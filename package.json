@@ -1,0 +1,11 @@
+{
+  "name": "booking-dojo",
+  "description": "Booking dojo app",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "^1.6.9",
+    "express": "^4.16.2",
+    "mongodb": "*",
+    "mongoose": "*"
+  }
+}
