@@ -4,13 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node ./bin/www & ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
     "@angular/common": "^5.2.0",
@@ -21,11 +20,17 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
     "core-js": "^2.4.1",
+    "debug": "~2.6.9",
     "express": "^4.16.2",
-    "mongodb": "^3.0.3",
-    "mongoose": "^5.0.8",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "node-sass-middleware": "0.9.8",
     "rxjs": "^5.5.6",
+    "serve-favicon": "~2.4.5",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
