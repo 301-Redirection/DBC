@@ -103,5 +103,4 @@ typings/
 .env
 
 # Generated Lua Scripts
-/Lua
-*.lua
+/Lua/*.lua
