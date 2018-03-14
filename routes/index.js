@@ -12,7 +12,9 @@ router.get('/generate', function(req, res, next) {
   lua = "io.write(\"Hello World\\n\")";
   fs.writeFile('./Lua/hello.lua', lua, (err) => {
     if (err) throw err;
-    res.send("File Generated: hello.lua");
+    // res.send("File Generated: hello.lua");
+    var file = "./Lua/hello.lua";
+    res.download(file);
   });
 });
 
