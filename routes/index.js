@@ -18,4 +18,8 @@ router.get('/generate', function(req, res, next) {
   });
 });
 
+router.get("/test", (request, response) => {
+    response.status(500).send({ "message": "This is an error response" });
+});
+
 module.exports = router;
