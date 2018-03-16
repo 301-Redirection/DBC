@@ -9,8 +9,7 @@
     "test": "./node_modules/jasmine/bin/jasmine.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
-    "test": "./node_modules/jasmine/bin/jasmine.js"
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init"
   },
   "dependencies": {
     "@angular/animations": "^5.2.0",
