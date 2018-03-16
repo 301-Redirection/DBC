@@ -6,9 +6,10 @@
     "ng": "ng",
     "start": "node ./bin/www & ng serve",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test": "./node_modules/jasmine/bin/jasmine.js",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init"
   },
   "dependencies": {
     "@angular/animations": "^5.2.0",
@@ -29,6 +30,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "jade": "~1.11.0",
+    "jasmine-node": "^1.14.5",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
     "node-sass-middleware": "0.9.8",

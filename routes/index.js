@@ -59,4 +59,8 @@ router.get('/failure', function(req, res) {
   });
 });
 
+router.get("/test", (request, response) => {
+    response.status(500).send({ "message": "This is an error response" });
+});
+
 module.exports = router;
