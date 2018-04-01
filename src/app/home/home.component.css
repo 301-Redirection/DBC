@@ -1,0 +1,23 @@
+/* 
+* Home Component Styles 
+*/
+
+/* body styles */
+.container-fluid {
+    height: 100%;
+    background-image: url(http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg);
+    padding-top: 2rem;
+}
+
+/* frame styles */
+.frame {
+    margin: 5rem 5rem 5rem 5rem;
+    text-align: center;     
+    color: rgb(163, 163, 163);
+}
+
+.frame h1,
+.frame h2 {
+    text-shadow: 2px 2px 5px #000000;
+    letter-spacing: 4px;
+}
