@@ -5,12 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
+import { BotManagementComponent } from '../bot-management/bot-management.component';
 
 const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, pathMatch: 'full' },  
+  { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
-  { path: 'bot-config', component: BotConfigComponent, pathMatch: 'full' }
+  { path: 'bot-config', component: BotConfigComponent, pathMatch: 'full' },
+  { path: 'bot-management', component: BotManagementComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

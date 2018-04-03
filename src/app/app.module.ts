@@ -16,10 +16,12 @@ import { ApiConnectService } from './services/api-connect.service';
 
 // Components
 import { AppComponent } from './app.component';
+import { BotManagementComponent } from './bot-management/bot-management.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BotManagementComponent
   ],
   imports: [
     BrowserModule,
