@@ -16,8 +16,29 @@
     color: rgb(163, 163, 163);
 }
 
-.frame h1,
-.frame h2 {
+/* General heading font styles */
+h1, h2, h3, h4, h5 {
     text-shadow: 2px 2px 5px #000000;
+    font-family: 'Radiance';
+}
+
+h1, h2 {
     letter-spacing: 4px;
+}
+
+h3, h4, h5 {
+    letter-spacing: 2px;
+}
+
+/* Paragraph styles */
+p {
+    font-family: 'Radiance';
+}
+
+/* button class */
+.btn {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    letter-spacing: .2rem;
+    font-family: 'Radiance';
 }

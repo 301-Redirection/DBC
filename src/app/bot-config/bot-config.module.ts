@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { NavbarModule } from '../navbar/navbar.module';
 
-import { DashboardComponent } from './dashboard.component';
-
+import { BotConfigComponent } from './bot-config.component';
 
 
 @NgModule({
@@ -15,8 +14,8 @@ import { DashboardComponent } from './dashboard.component';
     RouterModule
   ],
   declarations: [
-    DashboardComponent
+    BotConfigComponent
   ],
-  exports: [DashboardComponent]
+  exports: [BotConfigComponent]
 })
-export class DashboardModule { }
+export class BotConfigModule { }

@@ -1,3 +1,42 @@
-<p>
-  dashboard works!
-</p>
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div class="frame" id="dashboard-title">
+      <h1>DASHBOARD</h1>
+      <br>
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="button" routerLink="/bot-config">NEW BOT CONFIGURATION</button>
+  </div>
+
+  <div class="frame">
+    <div class="card">        
+        <div class="card-header"><h5>YOUR BOTS</h5></div>        
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Test Bot 3
+            <br><sub style="float:right">About an hour ago</sub>
+          </li>
+          <li class="list-group-item">
+            Another Bot
+            <br><sub style="float:right">3 weeks ago</sub>
+          </li>
+          <li class="list-group-item">
+            My First Bot
+            <br><sub style="float:right">1 month ago</sub>
+          </li>
+        </ul>        
+    </div>
+  </div>
+
+  <div class="frame">
+      <div class="card">        
+          <div class="card-header"><h5>YOUR BOT TEAMS</h5></div>        
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Tournament 1
+              <br><sub style="float:right">5 days ago</sub>
+            </li>
+          </ul>        
+      </div>
+  </div>
+  
+</div>

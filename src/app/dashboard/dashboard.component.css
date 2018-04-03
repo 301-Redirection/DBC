@@ -1,0 +1,29 @@
+/* 
+* Dashboard Component Styles 
+*/
+
+
+/* Import Home Component CSS */
+@import '../home/home.component.css';
+
+/* Title */
+#dashboard-title {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Cards */
+.card {
+    background-color: #3d3d3d;
+    text-align: left;
+}
+
+.list-group-item {
+    background-color: #292929;   
+    padding: 1rem 2rem 2rem 2rem; 
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #333333;   
+}

@@ -1,0 +1,6 @@
+/* 
+* Bot Configuration Styles
+*/
+
+/* Import Home Component Styles */
+@import '../home/home.component.css';

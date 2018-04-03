@@ -1,0 +1,84 @@
+/* 
+* Home Navbar Styles 
+*/
+
+/* padding */
+nav {
+    padding: .6rem 5rem;    
+    box-shadow: 0 1px 5px 5px #181818;    
+    background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
+    background-repeat: no-repeat;
+    line-height: normal;
+    letter-spacing: .2rem;
+}
+
+/* navbar brand */
+.navbar-brand {
+    color: gray;
+    font-family: 'Radiance';    
+}
+.navbar-brand:hover {
+    color: rgb(143, 143, 143);    
+}
+
+#bot-scripting-title {
+    font-size: 65%;
+}
+
+
+/* nav item */
+.nav-item {
+    margin-left: .5rem;
+    margin-right: .5rem;        
+    font-family: 'Radiance';    
+}
+
+.nav-link {
+    font-size: 85%;
+    color: rgb(172, 172, 172) !important;
+    padding-top: 14px !important;
+}
+.nav-link:hover {
+    color: rgb(221, 221, 221) !important;
+}
+
+.nav-divider {
+    color: rgb(102, 101, 101);
+    padding-top: 10px;
+}
+
+/* button class */
+.btn {
+    padding-top: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    letter-spacing: .2rem;
+    font-family: 'Radiance';
+}
+
+/* User dropdown */
+.dropdown-menu {
+    background-color: rgb(32, 32, 32);    
+    border-color: rgb(75, 75, 75);
+    border-radius: 2px;    
+}
+
+.dropdown-item {
+    color: gray;
+}
+.dropdown-item:hover {
+    background-color: rgb(32, 32, 32);    
+    color: lightgray;
+}
+
+.dropdown-item-danger {
+    color: #e2283b !important;
+}
+.dropdown-item-danger:hover {
+    color: #cc3544 !important;
+}
+
+.dropdown-divider {
+    border-color: #181818 !important;
+}
+
