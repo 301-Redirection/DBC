@@ -47,121 +47,41 @@
         ->Configure/Edit
         ->Download script
         -->
-        <li class="list-group-item" id="bot1_Heading" data-toggle="collapse" data-target="#bot1_Collapse" aria-expanded="false" aria-controls="bot1_Collapse">
+        <li *ngFor="let bot of bots" class="list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
           <!--Bot Item Heading-->
           <div class="row">
             <div class="col-sm-9">
-              <h4>Test Bot 1</h4>
+              <h4>{{bot.name}}</h4>
             </div>
             <div class="col-sm-3">
-              <sub style="float:right" id="bot1_LastEdit">
-                <i class="far fa-edit mr-1"></i>About an hour ago</sub>
+              <sub style="float:right">
+                <i class="far fa-edit mr-1"></i>{{bot.lastEdit}}</sub>
             </div>
           </div>
           <!--End of Heading-->
           <!--Bot Item details-->
-          <div class="card-body" id="bot1_Collapse" class="collapse hide" aria-labelledby="bot1_Heading" data-parent="#accordion">
+          <div class="card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in" >
             <div class="row">
               <div class="col-sm-12">
-                <p>Curabitur auctor eget mi id lacinia. Vestibulum tincidunt orci a luctus venenatis. Duis fermentum nulla id
-                  odio finibus interdum et et odio. Mauris a feugiat ipsum. Nulla placerat pretium fringilla. Aliquam sed
-                  porttitor nulla. Praesent suscipit, orci eget posuere luctus, enim urna scelerisque tellus, nec accumsan
-                  mauris mauris ut sem. Integer dignissim sit amet massa et facilisis. Vestibulum sagittis eros id purus
-                  dapibus ultrices nec eget turpis. Etiam mollis ipsum vitae ipsum convallis, ut dapibus enim eleifend. Nullam
-                  tempor porttitor ligula quis tempus. Pellentesque gravida, ante a aliquet imperdiet, nulla quam tristique
-                  magna, in placerat nisl sem quis lacus. Mauris quis sollicitudin ipsum. Vestibulum mattis lacinia massa,
-                  sit amet malesuada urna varius non.</p>
+                <p>{{bot.description}}</p>
               </div>
             </div>
-            <a href="#" class="btn button-edit mr-1" id="bot1_Edit-btn">
+            <a href="#" class="btn button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'_Edit-btn'">
               <i class="far fa-edit mr-1"></i>Edit Bot Script</a>
-            <a href="#" class="btn button-download" id="bot1_Download-btn">
+            <a href="#" class="btn button-download" #elem [attr.id]="'bot'+bot.id+'_Download-btn'">
               <i class="fas fa-download mr-1"></i>Download Bot Script</a>
           </div>
           <!--End of Details-->
         </li>
         <!--End of bot item-->
 
-         <!--Bot item -->
-        <li class="list-group-item" id="bot2_Heading" data-toggle="collapse" data-target="#bot2_Collapse" aria-expanded="false" aria-controls="bot2_Collapse">
-          <!--Bot Item Heading-->
-          <div class="row">
-            <div class="col-sm-9">
-              <h4>Test Bot 2</h4>
-            </div>
-            <div class="col-sm-3">
-              <sub style="float:right" id="bot2_LastEdit">
-                <i class="far fa-edit mr-1"></i>2 hour ago</sub>
-            </div>
-          </div>
-          <!--End of Heading-->
-          <!--Bot Item details-->
-          <div class="card-body" id="bot2_Collapse" class="collapse hide" aria-labelledby="bot2_Heading" data-parent="#accordion">
-            <div class="row">
-              <div class="col-sm-12">
-                <p>Curabitur auctor eget mi id lacinia. Vestibulum tincidunt orci a luctus venenatis. Duis fermentum nulla id
-                  odio finibus interdum et et odio. Mauris a feugiat ipsum. Nulla placerat pretium fringilla. Aliquam sed
-                  porttitor nulla. Praesent suscipit, orci eget posuere luctus, enim urna scelerisque tellus, nec accumsan
-                  mauris mauris ut sem. Integer dignissim sit amet massa et facilisis. Vestibulum sagittis eros id purus
-                  dapibus ultrices nec eget turpis. Etiam mollis ipsum vitae ipsum convallis, ut dapibus enim eleifend. Nullam
-                  tempor porttitor ligula quis tempus. Pellentesque gravida, ante a aliquet imperdiet, nulla quam tristique
-                  magna, in placerat nisl sem quis lacus. Mauris quis sollicitudin ipsum. Vestibulum mattis lacinia massa,
-                  sit amet malesuada urna varius non.</p>
-              </div>
-            </div>
-            <a href="#" class="btn button-edit mr-1" id="bot2_Edit-btn">
-              <i class="far fa-edit mr-1"></i>Edit Bot Script</a>
-            <a href="#" class="btn button-download" id="bot2_Download-btn">
-              <i class="fas fa-download mr-1"></i>Download Bot Script</a>
-          </div>
-          <!--End of Details-->
-        </li>
-        <!--End of bot item-->
-
-           <!--Bot item -->
-           <li class="list-group-item" id="bot3_Heading" data-toggle="collapse" data-target="#bot3_Collapse" aria-expanded="false" aria-controls="bot3_Collapse">
-            <!--Bot Item Heading-->
-            <div class="row">
-              <div class="col-sm-9">
-                <h4>Test Bot 3</h4>
-              </div>
-              <div class="col-sm-3">
-                <sub style="float:right" id="bot3_LastEdit">
-                  <i class="far fa-edit mr-1"></i>3 weeks ago</sub>
-              </div>
-            </div>
-            <!--End of Heading-->
-            <!--Bot Item details-->
-            <div class="card-body" id="bot3_Collapse" class="collapse hide" aria-labelledby="bot3_Heading" data-parent="#accordion">
-              <div class="row">
-                <div class="col-sm-12">
-                  <p>Curabitur auctor eget mi id lacinia. Vestibulum tincidunt orci a luctus venenatis. Duis fermentum nulla id
-                    odio finibus interdum et et odio. Mauris a feugiat ipsum. Nulla placerat pretium fringilla. Aliquam sed
-                    porttitor nulla. Praesent suscipit, orci eget posuere luctus, enim urna scelerisque tellus, nec accumsan
-                    mauris mauris ut sem. Integer dignissim sit amet massa et facilisis. Vestibulum sagittis eros id purus
-                    dapibus ultrices nec eget turpis. Etiam mollis ipsum vitae ipsum convallis, ut dapibus enim eleifend. Nullam
-                    tempor porttitor ligula quis tempus. Pellentesque gravida, ante a aliquet imperdiet, nulla quam tristique
-                    magna, in placerat nisl sem quis lacus. Mauris quis sollicitudin ipsum. Vestibulum mattis lacinia massa,
-                    sit amet malesuada urna varius non.</p>
-                </div>
-              </div>
-              <a href="#" class="btn button-edit mr-1" id="bot3_Edit-btn">
-                <i class="far fa-edit mr-1"></i>Edit Bot Script</a>
-              <a href="#" class="btn button-download" id="bot3_Download-btn">
-                <i class="fas fa-download mr-1"></i>Download Bot Script</a>
-            </div>
-            <!--End of Details-->
-          </li>
-          <!--End of bot item-->
 
       </ul>
 
     </div>
   </div>
-  <div class="mb-2">
-    <p>
-      kegbriutbg3rbgrigia
-      dwuigbuiebgvb
-      qdubguqbe
-    </p>
+  <div class="frame">
+    
+  
+  
   </div>

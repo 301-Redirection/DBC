@@ -10,28 +10,28 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { BotConfigModule } from './bot-config/bot-config.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
+import { BotManagementModule } from './bot-management/bot-management.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
 
 // Components
 import { AppComponent } from './app.component';
-import { BotManagementComponent } from './bot-management/bot-management.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    BotManagementComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RoutesModule,    
+    RoutesModule,
+    BotManagementModule,
     HomeModule,
     DashboardModule,
     NavbarModule,
-    BotConfigModule
+    BotConfigModule,
   ],
   providers: [ApiConnectService],
   bootstrap: [AppComponent]
