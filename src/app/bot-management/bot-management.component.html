@@ -3,19 +3,36 @@
 <div class="container-fluid">
   <div class="frame" id="bot-management-title">
     <h1>Manage</h1>
-    <div class="row">
-      <p>Possible sort or search options</p>
-    </div>
   </div>
-
-  <div class="frame mb-2">
-    <div id="accordion" class="card">
+      
+      <div class="frame ">
+        <div id="accordion" class="card">
       <!--Heading -->
       <div class="card-header">
-        <h5>YOUR BOTS</h5>
-      </div>
+        <div class="row">
+          <div class="col-sm-6">
+              <h5>YOUR BOTS</h5>
+          </div>
+          <div class="col-sm-6">
+              <div class="dropdown show dropdown-filter" style="float:right">
+                  <a class="btn dropdown-filter dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-filter mr-2"></i>Filter Bots
+                  </a>
+                
+                  <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-up mr-2"></i>Newest First</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-down mr-2"></i>Oldest First</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+       
+        
       <!--Bot list -->
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush" id="Bot_List">
+        
+
         <!--Bot item Implementation Notes:
         _______________________________
         headingID format: bot#_Heading

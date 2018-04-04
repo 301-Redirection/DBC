@@ -17,7 +17,9 @@
     background-color: #3d3d3d;
     text-align: left;
 }
-
+.card-body {
+    background-color: #292929;   
+}
 .list-group-item {
     background-color: #292929;   
     padding: 1rem 2rem 2rem 2rem; 
@@ -88,3 +90,11 @@
     -webkit-transition:.3s;
     transition:.3s;
 }
+
+.dropdown-filter{
+    color:#636468;
+    background-color:#3b3b3b;
+    border: none;
+}
+
+
