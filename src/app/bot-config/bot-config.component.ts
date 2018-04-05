@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser'; 
 
 @Component({
   selector: 'app-bot-config',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BotConfigComponent implements OnInit {
 
-  constructor() { }
+  pageTitle = 'Dota 2 Bot Scripting - Configuration'; 
+ 
+  constructor(private title: Title) {  
+    this.title.setTitle(this.pageTitle); 
+  } 
 
   ngOnInit() {
   }

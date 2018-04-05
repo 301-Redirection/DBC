@@ -21,8 +21,15 @@ nav {
     color: rgb(143, 143, 143);    
 }
 
+#dota-2-logo { 
+    opacity: 0.8; 
+} 
+#dota-2-logo:hover { 
+    opacity: 1; 
+} 
+
 #bot-scripting-title {
-    font-size: 65%;
+    font-size: 60%;
 }
 
 

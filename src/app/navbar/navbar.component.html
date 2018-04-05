@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" routerLink="/">
-    <img src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
+    <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
     &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,11 +8,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">    
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="user.name != ''">
-      <!-- <span class="nav-divider">|</span> -->
-      <li class="nav-item">
-        <a routerLink="/home" class="nav-link">HOME</a>
-      </li>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="user.name != ''">      
       <span class="nav-divider">|</span>
       <li class="nav-item">
         <a routerLink="/dashboard" class="nav-link">DASHBOARD</a>
@@ -29,8 +25,8 @@
 
     <ul class="navbar-nav ml-auto" *ngIf="user.name == ''">
       <li class="nav-item">
-        <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" (click)="submitLogin()">LOG IN</button> -->
-        <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button>
+        <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" (click)="submitLogin()">LOG IN</button>
+        <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button> -->
       </li>
       <li class="nav-item">
         <!-- <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button" (click)="submitSignUp()">SIGN UP</button> -->
