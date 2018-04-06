@@ -13,11 +13,11 @@ declare var $: any;
 export class BotManagementComponent implements OnInit {
   bots = BOTS;
   showDetails = false;
-  pageTitle = 'Dota 2 Bot Scripting - Management'; 
- 
-  constructor(private title: Title) { 
-    this.title.setTitle(this.pageTitle); 
-  } 
+  pageTitle = 'Dota 2 Bot Scripting - Management';
+
+  constructor(private title: Title) {
+    this.title.setTitle(this.pageTitle);
+  }
 
   ngOnInit() {
 }
