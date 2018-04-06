@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+	a(href='/login') Login
+
+	table class="table"
+		thead
+			tr
+				td ID
+				td Name
+				td LastName
+				td Auth0 ID	
+		each user in users
+			tr
+				td #{user.id}
+				td #{user.firstName}
+				td #{user.lastName}
+				td #{user.auth0_id}
+
+	

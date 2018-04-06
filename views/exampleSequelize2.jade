@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+	a(href='/login') Login
+	p DERP
+
+	table(class="table")
+		thead
+			tr
+				td ID
+				td Config
+				td User ID
+				td User Name
+				td User Surname
+				td AuthZero ID
+		each user in users
+			tr
+				td #{user.botConfigs.id}
+				td #{user.botConfigs.configuration}
+				td #{user.id}
+				td #{user.firstName}
+				td #{user.lastName}
+				td #{user.auth0_id}
+
+	

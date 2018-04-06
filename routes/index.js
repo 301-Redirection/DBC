@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
+var models = require('../models');
 
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -62,5 +63,34 @@ router.get('/failure', function(req, res) {
 router.get("/test", (request, response) => {
     response.status(500).send({ "message": "This is an error response" });
 });
+
+
+router.get("/example/sequelizer", (request, res) => {
+  models.BotConfig.findAll({
+    include: [{
+        model: models.User,
+        as: 'user',
+      }],
+  }).then(function(botconfigs) {
+    console.log("BotConfig");
+    console.log(botconfigs);
+    // return res.status(200).send(botconfigs);
+    res.render('exampleSequelize2', { title: 'Backend testing of auth0', botconfigs: botconfigs });
+  });
+})
+
+router.get("/example/sequelizer/user", (request, res) => {
+  models.User.findAll({
+    include: [{
+        model: models.BotConfig,
+        as: 'botConfigs',
+      }],
+  }).then(function(users) {
+    console.log("Users");
+    console.log(users);
+    // return res.status(200).send(users);
+    res.render('exampleSequelize2', { title: 'Backend testing of auth0', users: users });
+  });
+})
 
 module.exports = router;
