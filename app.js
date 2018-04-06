@@ -58,10 +58,11 @@ app.use(sassMiddleware({
 }));
 
 // Allow Cross-origin Resource Sharing 
-app.use(cors({ 
-  origin: 'http://localhost:4200', 
-  credentials: true 
-})); 
+app.use(cors());
+// app.use(cors({ 
+//   origin: 'http://localhost:4200', 
+//   credentials: true 
+// })); 
 // app.use(function(req, res, next) { 
 //   res.header("Access-Control-Allow-Origin", "*"); 
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
@@ -127,9 +128,9 @@ app.use(function(err, req, res, next) {
 
 // from jasmine tutorial 
 // https://www.thepolyglotdeveloper.com/2017/08/unit-testing-node-js-application-jasmine-testing-framework/
-var server = app.listen(3000, () => {
-    console.log("Listening on port " + server.address().port + "...");
-});
+// var server = app.listen(3000, () => {
+//     console.log("Listening on port " + server.address().port + "...");
+// });
 
-module.exports = server;
+// module.exports = server;
 module.exports = app;
