@@ -29,13 +29,12 @@ export class NavbarComponent implements OnInit {
     // console.log(this.route);
   }
 
-  public submitLogin() {
-    // this.api.login().subscribe();
+  public submitLogin() {    
     this.api.login().subscribe( 
       data => { 
         console.log(data); 
       } 
-    ); 
+    );     
   }
 
   public submitSignUp() {
