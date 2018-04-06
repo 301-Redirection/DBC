@@ -101,6 +101,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-# Generated Lua Scripts
-/Lua/*.lua
