@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
+import { BOTS } from '../bot-testing-data';
+=======
 import { Title } from '@angular/platform-browser'; 
+>>>>>>> begin-frontend-16
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +11,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  bots = BOTS;
 
   pageTitle = 'Dota 2 Bot Scripting - Dashboard'; 
  
