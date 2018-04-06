@@ -30,7 +30,12 @@ export class NavbarComponent implements OnInit {
   }
 
   public submitLogin() {
-    this.api.login().subscribe();
+    // this.api.login().subscribe();
+    this.api.login().subscribe( 
+      data => { 
+        console.log(data); 
+      } 
+    ); 
   }
 
   public submitSignUp() {

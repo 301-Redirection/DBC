@@ -9,6 +9,7 @@ var sassMiddleware = require('node-sass-middleware');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const flash = require('connect-flash');
+const cors = require('cors');
 
 // Configure Passport to use Auth0
 const strategy = new Auth0Strategy(
@@ -55,6 +56,17 @@ app.use(sassMiddleware({
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
+
+// Allow Cross-origin Resource Sharing 
+app.use(cors({ 
+  origin: 'http://localhost:4200', 
+  credentials: true 
+})); 
+// app.use(function(req, res, next) { 
+//   res.header("Access-Control-Allow-Origin", "*"); 
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
+//   next(); 
+// });  
 
 app.use(
   session({

@@ -1,5 +1,5 @@
 // General Modules
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -23,7 +23,7 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,    
     HttpClientModule,
     FormsModule,
     RoutesModule,
@@ -31,9 +31,12 @@ import { AppComponent } from './app.component';
     HomeModule,
     DashboardModule,
     NavbarModule,
-    BotConfigModule,
+    BotConfigModule
   ],
-  providers: [ApiConnectService],
+  providers: [
+    ApiConnectService,
+    Title
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

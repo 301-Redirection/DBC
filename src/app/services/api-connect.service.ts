@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
+import 'rxjs/add/observable/throw'; 
 
 @Injectable()
 export class ApiConnectService {
@@ -27,6 +28,12 @@ export class ApiConnectService {
       .get(this.apiUrl + '/logout')
       .pipe(catchError(this.handleError));
   }
+
+  public test() { 
+    return this.http 
+      .get(this.apiUrl + '/testing') 
+      .pipe(catchError(this.handleError)); 
+  } 
 
   // Handle errors if any
   private handleError(err: HttpErrorResponse | any) {

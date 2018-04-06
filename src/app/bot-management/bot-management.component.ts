@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser'; 
 import { BOTS } from '../bot-testing-data';
 import { forEach } from '@angular/router/src/utils/collection';
 declare var jquery: any;
@@ -12,7 +13,11 @@ declare var $: any;
 export class BotManagementComponent implements OnInit {
   bots = BOTS;
   showDetails = false;
-  constructor() { }
+  pageTitle = 'Dota 2 Bot Scripting - Management'; 
+ 
+  constructor(private title: Title) { 
+    this.title.setTitle(this.pageTitle); 
+  } 
 
   ngOnInit() {
 }
