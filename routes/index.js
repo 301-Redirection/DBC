@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 var models = require('../models');
+const sequelize = require('sequelize');
 
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -64,20 +65,22 @@ router.get("/test", (request, response) => {
     response.status(500).send({ "message": "This is an error response" });
 });
 
-
+/** The following routes are here to quickly demonstrate how one would use sequelize.
+ *  please consult the documentation for all possible options
+ *  http://docs.sequelizejs.com/manual/tutorial/querying.html
+ */
 router.get("/example/sequelizer", (request, res) => {
   models.BotConfig.findAll({
     include: [{
         model: models.User,
         as: 'user',
       }],
-  }).then(function(botconfigs) {
-    console.log("BotConfig");
-    console.log(botconfigs);
-    // return res.status(200).send(botconfigs);
-    res.render('exampleSequelize2', { title: 'Backend testing of auth0', botconfigs: botconfigs });
+  }).then(function(models) {
+    console.log("Models");
+    console.log(models);
+    res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
-})
+});
 
 router.get("/example/sequelizer/user", (request, res) => {
   models.User.findAll({
@@ -85,12 +88,54 @@ router.get("/example/sequelizer/user", (request, res) => {
         model: models.BotConfig,
         as: 'botConfigs',
       }],
-  }).then(function(users) {
-    console.log("Users");
-    console.log(users);
-    // return res.status(200).send(users);
-    res.render('exampleSequelize2', { title: 'Backend testing of auth0', users: users });
+  }).then(function(models) {
+    console.log("Models");
+    console.log(models);
+    res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
-})
+});
+
+router.get("/example/sequelizer/user/5", (request, res) => {
+  models.User.findAll({
+    include: [{
+        model: models.BotConfig,
+        as: 'botConfigs',
+      }],
+    where: {
+      id: 5
+    }
+  }).then(function(models) {
+    console.log("Models");
+    console.log(models);
+    res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+  });
+});
+
+const Op = sequelize.Op;
+router.get("/example/sequelizer/user/query", (request, res) => {
+  models.User.findAll({
+    include: [{
+        model: models.BotConfig,
+        as: 'botConfigs',
+      }],
+    where: {
+       [Op.or]: [{id: 12}, {id: 13}]
+      // alternatives ways (syntax) to query 
+      //  id: {
+      //     [Op.and]: {
+      //       [Op.lt]: 13,
+      //       [Op.gt]: 4
+      //   }
+      //  },
+      // firstname: {
+      //   [Op.like]: 'a%'
+      // }
+    }
+  }).then(function(models) {
+    console.log("Models");
+    console.log(models);
+    res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+  });
+});
 
 module.exports = router;

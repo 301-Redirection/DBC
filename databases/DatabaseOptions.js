@@ -1,5 +1,5 @@
 /**
- * Database Options 
+ * Database Options (Legacy -- before advent of Sequelize) 
  * 	
  * Input: This class requires intial parameters of 
  *			@param {String} databaseName 
@@ -11,7 +11,6 @@
  *			@param {Boolean} shouldDrop -- whether to try to drop database if exists
  *
  * Purpose: This class is used to generate the MySQL queries to create the database
- *
  * 
  *
  */

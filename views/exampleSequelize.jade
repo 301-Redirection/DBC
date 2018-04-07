@@ -15,13 +15,13 @@ block content
 				td User Name
 				td User Surname
 				td AuthZero ID
-		each user in users
+		each model in models
 			tr
-				td #{user.botConfigs.id}
-				td #{user.botConfigs.configuration}
-				td #{user.id}
-				td #{user.firstName}
-				td #{user.lastName}
-				td #{user.auth0_id}
+				td #{model.botConfigs.id}
+				td #{model.botConfigs.configuration}
+				td #{model.id}
+				td #{model.firstName}
+				td #{model.lastName}
+				td #{model.auth0_id}
 
 	
