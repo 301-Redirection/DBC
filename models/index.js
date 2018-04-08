@@ -18,12 +18,18 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
 var env       = process.env.NODE_ENV || 'development';
-var env_data = JSON.parse(fs.readFileSync(path.join(__dirname, "..", ".env")));
+
 /** the following line was altered to retrieve data from the root .env file 
  *  if that fails, it will retrieve data from the config/config.json which it should
  *  never do...
  */
-var config    = env_data["MySQL"][env] || require(path.join(__dirname, "..", "config", "config.json"))[env];
+var config;
+try {
+  config = JSON.parse(fs.readFileSync(path.join(__dirname, "..", ".env")))["MySQL"][env];
+}
+catch(err) {
+  config = require(path.join(__dirname, "..", "config", "config.json"))[env]
+}
 var db        = {};
 
 if (config.use_env_variable) {

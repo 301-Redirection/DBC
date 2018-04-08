@@ -39,7 +39,6 @@
     "passport-auth0": "^0.6.1",
     "rxjs": "^5.5.6",
     "sequelize": "^4.37.6",
-    "sequelize-cli": "^4.0.0",
     "serve-favicon": "~2.4.5",
     "zone.js": "^0.8.19"
   },
@@ -61,6 +60,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "~2.5.3",
+    "sequelize-cli": "^4.0.0",
   }
 }
