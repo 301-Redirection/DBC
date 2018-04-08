@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
-const flash = require('connect-flash');
+const flash = require('connect-flash'); 
 
 // Configure Passport to use Auth0
 const strategy = new Auth0Strategy(
