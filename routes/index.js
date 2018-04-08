@@ -76,8 +76,6 @@ router.get("/example/sequelizer", (request, res) => {
         as: 'user',
       }],
   }).then(function(models) {
-    console.log("Models");
-    console.log(models);
     res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
 });
@@ -89,8 +87,6 @@ router.get("/example/sequelizer/user", (request, res) => {
         as: 'botConfigs',
       }],
   }).then(function(models) {
-    console.log("Models");
-    console.log(models);
     res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
 });
@@ -105,8 +101,6 @@ router.get("/example/sequelizer/user/5", (request, res) => {
       id: 5
     }
   }).then(function(models) {
-    console.log("Models");
-    console.log(models);
     res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
 });
@@ -132,8 +126,6 @@ router.get("/example/sequelizer/user/query", (request, res) => {
       // }
     }
   }).then(function(models) {
-    console.log("Models");
-    console.log(models);
     res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
   });
 });
