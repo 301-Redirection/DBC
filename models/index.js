@@ -31,7 +31,7 @@ try {
 catch(err) {
     config = require(path.join(__dirname, '..', 'config', 'config.json'))[env]
 }
-var db        = {};
+var db = {};
 
 if (config.use_env_variable) {
     var sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -44,7 +44,7 @@ if (config.use_env_variable) {
  *  relationships and it exports a model variable where all models in this directory
  *  can be accessed from, for example model.User can be called.
  */ 
-fs .readdirSync(__dirname)
+fs.readdirSync(__dirname)
     .filter(file => {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
@@ -60,7 +60,6 @@ Object.keys(db).forEach(modelName => {
     }
 });
 
-console.log('testing');
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
