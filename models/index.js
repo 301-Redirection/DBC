@@ -25,18 +25,18 @@ var env       = process.env.NODE_ENV || 'development';
  */
 var config;
 try {
-  var jsonRaw = fs.readFileSync(path.join(__dirname, "..", ".env"));
-  config = JSON.parse(jsonRaw)["MySQL"][env];
+    var jsonRaw = fs.readFileSync(path.join(__dirname, "..", ".env"));
+    config = JSON.parse(jsonRaw)["MySQL"][env];
 }
 catch(err) {
-  config = require(path.join(__dirname, "..", "config", "config.json"))[env]
+    config = require(path.join(__dirname, "..", "config", "config.json"))[env]
 }
 var db        = {};
 
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable], config);
+    var sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+    var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 /** this following code appears to group all other js files in this directory under 
@@ -44,21 +44,20 @@ if (config.use_env_variable) {
  *  relationships and it exports a model variable where all models in this directory
  *  can be accessed from, for example model.User can be called.
  */ 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
+fs .readdirSync(__dirname)
+    .filter(file => {
+        return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    })
+    .forEach(file => {
     var model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
+        db[model.name] = model;
+    });
 
 
 Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
 console.log('testing');
