@@ -61,6 +61,6 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3",
-    "sequelize-cli": "^4.0.0",
+    "sequelize-cli": "^4.0.0"
   }
 }
