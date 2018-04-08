@@ -25,7 +25,8 @@ var env       = process.env.NODE_ENV || 'development';
  */
 var config;
 try {
-  config = JSON.parse(fs.readFileSync(path.join(__dirname, "..", ".env")))["MySQL"][env];
+  var jsonRaw = fs.readFileSync(path.join(__dirname, "..", ".env"));
+  config = JSON.parse(jsonRaw)["MySQL"][env];
 }
 catch(err) {
   config = require(path.join(__dirname, "..", "config", "config.json"))[env]
