@@ -25,11 +25,11 @@ var env       = process.env.NODE_ENV || 'development';
  */
 var config;
 try {
-    var jsonRaw = fs.readFileSync(path.join(__dirname, "..", ".env"));
-    config = JSON.parse(jsonRaw)["MySQL"][env];
+    var jsonRaw = fs.readFileSync(path.join(__dirname, '..', '.env'));
+    config = JSON.parse(jsonRaw)['MySQL'][env];
 }
 catch(err) {
-    config = require(path.join(__dirname, "..", "config", "config.json"))[env]
+    config = require(path.join(__dirname, '..', 'config', 'config.json'))[env]
 }
 var db        = {};
 
@@ -40,7 +40,7 @@ if (config.use_env_variable) {
 }
 
 /** this following code appears to group all other js files in this directory under 
- *  into the db variable, then later associates the files by their "hasOne" or "belongsTo"
+ *  into the db variable, then later associates the files by their 'hasOne' or 'belongsTo'
  *  relationships and it exports a model variable where all models in this directory
  *  can be accessed from, for example model.User can be called.
  */ 
