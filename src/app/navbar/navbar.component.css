@@ -33,7 +33,12 @@ nav {
 }
 
 
-/* nav item */
+/* nav items */
+
+#nav-links-list {
+    margin-left: 1.5rem;
+}
+
 .nav-item {
     margin-left: .5rem;
     margin-right: .5rem;        

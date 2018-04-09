@@ -17,6 +17,7 @@ import { ApiConnectService } from './services/api-connect.service';
 
 // Components
 import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AppComponent } from './app.component';
     HomeModule,
     DashboardModule,
     NavbarModule,
-    BotConfigModule
+    BotConfigModule,
+    RouterModule
   ],
   providers: [
     ApiConnectService,

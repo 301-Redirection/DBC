@@ -1,20 +1,4 @@
-/* 
-* Home Component Styles 
-*/
-
-/* body styles */
-
-.container-fluid {
-    background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');
-    padding-top: 2rem;
-}
-
-/* frame styles */
-.frame {
-    margin: 5rem 5rem 5rem 5rem;
-    text-align: center;     
-    color: rgb(163, 163, 163);
-}
+/* -- HOME STYLES -- */
 
 /* General heading font styles */
 h1, h2, h3, h4, h5 {
@@ -32,13 +16,5 @@ h3, h4, h5 {
 
 /* Paragraph styles */
 p {
-    font-family: 'Radiance';
-}
-
-/* button class */
-.btn {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    letter-spacing: .2rem;
     font-family: 'Radiance';
 }

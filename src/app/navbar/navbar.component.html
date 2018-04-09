@@ -1,57 +1,54 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/">
-    <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
-    &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" routerLink="/home">
+        <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
+        &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="navbar-toggler-icon"></i>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">    
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="user.name != ''">      
-      <span class="nav-divider">|</span>
-      <li class="nav-item">
-        <a routerLink="/dashboard" class="nav-link">DASHBOARD</a>
-      </li>
-      <span class="nav-divider">|</span>
-      <li class="nav-item">
-          <a routerLink="/bot-config" class="nav-link">CONFIGURATION</a>
-      </li>
-      <span class="nav-divider">|</span>
-      <li class="nav-item">
-          <a routerLink="/bot-management" class="nav-link">MANAGE</a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">    
+        <ul class="navbar-nav mt-4 mt-lg-0" id="nav-links-list" *ngIf="user.name != ''">                  
+            <li class="nav-item">
+                <a id="dashboard-link" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
+            </li>            
+            <li class="nav-item">
+                <a id="config-link" routerLink="/bot-config" class="nav-link">CONFIGURATION</a>
+            </li>            
+            <li class="nav-item">
+                <a id="manage-link" routerLink="/bot-management" class="nav-link">MANAGE</a>
+            </li>
+        </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="user.name == ''">
-      <li class="nav-item">
-        <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" (click)="submitLogin()">LOG IN</button>
-        <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button> -->
-      </li>
-      <li class="nav-item">
-        <!-- <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button" (click)="submitSignUp()">SIGN UP</button> -->
-        <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button">SIGN UP</button>
-      </li>            
-    </ul>
+        <ul class="navbar-nav ml-auto" *ngIf="user.name == ''">
+            <li class="nav-item">
+                <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" (click)="submitLogin()">LOG IN</button>
+                <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button> -->
+            </li>
+            <li class="nav-item">
+                <!-- <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button" (click)="submitSignUp()">SIGN UP</button> -->
+                <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button">SIGN UP</button>
+            </li>            
+        </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="user.name != ''">
-      <li class="nav-item">
-        <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Welcome, {{user.name}}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button">Account Settings</button>    
-              <div class="dropdown-divider"></div>           
-              <button class="dropdown-item dropdown-item-danger" type="button" routerLink="/"><span class="fa fa-sign-out"></span> Logout</button>          
-            </div>
-          </div>
-      </li>
+        <ul class="navbar-nav ml-auto" *ngIf="user.name != ''">
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome, {{user.name}}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item" type="button">Account Settings</button>    
+                        <div class="dropdown-divider"></div>           
+                        <button class="dropdown-item dropdown-item-danger" type="button" routerLink="/"><i class="fa fa-sign-out-alt"></i> Logout</button>          
+                    </div>
+                </div>
+            </li>
 
-      <!-- <li class="nav-item" *ngIf="route != '/home'">
-          <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" (click)="submitLogout()"><span class="fa fa-sign-out"></span> LOGOUT</button>
-          <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" routerLink="/"><span class="fa fa-sign-out"></span> LOGOUT</button>
-      </li> -->
-    </ul>   
-  </div>
+            <!-- <li class="nav-item" *ngIf="route != '/home'">
+                <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" (click)="submitLogout()"><span class="fa fa-sign-out"></span> LOGOUT</button>
+                <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" routerLink="/"><span class="fa fa-sign-out"></span> LOGOUT</button>
+            </li> -->
+        </ul>   
+    </div>
 </nav>
