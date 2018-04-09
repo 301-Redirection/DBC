@@ -14,7 +14,7 @@ nav {
 
 /* navbar brand */
 .navbar-brand {
-    color: gray;
+    color: var(--grey);
     font-family: 'Radiance';    
 }
 .navbar-brand:hover {
@@ -36,7 +36,7 @@ nav {
 /* nav items */
 
 #nav-links-list {
-    margin-left: 1.5rem;
+    margin-left: .5rem;
 }
 
 .nav-item {
@@ -47,50 +47,14 @@ nav {
 
 .nav-link {
     font-size: 85%;
-    color: rgb(172, 172, 172) !important;
+    color: var(--light-grey) !important;
     padding-top: 14px !important;
 }
 .nav-link:hover {
-    color: rgb(221, 221, 221) !important;
-}
-
-.nav-divider {
-    color: rgb(102, 101, 101);
-    padding-top: 10px;
+    color: #dddddd !important;
 }
 
 /* button class */
 .btn {
-    padding-top: .5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    letter-spacing: .2rem;
-    font-family: 'Radiance';
+    padding-top: .5rem;        
 }
-
-/* User dropdown */
-.dropdown-menu {
-    background-color: rgb(32, 32, 32);    
-    border-color: rgb(75, 75, 75);
-    border-radius: 2px;    
-}
-
-.dropdown-item {
-    color: gray;
-}
-.dropdown-item:hover {
-    background-color: rgb(32, 32, 32);    
-    color: lightgray;
-}
-
-.dropdown-item-danger {
-    color: #e2283b !important;
-}
-.dropdown-item-danger:hover {
-    color: #cc3544 !important;
-}
-
-.dropdown-divider {
-    border-color: #181818 !important;
-}
-

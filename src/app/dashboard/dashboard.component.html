@@ -8,7 +8,7 @@
     </div>
 
     <div class="frame ">
-        <div id="accordion" class="card">
+        <div id="accordion" class="card bot-manage-card">
             <!--Heading -->
             <div class="card-header">
                 <div class="row">
@@ -21,7 +21,7 @@
                                 <i class="fas fa-filter mr-2"></i>Filter Bots
                             </a>
                             
-                            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-up mr-2"></i>Newest First</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-down mr-2"></i>Oldest First</a>
                             </div>
@@ -47,7 +47,7 @@
                 ->Download script
                 -->
                 <div  *ngFor="let bot of bots; let i=index">
-                    <li *ngIf="i<5"  class="list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
+                    <li *ngIf="i<5"  class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
                         <!--Bot Item Heading-->
                         <div  class="row" >
                             <div class="col-sm-9">
@@ -59,7 +59,7 @@
                         </div>
                         <!--End of Heading-->
                         <!--Bot Item details-->
-                        <div class="card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in"  >
+                        <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in"  >
                             <div class="row">
                                 <div class="col-sm-12">
                                     <p>{{bot.description}}</p>
@@ -76,7 +76,7 @@
                     </li>
                     <!--End of bot item-->
                     <a routerLink="/bot-management" id="view-more-bots-link" *ngIf="i==6" style="text-decoration: none">
-                        <li   class="list-group-item" >
+                        <li   class="list-group-item manage-list-group-item" >
                             <h4>View More Bots</h4>  
                             <!--End of Details-->
                         </li>
@@ -89,10 +89,10 @@
     </div>
 
     <div class="frame">
-        <div class="card">        
+        <div class="card bot-manage-card">        
             <div class="card-header"><h5>YOUR BOT TEAMS</h5></div>        
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="list-group-item manage-list-group-item">
                     Tournament 1<br><sub style="float:right">5 days ago</sub>
                 </li>
             </ul>        

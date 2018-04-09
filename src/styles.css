@@ -12,32 +12,162 @@ html {
     background-size: cover;
 }
 
+
 /* Global colours */
+
 :root {
+    --red: #e2283b;
+    --blue: #007bff;
+    --grey: #808080;
     --light-grey: #a3a3a3;
     --dark-grey-1: #3d3d3d;
     --dark-grey-2: #333333;
+    --dark-grey-3: #292929;
 }
 
 
 /* -- Global Styles -- */
+
+
+/* -- Containers --  */
 
 .container-fluid-custom {
     background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');
     padding-top: 2rem;
 }
 
-/* General container */
 .frame {
     margin: 5rem 5rem 5rem 5rem;
     text-align: center;     
     color: var(--light-grey);
 }
 
-/* button class */
+
+/* -- Cards -- */
+
+.bot-manage-card {
+    background-color: var(--dark-grey-1) !important;
+    text-align: left !important;
+}
+
+.bot-manage-card-body {
+    background-color: var(--dark-grey-3) !important;   
+}
+
+.manage-list-group-item {
+    background-color: var(--dark-grey-3) !important;   
+    padding: 1rem 2rem 2rem 2rem !important; 
+    cursor: pointer !important;
+}
+
+.manage-list-group-item:hover {
+    background-color: var(--dark-grey-2) !important;   
+}
+
+
+/* -- Buttons -- */
+
 .btn {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    letter-spacing: .2rem;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;    
+    letter-spacing: .2rem !important;
     font-family: 'Radiance';
+}
+
+.button-download {
+    color: #4585C3;
+    background-color:  #333333;
+    border: 1px solid #336391;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+ }
+  
+  .button-download:hover {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: #263f56;
+    color: #5595D3;
+    border: 1px solid #3A73A3;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+}
+
+.button-edit {
+    color: #a9493f;
+    background-color:  #333333;
+    border: 1px solid #70251d;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+ }
+  
+  .button-edit:hover {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: #5e2d27;
+    color: #b15b52;
+    border: 1px solid #b15b52;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+}
+
+.dropdown-filter{    
+    color: var(--grey);
+}
+
+.dropdown-filter:hover {
+    color: var(--light-grey);
+}
+
+
+/*  Dropdown Menus */
+
+.dropdown-menu {
+    background-color: #202020 !important;        
+    border-color: var(--dark-grey-1) !important;
+    border-radius: 2px !important; 
+    width: 100% !important;   
+}
+
+.dropdown-item {
+    color: var(--grey) !important;
+}
+
+.dropdown-item:hover {
+    background-color: #202020 !important;    
+    color: var(--light-grey) !important;
+    cursor: pointer !important;
+}
+
+.dropdown-item-danger {
+    color: var(--red) !important;
+}
+
+.dropdown-item-danger:hover {
+    color: #e42b3e !important;
+}
+
+.dropdown-divider {
+    border-color: #181818 !important;
 }

@@ -9,7 +9,7 @@
 /* -- Rows --  */
 
 .row {    
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -26,7 +26,7 @@
 .config-card {
     height: 100%;
     background-color: var(--dark-grey-2);
-    opacity: 0.75;
+    opacity: 0.8;
     text-align: left;
     color: var(--light-grey);    
 }
@@ -39,18 +39,14 @@
 
 /* -- Forms -- */
 
-label {
-    /* text-align: right; */
-}
-
 #inputName,
-textarea {
+#inputDescription {
     background-color: var(--dark-grey-2);
     color: var(--light-grey) !important;
 }
 
 #inputName:focus,
-textarea:focus {
+#inputDescription:focus {
     background-color: var(--dark-grey-1);
 }
 
@@ -91,17 +87,17 @@ textarea:focus {
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%; 
-    background: #2e62d4;
+    background: var(--blue);
     cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background: #2e62d4;
+    background: var(--blue);
     cursor: pointer;
 }

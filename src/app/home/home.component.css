@@ -5,11 +5,9 @@ h1, h2, h3, h4, h5 {
     text-shadow: 2px 2px 5px #000000;
     font-family: 'Radiance';
 }
-
 h1, h2 {
     letter-spacing: 4px;
 }
-
 h3, h4, h5 {
     letter-spacing: 2px;
 }

@@ -6,7 +6,7 @@
     </div>
         
     <div class="frame">
-        <div id="accordion" class="card">
+        <div id="accordion" class="card bot-manage-card">
             <!--Heading -->
             <div class="card-header">
                 <div class="row">
@@ -46,7 +46,7 @@
                 ->Download script
                 -->
 
-                <li *ngFor="let bot of bots" class="list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
+                <li *ngFor="let bot of bots" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
                     <!--Bot Item Heading-->
                     <div class="row">
                         <div class="col-sm-9">
@@ -59,7 +59,7 @@
                     </div>
                     <!--End of Heading-->
                     <!--Bot Item details-->
-                    <div class="card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in" >
+                    <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in" >
                         <div class="row">
                         <div class="col-sm-12">
                             <p>{{bot.description}}</p>
