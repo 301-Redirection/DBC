@@ -2,7 +2,7 @@
 
 // to generate random int in range(0, maxValue), assuming maxValue > 0 
 function randomizeValue(maxValue) {
-    return Math.round(Math.random() * maxValue);
+    return Math.round(Math.random() * maxValue) / maxValue;
 }
 
 module.exports = {
