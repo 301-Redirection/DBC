@@ -5,6 +5,7 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Title } from '@angular/platform-browser';
 
 describe('BotManagementComponent', () => {
     let component: BotManagementComponent;
@@ -20,7 +21,8 @@ describe('BotManagementComponent', () => {
         providers: [
             ApiConnectService,
             HttpClient,
-            HttpHandler
+            HttpHandler,
+            { provide: Title, useClass: Title }
         ]
         })
         .compileComponents();
@@ -35,4 +37,9 @@ describe('BotManagementComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it(`should have the title 'Dota 2 Bot Scripting - Management'`, async(() => {        
+        let title = TestBed.get(Title);
+        expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Management');
+    }));
 });

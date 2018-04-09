@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Title } from '@angular/platform-browser';
 
 describe('BotConfigComponent', () => {
     let component: BotConfigComponent;
@@ -22,7 +23,8 @@ describe('BotConfigComponent', () => {
         providers: [
             ApiConnectService,
             HttpClient,
-            HttpHandler
+            HttpHandler,
+            { provide: Title, useClass: Title }
         ]
         })
         .compileComponents();
@@ -37,4 +39,10 @@ describe('BotConfigComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it(`should have the title 'Dota 2 Bot Scripting - Configuration'`, async(() => {        
+        let title = TestBed.get(Title);
+        expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
+    }));
+    
 });

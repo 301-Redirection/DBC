@@ -7,7 +7,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
 import { BotManagementComponent } from '../bot-management/bot-management.component';
 
-const ROUTES: Routes = [
+export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
