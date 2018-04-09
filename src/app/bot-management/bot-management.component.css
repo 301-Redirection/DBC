@@ -7,7 +7,7 @@
 @import '../home/home.component.css';
 
 /* Title */
-#dashboard-title {
+#bot-management-title {
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
 }
