@@ -8,18 +8,27 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-                configuration: {
+            name: {
+                type: Sequelize.STRING,
+            },
+            description: {
+                type: Sequelize.STRING,
+            },
+            title: {
+                type: Sequelize.STRING,
+            },
+            configuration: {
                 type: Sequelize.TEXT,
             },
-                user_id: {
+            user_id: {
                 type: Sequelize.INTEGER,
                 references: { model: 'Users', key: 'id', as: 'user_id'},
             },
-                createdAt: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-                updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE,
             }
