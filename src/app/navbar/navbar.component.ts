@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   route: string;
   user: any = {
     id: "",
-    name: "Bob",
+    name: "Steve",
     surname: "",
     email: ""
   };

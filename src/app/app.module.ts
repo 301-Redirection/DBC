@@ -3,6 +3,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 // Custom Modules
 import { HomeModule } from './home/home.module';
@@ -17,7 +18,7 @@ import { ApiConnectService } from './services/api-connect.service';
 
 // Components
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [

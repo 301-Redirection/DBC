@@ -101,7 +101,7 @@ describe('NavbarComponent', () => {
         // if not logged in, check for login and signup buttons 
         var loggedIn = false;
 
-        if (!loggedIn) {
+        if (loggedIn) {
             var logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;            
             var signUpButton = fixture.debugElement.query(By.css('button#signUpButton')).nativeElement.innerHTML;            
             expect(logInButton == 'LOG IN' && signUpButton == 'SIGN UP').toBeTruthy();

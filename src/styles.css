@@ -1,15 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-html {
+html, body {
+    height: 100% !important;
+    width: 100% !important;
     padding: 0;
     margin: 0;
     /*background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');*/
-    background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');
+    /* background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg'); */        
+    /* background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg');
 	background-repeat:repeat;
     background-position:center top;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover; */
 }
 
 
@@ -31,8 +34,8 @@ html {
 
 /* -- Containers --  */
 
-.container-fluid-custom {
-    background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');
+.container-fluid-custom {    
+    height: 100% !important;
     padding-top: 2rem;
 }
 

@@ -24,11 +24,7 @@
             <li class="nav-item">
                 <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" id="logInButton" (click)="submitLogin()">LOG IN</button>
                 <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button> -->
-            </li>
-            <li class="nav-item">
-                <!-- <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="button" (click)="submitSignUp()">SIGN UP</button> -->
-                <button class="btn btn-sm btn-outline-success my-2 my-sm-0" id="signUpButton" type="button">SIGN UP</button>
-            </li>            
+            </li>                    
         </ul>
 
         <ul class="navbar-nav ml-auto" *ngIf="user.name != ''">
@@ -38,8 +34,8 @@
                         Welcome, {{user.name}}
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">Account Settings</button>    
-                        <div class="dropdown-divider"></div>           
+                        <!-- <button class="dropdown-item" type="button">Account Settings</button>    
+                        <div class="dropdown-divider"></div>            -->
                         <button class="dropdown-item dropdown-item-danger" type="button" routerLink="/"><i class="fa fa-sign-out-alt"></i> Logout</button>          
                     </div>
                 </div>
