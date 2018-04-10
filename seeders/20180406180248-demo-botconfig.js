@@ -1,6 +1,8 @@
 'use strict';
 
-// to generate random int in range(0, maxValue), assuming maxValue > 0 
+/** to generate random int in range(0, maxValue) / maxValue, to get a nice predictable decimal place
+ *    for example randomizeValue(10) returns either 0.1,0.2,0.3,...0.9,1.0
+ */ 
 function randomizeValue(maxValue) {
     return Math.round(Math.random() * maxValue) / maxValue;
 }
