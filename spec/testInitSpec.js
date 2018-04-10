@@ -22,7 +22,10 @@ var Request = require("request");
 describe("Server", () => {
     var server;
     beforeAll(() => {
-        server = require("../app");
+        var app = require("../app");
+        server = app.listen(3000, () => {
+            console.log('Listening on port ' + server.address().port + '...');
+        });
     });
     afterAll(() => {
         // server.close(); --> cause error
