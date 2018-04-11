@@ -8,20 +8,20 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-                firstName: {
+            firstName: {
                 type: Sequelize.STRING
             },
-                lastName: {
+            lastName: {
                 type: Sequelize.STRING
             },
-                auth0_id: {
+            auth0_id: {
                 type: Sequelize.STRING
             },
-                createdAt: {
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-                updatedAt: {
+            updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
                 }
