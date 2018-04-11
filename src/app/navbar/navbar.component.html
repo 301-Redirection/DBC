@@ -8,7 +8,8 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">    
-        <ul class="navbar-nav mt-4 mt-lg-0" id="nav-links-list" *ngIf="user.name != ''">                  
+        <!-- Show only if logged in -->
+        <ul class="navbar-nav mt-2 mt-lg-0" id="nav-links-list" *ngIf="auth.loggedIn">                  
             <li class="nav-item">
                 <a id="dashboard-link" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>            
@@ -19,32 +20,28 @@
                 <a id="manage-link" routerLink="/bot-management" class="nav-link">MANAGE</a>
             </li>
         </ul>
+        
+        <ul class="navbar-nav ml-auto" >
+            <!-- Show only if not logged in -->
+            <li class="nav-item" *ngIf="!auth.loggedIn">
+                <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
+                    <i class="fas fa-sign-in-alt"></i>&nbsp;
+                    LOG IN
+                </button>                
+            </li>   
 
-        <ul class="navbar-nav ml-auto" *ngIf="user.name == ''">
-            <li class="nav-item">
-                <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" id="logInButton" (click)="submitLogin()">LOG IN</button>
-                <!-- <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" routerLink="/dashboard">LOG IN</button> -->
-            </li>                    
-        </ul>
-
-        <ul class="navbar-nav ml-auto" *ngIf="user.name != ''">
-            <li class="nav-item">
+            <!-- Show only if logged in -->
+            <li class="nav-item" *ngIf="auth.loggedIn">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Welcome, {{user.name}}
+                    <button id="welcome-btn" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>&nbsp;
+                        Hello, {{auth.userProfile?.given_name}}
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <!-- <button class="dropdown-item" type="button">Account Settings</button>    
-                        <div class="dropdown-divider"></div>            -->
-                        <button class="dropdown-item dropdown-item-danger" type="button" routerLink="/"><i class="fa fa-sign-out-alt"></i> Logout</button>          
+                    <div class="dropdown-menu dropdown-menu-right">                        
+                        <button class="dropdown-item dropdown-item-danger" type="button" (click)="auth.logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
                     </div>
                 </div>
-            </li>
-
-            <!-- <li class="nav-item" *ngIf="route != '/home'">
-                <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" (click)="submitLogout()"><span class="fa fa-sign-out"></span> LOGOUT</button>
-                <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="button" routerLink="/"><span class="fa fa-sign-out"></span> LOGOUT</button>
-            </li> -->
-        </ul>   
+            </li>                         
+        </ul>
     </div>
 </nav>

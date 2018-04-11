@@ -13,12 +13,8 @@ nav {
 }
 
 /* navbar brand */
-.navbar-brand {
-    color: var(--grey);
+.navbar-brand {    
     font-family: 'Radiance';    
-}
-.navbar-brand:hover {
-    color: rgb(143, 143, 143);    
 }
 
 #dota-2-logo { 
@@ -29,6 +25,7 @@ nav {
 } 
 
 #bot-scripting-title {
+    color: var(--grey);
     font-size: 60%;
 }
 
@@ -56,5 +53,18 @@ nav {
 
 /* button class */
 .btn {
-    padding-top: .5rem;        
+    padding-top: .5rem;            
+}
+
+#welcome-btn {
+    border: none !important;
+    color: var(--light-grey);
+}
+
+#welcome-btn:hover {
+    color: white;
+}
+
+#welcome-btn:focus {
+    color: white;
 }

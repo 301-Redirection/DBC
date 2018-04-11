@@ -15,14 +15,17 @@ import { BotManagementModule } from './bot-management/bot-management.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
+import { AuthService } from './auth/auth.service';
 
 // Components
 import { AppComponent } from './app.component';
+import { CallbackComponent } from './callback/callback.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,    
@@ -38,7 +41,8 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     ApiConnectService,
-    Title
+    Title,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

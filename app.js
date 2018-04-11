@@ -5,40 +5,85 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
 var bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 var sassMiddleware = require('node-sass-middleware');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const flash = require('connect-flash');
 const cors = require('cors');
+// Config
+const config = require('./server/config');
 
 // Configure Passport to use Auth0
-const strategy = new Auth0Strategy(
-  {
-    domain: 'dota-bot-scripting.eu.auth0.com',
-    clientID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
-    clientSecret: 'qdv6c__7UyeHeMA-IBejBVd9JyMJpA1d2VLLqSwNkm3ixKgfONk3-Op-UGGd3dR3',
-    callbackURL: 'http://localhost:3000/callback'
-  },
-  (accessToken, refreshToken, extraParams, profile, done) => {
-    return done(null, profile);
-  }
-);
+// const strategy = new Auth0Strategy(
+//   {
+//     domain: 'dota-bot-scripting.eu.auth0.com',
+//     clientID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
+//     clientSecret: 'qdv6c__7UyeHeMA-IBejBVd9JyMJpA1d2VLLqSwNkm3ixKgfONk3-Op-UGGd3dR3',
+//     callbackURL: 'http://localhost:3000/callback'
+//   },
+//   (accessToken, refreshToken, extraParams, profile, done) => {
+//     return done(null, profile);
+//   }
+// );
 
-passport.use(strategy);
+// passport.use(strategy);
 
 // This can be used to keep a smaller payload
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+app.use(cors());
+
+
+/* START TUTORIAL */
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(cors());
+
+// Set port
+const port = process.env.PORT || '8083';
+app.set('port', port);
+
+// Set static path to Angular app in dist
+// Don't run in dev
+if (process.env.NODE_ENV !== 'dev') {
+    app.use('/', express.static(path.join(__dirname, './dist')));
+}
+
+/*
+ |--------------------------------------
+ | Routes
+ |--------------------------------------
+ */
+
+require('./server/api')(app, config);
+
+// Pass routing to Angular app
+// Don't run in dev
+if (process.env.NODE_ENV !== 'dev') {
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, '/dist/index.html'));
+    });
+}
+
+/* END TUTORIAL */
+
+
+/*
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,18 +101,6 @@ app.use(sassMiddleware({
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
-
-// Allow Cross-origin Resource Sharing 
-app.use(cors());
-// app.use(cors({ 
-//   origin: 'http://localhost:4200', 
-//   credentials: true 
-// })); 
-// app.use(function(req, res, next) { 
-//   res.header("Access-Control-Allow-Origin", "*"); 
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
-//   next(); 
-// });  
 
 app.use(
   session({
@@ -125,12 +158,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+*/
 
-// from jasmine tutorial 
-// https://www.thepolyglotdeveloper.com/2017/08/unit-testing-node-js-application-jasmine-testing-framework/
-// var server = app.listen(3000, () => {
-//     console.log("Listening on port " + server.address().port + "...");
-// });
-
-// module.exports = server;
 module.exports = app;

@@ -1,9 +1,9 @@
 #content {
     background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg');
-	background-repeat:repeat;
-    background-position:center top;
+	background-repeat: no-repeat;
+    background-position: center top;    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;    
+    background-size: cover;        
 }

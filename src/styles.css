@@ -61,6 +61,7 @@ html, body {
     background-color: var(--dark-grey-3) !important;   
     padding: 1rem 2rem 2rem 2rem !important; 
     cursor: pointer !important;
+    border-radius: 0 !important;
 }
 
 .manage-list-group-item:hover {

@@ -4,45 +4,29 @@ import { Router } from '@angular/router';
 import { RoutesModule } from '../routes/routes.module';
 
 import { ApiConnectService } from '../services/api-connect.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
 
-  // Variables
-  route: string;
-  user: any = {
-    id: "",
-    name: "Steve",
-    surname: "",
-    email: ""
-  };
+    // Variables
+    user: any = {
+        id: "",
+        name: "",
+        surname: "",
+        email: ""
+    };
 
-  constructor(private api: ApiConnectService, private router: Router) { }
+    constructor(private api: ApiConnectService, 
+        private router: Router, 
+        public auth: AuthService) { }
 
-  ngOnInit() {
-    this.route = this.router.url;
-    // console.log(this.route);
-  }
-
-  public submitLogin() {    
-    this.api.login().subscribe( 
-      data => { 
-        console.log(data); 
-      } 
-    );     
-  }
-
-  public submitSignUp() {
-    this.api.signUp().subscribe();
-  }
-
-  public submitLogout() {
-    this.api.logout().subscribe();
-  }
+    ngOnInit() {
+    }  
 
 }
