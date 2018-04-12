@@ -4,41 +4,35 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, retry } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
-import { API } from './api.config';
+import { API_URL } from './api-url-config';
 
 @Injectable()
 export class ApiConnectService {
 
-    constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-    public login() {
-        return this.http
-        .get(API.URL + '/login', { responseType: 'text' })
-        .pipe(catchError(this.handleError));
-    }
+  public login() {
+    return this.http
+      .get(API_URL + '/login', { responseType: 'text' })
+      .pipe(catchError(this.handleError));
+  }
 
-    public signUp() {
-        return this.http
-        .get(API.URL + '/signup')
-        .pipe(catchError(this.handleError));
-    }
+  public signUp() {
+    return this.http
+      .get(API_URL + '/signup')
+      .pipe(catchError(this.handleError));
+  }
 
-    public logout() {
-        return this.http
-        .get(API.URL + '/logout')
-        .pipe(catchError(this.handleError));
-    }
+  public logout() {
+    return this.http
+      .get(API_URL + '/logout')
+      .pipe(catchError(this.handleError));
+  }
 
-    public test() {
-        return this.http
-        .get(API.URL + '/testing')
-        .pipe(catchError(this.handleError));
-    }
-
-    // Handle errors if any
-    private handleError(err: HttpErrorResponse | any) {
-        console.error('An error occurred', err);
-        return Observable.throw(err.message || err);
-    }
+  public test() {
+    return this.http
+      .get(API_URL + '/testing')
+      .pipe(catchError(this.handleError));
+  }
 
 }
