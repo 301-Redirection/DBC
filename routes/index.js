@@ -67,26 +67,54 @@ router.get('/test', (request, response) => {
 });
 
 
-// ***JUSTIN***
+// Generates the bot TeamDesires script
 router.post('/generate', function(req, res) {
-    // TODO: GENERATE LUA SCRIPT FROM PARAMETER
-    // Use req.body
+    var scriptBuilder = "";
+
+    //Adds the script name and the description as a comment at the top of the file
+    scriptBuilder += '-- ' + req.body.teamDesires.name + '--\
+                      [[ ' + req.body.teamDesires.description + ']]';
+
+    //Creates the UpdateRooshanDesire function
+    scriptBuilder += 'function UpdateRoshanDesire() \
+                        return ' + req.body.teamDesires.roshan + '\
+                    end';
+
+    //Creates the UpdateRoamDesire function
+    scriptBuilder += 'function UpdateRoamDesire() \
+                        return {' + req.body.teamDesires.roam + ' GetTeamMember(' + ((GetTeam() == TEAM_RADIANT) ? 'TEAM_RADIANT' : 'TEAM_DIRE') + ',' + RandomInt(1, 5 ) + ')}\
+                    end';
+
+    //Creates the UpdatePushLaneDesires function
+    scriptBuilder += 'function UpdatePushLaneDesires() \
+                        return {' + req.body.teamDesires.push.top + ',' + req.body.teamDesires.push.mid + req.body.teamDesires.push.bot + '}\
+                    end';
+
+    //Creates the UpdateDefendLaneDesires function
+    scriptBuilder += 'function UpdateDefendLaneDesires() \
+                        return ' + req.body.teamDesires.defend.top + ',' + req.body.teamDesires.defend.mid + req.body.teamDesires.defend.bot + '\
+                    end';
+
+    //Creates the UpdateFarmLaneDesires function    
+    scriptBuilder += 'function UpdateFarmLaneDesires() \
+                        return ' + req.body.teamDesires.farm.top + ',' + req.body.teamDesires.farm.mid + req.body.teamDesires.farm.bot + '\
+                    end';
 
 
-    // EXAMPLE LUA SCRIPT GENERATION CODE
-    // lua = 'io.write(\"Hello World\\n\")';
-    // try {
-    //     fs.mkdirSync('./Lua');
-    // } catch (err) {
-    //     if (err.code !== 'EEXIST') throw err
-    // }
-    // fs.writeFile('./Lua/hello.lua', lua, (err) => {
-    //     if (err) throw err;
-    //     // res.send('File Generated: hello.lua');
-    //     var file = './Lua/hello.lua';
-    //     res.download(file);
-    // });
-    console.log(req.body);
+    /*lua = 'io.write(\"Hello World\\n\")';
+    try {
+        fs.mkdirSync('./Lua');
+    } catch (err) {
+        if (err.code !== 'EEXIST') throw err
+    }
+    fs.writeFile('./Lua/TeamDesires.lua', lua, (err) => {
+        if (err) throw err;
+           res.send('File Generated: TeamDesiires.lua');
+        var file = './Lua/TeamDesires.lua';
+        res.download(file);
+    });*/
+
+    console.log(scriptBuilder);
     res.status(200).send("Received");
 })
 
