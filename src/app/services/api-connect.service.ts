@@ -4,35 +4,34 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, retry } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
+import { API_URL } from './apiURL-config';
 
 @Injectable()
 export class ApiConnectService {
-
-  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   public login() {
     return this.http
-      .get(this.apiUrl + '/login', { responseType: 'text' })
+      .get(API_URL + '/login', { responseType: 'text' })
       .pipe(catchError(this.handleError));
   }
 
   public signUp() {
     return this.http
-      .get(this.apiUrl + '/signup')
+      .get(API_URL + '/signup')
       .pipe(catchError(this.handleError));
   }
 
   public logout() {
     return this.http
-      .get(this.apiUrl + '/logout')
+      .get(API_URL + '/logout')
       .pipe(catchError(this.handleError));
   }
 
   public test() {
     return this.http
-      .get(this.apiUrl + '/testing')
+      .get(API_URL + '/testing')
       .pipe(catchError(this.handleError));
   }
 
