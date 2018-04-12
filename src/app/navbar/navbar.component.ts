@@ -27,16 +27,34 @@ export class NavbarComponent implements OnInit {
         public auth: AuthService) { }
 
     ngOnInit() {
+        
     }  
 
     toggleHamburger() {
+        let dropdown = document.getElementById('navbar-dropdown').classList;
         let hamburger = document.getElementById('hamburger').classList;
-        if (hamburger.contains('is-active')) {
+        
+        if (hamburger.contains('is-active') && dropdown.contains('show')) {
             hamburger.remove('is-active');
         } 
+        else if (hamburger.contains('is-active') && !dropdown.contains('show')) {
+            hamburger.remove('is-active');
+        }
+        else if(!hamburger.contains('is-active') && dropdown.contains('show')) {
+            hamburger.remove('is-active');
+        }
         else {
             hamburger.add('is-active');
         }
     }
+
+    public removeHamburger() {
+        let hamburger = document.getElementById('hamburger').classList;
+        if (hamburger.contains('is-active')) {
+            document.getElementById('hamburger').click();
+        }        
+    }
+
+
 
 }

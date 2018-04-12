@@ -18,6 +18,7 @@ nav {
 .navbar-brand {    
     font-family: 'Radiance';    
     opacity: 0.8;
+    margin-right: auto;
 }
 .navbar-brand:hover {
     opacity: 1;
@@ -28,7 +29,12 @@ nav {
     font-size: 60%;
 }
 
+
 /* Hamburger */
+
+#hamburger {
+    padding: 5px;
+}
 
 #hamburger:focus,
 #hamburger:active {    
@@ -90,21 +96,38 @@ nav {
  |--------------------------------------
  | Responsive
  |--------------------------------------
-*/
+ */
+
+@media only screen and (max-width: 1050px) {
+
+    nav {
+        padding-left: 2rem;
+        padding-right: 2rem;  
+    }
+
+}
+
+@media only screen and (max-width: 995px) {
+
+    #logInButton {
+        margin-top: 4% !important;        
+    }
+
+}
 
 @media only screen and (max-width: 750px) {
 
     nav {
         padding-left: 2rem;
         padding-right: 2rem;
-    }
-
-    #nav-links-list {
-        margin-top: 8% !important;
-    }
+    }    
 
     #welcome-btn {
         margin-top: 2%;
+    }
+
+    #logInButton {
+        margin-top: 5% !important;
     }
 
 }
@@ -117,13 +140,21 @@ nav {
     }
 
     #dota-2-logo {
-        height: 20px !important;
+        height: 24px !important;
     }
 
     #bot-scripting-title {
         font-size: 50%;
         letter-spacing: .1rem;
     }    
+
+    #nav-links-list {
+        margin-top: 5% !important;
+    }
+
+    #logInButton {
+        margin-top: 10% !important;
+    }
 
 }
 

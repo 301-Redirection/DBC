@@ -147,11 +147,16 @@ html, body {
 
 /*  Dropdown Menus */
 
+.dropdown {
+    display: inline-block;
+}
+
 .dropdown-menu {
+    display: inline-block;
     background-color: #202020 !important;        
     border-color: var(--dark-grey-1) !important;
     border-radius: 2px !important; 
-    width: 100% !important;   
+    min-width: 100% !important;   
 }
 
 .dropdown-item {

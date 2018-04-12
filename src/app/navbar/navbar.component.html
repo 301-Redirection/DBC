@@ -3,13 +3,13 @@
         <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
         &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
     </a>
-    <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-dropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">    
+    <div class="collapse navbar-collapse" id="navbar-dropdown">    
         <!-- Show only if logged in -->
         <ul class="navbar-nav mt-2 mt-lg-0" id="nav-links-list" *ngIf="auth.loggedIn">                  
             <li class="nav-item">
@@ -40,7 +40,7 @@
                         Hello, {{auth.userProfile?.given_name}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="welcome-btn">                        
-                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="auth.logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
+                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="removeHamburger(); auth.logout();"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
                     </div>
                 </div>
             </li>                         
