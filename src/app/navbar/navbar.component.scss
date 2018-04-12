@@ -2,13 +2,18 @@
 * Home Navbar Styles 
 */
 
+/* Import Global Variables */
+@import '../../variables';
+
+$nav-background-color:#181818 ; 
+
 /* padding */
 nav {
     width: 100%;
     padding: .6rem 5rem;    
-    box-shadow: 0 1px 5px 5px var(--black);   
-    background-color: var(--black) !important;
-    background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
+    box-shadow: 0 1px 5px 5px $nav-background-color;   
+    background-color: $nav-background-color !important ;
+    background-image: $nav-background-image;    
     background-repeat: no-repeat;
     line-height: normal;
     letter-spacing: .2rem;
@@ -16,7 +21,7 @@ nav {
 
 /* navbar brand */
 .navbar-brand {    
-    font-family: 'Radiance';    
+    font-family: $font-family;    
     opacity: 0.8;
     margin-right: auto;
 }
@@ -24,8 +29,8 @@ nav {
     opacity: 1;
 }
 
-#botScriptTitle {
-    color: var(--light-grey);
+#bot-scripting-title {
+    color: $light-grey ;
     font-size: 60%;
 }
 
@@ -43,8 +48,8 @@ nav {
 
 .hamburger-inner,
 .hamburger-inner:before,
-.hamburger-inner:after {    
-    background-color: var(--grey);
+.hamburger-inner:after {
+    background-color: #4e4e4e !important;
 }
 
 .navbar-toggler {
@@ -54,24 +59,23 @@ nav {
 
 /* nav items */
 
-#navLinksList {
-    margin-left: .5rem;    
+#nav-links-list {
+    margin-left: .5rem;
 }
 
 .nav-item {
     margin-left: .5rem;
     margin-right: .5rem;        
-    font-family: 'Radiance';    
+    font-family: $font-family;    
 }
 
 .nav-link {
     font-size: 85%;
-    color: var(--light-grey) !important;
+    color: $light-grey !important;
     padding-top: 14px !important;
 }
-
 .nav-link:hover {
-    color: var(--white) !important;
+    color: #dddddd !important;
 }
 
 /* button class */
@@ -79,40 +83,40 @@ nav {
     padding-top: .5rem;            
 }
 
-#welcomeButton {
-    padding-top: 14px;
+#welcome-btn {
+    padding-top: 14px !important;
     border: none !important;
-    color: var(--light-grey);
+    color: $light-grey;
 }
 
-#welcomeButton:hover {
-    color: white;
+#welcome-btn:hover {
+    color: $white;
 }
 
-#welcomeButton:focus {
-    color: white;
+#welcome-btn:focus {
+    color: $white;
 }
-
 .button-profile {
-    font-family: 'Radiance';
+
+font-family: $font-family;
     text-decoration:none;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
     font-size: 85%;
-    color: var(--light-grey) !important;
+    color: $light-grey !important;
     padding-top: 14px !important;
     background-color: transparent;
     background-image: none;
     border:none;
-}
+  }
   
-.button-profile:hover {
+  .button-profile:hover {
     text-decoration:none;
-    color: white;
-    background-color: var(--black);
+    color: $white;
+    background-color:$nav-background-color;
     border: none;
-}
+  }
 
 /*
  |--------------------------------------
@@ -121,59 +125,63 @@ nav {
  */
 
 @media only screen and (max-width: 1050px) {
+
     nav {
         padding-left: 2rem;
         padding-right: 2rem;  
     }
+
 }
 
 @media only screen and (max-width: 995px) {
+
     #logInButton {
         margin-top: 4% !important;        
-    }  
-    
-    #navLinksList {
-        margin-top: 3% !important;
     }
+
 }
 
 @media only screen and (max-width: 750px) {
+
     nav {
         padding-left: 2rem;
         padding-right: 2rem;
     }    
 
-    #welcomeButton {
+    #welcome-btn {
         margin-top: 2%;
     }
 
     #logInButton {
         margin-top: 5% !important;
     }
+
 }
 
 @media only screen and (max-width: 450px) {
+
     nav {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
-    #dotaLogo {
+    #dota-2-logo {
         height: 24px !important;
     }
 
-    #botScriptTitle {
+    #bot-scripting-title {
         font-size: 50%;
         letter-spacing: .1rem;
     }    
 
-    #navLinksList {
+    #nav-links-list {
         margin-top: 5% !important;
     }
 
     #logInButton {
         margin-top: 10% !important;
     }
+
 }
 
 

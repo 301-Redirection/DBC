@@ -2,8 +2,8 @@
 * Dashboard Component Styles 
 */
 
-/* Import Home Component CSS */
-@import '../home/home.component.css';
+/* Global Variables */
+@import '../../variables';
 
 /* Title */
 #dashboard-title {
@@ -23,13 +23,17 @@
 }
 
 @media only screen and (max-width: 450px) {
-    #newConfigButton {
+
+    #new-bot-config-button {
         font-size: 80%;
     }
+
 }
 
 @media only screen and (max-width: 350px) {
-    #newConfigButton {
+
+    #new-bot-config-button {
         font-size: 60%;
     }
+    
 }

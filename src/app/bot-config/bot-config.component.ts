@@ -7,7 +7,7 @@ declare var $: any;
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
-    styleUrls: ['./bot-config.component.css']
+    styleUrls: ['./bot-config.component.scss']
 })
 export class BotConfigComponent implements OnInit {
 
