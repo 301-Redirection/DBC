@@ -111,7 +111,7 @@ describe('NavbarComponent', () => {
         fixture.detectChanges();
         if (!auth.loggedIn) {
             const logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;
-            expect(logInButton).toContain('LOG IN');
+            expect(logInButton).toContain('SIGN IN');
         }
     });
 

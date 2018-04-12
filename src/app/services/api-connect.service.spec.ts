@@ -17,7 +17,7 @@ describe('ApiConnectService', () => {
             ],
         });
     });
-    const api: ApiConnectService;
+    let api: ApiConnectService;
 
     it('should be created', inject([ApiConnectService], (service: ApiConnectService) => {
         expect(service).toBeTruthy();
