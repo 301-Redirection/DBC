@@ -1,3 +1,5 @@
+@import '/assets/fonts.scss';
+
 /* Global variables */
 
 
@@ -13,12 +15,13 @@ $page-margin-bottom: 1rem !important;
 
 $red: #e2283b;
 $blue: #007bff;
-$white: white;
+$white: #dddddd;
 $grey: #808080;
 $light-grey: #a3a3a3;
 $dark-grey-1: #3d3d3d;
 $dark-grey-2: #333333;
 $dark-grey-3: #292929;
+$black: #181818;
 
 /*Button Variables*/
 $btn-general-border: 2px solid ;
