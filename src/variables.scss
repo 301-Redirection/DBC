@@ -23,6 +23,8 @@ $dark-grey-2: #333333;
 $dark-grey-3: #292929;
 $black: #181818;
 
+$dropdown-color-hover:#202020 ;
+
 /*Button Variables*/
 $btn-general-border: 2px solid ;
 $btn-general-background-color: transparent;
@@ -38,3 +40,7 @@ $btn-generate-border-color-hover:#3A73A3;
 $btn-edit-color: #b1884f;
 $btn-edit-border-color: #5b4629;
 $btn-edit-border-color-hover:#876a40;
+
+$btn-profile-color: $black;
+$btn-profile-border-color: none;
+$btn-profile-border-color-hover:$dropdown-color-hover;

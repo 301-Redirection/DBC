@@ -148,6 +148,22 @@ p {
     border-color: $btn-edit-border-color-hover;
 }
 
+.button-profile {
+    font-family: $font-family;
+    font-size: 85%;
+    color: $btn-profile-color;
+    background-color: $btn-general-background-color;
+    background-image: none;
+    border: $btn-general-border $btn-profile-border-color;
+  }
+  
+.button-profile:hover {    
+    text-decoration:none;
+    color: $white;
+    background-color: $btn-profile-border-color;
+    border-color: $btn-profile-border-color-hover;
+    padding-top: 14px;
+}
 
 /*  Dropdown Menus */
 
@@ -165,8 +181,8 @@ p {
 
 .dropdown-menu {
     display: inline-block;
-    background-color: #202020 !important;        
-    border-color: var($dark-grey-1) !important;
+    background-color: $dropdown-color-hover !important;        
+    border-color: $dark-grey-1 !important;
     border-radius: 2px !important; 
     min-width: 100% !important;   
 }

@@ -79,44 +79,10 @@ nav {
     color: $white !important;
 }
  
-/* button class */
-.btn {
-    padding-top: .5rem;            
-}
+/* Display on hover */
 
-#welcomeButton {
-    padding-top: 14px;
-    border: none !important;
-    color: $light-grey;
-}
- 
-#welcomeButton:hover {
-    color: white;
-}
- 
-#welcomeButton:focus {
-    color: white;
-}
- 
-.button-profile {
-    font-family: 'Radiance';
-    text-decoration:none;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 85%;
-    color: $light-grey !important;
-    padding-top: 14px !important;
-    background-color: transparent;
-    background-image: none;
-    border:none;
-}
-  
-.button-profile:hover {
-    text-decoration:none;
-    color: white;
-    background-color: $black;
-    border: none;
+li.nav-item div.dropdown:hover > div.dropdown-menu {
+    display: block;    
 }
  
 /*

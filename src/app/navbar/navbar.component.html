@@ -36,7 +36,7 @@
             <!-- Show only if logged in -->
             <li class="nav-item" *ngIf="auth.loggedIn">
                 <div class="dropdown">
-                    <button id="welcomeButton" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
                         Hello, {{auth.userProfile?.given_name}}
                     </button>
