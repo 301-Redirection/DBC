@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 // Jquery imports
-declare var jquery: any;
 declare var $: any;
 
 @Component({
@@ -41,7 +40,6 @@ export class BotConfigComponent implements OnInit {
     generate() {
         if (this.validateInfo()) {
             console.log(this.config);
-
             // call generate from api service
         }
     }
