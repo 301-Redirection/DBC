@@ -19,15 +19,15 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
+        "styles.scss",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
-        "../node_modules/hamburgers/dist/hamburgers.css" 
+        "../node_modules/hamburgers/dist/hamburgers.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js", 
-        "../node_modules/popper.js/dist/umd/popper.js", 
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js" 
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/popper.js/dist/umd/popper.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -61,7 +61,8 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "scss",
+    "component": {
+    }
   }
 }
