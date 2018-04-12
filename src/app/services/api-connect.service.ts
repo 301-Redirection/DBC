@@ -38,7 +38,7 @@ export class ApiConnectService {
 
     public generate(config: ConfigurationFormat) {
         return this.http
-            .post(API_URL + '/users/generate', config)
+            .post(API_URL + '/generate', config)
             .pipe(catchError(this.handleError));
     }
 
