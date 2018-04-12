@@ -42,11 +42,13 @@
     "method-override": "^2.3.10",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
     "node-sass-middleware": "0.9.8",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "popper.js": "^1.14.3",
     "rxjs": "^5.5.6",
+    "sequelize": "^4.37.6",
     "serve-favicon": "~2.4.5",
     "zone.js": "^0.8.19"
   },
@@ -68,6 +70,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "~2.5.3",
+    "sequelize-cli": "^4.0.0"
   }
 }
