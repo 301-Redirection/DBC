@@ -14,18 +14,18 @@ describe('BotConfigComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ BotConfigComponent ],
-        imports: [        
-            NavbarModule,
-            RouterTestingModule,
-            FormsModule
-        ],
-        providers: [
-            ApiConnectService,
-            HttpClient,
-            HttpHandler,
-            { provide: Title, useClass: Title }
-        ]
+            declarations: [ BotConfigComponent ],
+            imports: [        
+                NavbarModule,
+                RouterTestingModule,
+                FormsModule
+            ],
+            providers: [
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+                { provide: Title, useClass: Title }
+            ]
         })
         .compileComponents();
     }));
