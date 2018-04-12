@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth.config';
 import * as auth0 from 'auth0-js';
+import { ROUTE_NAMES } from '../routes/routes.config';
 
 @Injectable()
 export class AuthService {
@@ -14,29 +15,29 @@ export class AuthService {
         responseType: 'token',
         redirectUri: AUTH_CONFIG.REDIRECT,
         audience: AUTH_CONFIG.AUDIENCE,
-        scope: AUTH_CONFIG.SCOPE
+        scope: AUTH_CONFIG.SCOPE,
     });
 
     userProfile: any;
     
     // Create a stream of logged in status to communicate throughout app    
     loggedIn: boolean;
-    loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+    loggedInBehavior = new BehaviorSubject<boolean>(this.loggedIn);
 
     constructor(private router: Router) {        
         const localProfile = localStorage.getItem('profile');
 
-        if (this.tokenValid) {
+        if (this.isTokenValid) {
             this.userProfile = JSON.parse(localProfile);                    
             this.setLoggedIn(true);
-        } else if (!this.tokenValid && localProfile) {            
+        } else if (!this.isTokenValid && localProfile) {            
             this.logout();
         }
     }
 
     setLoggedIn(value: boolean) {
         // Update login status subject
-        this.loggedIn$.next(value);
+        this.loggedInBehavior.next(value);
         this.loggedIn = value;
     }
 
@@ -53,7 +54,7 @@ export class AuthService {
                 this._getProfile(authResult);                
             } else if (err) {                
                 console.error(`Error authenticating: ${err.error}`);                
-                this.router.navigate(['/']);
+                this.router.navigate([ROUTE_NAMES.HOME]);                
             }            
         });
     }
@@ -80,7 +81,7 @@ export class AuthService {
         // Update login status in loggedIn$ stream
         this.setLoggedIn(true);
         // Redirect to Dashboard
-        this.router.navigate(['/dashboard']);
+        this.router.navigate([ROUTE_NAMES.DASHBOARD]);
     }
 
     logout() {
@@ -93,10 +94,10 @@ export class AuthService {
         this.userProfile = undefined;
         this.setLoggedIn(false);
         // Return to homepage
-        this.router.navigate(['/']);
+        this.router.navigate([ROUTE_NAMES.HOME]);
     }
 
-    get tokenValid(): boolean {
+    get isTokenValid(): boolean {
         // Check if current time is past access token's expiration
         const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         return Date.now() < expiresAt;

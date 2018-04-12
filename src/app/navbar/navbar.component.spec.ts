@@ -14,9 +14,9 @@ import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthService } from '../auth/auth.service';
-import { LOADIPHLPAPI } from 'dns';
 import { LoadingComponent } from '../core/loading.component';
-import { AuthGuard } from '../auth/auth.gaurd';
+import { AuthGuard } from '../auth/auth.guard';
+import { ROUTE_NAMES } from '../routes/routes.config';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -69,7 +69,7 @@ describe('NavbarComponent', () => {
         fixture.detectChanges();
         fixture.debugElement.query(By.css('.navbar-brand')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual('/home');
+            expect(location.path()).toEqual(ROUTE_NAMES.HOME);
         });
     }));
 
@@ -79,7 +79,7 @@ describe('NavbarComponent', () => {
         if (auth.loggedIn) {
             fixture.debugElement.query(By.css('a#dashboard-link')).nativeElement.click();
             fixture.whenStable().then(() => {
-                expect(location.path()).toEqual('/dashboard');
+                expect(location.path()).toEqual(ROUTE_NAMES.DASHBOARD);
             });
         }
     }));
@@ -90,7 +90,7 @@ describe('NavbarComponent', () => {
         if (auth.loggedIn) {
             fixture.debugElement.query(By.css('a#config-link')).nativeElement.click();
             fixture.whenStable().then(() => {
-                expect(location.path()).toEqual('/bot-config');
+                expect(location.path()).toEqual(ROUTE_NAMES.CONFIGURATION);
             });
         }
     }));
@@ -101,7 +101,7 @@ describe('NavbarComponent', () => {
         if (auth.loggedIn) {
             fixture.debugElement.query(By.css('a#manage-link')).nativeElement.click();
             fixture.whenStable().then(() => {
-                expect(location.path()).toEqual('/bot-management');
+                expect(location.path()).toEqual(ROUTE_NAMES.MANAGEMENT);
             });
         }
     }));
@@ -121,7 +121,7 @@ describe('NavbarComponent', () => {
         if (auth.loggedIn) {
             fixture.debugElement.query(By.css('#logoutButton')).nativeElement.click();
             fixture.whenStable().then(() => {
-                expect(location.path()).toEqual('/home');
+                expect(location.path()).toEqual(ROUTE_NAMES.HOME);
                 expect(auth.loggedIn).toEqual(false);
             });
         }

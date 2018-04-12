@@ -5,14 +5,16 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { BotManagementComponent } from './bot-management.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NavbarModule,
-    RouterModule
-  ],
-  declarations: [
-    BotManagementComponent
-  ],
-  exports: [BotManagementComponent]
+    imports: [
+        CommonModule,
+        NavbarModule,
+        RouterModule,
+    ],
+    declarations: [
+        BotManagementComponent,
+    ],
+    exports: [
+        BotManagementComponent,
+    ]
 })
 export class BotManagementModule { }

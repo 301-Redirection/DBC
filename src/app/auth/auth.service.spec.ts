@@ -13,8 +13,8 @@ describe('AuthService', () => {
                 HttpClient,
                 HttpHandler,            
                 { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
-                RoutesModule  
-            ]
+                RoutesModule,
+            ],
         });
     });
 

@@ -17,7 +17,8 @@ import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../auth/auth.gaurd';
+import { AuthGuard } from '../auth/auth.guard';
+import { ROUTE_NAMES } from '../routes/routes.config';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -50,7 +51,7 @@ describe('DashboardComponent', () => {
             { provide: Title, useClass: Title }
         ]
         })
-            .compileComponents();
+        .compileComponents();
 
         router = TestBed.get(Router);
         location = TestBed.get(Location);
@@ -78,16 +79,16 @@ describe('DashboardComponent', () => {
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#new-bot-config-button')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual('/bot-config');
+            expect(location.path()).toEqual(ROUTE_NAMES.CONFIGURATION);
         });
     }));
 
     it('should redirect to Manage page on \'View more bots\' click', fakeAsync(() => {
         auth.setLoggedIn(true);
         fixture.detectChanges();
-        fixture.debugElement.query(By.css('#view-more-bots-link')).nativeElement.click();
+        fixture.debugElement.query(By.css('#viewMore')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual('/bot-management');
+            expect(location.path()).toEqual(ROUTE_NAMES.MANAGEMENT);
         });
     }));
 });

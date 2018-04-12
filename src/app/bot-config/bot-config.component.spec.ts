@@ -18,14 +18,14 @@ describe('BotConfigComponent', () => {
             imports: [
                 NavbarModule,
                 RouterTestingModule,
-                FormsModule
+                FormsModule,
             ],
             providers: [
                 ApiConnectService,
                 HttpClient,
                 HttpHandler,
-                { provide: Title, useClass: Title }
-            ]
+                { provide: Title, useClass: Title },
+            ],
         })
             .compileComponents();
     }));

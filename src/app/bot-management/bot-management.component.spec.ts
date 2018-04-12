@@ -16,14 +16,14 @@ describe('BotManagementComponent', () => {
             declarations: [BotManagementComponent],
             imports: [
                 NavbarModule,
-                RouterTestingModule
+                RouterTestingModule,
             ],
             providers: [
                 ApiConnectService,
                 HttpClient,
                 HttpHandler,
-                { provide: Title, useClass: Title }
-            ]
+                { provide: Title, useClass: Title },
+            ],
         })
             .compileComponents();
     }));

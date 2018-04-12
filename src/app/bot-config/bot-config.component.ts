@@ -32,12 +32,7 @@ export class BotConfigComponent implements OnInit {
     };
 
     constructor(private title: Title) {
-        this.title.setTitle(this.pageTitle);
-
-        // activate tooltips to show slider values
-        // $(function () {
-        //   $('[data-toggle="tooltip"]').tooltip()
-        // })
+        this.title.setTitle(this.pageTitle);        
     }
 
     ngOnInit() {

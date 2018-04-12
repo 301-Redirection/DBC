@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RoutesModule } from '../routes/routes.module';
-import { ApiConnectService } from '../services/api-connect.service';
 import { AuthService } from '../auth/auth.service';
 
 
@@ -10,30 +7,41 @@ import { AuthService } from '../auth/auth.service';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit {    
 
-    // Variables
-    user: any = {
-        id: '',
-        name: '',
-        surname: '',
-        email: ''
-    };
-
-    constructor(private api: ApiConnectService,
-        private router: Router,
-        public auth: AuthService) { }
+    constructor(public auth: AuthService) { }
 
     ngOnInit() {
     }
 
+    logout() {
+        this.auth.logout(); 
+        this.closeDropdown();
+    }
+
     toggleHamburger() {
+        let dropdown = document.getElementById('navbar-dropdown').classList;
         let hamburger = document.getElementById('hamburger').classList;
-        if (hamburger.contains('is-active')) {
+        
+        if (hamburger.contains('is-active') && dropdown.contains('show')) {
             hamburger.remove('is-active');
-        } else {
+        } 
+        else if (hamburger.contains('is-active') && !dropdown.contains('show')) {
+            hamburger.remove('is-active');
+        }
+        else if(!hamburger.contains('is-active') && dropdown.contains('show')) {
+            hamburger.remove('is-active');
+        }
+        else {
             hamburger.add('is-active');
         }
+    }
+ 
+    closeDropdown() {
+        let hamburger = document.getElementById('hamburger').classList;
+        if (hamburger.contains('is-active')) {
+            document.getElementById('hamburger').click();
+        }        
     }
 
 }

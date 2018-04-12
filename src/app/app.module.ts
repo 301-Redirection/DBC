@@ -27,7 +27,7 @@ import { LoadingComponent } from './core/loading.component';
   declarations: [
     AppComponent,
     CallbackComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,12 +39,12 @@ import { LoadingComponent } from './core/loading.component';
     DashboardModule,
     NavbarModule,
     BotConfigModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
     ApiConnectService,
     Title,
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

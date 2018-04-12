@@ -40,7 +40,7 @@
                         Hello, {{auth.userProfile?.given_name}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="welcome-btn">                        
-                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="removeHamburger(); auth.logout();"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
+                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
                     </div>
                 </div>
             </li>                         

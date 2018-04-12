@@ -10,18 +10,18 @@ describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                AppComponent
+                AppComponent,
             ],
             imports: [
                 RouterTestingModule,
-                NavbarModule
+                NavbarModule,
             ],
             providers: [
                 AuthService,
                 ApiConnectService,
                 HttpClient,
-                HttpHandler
-            ]
+                HttpHandler,
+            ],
         }).compileComponents();
     }));
     it('should create the app', async(() => {
