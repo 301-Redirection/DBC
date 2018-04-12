@@ -11,21 +11,25 @@ body {
     margin: 0 !important;   
 }
 
-
 /* -- Global Styles -- */
+
 /* General heading font styles */
-h1, h2, h3, h4, h5,h6 {
+
+h1, h2, h3, h4, h5, h6 {
     text-shadow: 2px 2px 5px #000000;
     font-family: $font-family;
 }
+
 h1, h2 {
     letter-spacing: 4px;
 }
+
 h3, h4, h5 {
     letter-spacing: 2px;
 }
 
 /* Paragraph styles */
+
 p {
     font-family:  $font-family;
 }
@@ -69,13 +73,6 @@ p {
 
 /* -- Buttons -- */
 
-.btn {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;    
-    letter-spacing: .2rem !important;
-    font-family: $font-family;
-}
-
 
 /* -- Custom Button Styles to mimic Dota 2 -- */ 
 
@@ -108,70 +105,47 @@ p {
     box-shadow: $box-shadow;
     cursor: pointer;
 }
+
 .button-cancel {   
     text-decoration:none;
     color: $btn-cancel-color;
     background-color: transparent;
-    border: 1px solid #70251d;
+    border: 1px solid $btn-cancel-border-color;
  }
   
-  .button-cancel:hover {
+.button-cancel:hover {
     text-decoration:none;
-    background-color: #5e2d27;
+    background-color: $btn-cancel-border-color;
     color: $btn-cancel-color;
-    border: 1px solid #b15b52;
+    border: 1px solid $btn-cancel-border-color-hover;
 }
 
 .button-generate { 
-    color: #4585C3;
+    color: $btn-generate-color;
     background-color: transparent;
     background-image: none;
-    border:2px solid #263f56;
+    border:2px solid $btn-generate-border-color;
 }
 
 .button-generate:hover {
     text-decoration:none;
-    color: #5595D3;
-    background-color: #263f56;
-    border-color: #3A73A3;
+    color:$btn-generate-color;
+    background-color: $btn-generate-border-color;
+    border-color: $btn-generate-border-color-hover;
 }
 
 .button-edit {
-    color: #b1884f;
+    color: $btn-edit-color;
     background-color: transparent;
     background-image: none;
-    border:2px solid #5b4629;
+    border:2px solid $btn-edit-border-color;
   }
   
-  .button-edit:hover {
+.button-edit:hover {
     text-decoration:none;
-    color: #b1884f;
-    background-color: #5b4629;
-    border-color: #876a40;
-  }
-  
-  .button-delete {
-    color: #526d74;
-    background-color: transparent;
-    background-image: none;
-    border:2px solid #526d74;
-  }
-  
-  .button-delete:hover {
-    text-decoration:none; 
-    color: #65868f;
-    background-color:#324750;
-    border-color: #5a7a81;
-  }
-
-  
-
-.dropdown-filter {    
-    color: $grey;
-}
-
-.dropdown-filter:hover {
-    color: $light-grey;
+    color: $btn-edit-color;
+    background-color: $btn-edit-border-color;
+    border-color: $btn-edit-border-color-hover;
 }
 
 
@@ -179,6 +153,14 @@ p {
 
 .dropdown {
     display: inline-block;
+}
+
+.dropdown-filter {    
+    color: $grey;
+}
+
+.dropdown-filter:hover {
+    color: $light-grey;
 }
 
 .dropdown-menu {
