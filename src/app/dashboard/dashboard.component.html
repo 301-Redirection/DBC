@@ -1,7 +1,8 @@
 <!-- Start Container Fluid -->
 <div class="container-fluid container-fluid-custom">
     <div class="frame" id="dashboard-title">
-        <h1>DASHBOARD</h1><br>
+        <h1>DASHBOARD</h1>
+        <br>
         <button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="new-bot-config-button" routerLink="/bot-config">NEW BOT CONFIGURATION</button>
     </div>
 
@@ -15,21 +16,24 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="dropdown show dropdown-filter" style="float:right">
-                            <a class="btn dropdown-filter dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="btn dropdown-filter dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 <i class="fas fa-filter mr-2"></i>Filter Bots
                             </a>
-                            
+
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-up mr-2"></i>Newest First</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-sort-amount-down mr-2"></i>Oldest First</a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sort-amount-up mr-2"></i>Newest First</a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sort-amount-down mr-2"></i>Oldest First</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!--Bot list -->
-            <ul class="list-group list-group-flush" id="Bot_List">            
+            <ul class="list-group list-group-flush" id="Bot_List">
                 <!--Bot item Implementation Notes:
                 _______________________________
                 headingID format: bot#
@@ -45,20 +49,22 @@
                 ->Generate script
                 ->Delete Script
                 -->
-                <div  *ngFor="let bot of bots; let i=index">
-                    <li *ngIf="i<5"  class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id"  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'_Collapse'" >
+                <div *ngFor="let bot of bots; let i=index">
+                    <li *ngIf="i<5" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
+                        [attr.href]="'#bot'+bot.id+'_Collapse'">
                         <!--Bot Item Heading-->
-                        <div  class="row" >
+                        <div class="row">
                             <div class="col-sm-9">
                                 <h5>{{bot.name}}</h5>
                             </div>
                             <div class="col-sm-3">
-                                <sub style="float:right"><i class="far fa-edit mr-1"></i>{{bot.lastEdit}}</sub>
+                                <sub style="float:right">
+                                    <i class="far fa-edit mr-1"></i>{{bot.lastEdit}}</sub>
                             </div>
                         </div>
                         <!--End of Heading-->
                         <!--Bot Item details-->
-                        <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in"  >
+                        <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'_Collapse'" class="collapse in">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <p>{{bot.description}}</p>
@@ -67,19 +73,22 @@
                             <a href="#" class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'_Edit-btn'">
                                 <i class="far fa-edit mr-1"></i>Edit Bot Script
                             </a>
-                            <a href="#" class="button button-generate" #elem [attr.id]="'bot'+bot.id+'_Download-btn'">
+                            <a href="#" class="button button-generate mr-1" #elem [attr.id]="'bot'+bot.id+'_Download-btn'">
                                 <i class="fas fa-download mr-1"></i>Generate Bot Script
+                            </a>
+                            <a href="#" class="button button-cancel" #elem [attr.id]="'bot'+bot.id+'_Delete-btn'">
+                                <i class="fas fa-trash-alt mr-1"></i>Delete Bot Script
                             </a>
                         </div>
                         <!--End of Details-->
                     </li>
                     <!--End of bot item-->
                     <a routerLink="/bot-management" id="view-more-bots-link" *ngIf="i==6" style="text-decoration: none">
-                        <li   class="list-group-item manage-list-group-item" >
-                            <h6>View More Bots</h6>  
+                        <li class="list-group-item manage-list-group-item">
+                            <h6>View More Bots</h6>
                             <!--End of Details-->
                         </li>
-                    </a>        
+                    </a>
                 </div>
 
             </ul>
@@ -88,22 +97,25 @@
     </div>
 
     <div class="frame">
-        <div class="card bot-manage-card">        
-            <div class="card-header"><h5>YOUR BOT TEAMS</h5></div>        
+        <div class="card bot-manage-card">
+            <div class="card-header">
+                <h5>YOUR BOT TEAMS</h5>
+            </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item manage-list-group-item">
-                    <div  class="row" >
+                    <div class="row">
                         <div class="col-sm-9">
                             <h6>Tournament 1</h6>
                         </div>
                         <div class="col-sm-3">
-                            <sub style="float:right"><i class="far fa-edit mr-1"></i>2 weeks ago</sub>
-                        </div>                        
+                            <sub style="float:right">
+                                <i class="far fa-edit mr-1"></i>2 weeks ago</sub>
+                        </div>
                     </div>
                 </li>
-            </ul>        
+            </ul>
         </div>
     </div>
-    
+
 </div>
 <!-- End Container Fluid -->

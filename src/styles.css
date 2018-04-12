@@ -109,21 +109,21 @@ html, body {
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
 }
-.button-edit {   
+.button-cancel {   
     text-decoration:none;
-    color: #a9493f;
+    color: #b64f44;
     background-color: transparent;
     border: 1px solid #70251d;
  }
   
-  .button-edit:hover {
+  .button-cancel:hover {
     text-decoration:none;
     -webkit-transition: none;
     -moz-transition: none;
     -o-transition: none;
     transition: none;
     background-color: #5e2d27;
-    color: #b15b52;
+    color: #b64f44;
     border: 1px solid #b15b52;
     -o-transition:.3s;
     -ms-transition:.3s;
@@ -132,10 +132,7 @@ html, body {
     transition:.3s;
 }
 
-
-
-
-.button-generate{ 
+.button-generate { 
     color: #4585C3;
     background-color: transparent;
     background-image: none;
@@ -166,8 +163,8 @@ html, body {
     transition:.3s;
 }
 
-.button-cancel{
-    color: #5b4629;
+.button-edit {
+    color: #b1884f;
     background-color: transparent;
     background-image: none;
     border:2px solid #5b4629;
@@ -181,13 +178,13 @@ html, body {
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
   }
   
-  .button-cancel:hover {
+  .button-edit:hover {
     text-decoration:none;
     -webkit-transition: none;
     -moz-transition: none;
     -o-transition: none;
     transition: none; 
-    color: #a17b46;
+    color: #b1884f;
     background-color: #5b4629;
     border-color: #876a40;
     -o-transition:.3s;
@@ -196,10 +193,39 @@ html, body {
     -webkit-transition:.3s;
     transition:.3s;
   }
+  
+  .button-delete {
+    color: #526d74;
+    background-color: transparent;
+    background-image: none;
+    border:2px solid #526d74;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+  }
+  
+  .button-delete:hover {
+    text-decoration:none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+    color: #65868f;
+    background-color:#324750;
+    border-color: #5a7a81;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+  }
 
-
-
-.dropdown-filter{    
+.dropdown-filter {    
     color: var(--grey);
 }
 
