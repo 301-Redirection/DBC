@@ -24,7 +24,7 @@ h1, h2 {
     letter-spacing: 4px;
 }
 
-h3, h4, h5 {
+h3, h4, h5, h6 {
     letter-spacing: 2px;
 }
 
@@ -149,6 +149,19 @@ p {
     border-color: $btn-edit-border-color-hover;
 }
 
+.button-new-configuration {
+    color: $btn-new-configuration-color;
+    background-color: $btn-general-background-color;
+    background-image: none;
+    border: $btn-general-border $btn-new-configuration-color;
+}
+  
+.button-new-configuration:hover {
+    text-decoration:none;
+    color: $btn-new-configuration-color;
+    background-color: $btn-new-configuration-border-color;
+    border-color: $btn-new-configuration-border-color-hover;
+}
 .button-profile {
     letter-spacing: .2rem !important;
     font-family: $font-family;

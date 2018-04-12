@@ -25,7 +25,11 @@ export class NavbarComponent implements OnInit {
             hamburger.remove('is-active');
         } else if (hamburger.contains('is-active') && !dropdown.contains('show')) {
             hamburger.remove('is-active');
+<<<<<<< Updated upstream
         } else if (!hamburger.contains('is-active') && dropdown.contains('show')) {
+=======
+        } else if(!hamburger.contains('is-active') && dropdown.contains('show')) {
+>>>>>>> Stashed changes
             hamburger.remove('is-active');
         } else {
             hamburger.add('is-active');
