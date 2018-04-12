@@ -66,6 +66,29 @@ router.get('/test', (request, response) => {
     response.status(500).send({ 'message': 'This is an error response' });
 });
 
+
+// ***JUSTIN***
+router.get('/generate', function(req, res) {
+    // TODO: GENERATE LUA SCRIPT FROM PARAMETER
+    // Use req.body
+
+
+    // EXAMPLE LUA SCRIPT GENERATION CODE
+    // lua = 'io.write(\"Hello World\\n\")';
+    // try {
+    //     fs.mkdirSync('./Lua');
+    // } catch (err) {
+    //     if (err.code !== 'EEXIST') throw err
+    // }
+    // fs.writeFile('./Lua/hello.lua', lua, (err) => {
+    //     if (err) throw err;
+    //     // res.send('File Generated: hello.lua');
+    //     var file = './Lua/hello.lua';
+    //     res.download(file);
+    // });
+    console.log(req.body);
+})
+
 /** The following routes are here to quickly demonstrate how one would use sequelize.
  *  please consult the documentation for all possible options
  *  http://docs.sequelizejs.com/manual/tutorial/querying.html
