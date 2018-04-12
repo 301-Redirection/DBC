@@ -16,7 +16,7 @@ body {
 /* General heading font styles */
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 2px 2px 5px #000000;
+    text-shadow: 2px 2px 5px black;
     font-family: $font-family;
 }
 
@@ -179,9 +179,14 @@ p {
     color: $light-grey;
 }
 
+<<<<<<< HEAD
 .dropdown-menu {
     display: inline-block;
     background-color: $dropdown-color-hover !important;        
+=======
+.dropdown-menu {    
+    background-color: $black !important;        
+>>>>>>> begin-frontend-16
     border-color: $dark-grey-1 !important;
     border-radius: 2px !important; 
     min-width: 100% !important;   
@@ -192,7 +197,7 @@ p {
 }
 
 .dropdown-item:hover {
-    background-color: #202020 !important;    
+    background-color: $black !important;    
     color: $light-grey !important;
     cursor: pointer !important;
 }
@@ -202,9 +207,5 @@ p {
 }
 
 .dropdown-item-danger:hover {
-    color: #e42b3e !important;
-}
-
-.dropdown-divider {
-    border-color: #181818 !important;
+    color: $red !important;
 }
