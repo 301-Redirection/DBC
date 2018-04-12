@@ -149,20 +149,29 @@ p {
 }
 
 .button-profile {
+    letter-spacing: .2rem !important;
+    font-family: $font-family;
+    text-decoration:none;
+    display: inline-block;
+    vertical-align: middle;
     font-family: $font-family;
     font-size: 85%;
-    color: $btn-profile-color;
+    color: $white;
+    opacity: 0.8;
     background-color: $btn-general-background-color;
     background-image: none;
-    border: $btn-general-border $btn-profile-border-color;
+    border:none;
+    padding-top: 14px;
+    margin: 2px;
   }
   
 .button-profile:hover {    
     text-decoration:none;
+    opacity: 1;
     color: $white;
     background-color: $btn-profile-border-color;
     border-color: $btn-profile-border-color-hover;
-    padding-top: 14px;
+    
 }
 
 /*  Dropdown Menus */
@@ -195,6 +204,7 @@ p {
     background-color: $black !important;    
     color: $light-grey !important;
     cursor: pointer !important;
+    padding-top: 5px;
 }
 
 .dropdown-item-danger {

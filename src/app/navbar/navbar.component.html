@@ -27,9 +27,9 @@
         <ul class="navbar-nav ml-auto" >
             <!-- Show only if not logged in -->
             <li class="nav-item" *ngIf="!busyLogin && !auth.loggedIn">
-                <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
+                <button class="button-profile my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
                     <i class="fas fa-sign-in-alt"></i>&nbsp;
-                    LOG IN
+                    SIGN IN
                 </button>                
             </li>   
             
@@ -42,7 +42,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="welcomeButton">                        
                         <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()">
-                            <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out
+                            <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;SIGN OUT
                         </button>          
                     </div>
                 </div>
