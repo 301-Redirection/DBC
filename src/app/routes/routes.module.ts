@@ -10,17 +10,17 @@ import { CallbackComponent } from '../callback/callback.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 export const ROUTES: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'bot-config', component: BotConfigComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'bot-management', component: BotManagementComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'callback', component: CallbackComponent },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent, pathMatch: 'full' },
+    { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: 'bot-config', component: BotConfigComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: 'bot-management', component: BotManagementComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: 'callback', component: CallbackComponent },
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(ROUTES)],
     exports: [RouterModule],
-    providers: [AuthGuard]
+    providers: [AuthGuard],
 })
 export class RoutesModule { }

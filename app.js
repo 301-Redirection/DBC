@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-  });
+});
    
 // error handler
 app.use(function(err, req, res, next) {
@@ -69,8 +69,9 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
+
 /** 
- * Tutorial stuff that doesn't seem to be working too well for us 
+ * Stuff that doesn't seem to be working too well for us 
  * */
 
 // Set port
