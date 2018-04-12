@@ -13,19 +13,19 @@ describe('BotManagementComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ BotManagementComponent ],
-        imports: [        
-            NavbarModule,
-            RouterTestingModule
-        ],
-        providers: [
-            ApiConnectService,
-            HttpClient,
-            HttpHandler,
-            { provide: Title, useClass: Title }
-        ]
+            declarations: [BotManagementComponent],
+            imports: [
+                NavbarModule,
+                RouterTestingModule
+            ],
+            providers: [
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+                { provide: Title, useClass: Title }
+            ]
         })
-        .compileComponents();
+            .compileComponents();
     }));
 
     beforeEach(() => {
@@ -38,7 +38,7 @@ describe('BotManagementComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Management'`, async(() => {        
+    it(`should have the title 'Dota 2 Bot Scripting - Management'`, async(() => {
         let title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Management');
     }));

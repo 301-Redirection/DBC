@@ -10,8 +10,8 @@ import { Component } from '@angular/core';
             display: block;
         }
         img {
-            padding-top: 20%; 
-            padding-bottom: 50%;                  
+            padding-top: 20%;
+            padding-bottom: 50%;
         }
     `]
 })

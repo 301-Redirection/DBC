@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser'; 
+import { Title } from '@angular/platform-browser';
 import { BOTS } from '../bot-testing-data';
 import { forEach } from '@angular/router/src/utils/collection';
-declare var jquery: any;
-declare var $: any;
 
 @Component({
   selector: 'app-bot-management',
@@ -19,7 +17,6 @@ export class BotManagementComponent implements OnInit {
     this.title.setTitle(this.pageTitle);
   }
 
-  ngOnInit() {
-}
+  ngOnInit() {  }
 
 }

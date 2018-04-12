@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser'; 
+import { Title } from '@angular/platform-browser';
 
 // Jquery imports
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 @Component({
     selector: 'app-bot-config',
@@ -12,7 +12,7 @@ declare var $ :any;
 })
 export class BotConfigComponent implements OnInit {
 
-    pageTitle = 'Dota 2 Bot Scripting - Configuration'; 
+    pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // configuration object
     config = {
@@ -20,7 +20,7 @@ export class BotConfigComponent implements OnInit {
         description: "",
         pushTop: 0,
         pushMiddle: 0,
-        pushBottom: 0,    
+        pushBottom: 0,
         defendTop: 0,
         defendMiddle: 0,
         defendBottom: 0,
@@ -30,31 +30,31 @@ export class BotConfigComponent implements OnInit {
         roam: 0,
         roshan: 0
     };
-    
-    constructor(private title: Title) {  
-        this.title.setTitle(this.pageTitle); 
+
+    constructor(private title: Title) {
+        this.title.setTitle(this.pageTitle);
 
         // activate tooltips to show slider values
         // $(function () {
         //   $('[data-toggle="tooltip"]').tooltip()
         // })
-    } 
+    }
 
     ngOnInit() {
     }
 
     generate() {
         if (this.validateInfo()) {
-        console.log(this.config);
+            console.log(this.config);
 
-        // call generate from api service 
+            // call generate from api service 
         }
     }
 
     validateInfo(): boolean {
         if (this.config.name == "" || this.config.description == "") {
-        alert("Please enter your bot script name and description.");
-        return false;
+            alert("Please enter your bot script name and description.");
+            return false;
         }
         return true;
     }
