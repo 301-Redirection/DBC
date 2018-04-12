@@ -5,13 +5,15 @@
 /* Import Global Variables */
 @import '../../variables';
 
+$nav-background-color:#181818 ; 
+
 /* padding */
 nav {
     width: 100%;
     padding: .6rem 5rem;    
-    box-shadow: 0 1px 5px 5px #181818;   
-    background-color: #181818 !important;
-    background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
+    box-shadow: 0 1px 5px 5px $nav-background-color;   
+    background-color: $nav-background-color !important ;
+    background-image: $nav-background-image;    
     background-repeat: no-repeat;
     line-height: normal;
     letter-spacing: .2rem;
@@ -88,11 +90,11 @@ nav {
 }
 
 #welcome-btn:hover {
-    color: white;
+    color: $white;
 }
 
 #welcome-btn:focus {
-    color: white;
+    color: $white;
 }
 .button-profile {
 
@@ -111,8 +113,8 @@ font-family: $font-family;
   
   .button-profile:hover {
     text-decoration:none;
-    color: #ffff;
-    background-color:#181818;
+    color: $white;
+    background-color:$nav-background-color;
     border: none;
   }
 
