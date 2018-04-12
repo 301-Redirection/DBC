@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { RoutesModule } from '../routes/routes.module';
-
 import { ApiConnectService } from '../services/api-connect.service';
 import { AuthService } from '../auth/auth.service';
 
@@ -33,8 +31,7 @@ export class NavbarComponent implements OnInit {
         let hamburger = document.getElementById('hamburger').classList;
         if (hamburger.contains('is-active')) {
             hamburger.remove('is-active');
-        }
-        else {
+        } else {
             hamburger.add('is-active');
         }
     }

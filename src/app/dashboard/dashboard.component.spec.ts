@@ -24,26 +24,26 @@ describe('DashboardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ 
-            DashboardComponent,
-            CallbackComponent
-        ],
-        imports: [        
-            NavbarModule,
-            RouterTestingModule.withRoutes(ROUTES),
-            HomeModule,            
-            BotConfigModule,
-            BotManagementModule 
-        ],
-        providers: [
-            ApiConnectService,
-            HttpClient,
-            HttpHandler,
-            Location,
-            { provide: Title, useClass: Title }
-        ]
+            declarations: [
+                DashboardComponent,
+                CallbackComponent
+            ],
+            imports: [
+                NavbarModule,
+                RouterTestingModule.withRoutes(ROUTES),
+                HomeModule,
+                BotConfigModule,
+                BotManagementModule
+            ],
+            providers: [
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+                Location,
+                { provide: Title, useClass: Title }
+            ]
         })
-        .compileComponents();
+            .compileComponents();
 
         router = TestBed.get(Router);
         location = TestBed.get(Location);
@@ -60,7 +60,7 @@ describe('DashboardComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Dashboard'`, async(() => {        
+    it(`should have the title 'Dota 2 Bot Scripting - Dashboard'`, async(() => {
         let title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     }));
@@ -69,7 +69,7 @@ describe('DashboardComponent', () => {
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#new-bot-config-button')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual('/bot-config');            
+            expect(location.path()).toEqual('/bot-config');
         });
     }));
 
@@ -77,7 +77,7 @@ describe('DashboardComponent', () => {
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#view-more-bots-link')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual('/bot-management');            
+            expect(location.path()).toEqual('/bot-management');
         });
     }));
 });

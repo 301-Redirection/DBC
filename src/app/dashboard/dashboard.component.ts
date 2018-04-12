@@ -15,6 +15,6 @@ export class DashboardComponent implements OnInit {
     this.title.setTitle(this.pageTitle);
   }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
 }
