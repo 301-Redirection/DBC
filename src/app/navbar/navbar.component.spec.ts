@@ -14,6 +14,9 @@ import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthService } from '../auth/auth.service';
+import { LOADIPHLPAPI } from 'dns';
+import { LoadingComponent } from '../core/loading.component';
+import { AuthGuard } from '../auth/auth.gaurd';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -24,23 +27,25 @@ describe('NavbarComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                CallbackComponent
-            ],
-            imports: [
-                RouterTestingModule.withRoutes(ROUTES),
-                HomeModule,
-                DashboardModule,
-                BotConfigModule,
-                BotManagementModule
-            ],
-            providers: [
-                AuthService,
-                ApiConnectService,
-                HttpHandler,
-                HttpClient,
-                Location
-            ]
+        declarations: [
+            CallbackComponent,
+            LoadingComponent
+        ],
+        imports: [
+            RouterTestingModule.withRoutes(ROUTES),
+            HomeModule,
+            DashboardModule,
+            BotConfigModule,
+            BotManagementModule  
+        ],
+        providers: [ 
+            AuthService,
+            AuthGuard,
+            ApiConnectService,
+            HttpHandler,
+            HttpClient,
+            Location          
+        ]
         })
             .compileComponents();
 

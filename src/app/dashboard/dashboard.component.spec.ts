@@ -15,38 +15,46 @@ import { DashboardModule } from './dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
+import { LoadingComponent } from '../core/loading.component';
+import { AuthService } from '../auth/auth.service';
+import { AuthGuard } from '../auth/auth.gaurd';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
     let router: Router;
     let location: Location;
+    let auth: AuthService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                DashboardComponent,
-                CallbackComponent
-            ],
-            imports: [
-                NavbarModule,
-                RouterTestingModule.withRoutes(ROUTES),
-                HomeModule,
-                BotConfigModule,
-                BotManagementModule
-            ],
-            providers: [
-                ApiConnectService,
-                HttpClient,
-                HttpHandler,
-                Location,
-                { provide: Title, useClass: Title }
-            ]
+        declarations: [ 
+            DashboardComponent,
+            CallbackComponent,
+            LoadingComponent
+        ],
+        imports: [        
+            NavbarModule,
+            RouterTestingModule.withRoutes(ROUTES),
+            HomeModule,            
+            BotConfigModule,
+            BotManagementModule 
+        ],
+        providers: [
+            AuthService,
+            AuthGuard,
+            ApiConnectService,
+            HttpClient,
+            HttpHandler,
+            Location,
+            { provide: Title, useClass: Title }
+        ]
         })
             .compileComponents();
 
         router = TestBed.get(Router);
         location = TestBed.get(Location);
+        auth = TestBed.get(AuthService);
         router.initialNavigation();
     }));
 
@@ -66,6 +74,7 @@ describe('DashboardComponent', () => {
     }));
 
     it('should redirect to Configuration page on \'New Bot Configuration\' click', fakeAsync(() => {
+        auth.setLoggedIn(true);
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#new-bot-config-button')).nativeElement.click();
         fixture.whenStable().then(() => {
@@ -74,6 +83,7 @@ describe('DashboardComponent', () => {
     }));
 
     it('should redirect to Manage page on \'View more bots\' click', fakeAsync(() => {
+        auth.setLoggedIn(true);
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#view-more-bots-link')).nativeElement.click();
         fixture.whenStable().then(() => {
