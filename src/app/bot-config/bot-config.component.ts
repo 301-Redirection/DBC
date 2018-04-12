@@ -26,7 +26,7 @@ export class BotConfigComponent implements OnInit {
         farmMiddle: 0,
         farmBottom: 0,
         roam: 0,
-        roshan: 0
+        roshan: 0,
     };
 
     constructor(private title: Title) {

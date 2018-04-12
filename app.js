@@ -34,9 +34,9 @@ app.use(sassMiddleware({
 
 app.use(
     session({
-      secret: 'it\'s really a secret',
-      resave: true,
-      saveUninitialized: true
+        secret: 'it\'s really a secret',
+        resave: true,
+        saveUninitialized: true
     })
 );
 

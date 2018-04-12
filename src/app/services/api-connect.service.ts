@@ -8,7 +8,6 @@ import { API_URL } from './api-url-config';
 
 @Injectable()
 export class ApiConnectService {
-
     constructor(private http: HttpClient, private router: Router) { }
 
     public login() {
@@ -40,5 +39,4 @@ export class ApiConnectService {
         console.error('An error occurred', err);
         return Observable.throw(err.message || err);
     }
-
 }

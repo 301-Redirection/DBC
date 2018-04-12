@@ -11,7 +11,7 @@ describe('CallbackComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 CallbackComponent,
-                LoadingComponent
+                LoadingComponent,
             ],
         })
         .compileComponents();
