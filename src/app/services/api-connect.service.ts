@@ -9,7 +9,6 @@ import { ConfigurationFormat } from '../configFormat';
 
 @Injectable()
 export class ApiConnectService {
-
     constructor(private http: HttpClient, private router: Router) { }
 
     public login() {

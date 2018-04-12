@@ -1,10 +1,10 @@
 <div class="container-fluid container-fluid-custom">
-    <div class="frame" id="bot-config-title">
+    <div class="frame" id="botConfigTitle">
         <h1>BOT CONFIGURATION</h1>
     </div>
 
     <!-- Start Row -->
-    <div class="row">
+    <div class="row mb-4">
 
         <!-- Start Script Details -->
         <div class="col-md-6">
@@ -13,20 +13,18 @@
                     <div class="card-title config-card-title">
                         <h4>Script Details</h4>
                     </div>
-                    <form>
-                        <div class="form-group row">
-                            <label for="inputName" class="col-sm-3 col-form-label">Name</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="config.name">
-                            </div>
+                    <div class="form-group row mb-4">
+                        <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="config.name">
                         </div>
-                        <div class="form-group row">
-                            <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="config.description"></textarea>
-                            </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="config.description"></textarea>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,7 +72,7 @@
     <!-- End Row -->
 
     <!-- Start Row -->
-    <div class="row">
+    <div class="row mb-4">
 
         <!-- Start Defend Lane Desires -->
         <div class="col-md-6">
@@ -109,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,16 +120,14 @@
                     <div class="card-title config-card-title">
                         <h4>Roam Desires</h4>
                     </div>
-                    <form>
-                        <div class="form-group row">
-                            <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{config.roam}}</label>
-                            <div class="col-sm-9">
-                                <div class="slide-container">
-                                    <input type="range" min="0" max="10" [value]="config.roam" class="slider" id="roam" name="roam" [(ngModel)]="config.roam">
-                                </div>
+                    <div class="form-group row mb-4">
+                        <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{config.roam}}</label>
+                        <div class="col-sm-9">
+                            <div class="slide-container">
+                                <input type="range" min="0" max="10" [value]="config.roam" class="slider" id="roam" name="roam" [(ngModel)]="config.roam">
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,7 +137,7 @@
     <!-- End Row -->
 
     <!-- Start Row -->
-    <div class="row">
+    <div class="row mb-4">
 
         <!-- Start Farm Lane Desires -->
         <div class="col-md-6">
@@ -175,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,16 +184,14 @@
                     <div class="card-title config-card-title">
                         <h4>Roshan Desires</h4>
                     </div>
-                    <form>
-                        <div class="form-group row">
-                            <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{config.roshan}}</label>
-                            <div class="col-sm-9">
-                                <div class="slide-container">
-                                    <input type="range" min="0" max="10" [value]="config.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="config.roshan">
-                                </div>
+                    <div class="form-group row mb-4">
+                        <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{config.roshan}}</label>
+                        <div class="col-sm-9">
+                            <div class="slide-container">
+                                <input type="range" min="0" max="10" [value]="config.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="config.roshan">
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,7 +201,7 @@
     <!-- End Row -->
 
     <!-- Start Button Row -->
-    <div class="row">
+    <div class="row mb-4">
         <div class="button-container ml-auto">
             <button type="button" class="button button-cancel" routerLink="/dashboard">
                 <i class="fas fa-undo mr-1"></i>

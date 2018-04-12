@@ -27,7 +27,7 @@ describe('BotConfigComponent', () => {
                 { provide: Title, useClass: Title },
             ],
         })
-            .compileComponents();
+        .compileComponents();
     }));
 
     beforeEach(() => {
@@ -41,7 +41,7 @@ describe('BotConfigComponent', () => {
     });
 
     it(`should have the title 'Dota 2 Bot Scripting - Configuration'`, async(() => {
-        let title = TestBed.get(Title);
+        const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
     }));
 

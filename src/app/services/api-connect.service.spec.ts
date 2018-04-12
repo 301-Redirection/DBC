@@ -12,9 +12,9 @@ describe('ApiConnectService', () => {
                 ApiConnectService,
                 HttpClient,
                 HttpHandler,
-                { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
+                { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } },
                 RoutesModule,
-            ]
+            ],
         });
     });
     let api: ApiConnectService;

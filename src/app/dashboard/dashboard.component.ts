@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
     bots = BOTS;
@@ -18,5 +18,4 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() { }
-
 }

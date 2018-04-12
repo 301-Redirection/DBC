@@ -36,16 +36,16 @@ describe('NavbarComponent', () => {
                 HomeModule,
                 DashboardModule,
                 BotConfigModule,
-                BotManagementModule,  
+                BotManagementModule,
             ],
-            providers: [ 
+            providers: [
                 AuthService,
                 AuthGuard,
                 ApiConnectService,
                 HttpHandler,
                 HttpClient,
-                Location,          
-            ]
+                Location,
+            ],
         })
         .compileComponents();
 
@@ -110,8 +110,8 @@ describe('NavbarComponent', () => {
         auth.setLoggedIn(false);
         fixture.detectChanges();
         if (!auth.loggedIn) {
-            var logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;
-            expect(logInButton).toContain('LOG IN');
+            const logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;
+            expect(logInButton).toContain('SIGN IN');
         }
     });
 

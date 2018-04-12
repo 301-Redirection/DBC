@@ -9,13 +9,13 @@ import { DashboardComponent } from './dashboard.component';
     imports: [
         CommonModule,
         NavbarModule,
-        RouterModule
+        RouterModule,
     ],
     declarations: [
         DashboardComponent,
     ],
     exports: [
         DashboardComponent,
-    ]
+    ],
 })
 export class DashboardModule { }

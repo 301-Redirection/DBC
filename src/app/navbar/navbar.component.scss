@@ -60,7 +60,7 @@ nav {
 /* nav items */
  
 #navLinksList {
-    margin-left: .5rem;    
+    margin-left: 1.4rem;    
 }
  
 .nav-item {
@@ -109,11 +109,6 @@ li.nav-item div.dropdown:hover > div.dropdown-menu {
 }
  
 @media only screen and (max-width: 750px) {
-    nav {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }    
- 
     #welcomeButton {
         margin-top: 2%;
     }

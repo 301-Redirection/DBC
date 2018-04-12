@@ -9,10 +9,9 @@ declare var $: any;
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
-    styleUrls: ['./bot-config.component.scss']
+    styleUrls: ['./bot-config.component.scss'],
 })
 export class BotConfigComponent implements OnInit {
-
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // configuration object
@@ -35,15 +34,14 @@ export class BotConfigComponent implements OnInit {
             bot: 0
         },
         roam: 0,
-        roshan: 0
+        roshan: 0,
     };
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);        
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     generate() {
         if (this.validateInfo()) {

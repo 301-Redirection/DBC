@@ -18,7 +18,7 @@ module.exports = function(app, config) {
         }),
         audience: config.AUTH0_API_AUDIENCE,
         issuer: `https://${config.AUTH0_DOMAIN}/`,
-        algorithm: 'RS256'
+        algorithm: 'RS256',
     });
 
     /*
@@ -31,5 +31,4 @@ module.exports = function(app, config) {
     app.get('/api/', (req, res) => {
         res.send('API works');
     });
-
 };
