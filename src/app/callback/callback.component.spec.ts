@@ -4,26 +4,26 @@ import { CallbackComponent } from './callback.component';
 import { LoadingComponent } from '../core/loading.component';
 
 describe('CallbackComponent', () => {
-  let component: CallbackComponent;
-  let fixture: ComponentFixture<CallbackComponent>;
+    let component: CallbackComponent;
+    let fixture: ComponentFixture<CallbackComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ 
-          CallbackComponent,
-          LoadingComponent
-    ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ 
+                CallbackComponent,
+                LoadingComponent
+            ]
+        })
+        .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CallbackComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CallbackComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -4,7 +4,7 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ApiConnectService } from '../services/api-connect.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Title } from '@angular/platform-browser';
+import { Title, By } from '@angular/platform-browser';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -15,16 +15,16 @@ describe('HomeComponent', () => {
             declarations: [HomeComponent],
             imports: [
                 NavbarModule,
-                RouterTestingModule
+                RouterTestingModule,
             ],
             providers: [
                 ApiConnectService,
                 HttpClient,
                 HttpHandler,
-                { provide: Title, useClass: Title }
+                { provide: Title, useClass: Title },
             ]
         })
-            .compileComponents();
+        .compileComponents();
     }));
 
     beforeEach(() => {
@@ -44,9 +44,9 @@ describe('HomeComponent', () => {
 
     it('should render title in a h1 tag', async(() => {
         const fixture = TestBed.createComponent(HomeComponent);
-        fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('h1').textContent).toContain('Create Your Own Bots!');
+        fixture.detectChanges();     
+        let compiled = fixture.debugElement.query(By.css('#createBotsTitle')).nativeElement.innerHTML;
+        expect(compiled).toEqual('Create Your Own Bots!');
     }));
 
 });

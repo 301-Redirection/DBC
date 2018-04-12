@@ -1,7 +1,7 @@
 export const ROUTE_NAMES = {
     HOME: '/home',
     DASHBOARD: '/dashboard',
-    CONFIGURATION: '/bot-config',
-    MANAGEMENT: '/bot-management',
+    BOT_CONFIGURATION: '/bot-config',
+    BOT_MANAGEMENT: '/bot-management',
     CALLBACK: '/callback',
 };
