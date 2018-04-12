@@ -4,8 +4,10 @@
 
 /* padding */
 nav {
+    width: 100%;
     padding: .6rem 5rem;    
-    box-shadow: 0 1px 5px 5px #181818;    
+    box-shadow: 0 1px 5px 5px #181818;   
+    background-color: #181818 !important;
     background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
     background-repeat: no-repeat;
     line-height: normal;
@@ -15,18 +17,32 @@ nav {
 /* navbar brand */
 .navbar-brand {    
     font-family: 'Radiance';    
+    opacity: 0.8;
+}
+.navbar-brand:hover {
+    opacity: 1;
 }
 
-#dota-2-logo { 
-    opacity: 0.8; 
-} 
-#dota-2-logo:hover { 
-    opacity: 1; 
-} 
-
 #bot-scripting-title {
-    color: var(--grey);
+    color: var(--light-grey);
     font-size: 60%;
+}
+
+/* Hamburger */
+
+#hamburger:focus,
+#hamburger:active {    
+    outline: none;
+}
+
+.hamburger-inner,
+.hamburger-inner:before,
+.hamburger-inner:after {
+    background-color: #4e4e4e !important;
+}
+
+.navbar-toggler {
+    border: none;
 }
 
 
@@ -68,3 +84,48 @@ nav {
 #welcome-btn:focus {
     color: white;
 }
+
+
+/*
+ |--------------------------------------
+ | Responsive
+ |--------------------------------------
+*/
+
+@media only screen and (max-width: 750px) {
+
+    nav {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    #nav-links-list {
+        margin-top: 8% !important;
+    }
+
+    #welcome-btn {
+        margin-top: 2%;
+    }
+
+}
+
+@media only screen and (max-width: 450px) {
+
+    nav {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #dota-2-logo {
+        height: 20px !important;
+    }
+
+    #bot-scripting-title {
+        font-size: 50%;
+        letter-spacing: .1rem;
+    }    
+
+}
+
+
+

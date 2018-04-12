@@ -3,8 +3,10 @@
         <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
         &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="navbar-toggler-icon"></i>
+    <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">    
@@ -23,7 +25,7 @@
         
         <ul class="navbar-nav ml-auto" >
             <!-- Show only if not logged in -->
-            <li class="nav-item" *ngIf="!auth.loggedIn">
+            <li class="nav-item" *ngIf="!busyLogin && !auth.loggedIn">
                 <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
                     <i class="fas fa-sign-in-alt"></i>&nbsp;
                     LOG IN
@@ -32,13 +34,13 @@
 
             <!-- Show only if logged in -->
             <li class="nav-item" *ngIf="auth.loggedIn">
-                <div class="btn-group">
+                <div class="dropdown">
                     <button id="welcome-btn" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
                         Hello, {{auth.userProfile?.given_name}}
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">                        
-                        <button class="dropdown-item dropdown-item-danger" type="button" (click)="auth.logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
+                    <div class="dropdown-menu" aria-labelledby="welcome-btn">                        
+                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="auth.logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
                     </div>
                 </div>
             </li>                         

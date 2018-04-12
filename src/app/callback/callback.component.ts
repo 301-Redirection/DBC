@@ -9,7 +9,7 @@ export class CallbackComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {      
   }
 
 }

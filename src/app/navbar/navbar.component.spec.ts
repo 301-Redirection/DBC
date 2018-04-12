@@ -12,16 +12,21 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
+import { CallbackComponent } from '../callback/callback.component';
+import { AuthService } from '../auth/auth.service';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
     let router: Router;
     let location: Location;
+    let auth: AuthService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [],
+        declarations: [
+            CallbackComponent
+        ],
         imports: [
             RouterTestingModule.withRoutes(ROUTES),
             HomeModule,
@@ -30,6 +35,7 @@ describe('NavbarComponent', () => {
             BotManagementModule  
         ],
         providers: [ 
+            AuthService,
             ApiConnectService,
             HttpHandler,
             HttpClient,
@@ -40,6 +46,7 @@ describe('NavbarComponent', () => {
 
         router = TestBed.get(Router);
         location = TestBed.get(Location);
+        auth = TestBed.get(AuthService);
         router.initialNavigation();
     }));
 
@@ -61,22 +68,22 @@ describe('NavbarComponent', () => {
         });
     }));
 
-    it('should redirect to Dashboard from dashboard link, if logged in', fakeAsync(() => {                
-        fixture.detectChanges();
-        var link = fixture.debugElement.query(By.css('a#dashboard-link'));
-        // fixture.debugElement.query(By.css('a#dashboard-link')).nativeElement.click();
-        if (link != null) {
+    it('should redirect to Dashboard from dashboard link, if logged in', fakeAsync(() => {    
+        auth.setLoggedIn(true);                 
+        fixture.detectChanges();        
+        if (auth.loggedIn) {
+            fixture.debugElement.query(By.css('a#dashboard-link')).nativeElement.click();
             fixture.whenStable().then(() => {
                 expect(location.path()).toEqual('/dashboard');            
             });        
         }
     }));
 
-    it('should redirect to Configuration page from configuration link, if logged in', fakeAsync(() => {                
-        fixture.detectChanges();
-        var link = fixture.debugElement.query(By.css('a#config-link'));
-        // fixture.debugElement.query(By.css('a#config-link')).nativeElement.click();
-        if (link != null) {
+    it('should redirect to Configuration page from configuration link, if logged in', fakeAsync(() => {    
+        auth.setLoggedIn(true);                
+        fixture.detectChanges();                
+        if (auth.loggedIn) {
+            fixture.debugElement.query(By.css('a#config-link')).nativeElement.click();
             fixture.whenStable().then(() => {
                 expect(location.path()).toEqual('/bot-config');            
             });        
@@ -84,11 +91,10 @@ describe('NavbarComponent', () => {
     }));
 
     it('should redirect to Manage page from manage link, if logged in', fakeAsync(() => {                
-        fixture.detectChanges();
-        var link = fixture.debugElement.query(By.css('a#manage-link'));
-        // fixture.debugElement.query(By.css('a#manage-link')).nativeElement.click();
-        if (link != null) {
-            link.nativeElement.click();
+        auth.setLoggedIn(true);      
+        fixture.detectChanges();                  
+        if (auth.loggedIn) {
+            fixture.debugElement.query(By.css('a#manage-link')).nativeElement.click();
             fixture.whenStable().then(() => {
                 expect(location.path()).toEqual('/bot-management');            
             });    
@@ -96,15 +102,23 @@ describe('NavbarComponent', () => {
     }));
 
     it('should show log in and sign up buttons if not logged in', () => {
+        auth.setLoggedIn(false);   
+        fixture.detectChanges();                      
+        if (!auth.loggedIn) {
+            var logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;             
+            expect(logInButton).toContain('LOG IN');
+        }
+    });
+
+    it('should redirect to home on logout', () => {
+        auth.setLoggedIn(true);
         fixture.detectChanges();
-
-        // if not logged in, check for login and signup buttons 
-        var loggedIn = false;
-
-        if (loggedIn) {
-            var logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;            
-            var signUpButton = fixture.debugElement.query(By.css('button#signUpButton')).nativeElement.innerHTML;            
-            expect(logInButton == 'LOG IN' && signUpButton == 'SIGN UP').toBeTruthy();
+        if (auth.loggedIn) {
+            fixture.debugElement.query(By.css('#logoutButton')).nativeElement.click(); 
+            fixture.whenStable().then(() => {
+                expect(location.path()).toEqual('/home');  
+                expect(auth.loggedIn).toEqual(false);          
+            });
         }
     });
 });

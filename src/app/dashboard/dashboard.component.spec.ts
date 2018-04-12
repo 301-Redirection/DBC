@@ -14,6 +14,7 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from './dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
+import { CallbackComponent } from '../callback/callback.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -23,7 +24,10 @@ describe('DashboardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ DashboardComponent ],
+        declarations: [ 
+            DashboardComponent,
+            CallbackComponent
+        ],
         imports: [        
             NavbarModule,
             RouterTestingModule.withRoutes(ROUTES),

@@ -20,12 +20,14 @@ import { AuthService } from './auth/auth.service';
 // Components
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
+import { LoadingComponent } from './core/loading.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CallbackComponent
+    CallbackComponent,
+    LoadingComponent    
   ],
   imports: [
     BrowserModule,    

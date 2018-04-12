@@ -6,19 +6,19 @@ import { Router } from '@angular/router';
 import { RoutesModule } from '../routes/routes.module';
 
 describe('AuthService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-          AuthService,
-          HttpClient,
-          HttpHandler,            
-          {provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); }},
-          RoutesModule  
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                AuthService,
+                HttpClient,
+                HttpHandler,            
+                { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
+                RoutesModule  
+            ]
+        });
     });
-  });
 
-  it('should be created', inject([AuthService], (service: AuthService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([AuthService], (service: AuthService) => {
+        expect(service).toBeTruthy();
+    }));
 });

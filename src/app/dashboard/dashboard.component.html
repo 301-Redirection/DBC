@@ -75,7 +75,7 @@
                     <!--End of bot item-->
                     <a routerLink="/bot-management" id="view-more-bots-link" *ngIf="i==6" style="text-decoration: none">
                         <li   class="list-group-item manage-list-group-item" >
-                            <h4>View More Bots</h4>  
+                            <h6>View More Bots</h6>  
                             <!--End of Details-->
                         </li>
                     </a>        
@@ -91,7 +91,14 @@
             <div class="card-header"><h5>YOUR BOT TEAMS</h5></div>        
             <ul class="list-group list-group-flush">
                 <li class="list-group-item manage-list-group-item">
-                    Tournament 1<br><sub style="float:right">5 days ago</sub>
+                    <div  class="row" >
+                        <div class="col-sm-9">
+                            <h6>Tournament 1</h6>
+                        </div>
+                        <div class="col-sm-3">
+                            <sub style="float:right"><i class="far fa-edit mr-1"></i>2 weeks ago</sub>
+                        </div>                        
+                    </div>
                 </li>
             </ul>        
         </div>

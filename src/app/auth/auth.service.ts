@@ -19,21 +19,17 @@ export class AuthService {
 
     userProfile: any;
     
-    // Create a stream of logged in status to communicate throughout app
+    // Create a stream of logged in status to communicate throughout app    
     loggedIn: boolean;
     loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
-    constructor(private router: Router) {
-        // If authenticated, set local profile property
-        // and update login status subject.
-        // If not authenticated but there are still items
-        // in localStorage, log out.
-        const lsProfile = localStorage.getItem('profile');
+    constructor(private router: Router) {        
+        const localProfile = localStorage.getItem('profile');
 
         if (this.tokenValid) {
-            this.userProfile = JSON.parse(lsProfile);        
+            this.userProfile = JSON.parse(localProfile);                    
             this.setLoggedIn(true);
-        } else if (!this.tokenValid && lsProfile) {
+        } else if (!this.tokenValid && localProfile) {            
             this.logout();
         }
     }
@@ -44,19 +40,19 @@ export class AuthService {
         this.loggedIn = value;
     }
 
-    login() {
+    login() {        
         // Auth0 authorize request
-        this._auth0.authorize();
+        this._auth0.authorize();        
     }
 
-    handleAuth() {
+    handleAuth() {                
         // When Auth0 hash parsed, get profile
-        this._auth0.parseHash((err, authResult) => {
-            if (authResult && authResult.accessToken) {
+        this._auth0.parseHash((err, authResult) => {            
+            if (authResult && authResult.accessToken) {                
                 window.location.hash = '';
-                this._getProfile(authResult);
-            } else if (err) {
-                console.error(`Error authenticating: ${err.error}`);
+                this._getProfile(authResult);                
+            } else if (err) {                
+                console.error(`Error authenticating: ${err.error}`);                
                 this.router.navigate(['/']);
             }            
         });

@@ -29,4 +29,14 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
     }  
 
+    toggleHamburger() {
+        let hamburger = document.getElementById('hamburger').classList;
+        if (hamburger.contains('is-active')) {
+            hamburger.remove('is-active');
+        } 
+        else {
+            hamburger.add('is-active');
+        }
+    }
+
 }
