@@ -113,32 +113,23 @@ p {
     -ms-transition: $transition-speed;
     -moz-transition: $transition-speed;
     -webkit-transition: $transition-speed;
-    transition:.3s;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    transition: $transition-speed;
+    -webkit-box-shadow: $box-shadow;
+    -moz-box-shadow: $box-shadow;
+    box-shadow: $box-shadow;
 }
 .button-cancel {   
     text-decoration:none;
-    color: #b64f44;
+    color: $btn-cancel-color;
     background-color: transparent;
     border: 1px solid #70251d;
  }
   
   .button-cancel:hover {
     text-decoration:none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
     background-color: #5e2d27;
-    color: #b64f44;
+    color: $btn-cancel-color;
     border: 1px solid #b15b52;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
 }
 
 .button-generate { 
@@ -146,30 +137,13 @@ p {
     background-color: transparent;
     background-image: none;
     border:2px solid #263f56;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
 }
 
 .button-generate:hover {
     text-decoration:none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none; 
     color: #5595D3;
     background-color: #263f56;
     border-color: #3A73A3;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
 }
 
 .button-edit {
@@ -177,30 +151,13 @@ p {
     background-color: transparent;
     background-image: none;
     border:2px solid #5b4629;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
   }
   
   .button-edit:hover {
     text-decoration:none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none; 
     color: #b1884f;
     background-color: #5b4629;
     border-color: #876a40;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
   }
   
   .button-delete {
@@ -208,30 +165,13 @@ p {
     background-color: transparent;
     background-image: none;
     border:2px solid #526d74;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
   }
   
   .button-delete:hover {
-    text-decoration:none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none; 
+    text-decoration:none; 
     color: #65868f;
     background-color:#324750;
     border-color: #5a7a81;
-    -o-transition:$transition-speed;
-    -ms-transition:$transition-speed;
-    -moz-transition:$transition-speed;
-    -webkit-transition:$transition-speed;
-    transition:$transition-speed;
   }
 
   
