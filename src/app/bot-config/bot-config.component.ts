@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ConfigurationFormat } from '../configFormat';
+import { ApiConnectService } from '../services/api-connect.service';
 
 // Jquery imports
 declare var $: any;
@@ -14,23 +16,29 @@ export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // configuration object
-    config = {
+    config: ConfigurationFormat = {
         name: '',
         description: '',
-        pushTop: 0,
-        pushMiddle: 0,
-        pushBottom: 0,
-        defendTop: 0,
-        defendMiddle: 0,
-        defendBottom: 0,
-        farmTop: 0,
-        farmMiddle: 0,
-        farmBottom: 0,
+        push: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
+        farm: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
+        defend: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
         roam: 0,
         roshan: 0
     };
 
-    constructor(private title: Title) {
+    constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);        
     }
 
@@ -41,6 +49,7 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             console.log(this.config);
             // call generate from api service
+            this.api.generate(this.config);
         }
     }
 
