@@ -16,8 +16,8 @@ export class BotConfigComponent implements OnInit {
 
     // configuration object
     config = {
-        name: "",
-        description: "",
+        name: '',
+        description: '',
         pushTop: 0,
         pushMiddle: 0,
         pushBottom: 0,
@@ -47,13 +47,13 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             console.log(this.config);
 
-            // call generate from api service 
+            // call generate from api service
         }
     }
 
     validateInfo(): boolean {
-        if (this.config.name == "" || this.config.description == "") {
-            alert("Please enter your bot script name and description.");
+        if (this.config.name === '' || this.config.description === '') {
+            alert('Please enter your bot script name and description');
             return false;
         }
         return true;

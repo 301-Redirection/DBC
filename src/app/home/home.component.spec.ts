@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeComponent } from './home.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -13,19 +12,19 @@ describe('HomeComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ HomeComponent ],
-        imports: [        
-            NavbarModule,
-            RouterTestingModule
-        ],
-        providers: [
-            ApiConnectService,
-            HttpClient,
-            HttpHandler,
-            { provide: Title, useClass: Title }
-        ]
+            declarations: [HomeComponent],
+            imports: [
+                NavbarModule,
+                RouterTestingModule
+            ],
+            providers: [
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+                { provide: Title, useClass: Title }
+            ]
         })
-        .compileComponents();
+            .compileComponents();
     }));
 
     beforeEach(() => {
@@ -38,7 +37,7 @@ describe('HomeComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Home'`, async(() => {        
+    it(`should have the title 'Dota 2 Bot Scripting - Home'`, async(() => {
         let title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Home');
     }));

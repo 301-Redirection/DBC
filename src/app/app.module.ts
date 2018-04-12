@@ -27,10 +27,10 @@ import { LoadingComponent } from './core/loading.component';
   declarations: [
     AppComponent,
     CallbackComponent,
-    LoadingComponent    
+    LoadingComponent
   ],
   imports: [
-    BrowserModule,    
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     RoutesModule,

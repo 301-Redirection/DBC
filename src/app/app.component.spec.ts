@@ -9,19 +9,19 @@ import { ApiConnectService } from './services/api-connect.service';
 describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [
-            AppComponent
-        ],
-        imports: [ 
-            RouterTestingModule,
-            NavbarModule 
-        ],
-        providers: [
-            AuthService,
-            ApiConnectService,
-            HttpClient,
-            HttpHandler
-        ]
+            declarations: [
+                AppComponent
+            ],
+            imports: [
+                RouterTestingModule,
+                NavbarModule
+            ],
+            providers: [
+                AuthService,
+                ApiConnectService,
+                HttpClient,
+                HttpHandler
+            ]
         }).compileComponents();
     }));
     it('should create the app', async(() => {
@@ -29,5 +29,5 @@ describe('AppComponent', () => {
         const app = fixture.debugElement.componentInstance;
         expect(app).toBeTruthy();
     }));
-    
+
 });

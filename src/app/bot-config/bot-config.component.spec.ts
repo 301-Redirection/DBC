@@ -14,8 +14,8 @@ describe('BotConfigComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ BotConfigComponent ],
-            imports: [        
+            declarations: [BotConfigComponent],
+            imports: [
                 NavbarModule,
                 RouterTestingModule,
                 FormsModule
