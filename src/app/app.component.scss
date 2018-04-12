@@ -1,16 +1,3 @@
 
 /* Import Global Variables */
 @import '../variables';
-
-
-#content {
-    padding: 0;
-    width: 100%;
-    background-image: $general-background-image;
-    background-repeat: no-repeat;
-    background-position: center top;    
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;        
-}
