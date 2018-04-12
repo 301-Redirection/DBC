@@ -20,5 +20,5 @@ install:
 services:
     - mysql
 script:
-    - npm test-backend
+    - npm run test-backend
     - karma start karma.conf.js --single-run
