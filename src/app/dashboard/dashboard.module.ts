@@ -16,6 +16,6 @@ import { DashboardComponent } from './dashboard.component';
     ],
     exports: [
         DashboardComponent,
-    ]
+    ],
 })
 export class DashboardModule { }

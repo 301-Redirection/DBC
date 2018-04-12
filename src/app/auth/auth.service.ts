@@ -7,7 +7,6 @@ import { ROUTE_NAMES } from '../routes/routes.config';
 
 @Injectable()
 export class AuthService {
-
     // Create Auth0 web auth instance
     private _auth0 = new auth0.WebAuth({
         clientID: AUTH_CONFIG.CLIENT_ID,
@@ -19,18 +18,18 @@ export class AuthService {
     });
 
     userProfile: any;
-    
-    // Create a stream of logged in status to communicate throughout app    
+
+    // Create a stream of logged in status to communicate throughout app
     loggedIn: boolean;
     loggedInBehavior = new BehaviorSubject<boolean>(this.loggedIn);
 
-    constructor(private router: Router) {        
+    constructor(private router: Router) {
         const localProfile = localStorage.getItem('profile');
 
         if (this.isTokenValid) {
-            this.userProfile = JSON.parse(localProfile);                    
+            this.userProfile = JSON.parse(localProfile);
             this.setLoggedIn(true);
-        } else if (!this.isTokenValid && localProfile) {            
+        } else if (!this.isTokenValid && localProfile) {
             this.logout();
         }
     }
@@ -41,21 +40,21 @@ export class AuthService {
         this.loggedIn = value;
     }
 
-    login() {        
+    login() {
         // Auth0 authorize request
-        this._auth0.authorize();        
+        this._auth0.authorize();
     }
 
-    handleAuth() {                
+    handleAuth() {
         // When Auth0 hash parsed, get profile
-        this._auth0.parseHash((err, authResult) => {            
-            if (authResult && authResult.accessToken) {                
+        this._auth0.parseHash((err, authResult) => {
+            if (authResult && authResult.accessToken) {
                 window.location.hash = '';
-                this._getProfile(authResult);                
-            } else if (err) {                
-                console.error(`Error authenticating: ${err.error}`);                
-                this.router.navigate([ROUTE_NAMES.HOME]);                
-            }            
+                this._getProfile(authResult);
+            } else if (err) {
+                console.error(`Error authenticating: ${err.error}`);
+                this.router.navigate([ROUTE_NAMES.HOME]);
+            }
         });
     }
 
@@ -70,14 +69,14 @@ export class AuthService {
         });
     }
 
-    private _setSession(authResult, profile) {        
+    private _setSession(authResult, profile) {
         // Save session data and update login status subject
         const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
         // Set tokens and expiration in localStorage and props
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('expires_at', expiresAt);
         localStorage.setItem('profile', JSON.stringify(profile));
-        this.userProfile = profile;        
+        this.userProfile = profile;
         // Update login status in loggedIn$ stream
         this.setLoggedIn(true);
         // Redirect to Dashboard
@@ -102,5 +101,4 @@ export class AuthService {
         const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         return Date.now() < expiresAt;
     }
-
 }

@@ -6,7 +6,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 @Component({
     selector: 'app-bot-management',
     templateUrl: './bot-management.component.html',
-    styleUrls: ['./bot-management.component.scss']
+    styleUrls: ['./bot-management.component.scss'],
 })
 export class BotManagementComponent implements OnInit {
     bots = BOTS;
@@ -18,5 +18,4 @@ export class BotManagementComponent implements OnInit {
     }
 
     ngOnInit() { }
-
 }

@@ -22,7 +22,7 @@ var Request = require('request');
 describe('Server', () => {
     var server;
     beforeAll(() => {
-        var app = require("../app");
+        var app = require('../app');
         server = app.listen(3000, () => {
             console.log('Listening on port ' + server.address().port + '...');
         });

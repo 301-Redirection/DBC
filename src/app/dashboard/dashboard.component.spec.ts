@@ -29,15 +29,15 @@ describe('DashboardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ 
+            declarations: [
                 DashboardComponent,
                 CallbackComponent,
                 LoadingComponent,
             ],
-            imports: [        
+            imports: [
                 NavbarModule,
                 RouterTestingModule.withRoutes(ROUTES),
-                HomeModule,            
+                HomeModule,
                 BotConfigModule,
                 BotManagementModule,
             ],
@@ -49,7 +49,7 @@ describe('DashboardComponent', () => {
                 HttpHandler,
                 Location,
                 { provide: Title, useClass: Title },
-            ]
+            ],
         })
         .compileComponents();
 
@@ -70,7 +70,7 @@ describe('DashboardComponent', () => {
     });
 
     it(`should have the title 'Dota 2 Bot Scripting - Dashboard'`, async(() => {
-        let title = TestBed.get(Title);
+        const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     }));
 

@@ -15,6 +15,6 @@ import { BotManagementComponent } from './bot-management.component';
     ],
     exports: [
         BotManagementComponent,
-    ]
+    ],
 })
 export class BotManagementModule { }

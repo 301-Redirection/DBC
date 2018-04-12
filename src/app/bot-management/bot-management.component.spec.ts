@@ -25,7 +25,7 @@ describe('BotManagementComponent', () => {
                 { provide: Title, useClass: Title },
             ],
         })
-            .compileComponents();
+        .compileComponents();
     }));
 
     beforeEach(() => {
@@ -39,7 +39,7 @@ describe('BotManagementComponent', () => {
     });
 
     it(`should have the title 'Dota 2 Bot Scripting - Management'`, async(() => {
-        let title = TestBed.get(Title);
+        const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Management');
     }));
 });

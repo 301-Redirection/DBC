@@ -22,7 +22,7 @@ describe('HomeComponent', () => {
                 HttpClient,
                 HttpHandler,
                 { provide: Title, useClass: Title },
-            ]
+            ],
         })
         .compileComponents();
     }));
@@ -38,14 +38,14 @@ describe('HomeComponent', () => {
     });
 
     it(`should have the title 'Dota 2 Bot Scripting - Home'`, async(() => {
-        let title = TestBed.get(Title);
+        const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Home');
     }));
 
     it('should render title in a h1 tag', async(() => {
-        const fixture = TestBed.createComponent(HomeComponent);
-        fixture.detectChanges();     
-        let compiled = fixture.debugElement.query(By.css('#createBotsTitle')).nativeElement.innerHTML;
+        fixture = TestBed.createComponent(HomeComponent);
+        fixture.detectChanges();
+        const compiled = fixture.debugElement.query(By.css('#createBotsTitle')).nativeElement.innerHTML;
         expect(compiled).toEqual('Create Your Own Bots!');
     }));
 

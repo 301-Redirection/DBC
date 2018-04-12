@@ -12,12 +12,12 @@ describe('ApiConnectService', () => {
                 ApiConnectService,
                 HttpClient,
                 HttpHandler,
-                { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); } },
+                { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } },
                 RoutesModule,
-            ]
+            ],
         });
     });
-    let api: ApiConnectService;
+    const api: ApiConnectService;
 
     it('should be created', inject([ApiConnectService], (service: ApiConnectService) => {
         expect(service).toBeTruthy();

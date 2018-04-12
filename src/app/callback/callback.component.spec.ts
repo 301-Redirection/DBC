@@ -9,10 +9,10 @@ describe('CallbackComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ 
+            declarations: [
                 CallbackComponent,
                 LoadingComponent
-            ]
+            ],
         })
         .compileComponents();
     }));

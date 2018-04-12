@@ -10,6 +10,6 @@ import { NavbarComponent } from './navbar.component';
         RouterModule,
     ],
     declarations: [NavbarComponent],
-    exports: [NavbarComponent]
+    exports: [NavbarComponent],
 })
 export class NavbarModule { }

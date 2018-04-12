@@ -24,28 +24,28 @@ import { LoadingComponent } from './core/loading.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CallbackComponent,
-    LoadingComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    RoutesModule,
-    BotManagementModule,
-    HomeModule,
-    DashboardModule,
-    NavbarModule,
-    BotConfigModule,
-    RouterModule,
-  ],
-  providers: [
-    ApiConnectService,
-    Title,
-    AuthService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CallbackComponent,
+        LoadingComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        RoutesModule,
+        BotManagementModule,
+        HomeModule,
+        DashboardModule,
+        NavbarModule,
+        BotConfigModule,
+        RouterModule,
+    ],
+        providers: [
+        ApiConnectService,
+        Title,
+        AuthService,
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule { }
