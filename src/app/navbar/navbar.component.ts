@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { RoutesModule } from '../routes/routes.module';
-
 import { ApiConnectService } from '../services/api-connect.service';
 import { AuthService } from '../auth/auth.service';
 

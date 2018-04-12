@@ -79,6 +79,7 @@ nav {
 }
 
 #welcome-btn {
+    padding-top: 14px !important;
     border: none !important;
     color: var(--light-grey);
 }
@@ -90,7 +91,26 @@ nav {
 #welcome-btn:focus {
     color: white;
 }
-
+.button-profile {
+    font-family: 'Radiance';
+    text-decoration:none;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 85%;
+    color: var(--light-grey) !important;
+    padding-top: 14px !important;
+    background-color: transparent;
+    background-image: none;
+    border:none;
+  }
+  
+  .button-profile:hover {
+    text-decoration:none;
+    color: #ffff;
+    background-color:#181818;
+    border: none;
+  }
 
 /*
  |--------------------------------------
