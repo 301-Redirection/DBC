@@ -42,7 +42,9 @@ Farm - The simple activity of a hero collecting gold and experience by killing c
 
 Defend - The act of staying close to or even behind your own tower and creep wave when the enemy team is pushing down your lane.
 
-Roaming - the act of not remianing in a lane for too long, but rather move between lanes to attempt to kill enemy heroes with the other heroes in that lane/ or in the jungle. 
+Roaming - the act of not remaining in a lane for too long, but rather move between lanes to attempt to kill enemy heroes with the other heroes in that lane/ or in the jungle. 
+
+Ganking - The act of a group of team players grouping together to attempt to kill enemy heroes on the map.
 
 ## 3. Documentation of scripts and their functions
 
