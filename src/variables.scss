@@ -1,3 +1,5 @@
+@import '/assets/fonts.scss';
+
 /* Global variables */
 
 $transition-speed: .3s;
@@ -9,12 +11,13 @@ $general-background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play
 /* Global colours */
 $red: #e2283b;
 $blue: #007bff;
-$white: white;
+$white: #dddddd;
 $grey: #808080;
 $light-grey: #a3a3a3;
 $dark-grey-1: #3d3d3d;
 $dark-grey-2: #333333;
 $dark-grey-3: #292929;
+$black: #181818;
 
 /*Button colours*/
 $btn-cancel-color: #b64f44;

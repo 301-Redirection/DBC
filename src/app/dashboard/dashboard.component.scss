@@ -10,30 +10,26 @@
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
 }
-
-
+ 
+ 
 /*
  |--------------------------------------
  | Responsive
  |--------------------------------------
 */
-
+ 
 @media only screen and (max-width: 750px) {
-
+ 
 }
-
+ 
 @media only screen and (max-width: 450px) {
-
-    #new-bot-config-button {
+    #newConfigButton {
         font-size: 80%;
     }
-
 }
-
+ 
 @media only screen and (max-width: 350px) {
-
-    #new-bot-config-button {
+    #newConfigButton {
         font-size: 60%;
     }
-    
 }
