@@ -5,15 +5,6 @@ import { Component } from '@angular/core';
     template: `
         <img src="/assets/images/loading.svg">
     `,
-    styles: [`
-        :host {
-            display: block;
-        }
-        img {
-            padding-top: 20%;
-            padding-bottom: 50%;
-        }
-    `]
+    styleUrls: ['./loading.component.css']
 })
-export class LoadingComponent {
-}
+export class LoadingComponent { }

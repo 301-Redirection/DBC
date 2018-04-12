@@ -2,19 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  pageTitle = 'Dota 2 Bot Scripting - Home';
+    pageTitle = 'Dota 2 Bot Scripting - Home';
 
-  constructor(private title: Title) {
-    this.title.setTitle(this.pageTitle);
-  }
+    constructor(private title: Title) {
+        this.title.setTitle(this.pageTitle);
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() { }
 
 }

@@ -6,8 +6,8 @@
 nav {
     width: 100%;
     padding: .6rem 5rem;    
-    box-shadow: 0 1px 5px 5px #181818;   
-    background-color: #181818 !important;
+    box-shadow: 0 1px 5px 5px var(--black);   
+    background-color: var(--black) !important;
     background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
     background-repeat: no-repeat;
     line-height: normal;
@@ -24,7 +24,7 @@ nav {
     opacity: 1;
 }
 
-#bot-scripting-title {
+#botScriptTitle {
     color: var(--light-grey);
     font-size: 60%;
 }
@@ -43,8 +43,8 @@ nav {
 
 .hamburger-inner,
 .hamburger-inner:before,
-.hamburger-inner:after {
-    background-color: #4e4e4e !important;
+.hamburger-inner:after {    
+    background-color: var(--grey);
 }
 
 .navbar-toggler {
@@ -54,8 +54,8 @@ nav {
 
 /* nav items */
 
-#nav-links-list {
-    margin-left: .5rem;
+#navLinksList {
+    margin-left: .5rem;    
 }
 
 .nav-item {
@@ -69,8 +69,9 @@ nav {
     color: var(--light-grey) !important;
     padding-top: 14px !important;
 }
+
 .nav-link:hover {
-    color: #dddddd !important;
+    color: var(--white) !important;
 }
 
 /* button class */
@@ -78,19 +79,20 @@ nav {
     padding-top: .5rem;            
 }
 
-#welcome-btn {
-    padding-top: 14px !important;
+#welcomeButton {
+    padding-top: 14px;
     border: none !important;
     color: var(--light-grey);
 }
 
-#welcome-btn:hover {
+#welcomeButton:hover {
     color: white;
 }
 
-#welcome-btn:focus {
+#welcomeButton:focus {
     color: white;
 }
+
 .button-profile {
     font-family: 'Radiance';
     text-decoration:none;
@@ -103,14 +105,14 @@ nav {
     background-color: transparent;
     background-image: none;
     border:none;
-  }
+}
   
-  .button-profile:hover {
+.button-profile:hover {
     text-decoration:none;
-    color: #ffff;
-    background-color:#181818;
+    color: white;
+    background-color: var(--black);
     border: none;
-  }
+}
 
 /*
  |--------------------------------------
@@ -119,63 +121,59 @@ nav {
  */
 
 @media only screen and (max-width: 1050px) {
-
     nav {
         padding-left: 2rem;
         padding-right: 2rem;  
     }
-
 }
 
 @media only screen and (max-width: 995px) {
-
     #logInButton {
         margin-top: 4% !important;        
+    }  
+    
+    #navLinksList {
+        margin-top: 3% !important;
     }
-
 }
 
 @media only screen and (max-width: 750px) {
-
     nav {
         padding-left: 2rem;
         padding-right: 2rem;
     }    
 
-    #welcome-btn {
+    #welcomeButton {
         margin-top: 2%;
     }
 
     #logInButton {
         margin-top: 5% !important;
     }
-
 }
 
 @media only screen and (max-width: 450px) {
-
     nav {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
-    #dota-2-logo {
+    #dotaLogo {
         height: 24px !important;
     }
 
-    #bot-scripting-title {
+    #botScriptTitle {
         font-size: 50%;
         letter-spacing: .1rem;
     }    
 
-    #nav-links-list {
+    #navLinksList {
         margin-top: 5% !important;
     }
 
     #logInButton {
         margin-top: 10% !important;
     }
-
 }
 
 

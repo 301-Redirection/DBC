@@ -29,27 +29,27 @@ describe('DashboardComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-        declarations: [ 
-            DashboardComponent,
-            CallbackComponent,
-            LoadingComponent
-        ],
-        imports: [        
-            NavbarModule,
-            RouterTestingModule.withRoutes(ROUTES),
-            HomeModule,            
-            BotConfigModule,
-            BotManagementModule 
-        ],
-        providers: [
-            AuthService,
-            AuthGuard,
-            ApiConnectService,
-            HttpClient,
-            HttpHandler,
-            Location,
-            { provide: Title, useClass: Title }
-        ]
+            declarations: [ 
+                DashboardComponent,
+                CallbackComponent,
+                LoadingComponent,
+            ],
+            imports: [        
+                NavbarModule,
+                RouterTestingModule.withRoutes(ROUTES),
+                HomeModule,            
+                BotConfigModule,
+                BotManagementModule,
+            ],
+            providers: [
+                AuthService,
+                AuthGuard,
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+                Location,
+                { provide: Title, useClass: Title },
+            ]
         })
         .compileComponents();
 
@@ -77,9 +77,9 @@ describe('DashboardComponent', () => {
     it('should redirect to Configuration page on \'New Bot Configuration\' click', fakeAsync(() => {
         auth.setLoggedIn(true);
         fixture.detectChanges();
-        fixture.debugElement.query(By.css('#new-bot-config-button')).nativeElement.click();
+        fixture.debugElement.query(By.css('#newConfigButton')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual(ROUTE_NAMES.CONFIGURATION);
+            expect(location.path()).toEqual(ROUTE_NAMES.BOT_CONFIGURATION);
         });
     }));
 
@@ -88,7 +88,7 @@ describe('DashboardComponent', () => {
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#viewMore')).nativeElement.click();
         fixture.whenStable().then(() => {
-            expect(location.path()).toEqual(ROUTE_NAMES.MANAGEMENT);
+            expect(location.path()).toEqual(ROUTE_NAMES.BOT_MANAGEMENT);
         });
     }));
 });

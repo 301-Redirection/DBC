@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" routerLink="/home">
-        <img id="dota-2-logo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
-        &nbsp;<sub id="bot-scripting-title">BOT SCRIPTING</sub>
+        <img id="dotaLogo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
+        &nbsp;<sub id="botScriptTitle">BOT SCRIPTING</sub>
     </a>
+
     <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-dropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
@@ -11,18 +12,18 @@
 
     <div class="collapse navbar-collapse" id="navbar-dropdown">    
         <!-- Show only if logged in -->
-        <ul class="navbar-nav mt-2 mt-lg-0" id="nav-links-list" *ngIf="auth.loggedIn">                  
+        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">                  
             <li class="nav-item">
-                <a id="dashboard-link" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
+                <a id="dashboardLink" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>            
             <li class="nav-item">
-                <a id="config-link" routerLink="/bot-config" class="nav-link">CONFIGURATION</a>
+                <a id="configLink" routerLink="/bot-config" class="nav-link">CONFIGURATION</a>
             </li>            
             <li class="nav-item">
-                <a id="manage-link" routerLink="/bot-management" class="nav-link">MANAGE</a>
+                <a id="manageLink" routerLink="/bot-management" class="nav-link">MANAGE</a>
             </li>
         </ul>
-        
+
         <ul class="navbar-nav ml-auto" >
             <!-- Show only if not logged in -->
             <li class="nav-item" *ngIf="!busyLogin && !auth.loggedIn">
@@ -31,16 +32,18 @@
                     LOG IN
                 </button>                
             </li>   
-
+            
             <!-- Show only if logged in -->
             <li class="nav-item" *ngIf="auth.loggedIn">
                 <div class="dropdown">
-                    <button id="welcome-btn" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button id="welcomeButton" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
                         Hello, {{auth.userProfile?.given_name}}
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="welcome-btn">                        
-                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>          
+                    <div class="dropdown-menu" aria-labelledby="welcomeButton">                        
+                        <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()">
+                            <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out
+                        </button>          
                     </div>
                 </div>
             </li>                         

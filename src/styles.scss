@@ -3,16 +3,7 @@ html, body {
     height: 100%;
     width: 100%;
     padding: 0 !important;
-    margin: 0 !important;
-    /*background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg');*/
-    /* background-image: url('http://cdn.dota2.com/apps/dota2/images/store/bg_main.jpg'); */        
-    /* background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg');
-	background-repeat:repeat;
-    background-position:center top;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; */
+    margin: 0 !important;   
 }
 
 
@@ -21,11 +12,13 @@ html, body {
 :root {
     --red: #e2283b;
     --blue: #007bff;
+    --white: #dddddd;
     --grey: #808080;
-    --light-grey: #a3a3a3;
+    --light-grey: #a3a3a3;    
     --dark-grey-1: #3d3d3d;
     --dark-grey-2: #333333;
     --dark-grey-3: #292929;
+    --black: #181818;
 }
 
 

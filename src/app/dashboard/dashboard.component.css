@@ -2,7 +2,6 @@
 * Dashboard Component Styles 
 */
 
-
 /* Import Home Component CSS */
 @import '../home/home.component.css';
 
@@ -24,17 +23,13 @@
 }
 
 @media only screen and (max-width: 450px) {
-
-    #new-bot-config-button {
+    #newConfigButton {
         font-size: 80%;
     }
-
 }
 
 @media only screen and (max-width: 350px) {
-
-    #new-bot-config-button {
+    #newConfigButton {
         font-size: 60%;
     }
-    
 }
