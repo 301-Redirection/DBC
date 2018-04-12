@@ -109,22 +109,22 @@ p {
 .button-cancel {   
     text-decoration:none;
     color: $btn-cancel-color;
-    background-color: transparent;
-    border: 1px solid $btn-cancel-border-color;
+    background-color: $btn-general-background-color;
+    border: $btn-general-border $btn-cancel-border-color;
  }
   
 .button-cancel:hover {
     text-decoration:none;
     background-color: $btn-cancel-border-color;
     color: $btn-cancel-color;
-    border: 1px solid $btn-cancel-border-color-hover;
+    border: $btn-general-border $btn-cancel-border-color-hover;
 }
 
 .button-generate { 
     color: $btn-generate-color;
-    background-color: transparent;
+    background-color: $btn-general-background-color;
     background-image: none;
-    border:2px solid $btn-generate-border-color;
+    border: $btn-general-border $btn-generate-border-color;
 }
 
 .button-generate:hover {
@@ -136,9 +136,9 @@ p {
 
 .button-edit {
     color: $btn-edit-color;
-    background-color: transparent;
+    background-color: $btn-general-background-color;
     background-image: none;
-    border:2px solid $btn-edit-border-color;
+    border: $btn-general-border $btn-edit-border-color;
   }
   
 .button-edit:hover {

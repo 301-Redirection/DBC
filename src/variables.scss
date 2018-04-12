@@ -1,10 +1,13 @@
 /* Global variables */
 
+
 $transition-speed: .3s;
 $font-family: 'Radiance';
 $box-shadow:0px 3px 12px 0px rgba(0,0,0,0.75);
 $nav-background-image: url('http://cdn.dota2.com/apps/dota2/images/header/header_bg.png');
 $general-background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg');
+$page-margin-top: 1rem !important;
+$page-margin-bottom: 1rem !important;
 
 /* Global colours */
 
@@ -17,7 +20,9 @@ $dark-grey-1: #3d3d3d;
 $dark-grey-2: #333333;
 $dark-grey-3: #292929;
 
-/*Button colours*/
+/*Button Variables*/
+$btn-general-border: 2px solid ;
+$btn-general-background-color: transparent;
 
 $btn-cancel-color: #b64f44;
 $btn-cancel-border-color: #5e2d27;
