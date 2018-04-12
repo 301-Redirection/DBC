@@ -17,8 +17,8 @@ export class BotConfigComponent implements OnInit {
 
     // configuration object
     config: ConfigurationFormat = {
-        name: '',
-        description: '',
+        name: 'test',
+        description: 'test',
         push: {
             top: 0,
             mid: 0,
@@ -49,7 +49,7 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             console.log(this.config);
             // call generate from api service
-            this.api.generate(this.config);
+            this.api.generate(this.config).subscribe();
         }
     }
 
