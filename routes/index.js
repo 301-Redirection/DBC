@@ -72,37 +72,36 @@ router.post('/generate', function(req, res) {
     var scriptBuilder = "";
 
     //Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\
-                      [[ ' + req.body.teamDesires.description + ']]';
+    scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
+                      [[ ' + req.body.teamDesires.description + ']]\n';
 
     //Creates the UpdateRooshanDesire function
-    scriptBuilder += 'function UpdateRoshanDesire() \
-                        return ' + req.body.teamDesires.roshan + '\
-                    end';
+    scriptBuilder += 'function UpdateRoshanDesire()\n \
+                        return ' + (req.body.teamDesires.roshan)/10 + '\n \
+                    end\n\n';
 
     //Creates the UpdateRoamDesire function
-    scriptBuilder += 'function UpdateRoamDesire() \
-                        return {' + req.body.teamDesires.roam + ' GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\
-                    end';
+    scriptBuilder += 'function UpdateRoamDesire()\n \
+                        return {' + (req.body.teamDesires.roam)/10 + ' GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\n \
+                    end\n\n';
 
     //Creates the UpdatePushLaneDesires function
-    scriptBuilder += 'function UpdatePushLaneDesires() \
-                        return {' + req.body.teamDesires.push.top + ',' + req.body.teamDesires.push.mid
-                        + ',' + req.body.teamDesires.push.bot + '}\
-                    end';
+    scriptBuilder += 'function UpdatePushLaneDesires() \n \
+                        return {' + (req.body.teamDesires.push.top)/10 + ',' + (req.body.teamDesires.push.mid)/10 + ',' + (req.body.teamDesires.push.bot)/10 + '}\n \
+                    end\n\n';
 
     //Creates the UpdateDefendLaneDesires function
-    scriptBuilder += 'function UpdateDefendLaneDesires() \
-                        return {' + req.body.teamDesires.defend.top + ',' + req.body.teamDesires.defend.mid + ',' + req.body.teamDesires.defend.bot + '}\
-                    end';
+    scriptBuilder += 'function UpdateDefendLaneDesires() \n \
+                        return {' + (req.body.teamDesires.defend.top)/10 + ',' + (req.body.teamDesires.defend.mid)/10 + ',' + (req.body.teamDesires.defend.bot)/10 + '}\n \
+                    end\n\n';
 
     //Creates the UpdateFarmLaneDesires function    
-    scriptBuilder += 'function UpdateFarmLaneDesires() \
-                        return {' + req.body.teamDesires.farm.top + ',' + req.body.teamDesires.farm.mid + ',' + req.body.teamDesires.farm.bot + '}\
+    scriptBuilder += 'function UpdateFarmLaneDesires() \n \
+                        return {' + (req.body.teamDesires.farm.top)/10 + ',' + (req.body.teamDesires.farm.mid)/10 + ',' + (req.body.teamDesires.farm.bot)/10 + '}\n \
                     end';
 
 
-    /*lua = 'io.write(\"Hello World\\n\")';
+    lua = scriptBuilder;
     try {
         fs.mkdirSync('./Lua');
     } catch (err) {
@@ -113,12 +112,10 @@ router.post('/generate', function(req, res) {
            res.send('File Generated: TeamDesiires.lua');
         var file = './Lua/TeamDesires.lua';
         res.download(file);
-    });*/
+    });
 
-    console.log(scriptBuilder);
     res.status(200).send({Message: "Received", Script: scriptBuilder});
 });
-
 /** The following routes are here to quickly demonstrate how one would use sequelize.
  *  please consult the documentation for all possible options
  *  http://docs.sequelizejs.com/manual/tutorial/querying.html
