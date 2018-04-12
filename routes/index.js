@@ -68,7 +68,7 @@ router.get('/test', (request, response) => {
 
 
 // ***JUSTIN***
-router.get('/generate', function(req, res) {
+router.post('/generate', function(req, res) {
     // TODO: GENERATE LUA SCRIPT FROM PARAMETER
     // Use req.body
 
@@ -87,6 +87,7 @@ router.get('/generate', function(req, res) {
     //     res.download(file);
     // });
     console.log(req.body);
+    res.status(200).send("Received");
 })
 
 /** The following routes are here to quickly demonstrate how one would use sequelize.
