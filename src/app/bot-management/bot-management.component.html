@@ -1,0 +1,99 @@
+<div class="container-fluid container-fluid-custom">
+    <div class="frame" id="botManagementTitle">
+        <h1>MANAGE</h1>
+    </div>
+
+    <div class="frame">
+        <div id="accordion" class="card bot-manage-card">
+            <!--Heading -->
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>YOUR BOTS</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dropdown show dropdown-filter float-right">
+                            <a class="btn dropdown-filter dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="fas fa-filter mr-2"></i>
+                                Filter Bots
+                            </a>
+
+                            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sort-amount-up mr-2"></i>
+                                    Newest First
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sort-amount-down mr-2"></i>
+                                    Oldest First
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Bot list -->
+            <ul class="list-group list-group-flush" id="botList">
+                <!--Bot item Implementation Notes:
+                _______________________________
+                headingID format: bot#
+                collapseID format: bot#_Collapse
+                _______________________________
+                Contains obtained from DB: 
+                -Title
+                -Description 
+                -Last Edit:  
+                
+                Buttons:
+                ->Edit
+                ->Generate script
+                ->Delete Script
+                -->
+
+                <li *ngFor="let bot of bots" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse"
+                    data-parent="#accordion" [attr.href]="'#bot'+bot.id+'Collapse'">
+                    <!--Bot Item Heading-->
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h5>{{bot.name}}</h5>
+                        </div>
+                        <div class="col-sm-3">
+                            <sub class="float-right">
+                                <i class="far fa-edit mr-1"></i>
+                                {{bot.lastEdit}}
+                            </sub>
+                        </div>
+                    </div>
+                    <!--End of Heading-->
+                    <!--Bot Item details-->
+                    <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'Collapse'" class="collapse in">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>{{bot.description}}</p>
+                            </div>
+                        </div>
+                        <a href="#" class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'EditBtn'">
+                            <i class="far fa-edit mr-1"></i>
+                            Edit
+                        </a>
+                        <a href="#" class="button button-generate mr-1" #elem [attr.id]="'bot'+bot.id+'DownloadBtn'">
+                            <i class="fas fa-download mr-1"></i>
+                            Generate
+                        </a>
+                        <a href="#" class="button button-cancel" #elem [attr.id]="'bot'+bot.id+'DeleteBtn'">
+                            <i class="fas fa-trash-alt mr-1"></i>
+                            Delete
+                        </a>
+                    </div>
+                    <!--End of Details-->
+                </li>
+                <!--End of bot item-->
+            </ul>
+        </div>
+    </div>
+
+    <div class="frame"></div>
+</div>
