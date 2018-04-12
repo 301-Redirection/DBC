@@ -8,21 +8,29 @@
     padding: 0;
 }
 
-.banner {
-    width: 100%;
-    margin-bottom: 10%;
+.banner-video {    
+    padding-top: 12%;
+    padding-bottom: 12%;
+    margin-top: -5%;      
 }
 
-.video-banner {
-    text-align: center;
+#featuresBanner {
+    background-image: url('http://cdn.dota2.com/apps/dota2/images/thebetaisover/bg_01.jpg');
+    height: 735px;
 }
 
 #MainTrailer { 
     width: 95%;    
 }
 
-#titleFrame {
-    padding-top: 12%;
-    margin-top: -5%;
+// Temporary for spacing between images
+#gettingStarted {
+    padding-top: 5%;
+    padding-bottom: 55%;
+}
+
+#moreContentBanner {
+    background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_08.jpg');
+    height: 972px;
 }
 
