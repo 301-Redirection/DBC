@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+
+/* Import Global Variables */
+@import 'variables';
+
+html, 
+body {
     height: 100%;
     width: 100%;
     padding: 0 !important;
@@ -16,21 +21,25 @@ html, body {
 }
 
 
-/* Global colours */
-
-:root {
-    --red: #e2283b;
-    --blue: #007bff;
-    --grey: #808080;
-    --light-grey: #a3a3a3;
-    --dark-grey-1: #3d3d3d;
-    --dark-grey-2: #333333;
-    --dark-grey-3: #292929;
-}
 
 
 /* -- Global Styles -- */
+/* General heading font styles */
+h1, h2, h3, h4, h5,h6 {
+    text-shadow: 2px 2px 5px #000000;
+    font-family: $font-family;
+}
+h1, h2 {
+    letter-spacing: 4px;
+}
+h3, h4, h5 {
+    letter-spacing: 2px;
+}
 
+/* Paragraph styles */
+p {
+    font-family:  $font-family;
+}
 
 /* -- Containers --  */
 
@@ -42,30 +51,30 @@ html, body {
 .frame {
     margin: 5% 5% 5% 5%;
     text-align: center;     
-    color: var(--light-grey);
+    color: $light-grey;
 }
 
 
 /* -- Cards -- */
 
 .bot-manage-card {
-    background-color: var(--dark-grey-1) !important;
+    background-color: $dark-grey-1 !important;
     text-align: left !important;
 }
 
 .bot-manage-card-body {
-    background-color: var(--dark-grey-3) !important;   
+    background-color: $dark-grey-3 !important;   
 }
 
 .manage-list-group-item {
-    background-color: var(--dark-grey-3) !important;   
+    background-color: $dark-grey-3 !important;   
     padding: 1rem 2rem 2rem 2rem !important; 
     cursor: pointer !important;
     border-radius: 0 !important;
 }
 
 .manage-list-group-item:hover {
-    background-color: var(--dark-grey-2) !important;   
+    background-color: $dark-grey-2 !important;   
 }
 
 
@@ -75,7 +84,7 @@ html, body {
     padding-left: 1rem !important;
     padding-right: 1rem !important;    
     letter-spacing: .2rem !important;
-    font-family: 'Radiance';
+    font-family: $font-family;
 }
 
 
@@ -85,7 +94,7 @@ html, body {
     padding-left: 1rem !important;
     padding-right: 1rem !important;    
     letter-spacing: .2rem !important;
-    font-family: 'Radiance';
+    font-family: $font-family;
     text-decoration:none;
     display: inline-block;
     font-weight: 400;
@@ -100,10 +109,10 @@ html, body {
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
+    -o-transition: $transition-speed;
+    -ms-transition: $transition-speed;
+    -moz-transition: $transition-speed;
+    -webkit-transition: $transition-speed;
     transition:.3s;
     -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
@@ -125,11 +134,11 @@ html, body {
     background-color: #5e2d27;
     color: #b64f44;
     border: 1px solid #b15b52;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
 }
 
 .button-generate { 
@@ -137,11 +146,11 @@ html, body {
     background-color: transparent;
     background-image: none;
     border:2px solid #263f56;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
     -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
@@ -156,11 +165,11 @@ html, body {
     color: #5595D3;
     background-color: #263f56;
     border-color: #3A73A3;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
 }
 
 .button-edit {
@@ -168,11 +177,11 @@ html, body {
     background-color: transparent;
     background-image: none;
     border:2px solid #5b4629;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
     -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
@@ -187,11 +196,11 @@ html, body {
     color: #b1884f;
     background-color: #5b4629;
     border-color: #876a40;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
   }
   
   .button-delete {
@@ -199,11 +208,11 @@ html, body {
     background-color: transparent;
     background-image: none;
     border:2px solid #526d74;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
     -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
@@ -218,21 +227,21 @@ html, body {
     color: #65868f;
     background-color:#324750;
     border-color: #5a7a81;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
+    -o-transition:$transition-speed;
+    -ms-transition:$transition-speed;
+    -moz-transition:$transition-speed;
+    -webkit-transition:$transition-speed;
+    transition:$transition-speed;
   }
 
   
 
 .dropdown-filter {    
-    color: var(--grey);
+    color: $grey;
 }
 
 .dropdown-filter:hover {
-    color: var(--light-grey);
+    color: $light-grey;
 }
 
 
@@ -245,23 +254,23 @@ html, body {
 .dropdown-menu {
     display: inline-block;
     background-color: #202020 !important;        
-    border-color: var(--dark-grey-1) !important;
+    border-color: var($dark-grey-1) !important;
     border-radius: 2px !important; 
     min-width: 100% !important;   
 }
 
 .dropdown-item {
-    color: var(--grey) !important;
+    color: $grey !important;
 }
 
 .dropdown-item:hover {
     background-color: #202020 !important;    
-    color: var(--light-grey) !important;
+    color: $light-grey !important;
     cursor: pointer !important;
 }
 
 .dropdown-item-danger {
-    color: var(--red) !important;
+    color: $red !important;
 }
 
 .dropdown-item-danger:hover {

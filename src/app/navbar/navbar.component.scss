@@ -2,6 +2,9 @@
 * Home Navbar Styles 
 */
 
+/* Import Global Variables */
+@import '../../variables';
+
 /* padding */
 nav {
     width: 100%;
@@ -16,7 +19,7 @@ nav {
 
 /* navbar brand */
 .navbar-brand {    
-    font-family: 'Radiance';    
+    font-family: $font-family;    
     opacity: 0.8;
     margin-right: auto;
 }
@@ -25,7 +28,7 @@ nav {
 }
 
 #bot-scripting-title {
-    color: var(--light-grey);
+    color: $light-grey ;
     font-size: 60%;
 }
 
@@ -61,12 +64,12 @@ nav {
 .nav-item {
     margin-left: .5rem;
     margin-right: .5rem;        
-    font-family: 'Radiance';    
+    font-family: $font-family;    
 }
 
 .nav-link {
     font-size: 85%;
-    color: var(--light-grey) !important;
+    color: $light-grey !important;
     padding-top: 14px !important;
 }
 .nav-link:hover {
@@ -81,7 +84,7 @@ nav {
 #welcome-btn {
     padding-top: 14px !important;
     border: none !important;
-    color: var(--light-grey);
+    color: $light-grey;
 }
 
 #welcome-btn:hover {
@@ -92,13 +95,14 @@ nav {
     color: white;
 }
 .button-profile {
-    font-family: 'Radiance';
+
+font-family: $font-family;
     text-decoration:none;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
     font-size: 85%;
-    color: var(--light-grey) !important;
+    color: $light-grey !important;
     padding-top: 14px !important;
     background-color: transparent;
     background-image: none;

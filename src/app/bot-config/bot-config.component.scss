@@ -2,8 +2,8 @@
 * Bot Configuration Styles
 */
 
-/* Import Home Component Styles */
-@import '../home/home.component.css';
+/* Global Variables */
+@import '../../variables';
 
 
 /* -- Rows --  */
@@ -25,10 +25,10 @@
 
 .config-card {
     height: 100%;
-    background-color: var(--dark-grey-2);
+    background-color: $dark-grey-2;
     opacity: 0.8;
     text-align: left;
-    color: var(--light-grey);    
+    color: $light-grey;    
 }
 
 .config-card-title {
@@ -41,13 +41,13 @@
 
 #inputName,
 #inputDescription {
-    background-color: var(--dark-grey-2);
-    color: var(--light-grey) !important;
+    background-color: $dark-grey-2;
+    color: $light-grey !important;
 }
 
 #inputName:focus,
 #inputDescription:focus {
-    background-color: var(--dark-grey-1);
+    background-color: $dark-grey-1;
 }
 
 
