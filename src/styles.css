@@ -78,39 +78,28 @@ html, body {
     font-family: 'Radiance';
 }
 
-.button-download {
-    color: #4585C3;
-    background-color:  #333333;
-    border: 1px solid #336391;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
- }
-  
-  .button-download:hover {
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
-    background-color: #263f56;
-    color: #5595D3;
-    border: 1px solid #3A73A3;
-    -o-transition:.3s;
-    -ms-transition:.3s;
-    -moz-transition:.3s;
-    -webkit-transition:.3s;
-    transition:.3s;
-}
 
-.button-edit {
-    color: #a9493f;
-    background-color:  #333333;
-    border: 1px solid #70251d;
+/* -- Custom Button Styles to mimic Dota 2 -- */ 
+
+.button {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;    
+    letter-spacing: .2rem !important;
+    font-family: 'Radiance';
+    text-decoration:none;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
     -o-transition:.3s;
     -ms-transition:.3s;
     -moz-transition:.3s;
@@ -119,15 +108,22 @@ html, body {
     -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+}
+.button-cancel {   
+    text-decoration:none;
+    color: #b64f44;
+    background-color: transparent;
+    border: 1px solid #70251d;
  }
   
-  .button-edit:hover {
+  .button-cancel:hover {
+    text-decoration:none;
     -webkit-transition: none;
     -moz-transition: none;
     -o-transition: none;
     transition: none;
     background-color: #5e2d27;
-    color: #b15b52;
+    color: #b64f44;
     border: 1px solid #b15b52;
     -o-transition:.3s;
     -ms-transition:.3s;
@@ -136,7 +132,100 @@ html, body {
     transition:.3s;
 }
 
-.dropdown-filter{    
+.button-generate { 
+    color: #4585C3;
+    background-color: transparent;
+    background-image: none;
+    border:2px solid #263f56;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+}
+
+.button-generate:hover {
+    text-decoration:none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+    color: #5595D3;
+    background-color: #263f56;
+    border-color: #3A73A3;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+}
+
+.button-edit {
+    color: #b1884f;
+    background-color: transparent;
+    background-image: none;
+    border:2px solid #5b4629;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+  }
+  
+  .button-edit:hover {
+    text-decoration:none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+    color: #b1884f;
+    background-color: #5b4629;
+    border-color: #876a40;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+  }
+  
+  .button-delete {
+    color: #526d74;
+    background-color: transparent;
+    background-image: none;
+    border:2px solid #526d74;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
+  }
+  
+  .button-delete:hover {
+    text-decoration:none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+    color: #65868f;
+    background-color:#324750;
+    border-color: #5a7a81;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+  }
+
+.dropdown-filter {    
     color: var(--grey);
 }
 

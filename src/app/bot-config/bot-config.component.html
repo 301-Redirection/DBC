@@ -13,8 +13,8 @@
                     <div class="card-title config-card-title">
                         <h4>Script Details</h4>
                     </div>
-                    <form>                            
-                        <div class="form-group row">    
+                    <form>
+                        <div class="form-group row">
                             <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="config.name">
@@ -25,10 +25,10 @@
                             <div class="col-sm-9">
                                 <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="config.description"></textarea>
                             </div>
-                        </div>            
+                        </div>
                     </form>
                 </div>
-            </div>      
+            </div>
         </div>
         <!-- End Script Details -->
 
@@ -38,35 +38,35 @@
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Push Lane Desires</h4>
-                    </div>          
-                    <form>                
+                    </div>
+                    <form>
                         <div class="form-group row">
                             <label for="pushTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.pushTop}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.pushTop" class="slider" id="pushTop" name="pushTop" [(ngModel)]="config.pushTop">
-                                </div>          
+                                </div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group row">
                             <label for="pushTop" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.pushMiddle}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.pushMiddle" class="slider" id="pushMiddle" name="pushMiddle" [(ngModel)]="config.pushMiddle">
-                                </div>          
+                                </div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group row">
                             <label for="pushTop" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.pushBottom}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.pushBottom" class="slider" id="pushBottom" name="pushBottom" [(ngModel)]="config.pushBottom">
-                                </div>          
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>      
+            </div>
         </div>
         <!-- End Push Lane Desires -->
 
@@ -75,42 +75,43 @@
 
     <!-- Start Row -->
     <div class="row">
-    
+
         <!-- Start Defend Lane Desires -->
         <div class="col-md-6">
             <div class="card config-card">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Defend Lane Desires</h4>
-                    </div>          
-                    <form>                
+                    </div>
+                    <form>
                         <div class="form-group row">
                             <label for="defendTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.defendTop}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.defendTop" class="slider" id="defendTop" name="defendTop" [(ngModel)]="config.defendTop">
-                                </div>          
+                                </div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group row">
                             <label for="defendMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.defendMiddle}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.defendMiddle" class="slider" id="defendMiddle" name="defendMiddle" [(ngModel)]="config.defendMiddle">
-                                </div>          
+                                </div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group row">
                             <label for="defendBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.defendBottom}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
-                                    <input type="range" min="0" max="10" [value]="config.defendBottom" class="slider" id="defendBottom" name="pushBottdefendBottomom" [(ngModel)]="config.defendBottom">
-                                </div>          
+                                    <input type="range" min="0" max="10" [value]="config.defendBottom" class="slider" id="defendBottom" name="pushBottdefendBottomom"
+                                        [(ngModel)]="config.defendBottom">
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>      
+            </div>
         </div>
         <!-- End Defend Lane Desires -->
 
@@ -120,16 +121,16 @@
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Roam Desires</h4>
-                    </div>          
-                    <form>                
+                    </div>
+                    <form>
                         <div class="form-group row">
                             <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{config.roam}}</label>
                             <div class="col-sm-9">
                                 <div class="slidecontainer">
                                     <input type="range" min="0" max="10" [value]="config.roam" class="slider" id="roam" name="roam" [(ngModel)]="config.roam">
-                                </div>          
+                                </div>
                             </div>
-                        </div>    
+                        </div>
                     </form>
                 </div>
             </div>
@@ -142,81 +143,84 @@
     <!-- Start Row -->
     <div class="row">
 
-    <!-- Start Farm Lane Desires -->
-    <div class="col-md-6">
-      <div class="card config-card">
-        <div class="card-body">
-          <div class="card-title config-card-title">
-            <h4>Farm Lane Desires</h4>
-          </div>          
-          <form>                
-            <div class="form-group row">
-              <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.farmTop}}</label>
-              <div class="col-sm-9">
-                <div class="slidecontainer">
-                  <input type="range" min="0" max="10" [value]="config.farmTop" class="slider" id="farmTop" name="farmTop" [(ngModel)]="config.farmTop">
-                </div>          
-              </div>
-            </div>    
-            <div class="form-group row">
-              <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.farmMiddle}}</label>
-              <div class="col-sm-9">
-                <div class="slidecontainer">
-                  <input type="range" min="0" max="10" [value]="config.farmMiddle" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="config.farmMiddle">
-                </div>          
-              </div>
-            </div>    
-            <div class="form-group row">
-              <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.farmBottom}}</label>
-              <div class="col-sm-9">
-                <div class="slidecontainer">
-                  <input type="range" min="0" max="10" [value]="config.farmBottom" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="config.farmBottom">
-                </div>          
-              </div>
+        <!-- Start Farm Lane Desires -->
+        <div class="col-md-6">
+            <div class="card config-card">
+                <div class="card-body">
+                    <div class="card-title config-card-title">
+                        <h4>Farm Lane Desires</h4>
+                    </div>
+                    <form>
+                        <div class="form-group row">
+                            <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.farmTop}}</label>
+                            <div class="col-sm-9">
+                                <div class="slidecontainer">
+                                    <input type="range" min="0" max="10" [value]="config.farmTop" class="slider" id="farmTop" name="farmTop" [(ngModel)]="config.farmTop">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.farmMiddle}}</label>
+                            <div class="col-sm-9">
+                                <div class="slidecontainer">
+                                    <input type="range" min="0" max="10" [value]="config.farmMiddle" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="config.farmMiddle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.farmBottom}}</label>
+                            <div class="col-sm-9">
+                                <div class="slidecontainer">
+                                    <input type="range" min="0" max="10" [value]="config.farmBottom" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="config.farmBottom">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </form>
         </div>
-      </div>      
-    </div>
-    <!-- End Farm Lane Desires -->
+        <!-- End Farm Lane Desires -->
 
-    <!-- Start Roshan Desires -->
-    <div class="col-md-6">
-      <div class="card config-card">
-        <div class="card-body">
-          <div class="card-title config-card-title">
-            <h4>Roshan Desires</h4>
-          </div>          
-          <form>                
-            <div class="form-group row">
-              <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{config.roshan}}</label>
-              <div class="col-sm-9">
-                <div class="slidecontainer">
-                  <input type="range" min="0" max="10" [value]="config.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="config.roshan">
-                </div>          
-              </div>
-            </div>    
-          </form>
+        <!-- Start Roshan Desires -->
+        <div class="col-md-6">
+            <div class="card config-card">
+                <div class="card-body">
+                    <div class="card-title config-card-title">
+                        <h4>Roshan Desires</h4>
+                    </div>
+                    <form>
+                        <div class="form-group row">
+                            <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{config.roshan}}</label>
+                            <div class="col-sm-9">
+                                <div class="slidecontainer">
+                                    <input type="range" min="0" max="10" [value]="config.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="config.roshan">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- End Roshan Desires -->
+        <!-- End Roshan Desires -->
 
     </div>
     <!-- End Row -->
 
     <!-- Start Button Row -->
     <div class="row">
-        <div class="button-container ml-auto">      
-            <button type="button" class="btn btn-outline-secondary" routerLink="/dashboard">CANCEL</button>
-            <button type="button" class="btn btn-outline-success">SAVE</button>      
-            <button type="button" class="btn btn-outline-primary" (click)="generate()">GENERATE</button>
+        <div class="button-container ml-auto">
+            <button type="button" class="button button-cancel" routerLink="/dashboard">
+                <i class="fas fa-undo mr-1"></i>CANCEL</button>
+            <button type="button" class="button button-edit">
+                <i class="fas fa-save mr-1"></i>SAVE</button>
+            <button type="button" class="button button-generate" (click)="generate()">
+                <i class="fas fa-download mr-1"></i>GENERATE</button>
         </div>
     </div>
     <!-- End Button Row -->
 
-  
-        
+
+
     <!-- <div class="frame">
         <img src="http://i.imgur.com/Sw79q.jpg" alt="Dota 2 map" height="1000">
     </div> -->
