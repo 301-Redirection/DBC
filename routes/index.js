@@ -72,7 +72,7 @@ router.post('/generate', function(req, res) {
     var scriptBuilder = "";
 
     //Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += '-- ' + req.body.teamDesires.name + '--\
+    scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\
                       [[ ' + req.body.teamDesires.description + ']]';
 
     //Creates the UpdateRooshanDesire function
@@ -82,22 +82,23 @@ router.post('/generate', function(req, res) {
 
     //Creates the UpdateRoamDesire function
     scriptBuilder += 'function UpdateRoamDesire() \
-                        return {' + req.body.teamDesires.roam + ' GetTeamMember(' + ((GetTeam() == TEAM_RADIANT) ? 'TEAM_RADIANT' : 'TEAM_DIRE') + ',' + RandomInt(1, 5 ) + ')}\
+                        return {' + req.body.teamDesires.roam + ' GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\
                     end';
 
     //Creates the UpdatePushLaneDesires function
     scriptBuilder += 'function UpdatePushLaneDesires() \
-                        return {' + req.body.teamDesires.push.top + ',' + req.body.teamDesires.push.mid + req.body.teamDesires.push.bot + '}\
+                        return {' + req.body.teamDesires.push.top + ',' + req.body.teamDesires.push.mid
+                        + ',' + req.body.teamDesires.push.bot + '}\
                     end';
 
     //Creates the UpdateDefendLaneDesires function
     scriptBuilder += 'function UpdateDefendLaneDesires() \
-                        return ' + req.body.teamDesires.defend.top + ',' + req.body.teamDesires.defend.mid + req.body.teamDesires.defend.bot + '\
+                        return {' + req.body.teamDesires.defend.top + ',' + req.body.teamDesires.defend.mid + ',' + req.body.teamDesires.defend.bot + '}\
                     end';
 
     //Creates the UpdateFarmLaneDesires function    
     scriptBuilder += 'function UpdateFarmLaneDesires() \
-                        return ' + req.body.teamDesires.farm.top + ',' + req.body.teamDesires.farm.mid + req.body.teamDesires.farm.bot + '\
+                        return {' + req.body.teamDesires.farm.top + ',' + req.body.teamDesires.farm.mid + ',' + req.body.teamDesires.farm.bot + '}\
                     end';
 
 
@@ -115,8 +116,8 @@ router.post('/generate', function(req, res) {
     });*/
 
     console.log(scriptBuilder);
-    res.status(200).send("Received");
-})
+    res.status(200).send({Message: "Received", Script: scriptBuilder});
+});
 
 /** The following routes are here to quickly demonstrate how one would use sequelize.
  *  please consult the documentation for all possible options

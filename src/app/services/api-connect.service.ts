@@ -37,7 +37,7 @@ export class ApiConnectService {
 
     public generate(config: ConfigurationFormat) {
         return this.http
-            .post(API_URL + '/generate', config)
+            .post(API_URL + '/generate', {teamDesires: config})
             .pipe(catchError(this.handleError));
     }
 
