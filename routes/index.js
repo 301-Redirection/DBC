@@ -75,14 +75,14 @@ router.post('/generate', function(req, res) {
     scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
                       [[ ' + req.body.teamDesires.description + ']]\n';
 
-    //Creates the UpdateRooshanDesire function
-    scriptBuilder += 'function UpdateRoshanDesire()\n \
+    //Creates the UpdateRoshanDesire function
+    scriptBuilder += 'function UpdateRoshanDesires()\n \
                         return ' + (req.body.teamDesires.roshan)/10 + '\n \
                     end\n\n';
 
     //Creates the UpdateRoamDesire function
-    scriptBuilder += 'function UpdateRoamDesire()\n \
-                        return {' + (req.body.teamDesires.roam)/10 + ' GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\n \
+    scriptBuilder += 'function UpdateRoamDesires()\n \
+                        return {' + (req.body.teamDesires.roam)/10 + ', GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\n \
                     end\n\n';
 
     //Creates the UpdatePushLaneDesires function
