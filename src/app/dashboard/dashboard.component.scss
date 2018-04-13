@@ -1,0 +1,33 @@
+/* 
+* Dashboard Component Styles 
+*/
+
+/* Global Variables */
+@import '../../variables';
+
+/* Title */
+#dashboardTitle {
+    margin-top: $page-margin-top;
+    margin-bottom: $page-margin-bottom;
+}
+ 
+ 
+/*
+ |--------------------------------------
+ | Responsive
+ |--------------------------------------
+*/
+ 
+@media only screen and (max-width: 750px) { }
+ 
+@media only screen and (max-width: 450px) {
+    #newConfigButton {
+        font-size: 80%;
+    }
+}
+ 
+@media only screen and (max-width: 350px) {
+    #newConfigButton {
+        font-size: 60%;
+    }
+}

@@ -17,20 +17,23 @@ block that contains tests connected with that feature. */
 	@param closure -- function to test with 
 */	
 
-var Request = require("request");
+var Request = require('request');
 
-describe("Server", () => {
+describe('Server', () => {
     var server;
     beforeAll(() => {
-        server = require("../app");
+        var app = require('../app');
+        server = app.listen(3000, () => {
+            console.log('Listening on port ' + server.address().port + '...');
+        });
     });
     afterAll(() => {
         // server.close(); --> cause error
     });
-    describe("GET /", () => {
+    describe('GET /', () => {
         var data = {};
         beforeAll((done) => {
-            Request.get("http://localhost:3000/", (error, response, body) => {
+            Request.get('http://localhost:3000/', (error, response, body) => {
                 data.status = response.statusCode;
                 data.body = body;
                 done();
@@ -44,25 +47,25 @@ describe("Server", () => {
                 
             });
         });
-        /* Note => represents a function that doesn't change "this" variable */
-        it("Status 200", () => {
+        /* Note => represents a function that doesn't change 'this' variable */
+        it('Status 200', () => {
             expect(data.status).toBe(200);
         });
     });
-    describe("GET /test", () => {
+    describe('GET /test', () => {
         var data = {};
         beforeAll((done) => {
-            Request.get("http://localhost:3000/test", (error, response, body) => {
+            Request.get('http://localhost:3000/test', (error, response, body) => {
                 data.status = response.statusCode;
                 data.body = JSON.parse(body);
                 done();
             });
         });
-        it("Status 500", () => {
+        it('Status 500', () => {
             expect(data.status).toBe(500);
         });
-        it("Body", () => {
-            expect(data.body.message).toBe("This is an error response");
+        it('Body', () => {
+            expect(data.body.message).toBe('This is an error response');
         });
     });
 });
