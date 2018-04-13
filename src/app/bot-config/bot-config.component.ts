@@ -3,7 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ConfigurationFormat } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 //var Config = require('./somefile.json');
-import * as app from '../../../config/config.json';
+//import { app } from '../../../config/config.json';
+const API_URL = "http://localhost:3000";
 // Jquery imports
 declare var $: any;
 
@@ -37,7 +38,7 @@ export class BotConfigComponent implements OnInit {
         roam: 0,
         roshan: 0,
     };
-    generateURL = String(app['API_URL']) + '/generate';
+    generateURL = String(API_URL) + '/generate';
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
@@ -49,8 +50,8 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             // call generate from api service
             const response = this.api.generate(this.config).subscribe((data) => {
-                this.generateURL = app['API_URL'] + '/download/' + data.id;
-                console.log(this);
+                this.generateURL = API_URL + '/download/' + data.id;
+                //console.log(app);
             });
         }
     }
