@@ -106,12 +106,12 @@ router.post('/generate', function(req, res) {
     } catch (err) {
         if (err.code !== 'EEXIST') throw err
     }
-    fs.writeFile('./Lua/TeamDesires.lua', scriptBuilder, (err) => {
+    fs.writeFile('./Lua/team_desires.lua', scriptBuilder, (err) => {
         if (err) throw err;
-           res.send('File Generated: TeamDesires.lua');
-        var file = './Lua/TeamDesires.lua';
+           res.send('File Generated: team_desires.lua');
+        var file = './Lua/team_desires.lua';
         var path = require('path');
-        res.download(path.resolve(file), 'TeamDesires.lua');
+        res.download(path.resolve(file), 'team_desires.lua');
     });
 
     res.status(200).send({Message: "Received", Script: scriptBuilder});
