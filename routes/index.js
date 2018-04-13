@@ -109,7 +109,7 @@ router.post('/generate', function(req, res) {
     }
     fs.writeFile('./Lua/TeamDesires.lua', lua, (err) => {
         if (err) throw err;
-           res.send('File Generated: TeamDesiires.lua');
+           res.send('File Generated: TeamDesires.lua');
         var file = './Lua/TeamDesires.lua';
         res.download(file);
     });
