@@ -37,7 +37,7 @@ export class BotConfigComponent implements OnInit {
         roam: 0,
         roshan: 0,
     };
-    generateURL: String(app.API_URL) + '/generate';
+    generateURL = String(app.API_URL) + '/generate';
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
