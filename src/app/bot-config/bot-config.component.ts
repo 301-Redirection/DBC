@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat } from '../configFormat';
+import { ConfigurationFormat } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 //var Config = require('./somefile.json');
 import * as app from '../../../config/config.json';
