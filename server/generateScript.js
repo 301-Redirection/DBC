@@ -1,8 +1,6 @@
 function generateScript() {
     var code = "";
-
     code += genPushLane();
-    
     return code;
 }
 
