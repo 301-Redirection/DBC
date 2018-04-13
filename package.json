@@ -6,7 +6,8 @@
     "ng": "ng",
     "start": "node ./bin/www & ng serve",
     "build": "ng build --prod",
-    "test": "./node_modules/jasmine/bin/jasmine.js",
+    "test-backend": "./node_modules/jasmine/bin/jasmine.js",
+    "test-frontend": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test-init": "./node_modules/jasmine/bin/jasmine.js init"

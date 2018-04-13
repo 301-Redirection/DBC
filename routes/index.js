@@ -79,7 +79,7 @@ router.post('/generate', function(req, res) {
 
     //Creates the UpdateRoshanDesire function
     scriptBuilder += 'function UpdateRoshanDesires()\n';
-    scriptBuilder += `    return ${req.body.teamDesires.roshan};\n`
+    scriptBuilder += `    return ${req.body.teamDesires.roshan/10};\n`
     scriptBuilder += 'end\n\n';
 
     //Creates the UpdateRoamDesire function

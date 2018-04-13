@@ -38,7 +38,7 @@ p {
 /* -- Containers --  */
 
 .container-fluid-custom {    
-    height: 100% !important;
+    height: 100%;
     padding-top: 2rem;
 }
 
@@ -46,6 +46,25 @@ p {
     margin: 5% 5% 5% 5%;
     text-align: center;     
     color: $light-grey;
+}
+
+.banner-frame {
+    width: 100%;
+    text-align: center;     
+    color: $light-grey;
+}
+
+.background {    
+    background-repeat: no-repeat;
+    background-position: center top;    
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important; 
+}
+
+.main-background {
+    background-image: $general-background-image;
 }
 
 
