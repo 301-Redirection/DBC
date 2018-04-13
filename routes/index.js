@@ -3,6 +3,7 @@ var router = express.Router();
 const passport = require('passport');
 var models = require('../models');
 const sequelize = require('sequelize');
+var fs = require('fs');  
 
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -73,45 +74,44 @@ router.post('/generate', function(req, res) {
 
     //Adds the script name and the description as a comment at the top of the file
     scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
-                      [[ ' + req.body.teamDesires.description + ']]\n';
+    [[ ' + req.body.teamDesires.description + ']]\n';
 
     //Creates the UpdateRoshanDesire function
     scriptBuilder += 'function UpdateRoshanDesires()\n \
-                        return ' + (req.body.teamDesires.roshan)/10 + '\n \
-                    end\n\n';
+        return ' + (req.body.teamDesires.roshan)/10 + '\n \
+    end\n\n';
 
     //Creates the UpdateRoamDesire function
     scriptBuilder += 'function UpdateRoamDesires()\n \
-                        return {' + (req.body.teamDesires.roam)/10 + ', GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\n \
-                    end\n\n';
+        return {' + (req.body.teamDesires.roam)/10 + ', GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE)' + ',' + 'RandomInt(1, 5 )' + ')}\n \
+    end\n\n';
 
     //Creates the UpdatePushLaneDesires function
     scriptBuilder += 'function UpdatePushLaneDesires() \n \
-                        return {' + (req.body.teamDesires.push.top)/10 + ',' + (req.body.teamDesires.push.mid)/10 + ',' + (req.body.teamDesires.push.bot)/10 + '}\n \
-                    end\n\n';
+        return {' + (req.body.teamDesires.push.top)/10 + ',' + (req.body.teamDesires.push.mid)/10 + ',' + (req.body.teamDesires.push.bot)/10 + '}\n \
+    end\n\n';
 
     //Creates the UpdateDefendLaneDesires function
     scriptBuilder += 'function UpdateDefendLaneDesires() \n \
-                        return {' + (req.body.teamDesires.defend.top)/10 + ',' + (req.body.teamDesires.defend.mid)/10 + ',' + (req.body.teamDesires.defend.bot)/10 + '}\n \
-                    end\n\n';
+        return {' + (req.body.teamDesires.defend.top)/10 + ',' + (req.body.teamDesires.defend.mid)/10 + ',' + (req.body.teamDesires.defend.bot)/10 + '}\n \
+    end\n\n';
 
     //Creates the UpdateFarmLaneDesires function    
     scriptBuilder += 'function UpdateFarmLaneDesires() \n \
-                        return {' + (req.body.teamDesires.farm.top)/10 + ',' + (req.body.teamDesires.farm.mid)/10 + ',' + (req.body.teamDesires.farm.bot)/10 + '}\n \
-                    end';
+        return {' + (req.body.teamDesires.farm.top)/10 + ',' + (req.body.teamDesires.farm.mid)/10 + ',' + (req.body.teamDesires.farm.bot)/10 + '}\n \
+    end';
 
-
-    lua = scriptBuilder;
     try {
         fs.mkdirSync('./Lua');
     } catch (err) {
         if (err.code !== 'EEXIST') throw err
     }
-    fs.writeFile('./Lua/TeamDesires.lua', lua, (err) => {
+    fs.writeFile('./Lua/TeamDesires.lua', scriptBuilder, (err) => {
         if (err) throw err;
            res.send('File Generated: TeamDesires.lua');
         var file = './Lua/TeamDesires.lua';
-        res.download(file);
+        var path = require('path');
+        res.download(path.resolve(file), 'TeamDesires.lua');
     });
 
     res.status(200).send({Message: "Received", Script: scriptBuilder});
