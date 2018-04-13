@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
 import { API_URL } from './api-url-config';
+import { ConfigurationFormat } from '../configFormat';
 
 @Injectable()
 export class ApiConnectService {
@@ -34,9 +35,16 @@ export class ApiConnectService {
         .pipe(catchError(this.handleError));
     }
 
-    // Handle errors if any
-    private handleError(err: HttpErrorResponse | any) {
-        console.error('An error occurred', err);
-        return Observable.throw(err.message || err);
+    public generate(config: ConfigurationFormat) {
+        return this.http
+            .post(API_URL + '/generate', {teamDesires: config, responseType: 'JSON'})
+            .pipe(catchError(this.handleError));
     }
+
+    // Handle errors if any 
+    private handleError(err: HttpErrorResponse | any) { 
+        console.error('An error occurred', err); 
+        return Observable.throw(err.message || err); 
+    } 
+
 }

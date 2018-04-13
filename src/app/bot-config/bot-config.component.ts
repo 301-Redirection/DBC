@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
+import { ConfigurationFormat } from '../configFormat';
+import { ApiConnectService } from '../services/api-connect.service';
+//var Config = require('./somefile.json');
+import * as app from '../../../config/config.json';
 // Jquery imports
 declare var $: any;
 
@@ -13,32 +16,42 @@ export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // configuration object
-    config = {
-        name: '',
-        description: '',
-        pushTop: 0,
-        pushMiddle: 0,
-        pushBottom: 0,
-        defendTop: 0,
-        defendMiddle: 0,
-        defendBottom: 0,
-        farmTop: 0,
-        farmMiddle: 0,
-        farmBottom: 0,
+    config: ConfigurationFormat = {
+        name: 'test',
+        description: 'test',
+        push: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
+        farm: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
+        defend: {
+            top: 0,
+            mid: 0,
+            bot: 0
+        },
         roam: 0,
         roshan: 0,
     };
+    generateURL = String(app['API_URL']) + '/generate';
 
-    constructor(private title: Title) {
+    constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
     }
 
     ngOnInit() { }
 
-    generate() {
+    save() {
         if (this.validateInfo()) {
-            console.log(this.config);
             // call generate from api service
+            const response = this.api.generate(this.config).subscribe((data) => {
+                this.generateURL = app['API_URL'] + '/download/' + data.id;
+                console.log(this);
+            });
         }
     }
 
