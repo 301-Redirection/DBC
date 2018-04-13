@@ -197,15 +197,15 @@
     <!-- Start Button Row -->
     <div class="row mb-4">
         <div class="button-container ml-auto">
-            <button type="button" class="button button-cancel" routerLink="/dashboard">
+            <button type="button" class="button button-cancel mr-1" routerLink="/dashboard">
                 <i class="fas fa-undo mr-1"></i>
                 CANCEL
             </button>
-            <button type="button" class="button button-edit" (click)="save()">
+            <button type="button" class="button button-edit mr-3" (click)="save()">
                 <i class="fas fa-save mr-1"></i>
                 SAVE
             </button>
-            <a class="button button-generate" id="generateButton" [href]="generateURL" download>
+            <a class="button button-generate mr-1" id="generateButton" [href]="generateURL" download>
                 <i class="fas fa-download mr-1"></i>
                 GENERATE
             </a>
