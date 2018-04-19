@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigurationFormat } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
-//var Config = require('./somefile.json');
-//import { app } from '../../../config/config.json';
-const API_URL = "http://localhost:3000";
+import * as globalConfig from '../../../config/config.json';
+
 // Jquery imports
 declare var $: any;
 
@@ -38,7 +37,7 @@ export class BotConfigComponent implements OnInit {
         roam: 0,
         roshan: 0,
     };
-    generateURL = String(API_URL) + '/generate';
+    generateURL = "";
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
@@ -50,8 +49,7 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             // call generate from api service
             const response = this.api.generate(this.config).subscribe((data) => {
-                this.generateURL = API_URL + '/download/' + data.id;
-                //console.log(app);
+                this.generateURL = globalConfig['app']['API_URL'] + '/download/' + data.id;
             });
         }
     }
