@@ -101,3 +101,8 @@ typings/
 
 # dotenv environment variables file
 .env
+
+package-lock.json
+
+# Generated Lua Scripts
+/Lua/*.lua
