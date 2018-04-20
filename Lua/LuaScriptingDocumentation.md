@@ -50,11 +50,65 @@ Ganking - The act of a group of team players grouping together to attempt to kil
 
 The following points are subdivided by file and then further by the important functions that are being implemented to be used by the bot team.
 
-### 3.1 Team Desires (team_desires.lua)
+### 3.1 Configuration Format
+
+The ConfigurationFormat.ts contains the ConfigurationFormat class. The file looks as follows:
+
+```typescript
+export class ConfigurationFormat {
+    name: string;
+    description: string;
+    
+    push: {
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
+    };
+    farm: {
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
+    };
+    defend: {
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
+    };
+    roam: Condition[];
+    roshan: Condition[];
+}
+
+export class Condition {
+    trigger: Trigger;
+    operator: Operator;
+    value: any;
+}
+
+enum Trigger {
+    Time = 1,
+    EnemyHeroesAlive,
+    AlliedHeroesAlive
+}
+
+enum Operator {
+    LessThan = 1,
+    LessThanEqualTo,
+    EqualTo,
+    GreaterThanEqualTo,
+    GreaterThan,
+    NotEqual
+}
+```
+
+Each of push, farm, defend, roam and roshan correspond to a function in team_desires.lua, which are explained in more detail below. Push, defend and farm are objects that have properties for each of the 3 lanes on the map. 
+
+Each lane property is an array of Condition objects that will be converted into lua conditions. A Condition object has 3 properties: a trigger, an operator and a value. The trigger is the event in the game of Dota that is to be evaluated in the condition. It is of type Trigger which is an enumerated type and has predefined options to choose from, as shown in the code. The operator is an enumerated value that corresponds to one of the values in the enum Operator and determines the type of relation it is that the condition should test. Finally, the value is the value to be tested against the trigger. This is of type `any` as it is possible to test it against numbers, literal strings or even lua functions. 
+
+### 3.2 Team Desires (team_desires.lua)
 
 This file contains functions that determine the desires of the team as a whole.
 
-#### 3.1.1 UpdatePushLaneDesires()
+#### 3.2.1 UpdatePushLaneDesires()
 
 This functions returns a vector of 3 floating point values between 0 and 1 that represents the collective desire of the bot team to push each of the 3 lanes on the map. A value of 1 is an absolute desire and 0 is no desire at all. The first value corresponds to the top lane, the second for mid lane and the last for bottom lane.
 
@@ -66,7 +120,7 @@ There are several factors that influence the desire of a team to push a specfic 
 * Whether the team has any illusions/controllable minions with them, or can spawn any. If the team does, they will have a greater desire to push.
 * Whether the enemy team is close by or not. If they are close by, there will be little desire to push the lane.
 
-#### 3.1.2 UpdateDefendLaneDesires()
+#### 3.2.2 UpdateDefendLaneDesires()
 
 This function also returns a vector of 3 floating point values between 0 and 1 representing the team's desire to push top, mid and bottom lanes respectively. A value of 1 is an absolute desire and 0 is no desire at all. 
 
@@ -76,7 +130,7 @@ Factors influencing defense of a lane:
 * If enemy creeps are mega creeps, then the team will have a much stronger desire to defend
 * If any creeps are attacking buildings, the team will have a strong desire to defend.
 
-#### 3.1.3 UpdateFarmLaneDesires()
+#### 3.2.3 UpdateFarmLaneDesires()
 
 This function also returns a vector of 3 floating point values between 0 and 1 representing the team's desire to push top, mid and bottom lanes respectively. A value of 1 is an absolute desire and 0 is no desire at all.
 
@@ -86,7 +140,7 @@ Factors influencing the desire to farm the lane:
 * The heroes are spread out accross the map and cannot group together for a push
 * The heroes desire to Push/Defend is very low
 
-#### 3.1.4 UpdateRoamDesire()
+#### 3.2.4 UpdateRoamDesire()
 
 This function returns a floating point value between 0 and 1, as well as a unit handle of a hero on the enemy team. The number represents the team's desire to go gank the specified target on the enemy team.
 
@@ -98,7 +152,7 @@ Factors influencing the desire for a team to go gank:
 
 Generally, the team will attempt to gank a/the enemy core, but any hero is still better than none. Priority therfore falls first to cores and then on to supports.
 
-#### 3.1.5 UpdateRoshanDesire()
+#### 3.2.5 UpdateRoshanDesire()
 
 This function simply returns a single floating point value between 0 and 1, and it represents the team's desire to go and attempt to defeat Roshan. 
 
