@@ -8,20 +8,41 @@ export class ConfigurationFormat {
     description: string;
     
     push: {
-        top: number;
-        mid: number;
-        bot: number;
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
     };
     farm: {
-        top: number;
-        mid: number;
-        bot: number;
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
     };
     defend: {
-        top: number;
-        mid: number;
-        bot: number;
+        top: Condition[];
+        mid: Condition[];
+        bot: Condition[];
     };
-    roam: number;
-    roshan: number;
+    roam: Condition[];
+    roshan: Condition[];
+}
+
+export class Condition {
+    trigger: Trigger;
+    operator: Operator;
+    value: any;
+}
+
+enum Trigger {
+    Time = 1,
+    EnemyHeroesAlive,
+    AlliedHeroesAlive
+}
+
+enum Operator {
+    LessThan = 1,
+    LessThanEqualTo,
+    EqualTo,
+    GreaterThanEqualTo,
+    GreaterThan,
+    NotEqual
 }
