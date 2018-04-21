@@ -8,12 +8,10 @@
 
 const models = require('../models');
 const config = require('../config/config.json');
-
 const Sequelize = require('sequelize');
 const { exec, spawnSync } = require('child_process');
 const path = require('path');
-
-const isWin = process.platform === "win32";
+const IS_WIN = process.platform === 'win32';
 
 describe('MySQL Intial Testing', () => {
     var sequelize;
@@ -23,14 +21,13 @@ describe('MySQL Intial Testing', () => {
             dialect: 'mysql',
             dialectOptions: {multipleStatements: true},
         });
-        sequelize.query('DROP DATABASE IF EXISTS ' + config.test.database + "; CREATE DATABASE " + config.test.database + ";");
+        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`);
     });
     afterAll(() => {
         // TODO: workout how to drop database after *ALL* tests are run
     });
-    
     describe('MySQL connection:', () => {
-        it("existence", (done) => {
+        it('existence', (done) => {
             sequelize.authenticate()
             .then(() => {
                 expect(true).toBe(true);
@@ -38,50 +35,43 @@ describe('MySQL Intial Testing', () => {
             });
         });
     });
-
-    describe("Seeding database:", () => {
-
-        it("Migrating schemas", (done) => {
-            const otherPath = path.join('node_modules','.bin', isWin?'sequelize.cmd':'sequelize');
-            const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2]});
-            const tables = sequelize.query("show tables;").then(myTableRows => {
+    describe('Seeding database:', () => {
+        it('Migrating schemas', (done) => {
+            const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+            const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
+            if (child.error) {
+                throw child.error;
+            }
+            const tables = sequelize.query('show tables;').then(myTableRows => {
                 let isPresent = false;
-                for (var i = myTableRows.length - 1; i >= 0 & !isPresent; i--) {
+                for (let i = myTableRows.length - 1; i >= 0; i--) {
                     if (myTableRows[i][0]['Tables_in_test'] === 'BotConfigs') {
                         isPresent = true;
                         break;
                     }
                 }
                 expect(isPresent).toBe(true);
-            })
-
-            if (child.error) {
-                throw child.error;
-            }
-            // console.log('error', child.error);
-            // console.log('stdout ', child.stdout);
-            // console.log('stderr ', child.stderr);
-            done()
-        })
-        it("Seeding data (25 records)", (done) => {
-            const otherPath = path.join('node_modules','.bin', isWin?'sequelize.cmd':'sequelize');
-            const child = spawnSync(otherPath, ['db:seed:all'], { stdio: [0, 1, 2]});
-
-            let bots = models.BotConfig.findAndCountAll().then(result => {
-                // the number of items added to be database should be 25, since the database was recreated
-                expect(result.count).toBe(22);
             });
-
-            if (child.error) {
-                throw child.error;
-            }
-
             // console.log('error', child.error);
             // console.log('stdout ', child.stdout);
             // console.log('stderr ', child.stderr);
             done();
-        })
-
+        });
+        it('Seeding data (25 records)', (done) => {
+            const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+            const child = spawnSync(otherPath, ['db:seed:all'], { stdio: [0, 1, 2]});
+            if (child.error) {
+                throw child.error;
+            }
+            let bots = models.BotConfig.findAndCountAll().then(result => {
+                // the number of items added to be database should be 25, since the database was recreated
+                expect(result.count).toBe(25);
+            });
+            // console.log('error', child.error);
+            // console.log('stdout ', child.stdout);
+            // console.log('stderr ', child.stderr);
+            done();
+        });
     });
 
 });

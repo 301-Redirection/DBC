@@ -17,7 +17,7 @@ block that contains tests connected with that feature. */
 	@param closure -- function to test with 
 */	
 
-var Request = require('request');
+const Request = require('request');
 
 describe('Server', () => {
     var server;
