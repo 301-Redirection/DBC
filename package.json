@@ -71,6 +71,7 @@
     "node-sass": "^4.8.3",
     "protractor": "~5.1.2",
     "proxyquire": "^2.0.1",
+    "seedquelize": "^1.0.1",
     "sequelize-cli": "^4.0.0",
     "sequelize-mock": "^0.10.2",
     "ts-node": "~4.1.0",
