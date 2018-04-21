@@ -20,7 +20,7 @@ install:
 services:
     - mysql
 before_script:
-    - mysql -c "CREATE DATABASE test" -u root
+    - mysql -e "CREATE DATABASE test" -u root
 script:
     - npm run test-backend
     - karma start karma.conf.js --single-run
