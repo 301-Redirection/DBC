@@ -1,0 +1,12 @@
+{
+    "globals": {
+        "describe": false,
+        "beforeAll": false,
+        "afterAll": false,
+        "it": false,
+        "expect": false,
+    },
+    "rules": {
+        "no-console": 0,
+    },
+}

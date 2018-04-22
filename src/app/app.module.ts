@@ -41,7 +41,7 @@ import { LoadingComponent } from './core/loading.component';
         BotConfigModule,
         RouterModule,
     ],
-        providers: [
+    providers: [
         ApiConnectService,
         Title,
         AuthService,

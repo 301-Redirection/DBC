@@ -1,21 +1,17 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-var sassMiddleware = require('node-sass-middleware');
+const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const cors = require('cors');
-const config = require('./server/config');
+const index = require('./routes/index');
+const users = require('./routes/users');
 
-
-var index = require('./routes/index');
-var users = require('./routes/users');
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,16 +25,14 @@ app.use(sassMiddleware({
     src: path.join(__dirname, 'public'),
     dest: path.join(__dirname, 'public'),
     indentedSyntax: true, // true = .sass and false = .scss
-    sourceMap: true
+    sourceMap: true,
 }));
 
-app.use(
-    session({
-        secret: 'it\'s really a secret',
-        resave: true,
-        saveUninitialized: true
-    })
-);
+app.use(session({
+    secret: 'it\'s really a secret',
+    resave: true,
+    saveUninitialized: true,
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
@@ -46,18 +40,18 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 
 
-app.use('/', index); 
+app.use('/', index);
 app.use('/user', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-   
+
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -70,8 +64,8 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-/** 
- * Stuff that doesn't seem to be working too well for us 
+/**
+ * Stuff that doesn't seem to be working too well for us
  * */
 
 // Set port
