@@ -49,7 +49,7 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             // call generate from api service
             const response = this.api.generate(this.config).subscribe((data) => {
-                this.generateURL = `${globalConfig['app']['API_URL']  }/download/${  data.id}`;
+                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
             });
         }
     }
