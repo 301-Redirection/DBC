@@ -10,7 +10,9 @@
     "test": "npm run test-backend && npm run test-frontend",
     "test-backend": "\"./node_modules/jasmine/bin/jasmine.js\"",
     "test-frontend": "\"./node_modules/.bin/karma\" start karma.conf.js --single-run",
-    "lint": "ng lint && ./node_modules/.bin/eslint ./ --ext js",
+    "lint": "npm run lint-ts && npm run lint-js",
+    "lint-ts": "ng lint",
+    "lint-js": "./node_modules/.bin/eslint ./ --ext js",
     "e2e": "ng e2e",
     "test-init": "./node_modules/jasmine/bin/jasmine.js init"
   },
@@ -71,6 +73,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-typescript": "^0.11.0",
+    "htmllint": "^0.7.2",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
