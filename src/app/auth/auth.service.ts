@@ -41,7 +41,9 @@ export class AuthService {
         this.loggedIn = value;
     }
 
-    login() {
+    login(redirect?: string) {
+        const REDIRECT = redirect ? redirect : this.router.url;
+        localStorage.setItem('authRedirect', REDIRECT);
         // Auth0 authorize request
         this.auth0.authorize();
     }
@@ -53,8 +55,9 @@ export class AuthService {
                 window.location.hash = '';                
                 this.getProfile(authResult);
             } else if (err) {
-                console.error(`Error authenticating: ${err.error}`);
+                this.clearRedirect();                                
                 this.router.navigate([ROUTE_NAMES.HOME]);
+                console.error(`Error authenticating: ${err.error}`);
             }
         });
     }
@@ -64,6 +67,8 @@ export class AuthService {
         this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
             if (profile) {
                 this.setSession(authResult, profile);
+                this.router.navigate([localStorage.getItem('authRedirect') || '/']);
+                this.clearRedirect();
             } else if (err) {
                 console.error(`Error authenticating: ${err.error}`);
             }
@@ -85,12 +90,18 @@ export class AuthService {
         this.router.navigate([ROUTE_NAMES.DASHBOARD]);
     }
 
+    private clearRedirect() {
+        // Remove redirect from localStorage
+        localStorage.removeItem('authRedirect');
+    }
+
     logout() {
         // Ensure all auth items removed from localStorage
         localStorage.removeItem('access_token');
         localStorage.removeItem('profile');
         localStorage.removeItem('expires_at');
         localStorage.removeItem('authRedirect');
+        this.clearRedirect();
         // Reset local properties, update loggedIn$ stream
         this.userProfile = undefined;
         this.setLoggedIn(false);
