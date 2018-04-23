@@ -6,7 +6,12 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 const jwtCheck = require('../server/api');
+const jwt = require('express-jwt');
+const config = require('../server/config.js');
+const request = require('request');
 
+//const jwks = require('jwks-rsa');
+const jwksRsa = require('jwks-rsa');
 const router = express.Router();
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -68,10 +73,52 @@ router.get('/failure', (req, res) => {
     });
 });
 
-router.get('/test', jwtCheck, (request, response) => {    
+router.get('/tester', jwtCheck, (request, response) => {    
+    console.log("ethiosentuh"); 
     response.status(500).send({ message: 'This is an error response' });
 });
 
+router.get('/protected',
+
+    jwt({
+      // Dynamically provide a signing key
+      // based on the kid in the header and 
+      // the signing keys provided by the JWKS endpoint.
+      secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://dota-bot-scripting.eu.auth0.com/.well-known/jwks.json`
+      }),
+
+      // Validate the audience and the issuer.
+      audience: 'dota-bot-scripting',
+      issuer: `https://dota-bot-scripting.eu.auth0.com/`,
+      algorithms: ['RS256']
+    }),
+    (req, res)  => {
+        console.log(req.user);
+        request.get('https://dota-bot-scripting.eu.auth0.com/userinfo', 
+            {
+                'auth': {
+                    'bearer': req.headers.authorization.substr(7),
+                },
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(response.body);
+                    const params = JSON.parse(response.body);
+                    models.User.build({
+                        'firstName': params.name,
+                        'lastName': null,
+                        'auth0_id': req.user.sub,
+                    }).save();
+                }
+            },
+        );
+        res.sendStatus(200);
+    }
+);
 
 // Generates the bot TeamDesires script
 router.post('/generate', (req, res) => {

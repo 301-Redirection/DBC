@@ -13,5 +13,5 @@ export const AUTH_CONFIG: AuthConfig = {
     CLIENT_DOMAIN: 'dota-bot-scripting.eu.auth0.com',
     AUDIENCE: 'dota-bot-scripting',
     REDIRECT: `${ENV.BASE_URI}/callback`,
-    SCOPE: 'openid profile',
+    SCOPE: 'openid profile email',
 };
