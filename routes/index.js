@@ -1,22 +1,23 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 const passport = require('passport');
-var models = require('../models');
+const models = require('../models');
 const sequelize = require('sequelize');
-var fs = require('fs');  
-var path = require('path');
-var mime = require('mime');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+
+const router = express.Router();
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
     AUTH0_DOMAIN: 'dota-bot-scripting.eu.auth0.com',
-    AUTH0_CALLBACK_URL: 'http://localhost:3000/callback'
+    AUTH0_CALLBACK_URL: 'http://localhost:3000/callback',
 };
 
 
 /* GET home page. */
 
-router.get('/', function(req, res, next) {
-    if(req.user) {
+router.get('/', (req, res) => {
+    if (req.user) {
         res.redirect('/user');
         return;
     }
@@ -29,14 +30,14 @@ router.get(
         clientID: env.AUTH0_CLIENT_ID,
         domain: env.AUTH0_DOMAIN,
         redirectUri: env.AUTH0_CALLBACK_URL,
-        // audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',        
-        audience: 'dota-bot-scripting',        
+        // audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
+        audience: 'dota-bot-scripting',
         responseType: 'code',
-        scope: 'openid'
+        scope: 'openid',
     }),
-    function(req, res) {
+    (req, res) => {
         res.redirect('/');
-    }
+    },
 );
 
 // Perform session logout and redirect to homepage
@@ -45,86 +46,98 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-router.get( '/callback',
-    passport.authenticate('auth0', {
-        failureRedirect: '/failure'
-    }),
-    function(req, res) {
+router.get(
+    '/callback',
+    passport.authenticate(
+        'auth0',
+        { failureRedirect: '/failure' },
+    ),
+    (req, res) => {
         res.redirect(req.session.returnTo || '/user');
-    }
+    },
 );
 
-router.get('/failure', function(req, res) {
-    var error = req.flash('error');
-    var error_description = req.flash('error_description');
+router.get('/failure', (req, res) => {
+    const error = req.flash('error');
+    const errorDescription = req.flash('error_description');
     req.logout();
     res.render('failure', {
         error: error[0],
-        error_description: error_description[0],
+        errorDescription: errorDescription[0],
     });
 });
 
 router.get('/test', (request, response) => {
-    response.status(500).send({ 'message': 'This is an error response' });
+    response.status(500).send({ message: 'This is an error response' });
 });
 
 
 // Generates the bot TeamDesires script
-router.post('/generate', function(req, res) {
-    var scriptBuilder = "";
+router.post('/generate', (req, res) => {
+    let scriptBuilder = '';
 
-    //Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
-    [[ ' + req.body.teamDesires.description + ']]\n';
+    // Adds the script name and the description as a comment at the top of the file
+    scriptBuilder += `-- ${req.body.teamDesires.name}--\n`;
+    scriptBuilder += `[[ ${req.body.teamDesires.description}]]\n`;
 
-    //Creates the UpdateRoshanDesire function
+    const { teamDesires } = req.body;
+    // Creates the UpdateRoshanDesire function
+    const roshanDesire = teamDesires.roshan / 10;
     scriptBuilder += 'function UpdateRoshanDesires()\n';
-    scriptBuilder += `    return ${req.body.teamDesires.roshan/10};\n`
+    scriptBuilder += `    return ${roshanDesire};\n`;
     scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateRoamDesire function
+    // Creates the UpdateRoamDesire function
+    const roamDesire = teamDesires.roam / 10;
     scriptBuilder += 'function UpdateRoamDesires()\n';
-    scriptBuilder += `    return \{${req.body.teamDesires.roam/10}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
+    scriptBuilder += `    return {${roamDesire}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
     scriptBuilder += 'end\n\n';
 
-    //Creates the UpdatePushLaneDesires function
+    // Creates the UpdatePushLaneDesires function
+    Object.keys(teamDesires.push).map((lane) => {
+        teamDesires.push[lane] /= 10;
+    });
     scriptBuilder += 'function UpdatePushLaneDesires() \n';
-    scriptBuilder += `    return \{${(req.body.teamDesires.push.top)/10}, ${(req.body.teamDesires.push.mid)/10}, ${(req.body.teamDesires.push.bot)/10}\}\n`;
+    scriptBuilder += `    return {${teamDesires.push.top}, ${teamDesires.push.mid}, ${teamDesires.push.bot}}\n`;
     scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateDefendLaneDesires function
+    // Creates the UpdateDefendLaneDesires function
+    Object.keys(req.body.teamDesires.defend).map((lane) => {
+        req.body.teamDesires.defend[lane] /= 10;
+    });
     scriptBuilder += 'function UpdateDefendLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.defend.top)/10}, ${(req.body.teamDesires.defend.mid)/10}, ${(req.body.teamDesires.defend.bot)/10}}\n`;
+    scriptBuilder += `    return {${teamDesires.defend.top}, ${teamDesires.defend.mid}, ${teamDesires.defend.bot}}\n`;
     scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateFarmLaneDesires function    
+    // Creates the UpdateFarmLaneDesires function
+    Object.keys(req.body.teamDesires.farm).map((lane) => {
+        req.body.teamDesires.farm[lane] /= 10;
+    });
     scriptBuilder += 'function UpdateFarmLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.farm.top)/10}, ${(req.body.teamDesires.farm.mid)/10}, ${(req.body.teamDesires.farm.bot)/10}}\n`;
+    scriptBuilder += `    return {${teamDesires.farm.top}, ${teamDesires.farm.mid}, ${teamDesires.farm.bot}}\n`;
     scriptBuilder += 'end';
 
     try {
         fs.mkdirSync('./Lua');
     } catch (err) {
-        if (err.code !== 'EEXIST') throw err
+        if (err.code !== 'EEXIST') throw err;
     }
     fs.writeFile('./Lua/team_desires.lua', scriptBuilder, (err) => {
         if (err) throw err;
-        var file = './Lua/team_desires.lua';
     });
-    res.status(200).send({id: 'team_desires.lua'});
-
+    res.status(200).send({ id: 'team_desires.lua' });
 });
-router.get('/download/:id([a-zA-Z0-9_\\.]+)', function(req, res){
 
-    var file = __dirname + '/../Lua/' + req.params.id;
+router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
+    const file = `${__dirname}/../Lua/${req.params.id}`;
 
-    var filename = path.basename(file);
-    var mimetype = mime.lookup(file);
+    const filename = path.basename(file);
+    const mimetype = mime.lookup(file);
 
-    res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+    res.setHeader('Content-disposition', `attachment; filename=${filename}`);
     res.setHeader('Content-type', mimetype);
 
-    var filestream = fs.createReadStream(file);
+    const filestream = fs.createReadStream(file);
     filestream.pipe(res);
     res.download(file);
 });
@@ -139,8 +152,8 @@ router.get('/example/sequelizer', (request, res) => {
             model: models.User,
             as: 'user',
         }],
-    }).then(function(models) {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+    }).then((returnedModels) => {
+        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
     });
 });
 
@@ -149,9 +162,9 @@ router.get('/example/sequelizer/user', (request, res) => {
         include: [{
             model: models.BotConfig,
             as: 'botConfigs',
-          }],
-    }).then(function(models) {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+        }],
+    }).then((returnedModels) => {
+        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
     });
 });
 
@@ -162,14 +175,14 @@ router.get('/example/sequelizer/user/5', (request, res) => {
             as: 'botConfigs',
         }],
         where: {
-          id: 5
-        }
-    }).then(function(models) {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+            id: 5,
+        },
+    }).then((returnedModels) => {
+        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
     });
 });
 
-const Op = sequelize.Op;
+const { Op } = sequelize;
 router.get('/example/sequelizer/user/query', (request, res) => {
     models.User.findAll({
         include: [{
@@ -177,20 +190,20 @@ router.get('/example/sequelizer/user/query', (request, res) => {
             as: 'botConfigs',
         }],
         where: {
-           [Op.or]: [{id: 12}, {id: 13}]
-          // alternatives ways (syntax) to query 
-          //  id: {
-          //     [Op.and]: {
-          //       [Op.lt]: 13,
-          //       [Op.gt]: 4
-          //   }
-          //  },
-          // firstname: {
-          //   [Op.like]: 'a%'
-          // }
-        }
-    }).then(function(models) {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: models });
+            [Op.or]: [{ id: 12 }, { id: 13 }],
+            // alternatives ways (syntax) to query
+            //  id: {
+            //     [Op.and]: {
+            //       [Op.lt]: 13,
+            //       [Op.gt]: 4
+            //   }
+            //  },
+            // firstname: {
+            //   [Op.like]: 'a%'
+            // }
+        },
+    }).then((returnedModels) => {
+        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
     });
 });
 

@@ -5,3 +5,5 @@ export const ROUTE_NAMES = {
     BOT_MANAGEMENT: '/bot-management',
     CALLBACK: '/callback',
 };
+
+export default 'ROUTE_NAMES';

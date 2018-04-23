@@ -5,7 +5,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
 // Jquery imports
-declare var $: any;
+// let $: any;
 
 @Component({
     selector: 'app-bot-config',
@@ -22,22 +22,22 @@ export class BotConfigComponent implements OnInit {
         push: {
             top: 0,
             mid: 0,
-            bot: 0
+            bot: 0,
         },
         farm: {
             top: 0,
             mid: 0,
-            bot: 0
+            bot: 0,
         },
         defend: {
             top: 0,
             mid: 0,
-            bot: 0
+            bot: 0,
         },
         roam: 0,
         roshan: 0,
     };
-    generateURL = "";
+    generateURL = '';
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
@@ -49,7 +49,7 @@ export class BotConfigComponent implements OnInit {
         if (this.validateInfo()) {
             // call generate from api service
             const response = this.api.generate(this.config).subscribe((data) => {
-                this.generateURL = globalConfig['app']['API_URL'] + '/download/' + data.id;
+                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
             });
         }
     }

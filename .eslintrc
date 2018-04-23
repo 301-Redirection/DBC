@@ -1,0 +1,28 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "func-names": ["error", "never"],
+        "indent": ["error", 4],
+        "import/first": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/extensions": [
+            0,
+            "always",
+            { "ts": "never", "js": "never" },
+        ],
+        "array-callback-return": 0,
+    },
+    "globals": {
+        "jasmine": false,
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts",
+                ],
+            },
+        },
+    },
+}
