@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
 
     test() {
         this.api.test().subscribe(
-            res => {
+            (res) => {
                 console.log(res);
-            }
+            },
         );
     }
 }

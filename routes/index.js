@@ -1,12 +1,9 @@
 const express = require('express');
-const passport = require('passport');
 const models = require('../models');
 const sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const config = require('../server/config.js');
-const request = require('request');
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 
@@ -84,8 +81,11 @@ router.get('/failure', (req, res) => {
     });
 });
 
-router.get('/test', jwtCheck, (request, response) => {    
-    console.log("ethiosentuh"); 
+router.get('/test', (request, response) => {
+    response.status(500).send({ message: 'This is an error response' });
+});
+
+router.get('/testAuthentication', jwtCheck, (request, response) => {
     response.status(200).send({ message: 'This is an error response' });
 });
 
