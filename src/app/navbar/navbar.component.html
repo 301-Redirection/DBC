@@ -26,7 +26,7 @@
 
         <ul class="navbar-nav ml-auto" >
             <!-- Show only if not logged in -->
-            <li class="nav-item" *ngIf="!busyLogin && !auth.loggedIn">
+            <li class="nav-item" *ngIf="!auth.loggedIn">
                 <button class="button-profile my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
                     <i class="fas fa-sign-in-alt"></i>&nbsp;
                     SIGN IN
@@ -36,9 +36,17 @@
             <!-- Show only if logged in -->
             <li class="nav-item" *ngIf="auth.loggedIn">
                 <div class="dropdown">
-                    <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user"></i>&nbsp;
-                        Hello, {{auth.userProfile?.given_name}}
+                    <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+                        <i class="fas fa-user"></i>&nbsp;                      
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name != null">                            
+                            Hello, {{auth.userProfile?.given_name}}
+                        </div>
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname != null">
+                            Hello, {{auth.userProfile?.nickname}}
+                        </div>                        
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname == null && auth.userProfile?.name != null">
+                            Hello, {{auth.userProfile?.name}}
+                        </div>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="welcomeButton">                        
                         <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()">
