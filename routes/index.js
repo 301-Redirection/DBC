@@ -80,29 +80,41 @@ router.post('/generate', (req, res) => {
     scriptBuilder += `-- ${req.body.teamDesires.name}--\n`;
     scriptBuilder += `[[ ${req.body.teamDesires.description}]]\n`;
 
+    const { teamDesires } = req.body;
     // Creates the UpdateRoshanDesire function
+    const roshanDesire = teamDesires.roshan / 10;
     scriptBuilder += 'function UpdateRoshanDesires()\n';
-    scriptBuilder += `    return ${req.body.teamDesires.roshan / 10};\n`;
+    scriptBuilder += `    return ${roshanDesire};\n`;
     scriptBuilder += 'end\n\n';
 
     // Creates the UpdateRoamDesire function
+    const roamDesire = teamDesires.roam / 10;
     scriptBuilder += 'function UpdateRoamDesires()\n';
-    scriptBuilder += `    return {${req.body.teamDesires.roam / 10}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
+    scriptBuilder += `    return {${roamDesire}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
     scriptBuilder += 'end\n\n';
 
     // Creates the UpdatePushLaneDesires function
+    Object.keys(teamDesires.push).map((lane) => {
+        teamDesires.push[lane] /= 10;
+    });
     scriptBuilder += 'function UpdatePushLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.push.top) / 10}, ${(req.body.teamDesires.push.mid) / 10}, ${(req.body.teamDesires.push.bot) / 10}}\n`;
+    scriptBuilder += `    return {${teamDesires.push.top}, ${teamDesires.push.mid}, ${teamDesires.push.bot}}\n`;
     scriptBuilder += 'end\n\n';
 
     // Creates the UpdateDefendLaneDesires function
+    Object.keys(req.body.teamDesires.defend).map((lane) => {
+        req.body.teamDesires.defend[lane] /= 10;
+    });
     scriptBuilder += 'function UpdateDefendLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.defend.top) / 10}, ${(req.body.teamDesires.defend.mid) / 10}, ${(req.body.teamDesires.defend.bot) / 10}}\n`;
+    scriptBuilder += `    return {${teamDesires.defend.top}, ${teamDesires.defend.mid}, ${teamDesires.defend.bot}}\n`;
     scriptBuilder += 'end\n\n';
 
     // Creates the UpdateFarmLaneDesires function
+    Object.keys(req.body.teamDesires.farm).map((lane) => {
+        req.body.teamDesires.farm[lane] /= 10;
+    });
     scriptBuilder += 'function UpdateFarmLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.farm.top) / 10}, ${(req.body.teamDesires.farm.mid) / 10}, ${(req.body.teamDesires.farm.bot) / 10}}\n`;
+    scriptBuilder += `    return {${teamDesires.farm.top}, ${teamDesires.farm.mid}, ${teamDesires.farm.bot}}\n`;
     scriptBuilder += 'end';
 
     try {
