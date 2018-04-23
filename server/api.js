@@ -9,8 +9,7 @@ const jwks = require('jwks-rsa');
 
 module.exports = function (app, config) {
     // Authentication middleware
-    // const jwtCheck =
-    jwt({
+    const jwtCheck = jwt({
         secret: jwks.expressJwtSecret({
             cache: true,
             rateLimit: true,

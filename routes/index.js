@@ -5,6 +5,7 @@ const sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
+const jwtCheck = require('../server/api');
 
 const router = express.Router();
 const env = {
@@ -24,21 +25,21 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'Backend testing of auth0' });
 });
 
-router.get(
-    '/login',
-    passport.authenticate('auth0', {
-        clientID: env.AUTH0_CLIENT_ID,
-        domain: env.AUTH0_DOMAIN,
-        redirectUri: env.AUTH0_CALLBACK_URL,
-        // audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
-        audience: 'dota-bot-scripting',
-        responseType: 'code',
-        scope: 'openid',
-    }),
-    (req, res) => {
-        res.redirect('/');
-    },
-);
+// router.get(
+//     '/login',
+//     passport.authenticate('auth0', {
+//         clientID: env.AUTH0_CLIENT_ID,
+//         domain: env.AUTH0_DOMAIN,
+//         redirectUri: env.AUTH0_CALLBACK_URL,
+//         audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
+//         audience: 'dota-bot-scripting',
+//         responseType: 'code',
+//         scope: 'openid',
+//     }),
+//     (req, res) => {
+//         res.redirect('/');
+//     },
+// );
 
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
@@ -46,16 +47,16 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-router.get(
-    '/callback',
-    passport.authenticate(
-        'auth0',
-        { failureRedirect: '/failure' },
-    ),
-    (req, res) => {
-        res.redirect(req.session.returnTo || '/user');
-    },
-);
+// router.get(
+//     '/callback',
+//     passport.authenticate(
+//         'auth0',
+//         { failureRedirect: '/failure' },
+//     ),
+//     (req, res) => {
+//         res.redirect(req.session.returnTo || '/user');
+//     },
+// );
 
 router.get('/failure', (req, res) => {
     const error = req.flash('error');
@@ -67,7 +68,7 @@ router.get('/failure', (req, res) => {
     });
 });
 
-router.get('/test', (request, response) => {
+router.get('/test', jwtCheck, (request, response) => {    
     response.status(500).send({ message: 'This is an error response' });
 });
 
