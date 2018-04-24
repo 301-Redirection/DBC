@@ -1,18 +1,32 @@
 const express = require('express');
-const passport = require('passport');
 const models = require('../models');
 const sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
 
 const router = express.Router();
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
     AUTH0_DOMAIN: 'dota-bot-scripting.eu.auth0.com',
     AUTH0_CALLBACK_URL: 'http://localhost:3000/callback',
+    AUTH0_API_AUDIENCE: 'dota-bot-scripting',
 };
 
+/* Authenticate JWT at route endpoints */
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://${env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    }),
+    audience: env.AUTH0_API_AUDIENCE,
+    issuer: `https://${env.AUTH0_DOMAIN}/`,
+    algorithm: 'RS256',
+});
 
 /* GET home page. */
 
@@ -24,21 +38,21 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'Backend testing of auth0' });
 });
 
-router.get(
-    '/login',
-    passport.authenticate('auth0', {
-        clientID: env.AUTH0_CLIENT_ID,
-        domain: env.AUTH0_DOMAIN,
-        redirectUri: env.AUTH0_CALLBACK_URL,
-        // audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
-        audience: 'dota-bot-scripting',
-        responseType: 'code',
-        scope: 'openid',
-    }),
-    (req, res) => {
-        res.redirect('/');
-    },
-);
+// router.get(
+//     '/login',
+//     passport.authenticate('auth0', {
+//         clientID: env.AUTH0_CLIENT_ID,
+//         domain: env.AUTH0_DOMAIN,
+//         redirectUri: env.AUTH0_CALLBACK_URL,
+//         audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
+//         audience: 'dota-bot-scripting',
+//         responseType: 'code',
+//         scope: 'openid',
+//     }),
+//     (req, res) => {
+//         res.redirect('/');
+//     },
+// );
 
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
@@ -46,16 +60,16 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-router.get(
-    '/callback',
-    passport.authenticate(
-        'auth0',
-        { failureRedirect: '/failure' },
-    ),
-    (req, res) => {
-        res.redirect(req.session.returnTo || '/user');
-    },
-);
+// router.get(
+//     '/callback',
+//     passport.authenticate(
+//         'auth0',
+//         { failureRedirect: '/failure' },
+//     ),
+//     (req, res) => {
+//         res.redirect(req.session.returnTo || '/user');
+//     },
+// );
 
 router.get('/failure', (req, res) => {
     const error = req.flash('error');
@@ -71,9 +85,12 @@ router.get('/test', (request, response) => {
     response.status(500).send({ message: 'This is an error response' });
 });
 
+router.get('/testAuthentication', jwtCheck, (request, response) => {
+    response.status(200).send({ message: 'This is an error response' });
+});
 
 // Generates the bot TeamDesires script
-router.post('/generate', (req, res) => {
+router.post('/generate', jwtCheck, (req, res) => {
     let scriptBuilder = '';
 
     // Adds the script name and the description as a comment at the top of the file
@@ -128,7 +145,7 @@ router.post('/generate', (req, res) => {
     res.status(200).send({ id: 'team_desires.lua' });
 });
 
-router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
+router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
     const file = `${__dirname}/../Lua/${req.params.id}`;
 
     const filename = path.basename(file);
