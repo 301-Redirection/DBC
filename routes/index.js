@@ -196,10 +196,19 @@ router.get('/testAuthentication', jwtCheck, (request, response) => {
 
 router.get('/recentBots', jwtCheck, (request, response) => {
     console.log(request.user);
-    const botConfigs = models.User.BotConfigs.find({
+    models.BotConfig.find({
 		where: {user_id: request.user.sub},
-	}).then(project => {
-	  response.status(200).send({ didTest: "YES"});
+	}).then((botConfigs) => {
+	  response.status(200).send({ botConfigs: botConfigs});
+	});
+});
+
+router.get('/createBot', jwtCheck, (request, response) => {
+    console.log(request.user);
+    models.BotConfig.find({
+		where: {user_id: request.user.sub},
+	}).then((botConfigs) => {
+	  response.status(200).send({ botConfigs: botConfigs});
 	});
 });
 

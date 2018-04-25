@@ -44,7 +44,7 @@ module.exports = {
                 description: 'This bot was seeded into the database',
                 title: `Test bot ${i}`,
                 configuration: JSON.stringify(configurationDetails),
-                
+                user_id: 'google-oauth2|100051510372753624926',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });
