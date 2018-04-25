@@ -29,7 +29,6 @@ const jwtCheck = jwt({
 });
 
 /* GET home page. */
-
 router.get('/', (req, res) => {
     if (req.user) {
         res.redirect('/user');
@@ -163,65 +162,45 @@ router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
  *  please consult the documentation for all possible options
  *  http://docs.sequelizejs.com/manual/tutorial/querying.html
  */
-router.get('/example/sequelizer', (request, res) => {
-    models.BotConfig.findAll({
-        include: [{
-            model: models.User,
-            as: 'user',
-        }],
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
+
+// const { Op } = sequelize;
+// router.get('/example/sequelizer/user/query', (request, res) => {
+//     models.User.findAll({
+//         include: [{
+//             model: models.BotConfig,
+//             as: 'botConfigs',
+//         }],
+//         where: {
+//             [Op.or]: [{ id: 12 }, { id: 13 }],
+//             // alternatives ways (syntax) to query
+//             //  id: {
+//             //     [Op.and]: {
+//             //       [Op.lt]: 13,
+//             //       [Op.gt]: 4
+//             //   }
+//             //  },
+//             // firstname: {
+//             //   [Op.like]: 'a%'
+//             // }
+//         },
+//     }).then((returnedModels) => {
+//         res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
+//     });
+// });
+
+/* API */
+
+router.get('/testAuthentication', jwtCheck, (request, response) => {
+    response.status(500).send({ message: 'This is an error response' });
 });
 
-router.get('/example/sequelizer/user', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
-});
-
-router.get('/example/sequelizer/user/5', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-        where: {
-            id: 5,
-        },
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
-});
-
-const { Op } = sequelize;
-router.get('/example/sequelizer/user/query', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-        where: {
-            [Op.or]: [{ id: 12 }, { id: 13 }],
-            // alternatives ways (syntax) to query
-            //  id: {
-            //     [Op.and]: {
-            //       [Op.lt]: 13,
-            //       [Op.gt]: 4
-            //   }
-            //  },
-            // firstname: {
-            //   [Op.like]: 'a%'
-            // }
-        },
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
+router.get('/recentBots', jwtCheck, (request, response) => {
+    console.log(request.user);
+    const botConfigs = models.User.BotConfigs.find({
+		where: {user_id: request.user.sub},
+	}).then(project => {
+	  response.status(200).send({ didTest: "YES"});
+	});
 });
 
 module.exports = router;

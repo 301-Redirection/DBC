@@ -20,8 +20,8 @@ module.exports = {
             type: Sequelize.TEXT,
         },
         user_id: {
-            type: Sequelize.INTEGER,
-            references: { model: 'Users', key: 'id', as: 'user_id' },
+            // note: this is the sub field of Auth0 token
+            type: Sequelize.STRING,
         },
         createdAt: {
             allowNull: false,
