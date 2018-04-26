@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const configuration = require('../config/config.json');
+const configuration = require('../config/config.js');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
@@ -25,7 +25,7 @@ let config = configuration[env];
  */
 try {
     const jsonRaw = fs.readFileSync(path.join(__dirname, '..', '.env'));
-    config = JSON.parse(jsonRaw).MySQL[env];
+    config = JSON.parse(jsonRaw)[env];
 } catch (err) {
     // This just fallsback on the original config which is already loaded
 }

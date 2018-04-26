@@ -44,15 +44,34 @@ export class ApiConnectService {
             .pipe(catchError(this.handleError));
     }
 
-    public generate(config: ConfigurationFormat) {
+    public recentBots() {
         return this.http
-            .post(`${API_URL}/generate`, { 
-                teamDesires: config, 
-                responseType: 'JSON',
+            .get(`${API_URL}/bots/recent`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
     }
+
+    public updateBot(config: ConfigurationFormat) {
+        const httpHeaders = {
+            headers: new HttpHeaders({
+                Authorization: this.authHeader,
+            }),
+        };
+        return this.http
+            .post(`${API_URL}/bots/update`, { bot: config }, httpHeaders)
+            .pipe(catchError(this.handleError));
+    }
+
+    // public generate(config: ConfigurationFormat) {
+    //     return this.http
+    //         .post(`${API_URL}/generate`, { 
+    //             teamDesires: config, 
+    //             responseType: 'JSON',
+    //             headers: new HttpHeaders().set('Authorization', this.authHeader),
+    //         })
+    //         .pipe(catchError(this.handleError));
+    // }
 
     // Handle errors if any
     private handleError(err: HttpErrorResponse | any) {

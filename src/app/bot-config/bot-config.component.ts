@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigurationFormat } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
-import * as globalConfig from '../../../config/config.json';
+import * as globalConfig from '../../../config/config.js';
 
 // Jquery imports
 // let $: any;
@@ -16,26 +16,29 @@ export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // configuration object
-    config: ConfigurationFormat = {
+    bot: ConfigurationFormat = {
+        id: -1,
         name: 'test',
         description: 'test',
-        push: {
-            top: 0,
-            mid: 0,
-            bot: 0,
+        configuration: {
+            push: {
+                top: 0,
+                mid: 0,
+                bot: 0,
+            },
+            farm: {
+                top: 0,
+                mid: 0,
+                bot: 0,
+            },
+            defend: {
+                top: 0,
+                mid: 0,
+                bot: 0,
+            },
+            roam: 0,
+            roshan: 0,
         },
-        farm: {
-            top: 0,
-            mid: 0,
-            bot: 0,
-        },
-        defend: {
-            top: 0,
-            mid: 0,
-            bot: 0,
-        },
-        roam: 0,
-        roshan: 0,
     };
     generateURL = '';
 
@@ -48,14 +51,18 @@ export class BotConfigComponent implements OnInit {
     save() {
         if (this.validateInfo()) {
             // call generate from api service
-            const response = this.api.generate(this.config).subscribe((data) => {
-                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
+            // const response = this.api.generate(this.config).subscribe((data) => {
+            //     this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
+            // });
+
+            const response = this.api.updateBot(this.bot).subscribe((data) => {
+                alert('successfully got the bot');
             });
         }
     }
 
     validateInfo(): boolean {
-        if (this.config.name === '' || this.config.description === '') {
+        if (this.bot.name === '' || this.bot.description === '') {
             alert('Please enter your bot script name and description');
             return false;
         }

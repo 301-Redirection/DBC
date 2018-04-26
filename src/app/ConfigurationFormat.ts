@@ -5,24 +5,26 @@
  */
 
 export class ConfigurationFormat {
+    id: number;
     name: string;
     description: string;
-
-    push: {
-        top: number;
-        mid: number;
-        bot: number;
+    configuration: {
+        push: {
+            top: number;
+            mid: number;
+            bot: number;
+        };
+        farm: {
+            top: number;
+            mid: number;
+            bot: number;
+        };
+        defend: {
+            top: number;
+            mid: number;
+            bot: number;
+        };
+        roam: number;
+        roshan: number;
     };
-    farm: {
-        top: number;
-        mid: number;
-        bot: number;
-    };
-    defend: {
-        top: number;
-        mid: number;
-        bot: number;
-    };
-    roam: number;
-    roshan: number;
 }

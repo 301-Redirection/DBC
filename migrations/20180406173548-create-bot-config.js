@@ -19,7 +19,7 @@ module.exports = {
         configuration: {
             type: Sequelize.TEXT,
         },
-        user_id: {
+        userId: {
             // note: this is the sub field of Auth0 token
             type: Sequelize.STRING,
         },

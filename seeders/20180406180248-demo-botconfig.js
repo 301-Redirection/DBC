@@ -5,15 +5,6 @@ function randomizeValue(maxValue) {
     return Math.round(Math.random() * maxValue) / maxValue;
 }
 
-function garbageString(length) {
-    let text = '';
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i += 1) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
-
 module.exports = {
     up: (queryInterface) => {
         /**
@@ -40,11 +31,11 @@ module.exports = {
             };
 
             configs.push({
-                name: `Test bot ${i}`,
+                name: `Test real ${i}`,
                 description: 'This bot was seeded into the database',
                 title: `Test bot ${i}`,
                 configuration: JSON.stringify(configurationDetails),
-                user_id: 'google-oauth2|100051510372753624926',
+                userId: 'auth0|5aaad1a6aa9ad130c17479ba',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });

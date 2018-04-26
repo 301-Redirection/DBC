@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const cors = require('cors');
 const index = require('./routes/index');
 const users = require('./routes/users');
+const bots = require('./routes/bots');
 
 const app = express();
 
