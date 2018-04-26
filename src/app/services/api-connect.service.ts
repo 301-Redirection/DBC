@@ -38,7 +38,7 @@ export class ApiConnectService {
 
     public test() {
         return this.http
-            .get(`${API_URL}/recentBots`, {
+            .get(`${API_URL}/test`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));

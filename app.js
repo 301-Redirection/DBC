@@ -42,6 +42,7 @@ app.use(cors());
 
 app.use('/', index);
 app.use('/user', users);
+app.use('/bots', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -84,10 +84,6 @@ router.get('/test', (request, response) => {
     response.status(500).send({ message: 'This is an error response' });
 });
 
-router.get('/testAuthentication', jwtCheck, (request, response) => {
-    response.status(200).send({ message: 'This is an error response' });
-});
-
 // Generates the bot TeamDesires script
 router.post('/generate', jwtCheck, (req, res) => {
     let scriptBuilder = '';
@@ -188,28 +184,10 @@ router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
 //     });
 // });
 
-/* API */
-
+/* just to test request and via its details */
 router.get('/testAuthentication', jwtCheck, (request, response) => {
-    response.status(500).send({ message: 'This is an error response' });
-});
-
-router.get('/recentBots', jwtCheck, (request, response) => {
-    console.log(request.user);
-    models.BotConfig.find({
-		where: {user_id: request.user.sub},
-	}).then((botConfigs) => {
-	  response.status(200).send({ botConfigs: botConfigs});
-	});
-});
-
-router.get('/createBot', jwtCheck, (request, response) => {
-    console.log(request.user);
-    models.BotConfig.find({
-		where: {user_id: request.user.sub},
-	}).then((botConfigs) => {
-	  response.status(200).send({ botConfigs: botConfigs});
-	});
+    console.log(request);
+    response.status(500).send({ message: request });
 });
 
 module.exports = router;
