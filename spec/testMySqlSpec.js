@@ -12,7 +12,7 @@ describe('MySQL Intial Testing', () => {
     let sequelize;
     beforeAll((done) => {
         sequelize = new Sequelize(
-            config.test.database,
+            "",
             config.test.username,
             config.test.password,
             {
