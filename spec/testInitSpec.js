@@ -1,50 +1,48 @@
-/*Jasmine specs are a description of a feature, 
-or a unit of code. This is why the specs usually start with a describe 
+/* Jasmine specs are a description of a feature,
+or a unit of code. This is why the specs usually start with a describe
 block that contains tests connected with that feature. */
 
 /*
-	some documentation:
-		http://jasmine.github.io/2.0/introduction.html#section-Included_Matchers
+    some documentation:
+    http://jasmine.github.io/2.0/introduction.html#section-Included_Matchers
 */
 
 /* describe -- represents a test suite
-	@param description -- string of test
-	@param closure -- function to test with 
-*/	
+    @param description -- string of test
+    @param closure -- function to test with
+*/
 
 /* it -- represents an actual test
-	@param description -- string of test
-	@param closure -- function to test with 
-*/	
+    @param description -- string of test
+    @param closure -- function to test with
+*/
 
 const Request = require('request');
+const app = require('../app');
 
 describe('Server', () => {
-    var server;
+    let server;
     beforeAll(() => {
-        var app = require('../app');
         server = app.listen(3000, () => {
-            console.log('Listening on port ' + server.address().port + '...');
+            console.log(`Listening on port ${server.address().port} ...`);
         });
     });
     afterAll(() => {
         server.close();
     });
     describe('GET /', () => {
-        var data = {};
+        const data = {};
         beforeAll((done) => {
             Request.get('http://localhost:3000/', (error, response, body) => {
                 data.status = response.statusCode;
                 data.body = body;
                 done();
-                 	
-                	/*
-	                	In this group of tests we issue an HTTP request against our endpoint
-	                	before trying to test anything. Because it is an asynchronous event,
-	                  	we need to work with the done callback. The done callback says,
-	                   	don’t move along to each test until we’re ready. 
-                   	*/
-                
+                /*
+                    In this group of tests we issue an HTTP request against our endpoint
+                    before trying to test anything. Because it is an asynchronous event,
+                    we need to work with the done callback. The done callback says,
+                    don’t move along to each test until we’re ready.
+                */
             });
         });
         /* Note => represents a function that doesn't change 'this' variable */
@@ -53,7 +51,7 @@ describe('Server', () => {
         });
     });
     describe('GET /test', () => {
-        var data = {};
+        const data = {};
         beforeAll((done) => {
             Request.get('http://localhost:3000/test', (error, response, body) => {
                 data.status = response.statusCode;

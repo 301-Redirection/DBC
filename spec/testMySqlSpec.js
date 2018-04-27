@@ -3,34 +3,38 @@
 const models = require('../models');
 const config = require('../config/config.json');
 const Sequelize = require('sequelize');
-const { exec, spawnSync } = require('child_process');
+const { spawnSync } = require('child_process');
 const path = require('path');
 
 const IS_WIN = process.platform === 'win32';
 
 describe('MySQL Intial Testing', () => {
-    var sequelize;
+    let sequelize;
     beforeAll((done) => {
-        sequelize = new Sequelize(config.test.database, config.test.username, config.test.password, {
-            host: 'localhost',
-            dialect: 'mysql',
-            dialectOptions: {multipleStatements: true},
-        });
+        sequelize = new Sequelize(
+            config.test.database,
+            config.test.username,
+            config.test.password,
+            {
+                host: 'localhost',
+                dialect: 'mysql',
+                dialectOptions: { multipleStatements: true },
+            },
+        );
         sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
-            .then((result) => {
+            .then(() => {
                 const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
                 const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
                 if (child.error) {
                     throw child.error;
                 }
                 const otherPath2 = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
-                const child2 = spawnSync(otherPath2, ['db:seed:all'], { stdio: [0, 1, 2]});
+                const child2 = spawnSync(otherPath2, ['db:seed:all'], { stdio: [0, 1, 2] });
                 if (child2.error) {
                     throw child2.error;
                 }
                 sequelize.query(`use ${config.test.database}`).then(() => { done(); });
             });
-
     });
     afterAll(() => {
         // TODO: workout how to drop database after *ALL* tests are run
@@ -38,18 +42,18 @@ describe('MySQL Intial Testing', () => {
     describe('MySQL connection:', () => {
         it('existence', (done) => {
             sequelize.authenticate()
-            .then(() => {
-                expect(true).toBe(true);
-                done();
-            });
+                .then(() => {
+                    expect(true).toBe(true);
+                    done();
+                });
         });
     });
     describe('Seeding database:', () => {
         it('Migrating schemas', (done) => {
-            const tables = sequelize.query('show tables;').then(myTableRows => {
+            sequelize.query('show tables;').then((myTableRows) => {
                 let isPresent = false;
-                for (let i = myTableRows.length - 1; i >= 0; i--) {
-                    if (myTableRows[i][0]['Tables_in_test'] === 'BotConfigs') {
+                for (let i = myTableRows.length - 1; i >= 0; i -= 1) {
+                    if (myTableRows[i][0].Tables_in_test === 'BotConfigs') {
                         isPresent = true;
                         break;
                     }
@@ -59,12 +63,10 @@ describe('MySQL Intial Testing', () => {
             });
         });
         it('Seeding data (25 records)', (done) => {
-            
-            let bots = models.BotConfig.findAndCountAll().then(result => {
+            models.BotConfig.findAndCountAll().then((result) => {
                 expect(result.count).toBe(25);
                 done();
             });
         });
     });
- 
 });

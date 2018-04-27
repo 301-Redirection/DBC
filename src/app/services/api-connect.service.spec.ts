@@ -1,5 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { ApiConnectService } from './api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -17,7 +16,7 @@ describe('ApiConnectService', () => {
             ],
         });
     });
-    let api: ApiConnectService;
+    // let api: ApiConnectService;
 
     it('should be created', inject([ApiConnectService], (service: ApiConnectService) => {
         expect(service).toBeTruthy();

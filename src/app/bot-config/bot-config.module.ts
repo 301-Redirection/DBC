@@ -7,15 +7,15 @@ import { BotConfigComponent } from './bot-config.component';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NavbarModule,
-    RouterModule,
-    FormsModule,
-  ],
-  declarations: [
-    BotConfigComponent,
-  ],
-  exports: [BotConfigComponent],
+    imports: [
+        CommonModule,
+        NavbarModule,
+        RouterModule,
+        FormsModule,
+    ],
+    declarations: [
+        BotConfigComponent,
+    ],
+    exports: [BotConfigComponent],
 })
 export class BotConfigModule { }

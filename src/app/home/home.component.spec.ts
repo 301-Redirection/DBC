@@ -37,7 +37,7 @@ describe('HomeComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Home'`, async(() => {
+    it('should have the title \'Dota 2 Bot Scripting - Home\'', async(() => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Home');
     }));
@@ -45,8 +45,9 @@ describe('HomeComponent', () => {
     it('should render title in a h1 tag', async(() => {
         fixture = TestBed.createComponent(HomeComponent);
         fixture.detectChanges();
-        const compiled = fixture.debugElement.query(By.css('#createBotsTitle')).nativeElement.innerHTML;
+        const compiled = fixture.debugElement
+            .query(By.css('#createBotsTitle')).nativeElement.innerHTML;
+
         expect(compiled).toEqual('Create Your Own Bots!');
     }));
-
 });

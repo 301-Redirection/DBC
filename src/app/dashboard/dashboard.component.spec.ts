@@ -6,8 +6,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RoutesModule, ROUTES } from '../routes/routes.module';
-import { Title } from '@angular/platform-browser';
-import { By } from '@angular/platform-browser';
+import { Title, By } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { HomeModule } from '../home/home.module';
@@ -69,7 +68,7 @@ describe('DashboardComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Dashboard'`, async(() => {
+    it('should have the title \'Dota 2 Bot Scripting - Dashboard\'', async(() => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     }));
