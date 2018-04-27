@@ -5,6 +5,7 @@ const config = require('../config/config.json');
 const Sequelize = require('sequelize');
 const { exec, spawnSync } = require('child_process');
 const path = require('path');
+
 const IS_WIN = process.platform === 'win32';
 
 describe('MySQL Intial Testing', () => {
