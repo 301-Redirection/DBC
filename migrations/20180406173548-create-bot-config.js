@@ -22,6 +22,7 @@ module.exports = {
         userId: {
             // note: this is the sub field of Auth0 token
             type: Sequelize.STRING,
+            underscore: false,
         },
         createdAt: {
             allowNull: false,

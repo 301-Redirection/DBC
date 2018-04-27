@@ -22,6 +22,9 @@ router.get('/recent', jwtCheck, (request, response) => {
 
 /* will always return JSON of the new record details */
 router.post('/update', jwtCheck, (request, response) => {
+    // console.log(request.body.bot.configuration);
+    // console.log(JSON.stringify(request.body.bot.configuration));
+    // const botConfigJSONRaw = JSON.stringify(request.body.bot.configuration);
     const {
         name, id, description, configuration,
     } = request.body.bot;
@@ -31,8 +34,8 @@ router.post('/update', jwtCheck, (request, response) => {
         models.BotConfig.create({
             name,
             description,
-            configuration,
-            userId,
+            configuration: JSON.stringify(configuration),
+            userId: userId,
             createdAt: new Date(),
             updatedAt: new Date(),
         })
@@ -50,7 +53,7 @@ router.post('/update', jwtCheck, (request, response) => {
                 botConfig.update({
                     name,
                     description,
-                    configuration,
+                    configuration: JSON.stringify(configuration),
                     updatedAt: new Date(),
                 });
                 response.status(200).send({ botConfig });

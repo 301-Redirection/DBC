@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const jsonRaw = fs.readFileSync(path.join(__dirname, '..', '.env'));
+console.log(JSON.parse(jsonRaw));
 const config = JSON.parse(jsonRaw);
 
 module.exports = {
