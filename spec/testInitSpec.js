@@ -28,7 +28,7 @@ describe('Server', () => {
         });
     });
     afterAll(() => {
-         server.close();
+        server.close();
     });
     describe('GET /', () => {
         var data = {};
