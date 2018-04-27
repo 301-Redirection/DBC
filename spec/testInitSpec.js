@@ -28,7 +28,7 @@ describe('Server', () => {
         });
     });
     afterAll(() => {
-        // server.close(); --> cause error
+        server.close();
     });
     describe('GET /', () => {
         const data = {};
