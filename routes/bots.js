@@ -61,4 +61,14 @@ router.post('/update', jwtCheck, (request, response) => {
     }
 });
 
+router.post('/get', jwtCheck, (request, response) => {
+    const id = request.body.botId;
+    models.BotConfig.findAll({
+        where: { userId: request.user.sub, id: botId },
+    })
+        .then((botConfig) => {
+            response.status(200).send({ botConfig });
+        });
+});
+
 module.exports = router;
