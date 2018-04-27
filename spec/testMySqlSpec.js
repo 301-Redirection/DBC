@@ -15,13 +15,32 @@ const IS_WIN = process.platform === 'win32';
 
 describe('MySQL Intial Testing', () => {
     var sequelize;
-    beforeAll(() => {
+    beforeAll((done) => {
         sequelize = new Sequelize(config.test.database, config.test.username, config.test.password, {
             host: 'localhost',
             dialect: 'mysql',
             dialectOptions: {multipleStatements: true},
         });
-        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`);
+        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
+            .then((result) => {
+                console.log("Starting migration")
+                const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+                const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
+                console.log("Finished migration")
+                if (child.error) {
+                    throw child.error;
+                }
+                console.log("Starting seeding");
+                const otherPath2 = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+                const child2 = spawnSync(otherPath2, ['db:seed:all'], { stdio: [0, 1, 2]});
+                console.log("finished seeding");
+                if (child2.error) {
+                    throw child2.error;
+                }
+                sequelize.query(`use ${config.test.database}`)
+                    .then(() => { done(); });
+            });
+
     });
     afterAll(() => {
         // TODO: workout how to drop database after *ALL* tests are run
@@ -37,11 +56,9 @@ describe('MySQL Intial Testing', () => {
     });
     describe('Seeding database:', () => {
         it('Migrating schemas', (done) => {
-            const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
-            const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
-            if (child.error) {
-                throw child.error;
-            }
+            
+
+            console.log("Querying database");
             const tables = sequelize.query('show tables;').then(myTableRows => {
                 let isPresent = false;
                 for (let i = myTableRows.length - 1; i >= 0; i--) {
@@ -58,11 +75,7 @@ describe('MySQL Intial Testing', () => {
             done();
         });
         it('Seeding data (25 records)', (done) => {
-            const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
-            const child = spawnSync(otherPath, ['db:seed:all'], { stdio: [0, 1, 2]});
-            if (child.error) {
-                throw child.error;
-            }
+            
             let bots = models.BotConfig.findAndCountAll().then(result => {
                 // the number of items added to be database should be 25, since the database was recreated
                 expect(result.count).toBe(25);
