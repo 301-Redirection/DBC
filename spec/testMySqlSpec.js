@@ -1,9 +1,3 @@
-/** NOTE: a database name as specified in config should already 
- *       exist on MySQL Sever!!
- * PS: please do not remove the console.log() comments, they may be needed 
- *     in the near future...
- */
-
 // TODO: Ensure this test runs first
 
 const models = require('../models');
@@ -23,22 +17,17 @@ describe('MySQL Intial Testing', () => {
         });
         sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
             .then((result) => {
-                console.log("Starting migration")
                 const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
                 const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
-                console.log("Finished migration")
                 if (child.error) {
                     throw child.error;
                 }
-                console.log("Starting seeding");
                 const otherPath2 = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
                 const child2 = spawnSync(otherPath2, ['db:seed:all'], { stdio: [0, 1, 2]});
-                console.log("finished seeding");
                 if (child2.error) {
                     throw child2.error;
                 }
-                sequelize.query(`use ${config.test.database}`)
-                    .then(() => { done(); });
+                sequelize.query(`use ${config.test.database}`).then(() => { done(); });
             });
 
     });
@@ -56,9 +45,6 @@ describe('MySQL Intial Testing', () => {
     });
     describe('Seeding database:', () => {
         it('Migrating schemas', (done) => {
-            
-
-            console.log("Querying database");
             const tables = sequelize.query('show tables;').then(myTableRows => {
                 let isPresent = false;
                 for (let i = myTableRows.length - 1; i >= 0; i--) {
@@ -68,22 +54,15 @@ describe('MySQL Intial Testing', () => {
                     }
                 }
                 expect(isPresent).toBe(true);
+                done();
             });
-            // console.log('error', child.error);
-            // console.log('stdout ', child.stdout);
-            // console.log('stderr ', child.stderr);
-            done();
         });
         it('Seeding data (25 records)', (done) => {
             
             let bots = models.BotConfig.findAndCountAll().then(result => {
-                // the number of items added to be database should be 25, since the database was recreated
                 expect(result.count).toBe(25);
+                done();
             });
-            // console.log('error', child.error);
-            // console.log('stdout ', child.stdout);
-            // console.log('stderr ', child.stderr);
-            done();
         });
     });
  
