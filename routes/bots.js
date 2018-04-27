@@ -35,7 +35,7 @@ router.post('/update', jwtCheck, (request, response) => {
             name,
             description,
             configuration: JSON.stringify(configuration),
-            userId: userId,
+            userId,
             createdAt: new Date(),
             updatedAt: new Date(),
         })
@@ -61,10 +61,10 @@ router.post('/update', jwtCheck, (request, response) => {
     }
 });
 
-router.post('/get', jwtCheck, (request, response) => {
+router.get('/get', jwtCheck, (request, response) => {
     const id = request.body.botId;
     models.BotConfig.findAll({
-        where: { userId: request.user.sub, id: botId },
+        where: { userId: request.user.sub, id },
     })
         .then((botConfig) => {
             response.status(200).send({ botConfig });
@@ -73,7 +73,7 @@ router.post('/get', jwtCheck, (request, response) => {
 
 router.get('/all', jwtCheck, (request, response) => {
     models.BotConfig.findAll({
-        where: { userId: request.user.sub},
+        where: { userId: request.user.sub },
     })
         .then((botConfigs) => {
             response.status(200).send({ botConfigs });
