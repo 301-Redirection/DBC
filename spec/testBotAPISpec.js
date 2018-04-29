@@ -1,17 +1,20 @@
-// TODO: Ensure this test runs first
-
-const models = require('../models');
+/* TODO: find a way to mock Auth0
+ *       fix asynchronous calls and stuff...
+ */
 const config = require('../config/config.json');
 const Sequelize = require('sequelize');
-const path = require('path');
-const request = require("request");
+const request = require('request');
 const app = require('../app');
+const http = require('http');
 
-const IS_WIN = process.platform === 'win32';
+function hasText(string, text) {
+    return string.indexOf(text) !== -1;
+}
 
 describe('Bot API testing', () => {
-    let sequelize, server;
-    let responseToken;
+    let sequelize;
+    let server;
+    const responseToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5rVXlSVUZCUlVFMk9UazNOalEyTkRNM09UUXdNek5CTlVRM01USkZOakE0T0VNNFJrWkRRUSJ9.eyJpc3MiOiJodHRwczovL2RvdGEtYm90LXNjcmlwdGluZy5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDAwNTE1MTAzNzI3NTM2MjQ5MjYiLCJhdWQiOlsiZG90YS1ib3Qtc2NyaXB0aW5nIiwiaHR0cHM6Ly9kb3RhLWJvdC1zY3JpcHRpbmcuZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTUyNTAxNjAwMSwiZXhwIjoxNTI1MDIzMjAxLCJhenAiOiJrWXctRjlKeklUWWt5RFpvUVVpRkU1UEdxa2VBdkJfSCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.u3ap1ZAby7fMjAlHmTxNCE3T9DxZyD74zf7VObDQocxSWc_NT-s0l3uxg5atF_BM7ntmHqXAnDizVoK3YjcwFw4bdFraaBvLDEB9VNwYk641dRJaTwfKW87NZUgLCc9ty_41O3Ce0HaTtzrlFsM5G4KhEggsecUcnsIUlOCXEZLmqnGG0NxjrXZ704odA9jkNVibtLpdKt6N8dsBZr4lZq5Pilxqb4t0va2aHxfZwxPXxKE36PM-LhEdmy1oubeQpZ9-o8iN4aGICwn1R8xM2d4ln9aixN_uJARJ46yHdwuWxo9fOgxJcHfxbRA5CHJ5gIA_S_1XAUFxC-aMj0j5Lw';
     beforeAll((done) => {
         server = app.listen(3000, () => {
             console.log(`Listening on port ${server.address().port} ...`);
@@ -24,29 +27,34 @@ describe('Bot API testing', () => {
                 host: 'localhost',
                 dialect: 'mysql',
                 dialectOptions: { multipleStatements: true },
-            }
+            },
         );
+        sequelize.query(`USE ${config.test.database}`).then(() => { done(); })
+            .then(() => {
+                // clear all entries from table
+                sequelize.query('DELETE FROM BotConfigs');
+            });
 
-        const options = { 
-            method: 'POST',
-            url: 'https://u16039689.auth0.com/oauth/token',
-            headers: { 'content-type': 'application/json' },
-            body: 
-                { 
-                    grant_type: 'client_credentials',
-                    client_id: '2sKYIhmVy6iQeTetLnTpYIfS1Zxb1t7n',
-                    client_secret: 'f4NdakjW_JwmhE8mYin_P-_EGepdF8nYBGY1YoUvmFa2Q6ZJXGlGCghAjC3xJeIi',
-                    audience: 'https://u16039689.auth0.com/api/v2/',
-                },
-            json: true
-        };
+        // const options = {
+        //     method: 'POST',
+        //     url: 'https://u16039689.auth0.com/oauth/token',
+        //     headers: { 'content-type': 'application/json' },
+        //     body: {
+        //             grant_type: 'client_credentials',
+        //             client_id: '2sKYIhmVy6iQeTetLnTpYIfS1Zxb1t7n',
+        //             client_secret: 'f4NdakjW_JwmhE8mYin_P-_
+        // EGepdF8nYBGY1YoUvmFa2Q6ZJXGlGCghAjC3xJeIi',
+        //             audience: 'https://u16039689.auth0.com/api/v2/',
+        //         },
+        //     json: true
+        // };
 
-        request(options, (error, response, body) => {
-            if (error) throw new Error(error);
-            console.log(body);
-            responseToken = body;
-            done();
-        });
+        // request(options, (error, response, body) => {
+        //     if (error) throw new Error(error);
+        //     console.log(body);
+        //     responseToken = body;
+        //     done();
+        // });
     });
     afterAll(() => {
         server.close();
@@ -60,22 +68,324 @@ describe('Bot API testing', () => {
                 });
         });
     });
-    describe('Retrieve Recent Bots', () => {
-        it('---', (done) => {
-            console.log('responseToken');
-            console.log(responseToken);
-            request.headers.authorization = "bearer: " + responseToken.access_token;
-            console.log(request.headers.authorization);
-            request.get('http://localhost:3000/bots/recent', (err, response, body) => {
-                expect(response.statusCode).toBe(200);
-                if (!err && response.statusCode == 200) {
-                    const result = JSON.parse(body);
-                    console.log('Retrieve Recent Bots');
-                    console.log(result);
-                }
+    const header = {
+        authorization: `bearer ${responseToken}`,
+    };
+    const postHeader = {
+        authorization: `bearer ${responseToken}`,
+        'content-type': 'application/json',
+    };
+    // for config data that we post at some point
+    const exampleConfig = JSON.stringify({
+        teamDesires: {
+            defend: {
+                top: 0.6,
+                mid: 0.6,
+                bot: 0.6,
+            },
+            push: {
+                top: 0.6,
+                mid: 0.6,
+                bot: 0.6,
+            },
+            roam: 0.6,
+            roshan: 0.6,
+        },
+    });
+
+    let validId;
+    describe('', () => {
+        // creating a bot in a valid way
+        it('-- Initial Recent', (done) => {
+            const options = {
+                url: 'http://localhost:3000/bots/recent',
+                headers: header,
+            };
+            request.get(options, (err, response, body) => {
+                if (err) { throw err; }
+                const json = JSON.parse(body);
+                console.log(json);
+                expect(json.botConfigs).toBeDefined();
+                expect(json.botConfigs.length).toBe(0);
                 done();
             });
         });
+        it('--Initial All', (done) => {
+            const options = {
+                url: 'http://localhost:3000/bots/all',
+                headers: header,
+            };
+            request.get(options, (err, response, body) => {
+                if (err) { throw err; }
+                const json = JSON.parse(body);
+                console.log(json);
+                expect(json.botConfigs).toBeDefined();
+                expect(json.botConfigs.length).toBe(0);
+                done();
+            });
+        });
+        it('-- New valid botconfig ', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {
+                bot: {
+                    id: -1,
+                    name: 'Test bot 1',
+                    description: 'Bot made during jasmine testing of express',
+                    configuration: exampleConfig,
+                },
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    // console.log(`!!!RESPONSE`);
+                    expect(hasText(chunk, 'error')).toBe(false);
+                    const chunkJSON = JSON.parse(chunk);
+                    // console.log(chunkJSON);
+                    // console.log(chunkJSON.botConfig);
+                    expect(chunkJSON.botConfig.id).toBeGreaterThan(0);
+                    validId = chunkJSON.botConfig.id;
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- New botconfig missing parameters', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {
+                bot: {
+                    id: -1,
+                    name: 'Test bot 1',
+                },
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    expect(hasText(chunk, 'error')).toBe(true);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- New botconfig no parameters', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {};
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    expect(hasText(chunk, 'error')).toBe(true);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- Update past botconfig by validId', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {
+                bot: {
+                    id: validId,
+                    // new value
+                    name: 'Test bot 666',
+                    description: 'Bot made during jasmine testing of express',
+                    configuration: exampleConfig,
+                },
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    // console.log(`!!!RESPONSE`);
+                    expect(hasText(chunk, 'error')).toBe(false);
+                    const chunkJSON = JSON.parse(chunk);
+                    // console.log(chunkJSON);
+                    // console.log(chunkJSON.botConfig);
+                    expect(chunkJSON.botConfig.name).toBe('Test bot 666');
+                    expect(chunkJSON.botConfig.id).toBe(validId);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- Update past botconfig non-existent id', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {
+                bot: {
+                    id: 989,
+                    // new value
+                    name: 'Test bot 666',
+                    description: 'Bot made during jasmine testing of express',
+                    configuration: exampleConfig,
+                },
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    console.log('!!!RESPONSE');
+                    expect(hasText(chunk, 'error')).toBe(false);
+                    const chunkJSON = JSON.parse(chunk);
+                    console.log(chunkJSON);
+                    console.log(chunkJSON.botConfig);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- Update past botconfig no paramters', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/update',
+                port: server.address().port,
+                method: 'POST',
+                headers: postHeader,
+            };
+            const postParamters = {};
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    expect(hasText(chunk, 'error')).toBe(true);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('--Recent', (done) => {
+            const options = {
+                url: 'http://localhost:3000/bots/recent',
+                headers: header,
+            };
+            request.get(options, (err, response, body) => {
+                if (err) { throw err; }
+                const json = JSON.parse(body);
+                console.log(json);
+                expect(json.botConfigs).toBeDefined();
+                expect(json.botConfigs.length).toBe(1);
+                done();
+            });
+        });
+        it('--All', (done) => {
+            const options = {
+                url: 'http://localhost:3000/bots/all',
+                headers: header,
+            };
+            request.get(options, (err, response, body) => {
+                if (err) { throw err; }
+                const json = JSON.parse(body);
+                console.log(json);
+                expect(json.botConfigs).toBeDefined();
+                expect(json.botConfigs.length).toBe(1);
+                done();
+            });
+        });
+        it('-- Get validId bot', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/get',
+                port: server.address().port,
+                method: 'GET',
+                headers: header,
+            };
+            const postParamters = {
+                botId: validId,
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    expect(chunk).not.toBe('{}');
+                    const chunkJSON = JSON.parse(chunk);
+                    expect(chunkJSON.id).toBe(validId);
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
+        it('-- Get bot with invalid id', (done) => {
+            const options = {
+                hostname: 'localhost',
+                path: '/bots/get',
+                port: server.address().port,
+                method: 'GET',
+                headers: header,
+            };
+            const postParamters = {
+                botId: 666,
+            };
+            const postData = JSON.stringify(postParamters);
+            const req = http.request(options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => {
+                    expect(chunk).toBe('{}');
+                    done();
+                });
+            });
+            req.on('error', (e) => {
+                throw e;
+            });
+            req.write(postData);
+            req.end();
+        });
     });
-
 });
+

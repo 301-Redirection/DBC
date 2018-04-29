@@ -1,6 +1,7 @@
 const express = require('express');
 const models = require('../models');
 const { jwtCheck } = require('./jwtCheck');
+const { check, validationResult } = require('express-validator/check');
 
 const router = express.Router();
 
@@ -16,15 +17,21 @@ router.get('/recent', jwtCheck, (request, response) => {
         limit: LIMIT_NUMBER,
     })
         .then((botConfigs) => {
-            response.status(200).send({ botConfigs });
+            response.status(200).json({ botConfigs });
         });
 });
 
 /* will always return JSON of the new record details */
-router.post('/update', jwtCheck, (request, response) => {
-    // console.log(request.body.bot.configuration);
-    // console.log(JSON.stringify(request.body.bot.configuration));
-    // const botConfigJSONRaw = JSON.stringify(request.body.bot.configuration);
+router.post('/update', jwtCheck, [
+    check('bot.id').exists(),
+    check('bot.name').exists(),
+    check('bot.description').exists(),
+    check('bot.configuration').exists(),
+], (request, response) => {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+        response.status(422).json({ errors: errors.mapped() });
+    }
     const {
         name, id, description, configuration,
     } = request.body.bot;
@@ -40,7 +47,7 @@ router.post('/update', jwtCheck, (request, response) => {
             updatedAt: new Date(),
         })
             .then((botConfig) => {
-                response.status(200).send({ botConfig });
+                response.status(200).json({ botConfig });
             });
     } else {
         models.BotConfig.find({
@@ -50,33 +57,35 @@ router.post('/update', jwtCheck, (request, response) => {
             },
         })
             .then((botConfig) => {
-                botConfig.update({
-                    name,
-                    description,
-                    configuration: JSON.stringify(configuration),
-                    updatedAt: new Date(),
-                });
-                response.status(200).send({ botConfig });
+                if (botConfig !== null) {
+                    botConfig.update({
+                        name,
+                        description,
+                        configuration: JSON.stringify(configuration),
+                        updatedAt: new Date(),
+                    });
+                    response.status(200).json({ botConfig });
+                } else {
+                    response.status(200).json({});
+                }
             });
     }
 });
-
 router.get('/get', jwtCheck, (request, response) => {
-    const id = request.body.botId;
+    const id = request.query.botId;
     models.BotConfig.findAll({
         where: { userId: request.user.sub, id },
     })
         .then((botConfig) => {
-            response.status(200).send({ botConfig });
+            response.status(200).json({ botConfig });
         });
 });
-
 router.get('/all', jwtCheck, (request, response) => {
     models.BotConfig.findAll({
         where: { userId: request.user.sub },
     })
         .then((botConfigs) => {
-            response.status(200).send({ botConfigs });
+            response.status(200).json({ botConfigs });
         });
 });
 

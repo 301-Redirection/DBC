@@ -11,6 +11,7 @@ const cors = require('cors');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const bots = require('./routes/bots');
+const validator = require('express-validator');
 
 const app = express();
 
@@ -39,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
-
+app.use(validator({}));
 
 app.use('/', index);
 app.use('/user', users);

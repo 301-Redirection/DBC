@@ -9,7 +9,7 @@ const path = require('path');
 const IS_WIN = process.platform === 'win32';
 
 describe('MySQL Intial Testing', () => {
-    let sequelize 
+    let sequelize;
     beforeAll((done) => {
         sequelize = new Sequelize(
             '',
@@ -19,7 +19,7 @@ describe('MySQL Intial Testing', () => {
                 host: 'localhost',
                 dialect: 'mysql',
                 dialectOptions: { multipleStatements: true },
-            }
+            },
         );
         sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
             .then(() => {

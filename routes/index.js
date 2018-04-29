@@ -167,7 +167,8 @@ router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
 
 /* just to test request and via its details */
 router.get('/testAuthentication', jwtCheck, (request, response) => {
-    response.status(500).send({ message: request });
+    // console.log(request.headers);
+    response.status(500).send({ message: 'you have been sucessfully authenticated' });
 });
 
 module.exports = router;
