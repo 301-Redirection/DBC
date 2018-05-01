@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat } from '../ConfigurationFormat';
+import { ConfigurationFormat, Condition, Trigger } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
@@ -15,27 +15,35 @@ declare var $: any;
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
+    // default condition
+    condition: Condition[] = {
+        trigger: 1,
+        operator: 1,
+        conditional: 0,
+        action: 0
+    };
+
     // configuration object
     config: ConfigurationFormat = {
         name: 'test',
         description: 'test',
         push: {
-            top: 0,
-            mid: 0,
-            bot: 0
+            top: this.condition,
+            mid: this.condition,
+            bot: this.condition
         },
         farm: {
-            top: 0,
-            mid: 0,
-            bot: 0
+            top: this.condition,
+            mid: this.condition,
+            bot: this.condition            
         },
         defend: {
-            top: 0,
-            mid: 0,
-            bot: 0
+            top: this.condition,
+            mid: this.condition,
+            bot: this.condition
         },
-        roam: 0,
-        roshan: 0,
+        roam: this.condition,
+        roshan: this.condition,
     };
     generateURL = "";
 
