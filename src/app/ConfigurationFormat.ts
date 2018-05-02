@@ -33,13 +33,13 @@ export class Condition {
     action: any; // TODO: Come up with action types
 }
 
-enum Trigger {
+export enum Trigger {
     Time = 1,
     EnemyHeroesAlive,
     AlliedHeroesAlive
 }
 
-enum Operator {
+export enum Operator {
     LessThan = 1,
     LessThanEqualTo,
     EqualTo,

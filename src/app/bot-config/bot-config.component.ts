@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat, Condition, Trigger } from '../ConfigurationFormat';
+import { ConfigurationFormat, Condition, Trigger, Operator } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
@@ -16,9 +16,9 @@ export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
     // default condition
-    condition: Condition[] = {
-        trigger: 1,
-        operator: 1,
+    condition: Condition = {
+        trigger: Trigger.Time,
+        operator: Operator.LessThan,
         conditional: 0,
         action: 0
     };
@@ -28,22 +28,77 @@ export class BotConfigComponent implements OnInit {
         name: 'test',
         description: 'test',
         push: {
-            top: this.condition,
-            mid: this.condition,
-            bot: this.condition
+            top: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            mid: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            bot: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
         },
         farm: {
-            top: this.condition,
-            mid: this.condition,
-            bot: this.condition            
+            top: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            mid: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            bot: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }]
         },
         defend: {
-            top: this.condition,
-            mid: this.condition,
-            bot: this.condition
+            top: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            mid: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }],
+            bot: [{ 
+                trigger: Trigger.Time,
+                operator: Operator.LessThan,
+                conditional: 0,
+                action: 0 
+            }]
         },
-        roam: this.condition,
-        roshan: this.condition,
+        roam: [{ 
+            trigger: Trigger.Time,
+            operator: Operator.LessThan,
+            conditional: 0,
+            action: 0 
+        }],
+        roshan: [{ 
+            trigger: Trigger.Time,
+            operator: Operator.LessThan,
+            conditional: 0,
+            action: 0 
+        }]
     };
     generateURL = "";
 
