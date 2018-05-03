@@ -8,10 +8,10 @@ module.exports = {
         scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
         [[ ' + req.body.teamDesires.description + ']]\n';
         
-        //Creates the UpdateRoshanDesire function    
+        //Creates the UpdateRoshanDesire function            
         trigger = this.getTrigger(req.body.teamDesires.roshan.trigger);
         operator = this.getOperator(req.body.teamDesires.roshan.operator);
-        scriptBuilder += 'function UpdateRoshanDesires()\n';
+        scriptBuilder += 'function UpdateRoshanDesires()\n';        
         scriptBuilder += '    ' + this.getAlliedHeroesAlive();
         scriptBuilder += '    ' + this.getEnemyHeroesAlive();
         scriptBuilder += `    if ${trigger} ${operator} then\n`;

@@ -81,7 +81,8 @@ export class ConfigurationFormat {
 export class Condition {
     trigger: Trigger;
     operator: Operator;
-    value: any;
+    conditional: any;
+    action: any;
 }
 
 enum Trigger {

@@ -3,40 +3,61 @@
  * This file will change as the complexity of the configuration options specified grows.
  */
 
-export class ConfigurationFormat {
+export interface ConfigurationFormat {
     name: string;
     description: string;
     
     push: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: {
+            conditions: CoumpoundCondition[]
+            default: any
+        }
+        mid: CoumpoundCondition[];
+        bot: CoumpoundCondition[];
     };
     farm: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: CoumpoundCondition[];
+        mid: CoumpoundCondition[];
+        bot: CoumpoundCondition[];
     };
     defend: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: CoumpoundCondition[];
+        mid: CoumpoundCondition[];
+        bot: CoumpoundCondition[];
     };
-    roam: Condition[];
-    roshan: Condition[];
+    roam: CoumpoundCondition[];
+    roshan: CoumpoundCondition[];
 }
 
-export class Condition {
+export interface CoumpoundCondition {
+    conditions: Condition[];
+    logicalOperator: LogicalOperator[];
+}
+
+export interface Condition {
     trigger: Trigger;
     operator: Operator;
     conditional: any;
     action: any; // TODO: Come up with action types
+    value: any;
+}
+
+export enum Action {
+    Modify = 1,
+    Return
 }
 
 export enum Trigger {
     Time = 1,
     EnemyHeroesAlive,
     AlliedHeroesAlive
+}
+
+export enum LogicalOperator {
+    AND = 1,
+    OR,
+    NAND,
+    NOR
 }
 
 export enum Operator {
