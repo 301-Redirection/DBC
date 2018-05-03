@@ -76,7 +76,7 @@ export interface ConfigurationFormat {
 }
 
 export interface Configuration {
-    conditions: CoumpoundCondition[];
+    compoundConditions: CoumpoundCondition[];
     initalValue: any;
 }
 

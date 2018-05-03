@@ -35,7 +35,7 @@ export interface Configuration {
  * }
  */
 export interface CoumpoundCondition {
-    conditions: Condition[];
+    compoundConditions: Condition[];
     logicalOperator: LogicalOperator[];
 }
 
