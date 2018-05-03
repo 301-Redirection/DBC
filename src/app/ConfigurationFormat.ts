@@ -24,7 +24,7 @@ export interface ConfigurationFormat {
 }
 
 export interface Configuration {
-    conditions: CoumpoundCondition[];
+    compoundConditions: CoumpoundCondition[];
     initalValue: any;
 }
 
@@ -35,7 +35,7 @@ export interface Configuration {
  * }
  */
 export interface CoumpoundCondition {
-    compoundConditions: Condition[];
+    conditions: Condition[];
     logicalOperator: LogicalOperator[];
 }
 

@@ -15,11 +15,15 @@ declare var $: any;
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
+    // Bot variables
+    name: string = 'test';
+    description: string = 'test';
+
     // configuration object
     config: ConfigurationFormat = {
         push: {
             top: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -32,7 +36,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             mid: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -45,7 +49,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             bot: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -60,7 +64,7 @@ export class BotConfigComponent implements OnInit {
         },
         farm: {
             top: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -73,7 +77,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             mid: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -86,7 +90,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             bot: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -101,7 +105,7 @@ export class BotConfigComponent implements OnInit {
         },
         defend: {
             top: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -114,7 +118,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             mid: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -127,7 +131,7 @@ export class BotConfigComponent implements OnInit {
                 initalValue: 0 
             },
             bot: {
-                conditions: [{
+                compoundConditions: [{
                     conditions: [{
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
@@ -141,7 +145,7 @@ export class BotConfigComponent implements OnInit {
             },
         },
         roam: {
-            conditions: [{
+            compoundConditions: [{
                 conditions: [{
                     trigger: Trigger.Time,
                     operator: Operator.LessThan,
@@ -154,7 +158,7 @@ export class BotConfigComponent implements OnInit {
             initalValue: 0 
         },
         roshan: {
-            conditions: [{
+            compoundConditions: [{
                 conditions: [{
                     trigger: Trigger.Time,
                     operator: Operator.LessThan,
@@ -167,6 +171,7 @@ export class BotConfigComponent implements OnInit {
             initalValue: 0 
         },
     };
+
     generateURL = "";
 
     constructor(private title: Title, private api: ApiConnectService) {
@@ -177,15 +182,21 @@ export class BotConfigComponent implements OnInit {
 
     save() {
         if (this.validateInfo()) {
+            var requestObject = {
+                config: this.config,
+                name: this.name,
+                description: this.description,
+            };
+
             // call generate from api service
-            const response = this.api.generate(this.config).subscribe((data) => {
+            const response = this.api.generate(requestObject).subscribe((data) => {
                 this.generateURL = globalConfig['app']['API_URL'] + '/download/' + data.id;
             });
         }
     }
 
     validateInfo(): boolean {
-        if (this.config.name === '' || this.config.description === '') {
+        if (this.name === '' || this.description === '') {
             alert('Please enter your bot script name and description');
             return false;
         }

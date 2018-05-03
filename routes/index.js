@@ -74,36 +74,39 @@ router.get('/test', (request, response) => {
 // Generates the bot TeamDesires script
 router.post('/generate', function(req, res) {        
     var scriptBuilder = "";
+
+    // Generates the team desire functions from ../server/generateScript.js
     scriptBuilder = generateScript.generateTeamDesires(req);
+    console.log("Here");
 
-    //Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
-    [[ ' + req.body.teamDesires.description + ']]\n';
+    // //Adds the script name and the description as a comment at the top of the file
+    // scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
+    // [[ ' + req.body.teamDesires.description + ']]\n';
 
-    //Creates the UpdateRoshanDesire function    
-    scriptBuilder += 'function UpdateRoshanDesires()\n';    
-    scriptBuilder += `    return ${req.body.teamDesires.roshan/10};\n`
-    scriptBuilder += 'end\n\n';
+    // //Creates the UpdateRoshanDesire function    
+    // scriptBuilder += 'function UpdateRoshanDesires()\n';    
+    // scriptBuilder += `    return ${req.body.teamDesires.roshan/10};\n`
+    // scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateRoamDesire function
-    scriptBuilder += 'function UpdateRoamDesires()\n';
-    scriptBuilder += `    return \{${req.body.teamDesires.roam/10}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
-    scriptBuilder += 'end\n\n';
+    // //Creates the UpdateRoamDesire function
+    // scriptBuilder += 'function UpdateRoamDesires()\n';
+    // scriptBuilder += `    return \{${req.body.teamDesires.roam/10}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
+    // scriptBuilder += 'end\n\n';
 
-    //Creates the UpdatePushLaneDesires function
-    scriptBuilder += 'function UpdatePushLaneDesires() \n';
-    scriptBuilder += `    return \{${(req.body.teamDesires.push.top)/10}, ${(req.body.teamDesires.push.mid)/10}, ${(req.body.teamDesires.push.bot)/10}\}\n`;
-    scriptBuilder += 'end\n\n';
+    // //Creates the UpdatePushLaneDesires function
+    // scriptBuilder += 'function UpdatePushLaneDesires() \n';
+    // scriptBuilder += `    return \{${(req.body.teamDesires.push.top)/10}, ${(req.body.teamDesires.push.mid)/10}, ${(req.body.teamDesires.push.bot)/10}\}\n`;
+    // scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateDefendLaneDesires function
-    scriptBuilder += 'function UpdateDefendLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.defend.top)/10}, ${(req.body.teamDesires.defend.mid)/10}, ${(req.body.teamDesires.defend.bot)/10}}\n`;
-    scriptBuilder += 'end\n\n';
+    // //Creates the UpdateDefendLaneDesires function
+    // scriptBuilder += 'function UpdateDefendLaneDesires() \n';
+    // scriptBuilder += `    return {${(req.body.teamDesires.defend.top)/10}, ${(req.body.teamDesires.defend.mid)/10}, ${(req.body.teamDesires.defend.bot)/10}}\n`;
+    // scriptBuilder += 'end\n\n';
 
-    //Creates the UpdateFarmLaneDesires function    
-    scriptBuilder += 'function UpdateFarmLaneDesires() \n';
-    scriptBuilder += `    return {${(req.body.teamDesires.farm.top)/10}, ${(req.body.teamDesires.farm.mid)/10}, ${(req.body.teamDesires.farm.bot)/10}}\n`;
-    scriptBuilder += 'end';
+    // //Creates the UpdateFarmLaneDesires function    
+    // scriptBuilder += 'function UpdateFarmLaneDesires() \n';
+    // scriptBuilder += `    return {${(req.body.teamDesires.farm.top)/10}, ${(req.body.teamDesires.farm.mid)/10}, ${(req.body.teamDesires.farm.bot)/10}}\n`;
+    // scriptBuilder += 'end';
 
     try {
         fs.mkdirSync('./Lua');
