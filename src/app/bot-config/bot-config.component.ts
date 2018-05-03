@@ -15,90 +15,157 @@ declare var $: any;
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
 
-    // default condition
-    condition: Condition = {
-        trigger: Trigger.Time,
-        operator: Operator.LessThan,
-        conditional: 0,
-        action: 0
-    };
-
     // configuration object
     config: ConfigurationFormat = {
-        name: 'test',
-        description: 'test',
         push: {
-            top: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            mid: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            bot: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
+            top: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            mid: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            bot: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
         },
         farm: {
-            top: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            mid: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            bot: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }]
+            top: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            mid: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            bot: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
         },
         defend: {
-            top: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            mid: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }],
-            bot: [{ 
-                trigger: Trigger.Time,
-                operator: Operator.LessThan,
-                conditional: 0,
-                action: 0 
-            }]
+            top: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            mid: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
+            bot: {
+                conditions: [{
+                    conditions: [{
+                        trigger: Trigger.Time,
+                        operator: Operator.LessThan,
+                        conditional: 0,
+                        action: 0,
+                        value: 0
+                    }],
+                    logicalOperator: []
+                }],
+                initalValue: 0 
+            },
         },
-        roam: [{ 
-            trigger: Trigger.Time,
-            operator: Operator.LessThan,
-            conditional: 0,
-            action: 0 
-        }],
-        roshan: [{ 
-            trigger: Trigger.Time,
-            operator: Operator.LessThan,
-            conditional: 0,
-            action: 0 
-        }]
+        roam: {
+            conditions: [{
+                conditions: [{
+                    trigger: Trigger.Time,
+                    operator: Operator.LessThan,
+                    conditional: 0,
+                    action: 0,
+                    value: 0
+                }],
+                logicalOperator: []
+            }],
+            initalValue: 0 
+        },
+        roshan: {
+            conditions: [{
+                conditions: [{
+                    trigger: Trigger.Time,
+                    operator: Operator.LessThan,
+                    conditional: 0,
+                    action: 0,
+                    value: 0
+                }],
+                logicalOperator: []
+            }],
+            initalValue: 0 
+        },
     };
     generateURL = "";
 
