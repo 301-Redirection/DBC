@@ -89,7 +89,7 @@ export interface Condition {
     trigger: Trigger;
     operator: Operator;
     conditional: any;
-    action: any;
+    action: Action;
     value: any;
 }
 

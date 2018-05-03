@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat, Condition, Trigger, Operator } from '../ConfigurationFormat';
+import { ConfigurationFormat, Condition, Trigger, Operator, Action } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
@@ -28,7 +28,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -41,7 +41,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -54,7 +54,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -69,7 +69,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -82,7 +82,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -95,7 +95,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -110,7 +110,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -123,7 +123,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -136,7 +136,7 @@ export class BotConfigComponent implements OnInit {
                         trigger: Trigger.Time,
                         operator: Operator.LessThan,
                         conditional: 0,
-                        action: 0,
+                        action: Action.Modify,
                         value: 0
                     }],
                     logicalOperator: []
@@ -150,7 +150,7 @@ export class BotConfigComponent implements OnInit {
                     trigger: Trigger.Time,
                     operator: Operator.LessThan,
                     conditional: 0,
-                    action: 0,
+                    action: Action.Modify,
                     value: 0
                 }],
                 logicalOperator: []
@@ -163,7 +163,7 @@ export class BotConfigComponent implements OnInit {
                     trigger: Trigger.Time,
                     operator: Operator.LessThan,
                     conditional: 0,
-                    action: 0,
+                    action: Action.Modify,
                     value: 0
                 }],
                 logicalOperator: []

@@ -1,19 +1,96 @@
------ Desire for the team to go for Roshan -----
-function UpdateRoshanDesire()
-	return 1
+-- test--
+[[ test ]]
+
+function UpdateRoshanDesires()
+    local common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    return common
 end
 
------ Desire for the team push a specific lane -----
+function UpdateRoamDesires()
+    local common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}
+end
+
 function UpdatePushLaneDesires()
-	return {0,0,0}
+    local common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local topCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local midCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local botCommon = common
+
+    return {topCommon, midCommon, botCommon}
 end
 
------ Desire for the team defend a specific lane -----
 function UpdateDefendLaneDesires()
-	return {0,0,0}
+    local common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local topCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local midCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local botCommon = common
+
+    return {topCommon, midCommon, botCommon}
 end
 
------ Desire for the team to farm a specific lane -----
 function UpdateFarmLaneDesires()
-	return {0,0,0}
+    local common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local topCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local midCommon = common
+
+    common = undefined
+    if DotaTime() < 0 then
+        common += 0
+    end
+
+    local botCommon = common
+
+    return {topCommon, midCommon, botCommon}
 end
+

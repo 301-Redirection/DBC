@@ -3,7 +3,7 @@ const ENUM = require('./enumConfig');
 module.exports = {
 
     // Generate the Lua script for team desires
-    generateTeamDesires(req) {                     
+    generateTeamDesires(req) {                    
         var scriptBuilder = ``;
 
         // Adds the script name and the description as a comment at the top of the file
@@ -11,10 +11,10 @@ module.exports = {
         
         // Creates the UpdateRoshanDesire function    
         scriptBuilder += this.generateRoshanDesires(req);        
-
+        
         // Creates the UpdateRoamDesire function
-        scriptBuilder += this.generateRoamDesire(req);        
-
+        scriptBuilder += this.generateRoamDesires(req);        
+        
         // Creates the UpdatePushLaneDesires function        
         scriptBuilder += this.generatePushLaneDesires(req);       
 
@@ -23,16 +23,17 @@ module.exports = {
         
         // Creates the UpdateFarmLaneDesires function    
         scriptBuilder += this.generateFarmLaneDesires(req);        
-
+        
         return scriptBuilder;
     },
 
     // Generate roshan desires
-    generateRoshanDesires(req) {  
-        var roshan = req.body.teamDesires.config.roshan;                                        
+    generateRoshanDesires(req) {                  
+        var roshan = req.body.teamDesires.config.roshan;    
+        console.log(req.body.teamDesires.config);                                                         
         var scriptBuilder = `function UpdateRoshanDesires()\n`;        
-        scriptBuilder += `    local common = ${roshan.initialValue}\n`;
-        scriptBuilder += this.getConditions(roshan.compoundConditions);        
+        scriptBuilder += `    local common = ${roshan.initialValue}\n`;        
+        scriptBuilder += this.getConditions(roshan.compoundConditions);                
         scriptBuilder += `    return common\n`;
         scriptBuilder += `end\n\n`;
         return scriptBuilder;
@@ -119,29 +120,30 @@ module.exports = {
     },
 
     // Get conditions in the compoundConditions array
-    getConditions(compoundConditions) {      
+    getConditions(compoundConditions) {              
         var trigger = ``;
         var operator = ``;
         var action = ``;
         var logicalOperator = ``;   
         var scriptBuilder = ``;
 
-        compoundConditions.forEach(compound => {
+        compoundConditions.forEach(compound => {            
             // If there is only 1 condition, then use the format of a single Condition instance.
-            if (compound.conditions.length == 1) {
-                var condition = compound.conditions[0];
-                trigger = this.getTrigger(condition.trigger);
-                operator = this.getOperator(condition.operator);
+            if (compound.conditions.length == 1) {                
+                var condition = compound.conditions[0];                                                          
+                trigger = this.getTrigger(condition.trigger);                                
+                operator = this.getOperator(condition.operator);                
                 action = this.getAction(condition.action);
-
-                if (condition.trigger == ENUM.TRIGGER.AlliedHeroesAlive)
+                
+                if (condition.trigger == TRIGGER.AlliedHeroesAlive)
                     scriptBuilder += this.getAlliedHeroesAlive();
-                else if (condition.trigger == ENUM.TRIGGER.EnemyHeroesAlive)
+                else if (condition.trigger == TRIGGER.EnemyHeroesAlive)
                     scriptBuilder += this.getEnemyHeroesAlive();
 
                 scriptBuilder += `    if ${trigger} ${operator} ${condition.conditional} then\n`;
                 scriptBuilder += `        ${action} ${condition.value}\n`;
                 scriptBuilder += `    end\n\n`;
+                
             }
             else {                            
                 var conditions = compound.conditions;
@@ -171,9 +173,9 @@ module.exports = {
                 scriptBuilder += ` (${trigger} ${operator} ${conditonal}) then\n`;                
                 scriptBuilder += `        ${conditions[0].action} ${totalValue/conditions.length}\n`;
                 scriptBuilder += `    end\n`;
-            }            
+            }                        
         });
-
+        
         return scriptBuilder;
     },        
 
@@ -202,18 +204,18 @@ module.exports = {
     },
 
     // Return a string representation of the passed trigger
-    getTrigger(trigger) {
+    getTrigger(trigger) {        
         var triggerString = '';
         switch(trigger) {
-            case ENUM.TRIGGER.Time:
+            case TRIGGER.Time:
                 // Gets the game time. Matches game clock. Pauses with game pause.
                 triggerString = 'DotaTime()';
                 break;
-            case ENUM.TRIGGER.EnemyHeroesAlive:
+            case TRIGGER.EnemyHeroesAlive:
                 // Get number of enemy heroes alive
                 triggerString = 'enemiesAlive';
                 break;
-            case ENUM.TRIGGER.AlliedHeroesAlive:
+            case TRIGGER.AlliedHeroesAlive:
                 // Get number of allied heroes alive
                 triggerString = 'alliesAlive';
                 break;
@@ -225,22 +227,22 @@ module.exports = {
     getOperator(operator) {
         var operatorString = '';
         switch(operator) {
-            case ENUM.OPERATOR.LessThan:
+            case OPERATOR.LessThan:
                 operatorString = '<';
                 break;
-            case ENUM.OPERATOR.LessThanEqualTo:
+            case OPERATOR.LessThanEqualTo:
                 operatorString = '<=';
                 break;
-            case ENUM.OPERATOR.EqualTo:
+            case OPERATOR.EqualTo:
                 operatorString = '==';
                 break;
-            case ENUM.OPERATOR.GreaterThanEqualTo:
+            case OPERATOR.GreaterThanEqualTo:
                 operatorString = '>=';
                 break;
-            case ENUM.OPERATOR.GreaterThan:
+            case OPERATOR.GreaterThan:
                 operatorString = '>';
                 break;
-            case ENUM.OPERATOR.NotEqual:
+            case OPERATOR.NotEqual:
                 operatorString = '!=';
                 break;
         }
@@ -251,10 +253,10 @@ module.exports = {
     getAction(action) {
         var actionString = '';
         switch(action) {
-            case ENUM.ACTION.Modify:                 
+            case ACTION.Modify:                 
                 actionString = 'common +='; // TODO: Decide on a modify method to use
                 break;
-            case ENUM.ACTION.Return:
+            case ACTION.Return:
                 actionString = 'return';
                 break;
         }
@@ -265,13 +267,42 @@ module.exports = {
     getLogicalOperator(logicalOperator) {
         var operatorString = '';
         switch(logicalOperator) {
-            case ENUM.LOGICAL_OPERTAOR.AND:
+            case LOGICAL_OPERTAOR.AND:
                 operatorString = 'and';
                 break;
-            case ENUM.LOGICAL_OPERTAOR.OR:
+            case LOGICAL_OPERTAOR.OR:
                 operatorString = 'or';
                 break;
         }
         return operatorString;
     }
 };
+
+// Trigger enum
+const TRIGGER = {
+    Time: 1,
+    EnemyHeroesAlive: 2,
+    AlliedHeroesAlive: 3
+}
+
+// Operator enum
+const OPERATOR = {
+    LessThan: 1,
+    LessThanEqualTo: 2,
+    EqualTo: 3,
+    GreaterThanEqualTo: 4,
+    GreaterThan: 5,
+    NotEqual: 6
+} 
+
+// Action enum
+const ACTION = {
+    Modify: 1,
+    Return: 2 // TODO: Decide what to do if a value is returned where there are multiple values to be outputted (eg. return {0,0,0})
+}
+
+// Logical Operator enum
+const LOGICAL_OPERTAOR = {
+    AND: 1,
+    OR: 2
+}

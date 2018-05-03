@@ -49,7 +49,7 @@ export interface Condition {
     trigger: Trigger;
     operator: Operator;
     conditional: any;
-    action: any; // TODO: Come up with action types
+    action: Action; // TODO: Come up with action types
     value: any;
 }
 

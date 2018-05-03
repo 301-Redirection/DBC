@@ -6,7 +6,7 @@ const sequelize = require('sequelize');
 var fs = require('fs');  
 var path = require('path');
 var mime = require('mime');
-var generateScript = require('../server/generateScript');
+var generateScript = require('../server/generateScript.js');
 
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -74,10 +74,9 @@ router.get('/test', (request, response) => {
 // Generates the bot TeamDesires script
 router.post('/generate', function(req, res) {        
     var scriptBuilder = "";
-
+    
     // Generates the team desire functions from ../server/generateScript.js
-    scriptBuilder = generateScript.generateTeamDesires(req);
-    console.log("Here");
+    scriptBuilder = generateScript.generateTeamDesires(req);    
 
     // //Adds the script name and the description as a comment at the top of the file
     // scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
