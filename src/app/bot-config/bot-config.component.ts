@@ -14,6 +14,11 @@ declare var $: any;
 })
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
+    imageURL = '../../assets/images/dota2-mini-map.png';
+    fractionIcon = '';
+    alertText = '';
+    fractionDetails = '';
+    fractionSelected = '';
 
     // configuration object
     config: ConfigurationFormat = {
@@ -37,7 +42,7 @@ export class BotConfigComponent implements OnInit {
         roam: 0,
         roshan: 0,
     };
-    generateURL = "";
+    generateURL = '';
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
@@ -60,5 +65,54 @@ export class BotConfigComponent implements OnInit {
             return false;
         }
         return true;
+    }
+
+    mouseEvent (event) {
+        if (event === 'dire') {
+            this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
+        } else {
+            this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
+        }
+    }
+
+    clickEvent (event) {
+          if (event === 'dire') {
+            this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
+            this.alertText = 'You are now editing Dire fraction';
+            this.fractionDetails = 'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located in the top right half of the game map.';
+            this.fractionSelected = 'Dire';
+            this.fractionIcon = '../../assets/images/dire-icon.png';
+
+            $('#alert-config')
+                .removeClass('hide')
+                    .addClass('show')
+                        .show()
+                            .removeClass('alert-radiant')
+                                .addClass('alert-dire');
+            $('div').each(function() {
+                $(this)
+                .find('div.config-card')
+                    .removeClass ('config-card-radiant')
+                        .addClass('config-card-dire');
+            });
+        } else {
+            this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
+            this.alertText = 'You are now editing Radiant fraction';
+            this.fractionDetails = 'The Radiant is a faction in Dota 2. It is characterized by a bright, natural theme and is located in the bottom left half of the game map.';
+            this.fractionSelected = 'Radiant';
+            this.fractionIcon = '../../assets/images/radiant-icon.png';
+            $('div').each(function() {
+                $(this)
+                .find('div.config-card')
+                    .removeClass ('config-card-dire')
+                        .addClass('config-card-radiant');
+            });
+            $('#alert-config')
+                .removeClass('hide')
+                    .addClass('show')
+                        .show()
+                            .removeClass('alert-dire')
+                                .addClass('alert-radiant');
+        }
     }
 }
