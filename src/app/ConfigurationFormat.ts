@@ -31,11 +31,11 @@ export interface Configuration {
 /*
  * A CompoundCondition will look as follows:
  * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} ... ${logicalOperator[n-1]} ${conditions[n]}) {
- *      ${conditions[0].action} sum(${conditions[0].value}, ..., ${conditions[0].value})
+ *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[0].value})
  * }
  */
 export interface CoumpoundCondition {
-    conditions: Condition[];
+    compoundConditions: Condition[];
     logicalOperator: LogicalOperator[];
 }
 
