@@ -36,18 +36,18 @@
                         <label for="inputDescription" class="col-sm-3 col-form-label">Fraction</label>
                         <div class="col-sm-9 row">
                             <div class="col-sm-6">
-                                <img [src]="imageURL" id="dotaMiniMap" usemap="#image-map">
+                                <img [src]="imageURL" class="img-fluid" id="dotaMiniMap" usemap="#image-map">
 
                                 <map name="image-map">
-                                    <area target="" class="area" id="direSide" alt="Dire Side" title="Dire Fraction" (mouseover)="mouseEvent('dire')" (click)="clickEvent('dire')"
+                                    <area target="" class="area" id="direSide" alt="Dire Side" title="Dire Fraction" (mouseover)="mouseOverEvent('dire')" (mouseleave)="mouseLeaveEvent()" (click)="clickEvent('dire')"
                                         coords="4,79,105,95,140,133,190,171,244,183,287,184,288,4,1,0" shape="poly">
-                                    <area target="" id="radiantSide" alt="Radiant Side" title="Radiant Fraction" (mouseover)="mouseEvent('radiant')" (click)="clickEvent('radiant')"
+                                    <area target="" id="radiantSide" alt="Radiant Side" title="Radiant Fraction" (mouseover)="mouseOverEvent('radiant')" (mouseleave)="mouseLeaveEvent()" (click)="clickEvent('radiant')"
                                         coords="1,81,98,99,133,140,183,172,223,188,290,191,290,265,3,262" shape="poly">
                                 </map>
                             </div>
                             <div class="col-sm-6  vert-align-center">
                                 <div class="text-center mb-2">
-                                    <img [src]="fractionIcon" class="rounded ">
+                                    <img [src]="fractionIcon" class="img-fluid rounded ">
                                 </div>
 
                                 <h5 class="vert-align-center">{{fractionDetails}}</h5>

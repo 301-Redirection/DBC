@@ -15,6 +15,7 @@ declare var $: any;
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
     imageURL = '../../assets/images/dota2-mini-map.png';
+    prevImageURL = this.imageURL;
     fractionIcon = '';
     alertText = '';
     fractionDetails = '';
@@ -48,7 +49,9 @@ export class BotConfigComponent implements OnInit {
         this.title.setTitle(this.pageTitle);
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        imageMapResize ('image-map');
+    }
 
     save() {
         if (this.validateInfo()) {
@@ -67,7 +70,7 @@ export class BotConfigComponent implements OnInit {
         return true;
     }
 
-    mouseEvent (event) {
+    mouseOverEvent (event) {
         if (event === 'dire') {
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
         } else {
@@ -75,9 +78,14 @@ export class BotConfigComponent implements OnInit {
         }
     }
 
+    mouseLeaveEvent() {
+        this.imageURL = this.prevImageURL;
+    }
+
     clickEvent (event) {
         if (event === 'dire') {
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
+            this.prevImageURL = this.imageURL;
             this.alertText = 'You are now editing Dire fraction';
             this.fractionDetails = 'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located in the top right half of the game map.';
             this.fractionSelected = 'Dire';
@@ -97,6 +105,7 @@ export class BotConfigComponent implements OnInit {
             });
         } else {
             this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
+            this.prevImageURL = this.imageURL;
             this.alertText = 'You are now editing Radiant fraction';
             this.fractionDetails = 'The Radiant is a faction in Dota 2. It is characterized by a bright, natural theme and is located in the bottom left half of the game map.';
             this.fractionSelected = 'Radiant';
