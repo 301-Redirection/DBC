@@ -4,36 +4,47 @@
  */
 
 export interface ConfigurationFormat {
-    name: string;
-    description: string;
-    
     push: {
-        top: {
-            conditions: CoumpoundCondition[]
-            default: any
-        }
-        mid: CoumpoundCondition[];
-        bot: CoumpoundCondition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
     farm: {
-        top: CoumpoundCondition[];
-        mid: CoumpoundCondition[];
-        bot: CoumpoundCondition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
     defend: {
-        top: CoumpoundCondition[];
-        mid: CoumpoundCondition[];
-        bot: CoumpoundCondition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
-    roam: CoumpoundCondition[];
-    roshan: CoumpoundCondition[];
+    roam: Configuration;
+    roshan: Configuration;
 }
 
+export interface Configuration {
+    conditions: CoumpoundCondition[];
+    initalValue: any;
+}
+
+/*
+ * A CompoundCondition will look as follows:
+ * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} ... ${logicalOperator[n-1]} ${conditions[n]}) {
+ *      ${conditions[0].action} sum(${conditions[0].value}, ..., ${conditions[0].value})
+ * }
+ */
 export interface CoumpoundCondition {
     conditions: Condition[];
     logicalOperator: LogicalOperator[];
 }
 
+/*
+ * A Condition will look as follows:
+ * if (${trigger} ${operator} ${conditional}) {
+ *    ${action} ${value}
+ * }
+ */
 export interface Condition {
     trigger: Trigger;
     operator: Operator;
@@ -50,14 +61,14 @@ export enum Action {
 export enum Trigger {
     Time = 1,
     EnemyHeroesAlive,
-    AlliedHeroesAlive
+    AlliedHeroesAlive,
+    NumEnemyHeroesVisible,
+    RadiusAlliedHeroes
 }
 
 export enum LogicalOperator {
     AND = 1,
-    OR,
-    NAND,
-    NOR
+    OR
 }
 
 export enum Operator {
