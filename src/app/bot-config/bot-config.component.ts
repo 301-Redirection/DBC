@@ -76,7 +76,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     clickEvent (event) {
-          if (event === 'dire') {
+        if (event === 'dire') {
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
             this.alertText = 'You are now editing Dire fraction';
             this.fractionDetails = 'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located in the top right half of the game map.';
