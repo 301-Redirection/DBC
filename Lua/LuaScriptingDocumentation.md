@@ -38,11 +38,11 @@ Creeps - Little minions that spawn and run down a lane to meet the opposing lane
 
 Push - a collective effort from a team to attempt to advance down a lane to attempt to take an objective, a teamfight, or both.
 
-Farm - The simple activity of a hero collecting gold and experience by killing creeps. 
+Farm - The simple activity of a hero collecting gold and experience by killing creeps.
 
 Defend - The act of staying close to or even behind your own tower and creep wave when the enemy team is pushing down your lane.
 
-Roaming - the act of not remaining in a lane for too long, but rather move between lanes to attempt to kill enemy heroes with the other heroes in that lane/ or in the jungle. 
+Roaming - the act of not remaining in a lane for too long, but rather move between lanes to attempt to kill enemy heroes with the other heroes in that lane/ or in the jungle.
 
 Ganking - The act of a group of team players grouping together to attempt to kill enemy heroes on the map.
 
@@ -55,43 +55,63 @@ The following points are subdivided by file and then further by the important fu
 The ConfigurationFormat.ts contains the ConfigurationFormat class. The file looks as follows:
 
 ```typescript
-export class ConfigurationFormat {
-    name: string;
-    description: string;
-    
+export interface ConfigurationFormat {
     push: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
     farm: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
     defend: {
-        top: Condition[];
-        mid: Condition[];
-        bot: Condition[];
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
-    roam: Condition[];
-    roshan: Condition[];
+    roam: Configuration;
+    roshan: Configuration;
 }
 
-export class Condition {
+export interface Configuration {
+    conditions: CoumpoundCondition[];
+    initalValue: any;
+}
+
+export interface CoumpoundCondition {
+    conditions: Condition[];
+    logicalOperator: LogicalOperator[];
+}
+
+export interface Condition {
     trigger: Trigger;
     operator: Operator;
     conditional: any;
     action: any;
+    value: any;
 }
 
-enum Trigger {
+export enum Action {
+    Modify = 1,
+    Return
+}
+
+export enum Trigger {
     Time = 1,
     EnemyHeroesAlive,
-    AlliedHeroesAlive
+    AlliedHeroesAlive,
+    NumEnemyHeroesVisible,
+    RadiusAlliedHeroes
 }
 
-enum Operator {
+export enum LogicalOperator {
+    AND = 1,
+    OR
+}
+
+export enum Operator {
     LessThan = 1,
     LessThanEqualTo,
     EqualTo,
@@ -101,9 +121,91 @@ enum Operator {
 }
 ```
 
-Each of push, farm, defend, roam and roshan correspond to a function in team_desires.lua, which are explained in more detail below. Push, defend and farm are objects that have properties for each of the 3 lanes on the map. 
+Each of push, farm, defend, roam and roshan correspond to a function in team_desires.lua, which are explained in more detail below. Push, defend and farm are objects that have properties for each of the 3 lanes on the map. Each lane as well as roshan and roam attributes is an array of Configuration objects that will be converted into lua conditions.
 
-Each lane property is an array of Condition objects that will be converted into lua conditions. A Condition object has 3 properties: a trigger, an operator and a value. The trigger is the event in the game of Dota that is to be evaluated in the condition. It is of type Trigger which is an enumerated type and has predefined options to choose from, as shown in the code. The operator is an enumerated value that corresponds to one of the values in the enum Operator and determines the type of relation it is that the condition should test. Finally, the value is the value to be tested against the trigger. This is of type `any` as it is possible to test it against numbers, literal strings or even lua functions. 
+#### 3.1.1 Explanations for each of the interfaces
+
+A Condition instance will have 5 properties:
+
+* a trigger of enumerated type Trigger
+* an operator of enumerated type Operator
+* a conditional of type any as it may be a number or function name in Lua
+* an action of enumerated type Action, and finally
+* a value of type any, which is the value that the common variable in the Lua function will be modified by and can be numerical or a function name that returns a value
+
+Thus, the general format of a Condition as represented in code will look as follows:
+
+``` Lua
+if (${trigger} ${operator} ${conditional}) {
+    ${action} ${value}
+}
+```
+
+A CompoundCondition object has 2 properties:
+
+* an array of Conditions, and
+* an array of logicalOperator enumerated types
+
+The array of conditions will be used to build a compound if statement joined together by the logical operators. In the event of a simple if statement with only one condition, then the logicalOperators array will be empty and the condition array will consist of one instance of Condition and use the format of a single Condition instance as shown above.
+
+The general format of a CompoundCondition instance is shown below:
+
+``` Lua
+if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} ... ${logicalOperator[n - 1]} ${conditions[n]}) {
+    ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
+}
+```
+
+A Configuration instance has 2 properties:
+
+* an array of CompoundConditions, and
+* an initial value
+
+An instance of Configuration represents the total configurations found within a function in team_desires.lua. The array of CompoundConditions represent all the if statement conditions that are to be evaluated, and the intial value the value that initialises the variable to be manipulated within the function.
+
+The general format of a Configuration instance expanded into the if conditions in a function is as follows:
+
+``` Lua
+local common = ${initialValue}
+
+if (${CompoundCondition[0]}) {...}
+
+if (${CompoundCondition[1]}) {...}
+
+...
+
+if (${CompoundCondition[n]}) {...}
+
+return common
+```
+
+#### 3.1.2 Explanation of the Enumerated Types
+
+`Action` determines the type of action to be taken inside an if statement. The 2 possible options are to return a value or to modify the variable common inside the Lua function.
+
+`Trigger` determines what is being tested in an if statement. The possible values are
+
+* time (the time in the Dota Game),
+* EnemyHeroesAlive which corresponds the the number of enemy heroes that are alive
+* AlliedHeroesAlive which corresponds to the number of allied heroes that are alive
+* NumEnemyHeroesVisible that corresponds to the number of enemy heroes that are currently visible on the minimap
+* RadiusAlliedHeroes which corresponds to the radius of the circle that covers all the allied heroes on the map
+
+`Operator` determines the type of operator to be used in an if statement. They are as follows
+
+* LessThan
+* LessThanEqualTo
+* EqualTo
+* GreaterThanEqualTo
+* GreaterThan
+* NotEqual
+
+The explanations for these operators are self-explanatory.
+
+`LogicalOperator` determines the type of logical operator to be used to join multiple Condition instances. The possible values are
+
+* OR which corresponds to the logical operator OR, that returns true if either or both conditions are true
+* AND which corresponds to the logical operator OR, that returns true only if both conditions are true
 
 ### 3.2 Team Desires (team_desires.lua)
 
@@ -123,7 +225,7 @@ There are several factors that influence the desire of a team to push a specfic 
 
 #### 3.2.2 UpdateDefendLaneDesires()
 
-This function also returns a vector of 3 floating point values between 0 and 1 representing the team's desire to push top, mid and bottom lanes respectively. A value of 1 is an absolute desire and 0 is no desire at all. 
+This function also returns a vector of 3 floating point values between 0 and 1 representing the team's desire to push top, mid and bottom lanes respectively. A value of 1 is an absolute desire and 0 is no desire at all.
 
 Factors influencing defense of a lane:
 
@@ -155,7 +257,7 @@ Generally, the team will attempt to gank a/the enemy core, but any hero is still
 
 #### 3.2.5 UpdateRoshanDesire()
 
-This function simply returns a single floating point value between 0 and 1, and it represents the team's desire to go and attempt to defeat Roshan. 
+This function simply returns a single floating point value between 0 and 1, and it represents the team's desire to go and attempt to defeat Roshan.
 
 Factors influencing a team to go and attempt a Roshan kill:
 
