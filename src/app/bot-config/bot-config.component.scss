@@ -19,6 +19,16 @@ $slider-cursor: pointer;
     margin-top: $page-margin-top;
     margin-bottom: $page-margin-bottom;
 }
+ 
+.alert-dire {
+    box-shadow: 0 0 8px $dire-border-color;
+    background-color: $dire-card-background-color;
+}
+
+.alert-radiant {
+    box-shadow: 0 0 8px $radiant-border-color;
+    background-color: $radiant-card-background-color;
+}
 
 
 /* -- Cards -- */
@@ -28,6 +38,18 @@ $slider-cursor: pointer;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
     color: $light-grey;    
+}
+
+.config-card-dire {
+    box-shadow: 0 0 7px $dire-border-color;
+    border: 0.5px solid $dire-border-color-dim;
+    background-color: $dire-card-background-color;
+    
+}
+.config-card-radiant {
+    box-shadow: 0 0 7px $radiant-border-color;
+    border: 0.5px solid $radiant-border-color-dim;
+    background-color: $radiant-card-background-color;
 }
 
 .config-card-title {
@@ -46,7 +68,7 @@ $slider-cursor: pointer;
 
 #inputName:focus,
 #inputDescription:focus {
-    background-color: $dark-grey-1;
+    background-color: transparent;
 }
 
 
@@ -82,20 +104,27 @@ $slider-cursor: pointer;
     opacity: 1; /* Fully shown on mouse-over */
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: $slider-size;
-    height: $slider-size;
-    border-radius: $slider-border-radius; 
-    background: $blue;
-    cursor: $slider-cursor;
+.slider::-webkit-slider-thumb { 
+    -webkit-appearance: none; 
+    appearance: none; 
+    width: $slider-size; 
+    height: $slider-size; 
+    border-radius: $slider-border-radius;  
+    background: $blue; 
+    cursor: $slider-cursor; 
 }
 
-.slider::-moz-range-thumb {
-    width: $slider-size;
-    height: $slider-size;
-    border-radius: $slider-border-radius;
-    background: $blue;
-    cursor: $slider-cursor;
+.slider::-moz-range-thumb { 
+    width: $slider-size; 
+    height: $slider-size; 
+    border-radius: $slider-border-radius; 
+    background: $blue; 
+    cursor: $slider-cursor; 
+} 
+
+.vert-align-center {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
+

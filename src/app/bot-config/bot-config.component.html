@@ -1,6 +1,13 @@
 <div class="container-fluid container-fluid-custom background main-background">
     <div class="frame" id="botConfigTitle">
-        <h1>BOT CONFIGURATION</h1><br>
+        <h1>BOT CONFIGURATION</h1>
+        <div class="alert  alert-dismissible fade hide" id="alert-config" role="alert">
+                 <strong>{{alertText}}</strong>
+                <button type="button" class="close" onclick="$('#alert-config').hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <br>        
     </div>
 
     <!-- Start Row -->
@@ -23,6 +30,26 @@
                         <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
                         <div class="col-sm-9">
                             <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="config.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="inputDescription" class="col-sm-3 col-form-label">Fraction</label>
+                        <div class="col-sm-9 row">
+                            <div class="col-sm-6">
+                                <img [src]="imageURL"  id="dotaMiniMap" usemap="#image-map">
+
+                                <map name="image-map" >
+                                    <area target="" class="area" id="direSide" alt="Dire Side" title="Dire Fraction" (mouseover)="mouseEvent('dire')" (click)="clickEvent('dire')" coords="4,79,105,95,140,133,190,171,244,183,287,184,288,4,1,0" shape="poly" >
+                                    <area target="" id="radiantSide" alt="Radiant Side" title="Radiant Fraction" (mouseover)="mouseEvent('radiant')" (click)="clickEvent('radiant')" coords="1,81,98,99,133,140,183,172,223,188,290,191,290,265,3,262" shape="poly">
+                                </map>
+                            </div>
+                            <div class="col-sm-6  vert-align-center">
+                                    <div class="text-center mb-2">
+                                            <img [src]="fractionIcon" class="rounded "  >
+                                          </div>
+                                    
+                                  <h5 class="vert-align-center">{{fractionDetails}}</h5>  
+                            </div>                            
                         </div>
                     </div>
                 </div>
