@@ -6,6 +6,8 @@ const sequelize = require('sequelize');
 var fs = require('fs');  
 var path = require('path');
 var mime = require('mime');
+var generateScript = require('../server/generateScript');
+
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
     AUTH0_DOMAIN: 'dota-bot-scripting.eu.auth0.com',
@@ -70,15 +72,16 @@ router.get('/test', (request, response) => {
 
 
 // Generates the bot TeamDesires script
-router.post('/generate', function(req, res) {
+router.post('/generate', function(req, res) {        
     var scriptBuilder = "";
+    scriptBuilder = generateScript.generateTeamDesires(req);
 
     //Adds the script name and the description as a comment at the top of the file
     scriptBuilder += '-- ' + req.body['teamDesires']['name'] + '--\n \
     [[ ' + req.body.teamDesires.description + ']]\n';
 
-    //Creates the UpdateRoshanDesire function
-    scriptBuilder += 'function UpdateRoshanDesires()\n';
+    //Creates the UpdateRoshanDesire function    
+    scriptBuilder += 'function UpdateRoshanDesires()\n';    
     scriptBuilder += `    return ${req.body.teamDesires.roshan/10};\n`
     scriptBuilder += 'end\n\n';
 
@@ -114,6 +117,7 @@ router.post('/generate', function(req, res) {
     res.status(200).send({id: 'team_desires.lua'});
 
 });
+
 router.get('/download/:id([a-zA-Z0-9_\\.]+)', function(req, res){
 
     var file = __dirname + '/../Lua/' + req.params.id;
