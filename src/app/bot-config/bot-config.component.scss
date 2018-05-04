@@ -19,7 +19,8 @@ $slider-cursor: pointer;
     margin-top: $page-margin-top;
     margin-bottom: $page-margin-bottom;
 }
- 
+
+/* -- Alerts --*/
 .alert-dire {
     box-shadow: 0 0 8px $dire-border-color;
     background-color: $dire-card-background-color;
@@ -28,6 +29,11 @@ $slider-cursor: pointer;
 .alert-radiant {
     box-shadow: 0 0 8px $radiant-border-color;
     background-color: $radiant-card-background-color;
+}
+.alert-red {
+    background-color: rgba($btn-cancel-border-color-hover,0.8);
+    border: 1px solid $btn-cancel-border-color;
+    color: $white;
 }
 
 
@@ -54,7 +60,7 @@ $slider-cursor: pointer;
 
 .config-card-blur {
     pointer-events: none;
-    opacity: 0.1;
+    opacity: 0.5;
 }
 
 .config-card-title {
