@@ -49,9 +49,7 @@ export class BotConfigComponent implements OnInit {
         this.title.setTitle(this.pageTitle);
     }
 
-    ngOnInit() {
-        imageMapResize ('image-map');
-    }
+    ngOnInit() { }
 
     save() {
         if (this.validateInfo()) {
@@ -87,7 +85,9 @@ export class BotConfigComponent implements OnInit {
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
             this.prevImageURL = this.imageURL;
             this.alertText = 'You are now editing Dire fraction';
-            this.fractionDetails = 'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located in the top right half of the game map.';
+            this.fractionDetails =
+            'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located'
+            + ' in the top right half of the game map.';
             this.fractionSelected = 'Dire';
             this.fractionIcon = '../../assets/images/dire-icon.png';
 
@@ -100,21 +100,25 @@ export class BotConfigComponent implements OnInit {
             $('div').each(function() {
                 $(this)
                 .find('div.config-card')
-                    .removeClass ('config-card-radiant')
-                        .addClass('config-card-dire');
+                    .removeClass('config-card-blur')
+                        .removeClass ('config-card-radiant')
+                            .addClass('config-card-dire');
             });
         } else {
             this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
             this.prevImageURL = this.imageURL;
             this.alertText = 'You are now editing Radiant fraction';
-            this.fractionDetails = 'The Radiant is a faction in Dota 2. It is characterized by a bright, natural theme and is located in the bottom left half of the game map.';
+            this.fractionDetails =
+            'The Radiant is a faction in Dota 2. It is characterized by a bright, natural theme'
+            + ' and is located in the bottom left half of the game map.';
             this.fractionSelected = 'Radiant';
             this.fractionIcon = '../../assets/images/radiant-icon.png';
             $('div').each(function() {
                 $(this)
                 .find('div.config-card')
-                    .removeClass ('config-card-dire')
-                        .addClass('config-card-radiant');
+                    .removeClass('config-card-blur')
+                        .removeClass ('config-card-dire')
+                            .addClass('config-card-radiant');
             });
             $('#alert-config')
                 .removeClass('hide')
