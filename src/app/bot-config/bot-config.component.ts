@@ -81,6 +81,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     clickEvent (event) {
+        $('#alertFractionSelect').hide();
         if (event === 'dire') {
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
             this.prevImageURL = this.imageURL;
