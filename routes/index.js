@@ -73,7 +73,7 @@ router.get('/test', (request, response) => {
 
 // Generates the bot TeamDesires script
 router.post('/generate', function(req, res) {        
-    var scriptBuilder = "";
+    var scriptBuilder = '';
     
     // Generates the team desire functions from ../server/generateScript.js
     scriptBuilder = generateScript.generateTeamDesires(req);    
