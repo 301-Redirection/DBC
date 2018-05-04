@@ -52,6 +52,11 @@ $slider-cursor: pointer;
     background-color: $radiant-card-background-color;
 }
 
+.config-card-blur {
+    pointer-events: none;
+    opacity: 0.1;
+}
+
 .config-card-title {
     margin-top: .5rem;
     margin-bottom: 2rem;
