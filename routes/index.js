@@ -1,9 +1,12 @@
 const express = require('express');
+var router = express.Router();
 const models = require('../models');
 const sequelize = require('sequelize');
 var fs = require('fs');  
 var path = require('path');
 var mime = require('mime');
+const jwt = require('express-jwt'); 
+const jwks = require('jwks-rsa'); 
 var generateScript = require('../server/generateScript.js');
 
 const env = {
