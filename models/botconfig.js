@@ -7,12 +7,5 @@ module.exports = (sequelize, DataTypes) => {
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
     }, {});
-    // BotConfig.associate = (models) => {
-    //     associations can be defined here
-    //     BotConfig.belongsTo(models.User, {
-    //         foreignKey: 'userId',
-    //         as: 'user',
-    //     });
-    // };
     return BotConfig;
 };
