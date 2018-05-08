@@ -15,11 +15,9 @@ import * as globalConfig from '../../../config/config.json';
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
     imageURL = '../../assets/images/dota2-mini-map.png';
+    imageURLBothFactions = '../../assets/images/dota2-mini-map.png';
     prevImageURL = this.imageURL;
-    fractionIcon = '';
     alertText = '';
-    fractionDetails = '';
-    fractionSelected = '';
 
     // configuration object
     config: ConfigurationFormat = {
@@ -80,24 +78,30 @@ export class BotConfigComponent implements OnInit {
         this.imageURL = this.prevImageURL;
     }
 
+    mouseOverBoth () {
+        this.imageURLBothFactions = '../../assets/images/dota2-mini-map-both-blur.png';
+    }
+
+    mouseLeaveBoth() {
+        this.imageURLBothFactions = '../../assets/images/dota2-mini-map.png' ;
+    }
+
     clickEvent (event) {
         $('#alertFractionSelect').hide();
+        this.imageURLBothFactions = '../../assets/images/dota2-mini-map.png';
         if (event === 'dire') {
+            $('#dotaMiniMap2').removeClass('alert-radiant');
+            $('#dotaMiniMap').addClass('alert-dire');
             this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
             this.prevImageURL = this.imageURL;
-            this.alertText = 'You are now editing Dire fraction';
-            this.fractionDetails =
-            'The Dire is a faction in Dota 2. It is characterized by a dark, burnt theme and is located'
-            + ' in the top right half of the game map.';
-            this.fractionSelected = 'Dire';
-            this.fractionIcon = '../../assets/images/dire-icon.png';
-
+            this.alertText = 'You are now editing Dire faction';
             $('#alert-config')
                 .removeClass('hide')
                     .addClass('show')
                         .show()
                             .removeClass('alert-radiant')
-                                .addClass('alert-dire');
+                                .removeClass('alert-both')
+                                    .addClass('alert-dire');
             $('div').each(function() {
                 $(this)
                 .find('div.config-card')
@@ -106,14 +110,11 @@ export class BotConfigComponent implements OnInit {
                             .addClass('config-card-dire');
             });
         } else {
+            $('#dotaMiniMap2').removeClass('alert-radiant');
+            $('#dotaMiniMap').addClass('alert-radiant');
             this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
             this.prevImageURL = this.imageURL;
-            this.alertText = 'You are now editing Radiant fraction';
-            this.fractionDetails =
-            'The Radiant is a faction in Dota 2. It is characterized by a bright, natural theme'
-            + ' and is located in the bottom left half of the game map.';
-            this.fractionSelected = 'Radiant';
-            this.fractionIcon = '../../assets/images/radiant-icon.png';
+            this.alertText = 'You are now editing Radiant faction';
             $('div').each(function() {
                 $(this)
                 .find('div.config-card')
@@ -126,7 +127,30 @@ export class BotConfigComponent implements OnInit {
                     .addClass('show')
                         .show()
                             .removeClass('alert-dire')
-                                .addClass('alert-radiant');
+                                .removeClass('alert-both')
+                                    .addClass('alert-radiant');
         }
+    }
+
+    clickEventBoth () {
+        $('#alertFractionSelect').hide();
+        $('#dotaMiniMap2').addClass('alert-radiant');
+        $('#dotaMiniMap').removeClass('alert-radiant');
+        $('#dotaMiniMap').removeClass('alert-dire');
+        this.alertText = 'You are now editing both factions';
+        $('div').each(function() {
+            $(this)
+            .find('div.config-card')
+                .removeClass('config-card-blur')
+                    .removeClass ('config-card-radiant')
+                        .removeClass('config-card-dire');
+        });
+        $('#alert-config')
+                .removeClass('hide')
+                    .addClass('show')
+                        .show()
+                            .removeClass('alert-dire')
+                                .removeClass('alert-radiant')
+                                    .addClass('alert-both');
     }
 }
