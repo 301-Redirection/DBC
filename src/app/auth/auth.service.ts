@@ -8,7 +8,7 @@ import { ROUTE_NAMES } from '../routes/routes.config';
 @Injectable()
 export class AuthService {
     // Create Auth0 web auth instance
-    private _auth0 = new auth0.WebAuth({
+    private auth0 = new auth0.WebAuth({
         clientID: AUTH_CONFIG.CLIENT_ID,
         domain: AUTH_CONFIG.CLIENT_DOMAIN,
         responseType: 'token',
@@ -28,6 +28,7 @@ export class AuthService {
 
         if (this.isTokenValid) {
             this.userProfile = JSON.parse(localProfile);
+            console.log(this.userProfile);
             this.setLoggedIn(true);
         } else if (!this.isTokenValid && localProfile) {
             this.logout();
@@ -40,36 +41,41 @@ export class AuthService {
         this.loggedIn = value;
     }
 
-    login() {
+    login(redirect?: string) {
+        const REDIRECT = redirect ? redirect : this.router.url;
+        localStorage.setItem('authRedirect', REDIRECT);
         // Auth0 authorize request
-        this._auth0.authorize();
+        this.auth0.authorize();
     }
 
     handleAuth() {
         // When Auth0 hash parsed, get profile
-        this._auth0.parseHash((err, authResult) => {
+        this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken) {
-                window.location.hash = '';
-                this._getProfile(authResult);
+                window.location.hash = '';                
+                this.getProfile(authResult);
             } else if (err) {
-                console.error(`Error authenticating: ${err.error}`);
+                this.clearRedirect();                                
                 this.router.navigate([ROUTE_NAMES.HOME]);
+                console.error(`Error authenticating: ${err.error}`);
             }
         });
     }
 
-    private _getProfile(authResult) {
+    private getProfile(authResult) {
         // Use access token to retrieve user's profile and set session
-        this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+        this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
             if (profile) {
-                this._setSession(authResult, profile);
+                this.setSession(authResult, profile);
+                this.router.navigate([localStorage.getItem('authRedirect') || '/']);
+                this.clearRedirect();
             } else if (err) {
                 console.error(`Error authenticating: ${err.error}`);
             }
         });
     }
 
-    private _setSession(authResult, profile) {
+    private setSession(authResult, profile) {
         // Save session data and update login status subject
         const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
         // Set tokens and expiration in localStorage and props
@@ -77,10 +83,16 @@ export class AuthService {
         localStorage.setItem('expires_at', expiresAt);
         localStorage.setItem('profile', JSON.stringify(profile));
         this.userProfile = profile;
+        console.log(this.userProfile);
         // Update login status in loggedIn$ stream
         this.setLoggedIn(true);
         // Redirect to Dashboard
         this.router.navigate([ROUTE_NAMES.DASHBOARD]);
+    }
+
+    private clearRedirect() {
+        // Remove redirect from localStorage
+        localStorage.removeItem('authRedirect');
     }
 
     logout() {
@@ -89,6 +101,7 @@ export class AuthService {
         localStorage.removeItem('profile');
         localStorage.removeItem('expires_at');
         localStorage.removeItem('authRedirect');
+        this.clearRedirect();
         // Reset local properties, update loggedIn$ stream
         this.userProfile = undefined;
         this.setLoggedIn(false);

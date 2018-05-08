@@ -40,9 +40,8 @@ describe('BotConfigComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it(`should have the title 'Dota 2 Bot Scripting - Configuration'`, async(() => {
+    it('should have the title \'Dota 2 Bot Scripting - Configuration\'', async(() => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
     }));
-
 });

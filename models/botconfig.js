@@ -1,9 +1,9 @@
-'use strict';
+
 
 module.exports = (sequelize, DataTypes) => {
-    var BotConfig = sequelize.define('BotConfig', {
+    const BotConfig = sequelize.define('BotConfig', {
         configuration: DataTypes.TEXT,
-        user_id: DataTypes.INTEGER
+        user_id: DataTypes.INTEGER,
     }, {});
     BotConfig.associate = (models) => {
         // associations can be defined here

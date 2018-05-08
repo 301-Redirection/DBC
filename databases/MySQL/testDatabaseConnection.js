@@ -1,10 +1,9 @@
-/** 
+/**
  *  Purpose: to illustrate how to connect to the MySQL database
- *  
+ *
  */
-var con = require('./connection');
+const con = require('./connection');
 
-con.connect(function(err) {
+con.connect((err) => {
     if (err) throw err;
-    console.log('Connected!');
 });

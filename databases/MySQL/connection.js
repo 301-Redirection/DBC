@@ -2,9 +2,9 @@
  * Purpose: exports a SQL connection
  *
  */
-var mysql = require('mysql');
+const mysql = require('mysql');
 
-var conn = mysql.createConnection({
+const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',

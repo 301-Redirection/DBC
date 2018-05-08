@@ -5,7 +5,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
 // Jquery imports
-declare var $: any;
+// let $: any;
 
 @Component({
     selector: 'app-bot-config',

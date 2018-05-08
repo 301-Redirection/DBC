@@ -1,0 +1,16 @@
+{
+    "parser": "typescript-eslint-parser",
+    "plugins": ["typescript"],
+    "globals": {
+        "window": false,
+        "document": false,
+        "it": false,
+        "expect": false,
+        "beforeEach": false,
+        "describe": false,
+    },
+    "rules": {
+        "no-unused-vars": 0,
+        "class-methods-use-this": 0,
+    }
+}

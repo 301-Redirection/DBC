@@ -19,3 +19,5 @@ import { DashboardComponent } from './dashboard.component';
     ],
 })
 export class DashboardModule { }
+
+export default 'DashboardModule';
