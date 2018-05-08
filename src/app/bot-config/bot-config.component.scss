@@ -30,6 +30,10 @@ $slider-cursor: pointer;
     box-shadow: 0 0 8px $radiant-border-color;
     background-color: $radiant-card-background-color;
 }
+.alert-both {
+    box-shadow: 0 0 8px $btn-both-factions-background-color;
+    background-color: $btn-both-factions-background-color;
+}
 .alert-red {
     background-color: rgba($btn-cancel-border-color-hover,0.8);
     border: 1px solid $btn-cancel-border-color;
@@ -139,3 +143,23 @@ $slider-cursor: pointer;
     float: none;
 }
 
+.btn-over-img  .button-cover {
+    position: absolute;
+    top: 55%;
+    left: 51%;
+    transform: translate(-60%, -50%);
+    -ms-transform: translate(-60%, -50%);
+    background-color: $btn-both-factions-background-color;
+    box-shadow: 0 0 5rem $light-grey;
+    
+  }
+
+  .button-cover{
+      border: 2px solid;
+  }
+
+  .img-pointer {
+    cursor: pointer;
+  }
+
+  
