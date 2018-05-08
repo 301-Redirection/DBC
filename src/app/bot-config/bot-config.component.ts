@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat, Condition, Trigger, Operator, Action } from '../ConfigurationFormat';
+import { ConfigurationFormat, Condition, Trigger, Operator, Action, LogicalOperator } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
@@ -33,7 +33,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             mid: {
                 compoundConditions: [{
@@ -46,7 +46,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             bot: {
                 compoundConditions: [{
@@ -59,7 +59,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
         },
         farm: {
@@ -74,7 +74,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             mid: {
                 compoundConditions: [{
@@ -87,7 +87,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             bot: {
                 compoundConditions: [{
@@ -100,7 +100,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
         },
         defend: {
@@ -115,7 +115,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             mid: {
                 compoundConditions: [{
@@ -128,7 +128,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
             bot: {
                 compoundConditions: [{
@@ -141,7 +141,7 @@ export class BotConfigComponent implements OnInit {
                     }],
                     logicalOperator: []
                 }],
-                initalValue: 0 
+                initialValue: 0 
             },
         },
         roam: {
@@ -155,7 +155,7 @@ export class BotConfigComponent implements OnInit {
                 }],
                 logicalOperator: []
             }],
-            initalValue: 0 
+            initialValue: 0 
         },
         roshan: {
             compoundConditions: [{
@@ -165,10 +165,10 @@ export class BotConfigComponent implements OnInit {
                     conditional: 0,
                     action: Action.Modify,
                     value: 0
-                }],
+                }],                
                 logicalOperator: []
             }],
-            initalValue: 0 
+            initialValue: 0
         },
     };
 
@@ -186,7 +186,8 @@ export class BotConfigComponent implements OnInit {
                 config: this.config,
                 name: this.name,
                 description: this.description,
-            };
+            };       
+            console.log(requestObject.config);                 
 
             // call generate from api service
             const response = this.api.generate(requestObject).subscribe((data) => {

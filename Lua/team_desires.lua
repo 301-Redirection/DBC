@@ -1,8 +1,8 @@
--- test--
+-- test --
 [[ test ]]
 
 function UpdateRoshanDesires()
-    local common = undefined
+    local common = 0
     if DotaTime() < 0 then
         common += 0
     end
@@ -11,7 +11,7 @@ function UpdateRoshanDesires()
 end
 
 function UpdateRoamDesires()
-    local common = undefined
+    local common = 0
     if DotaTime() < 0 then
         common += 0
     end
@@ -20,21 +20,21 @@ function UpdateRoamDesires()
 end
 
 function UpdatePushLaneDesires()
-    local common = undefined
+    local common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local topCommon = common
 
-    common = undefined
+    common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local midCommon = common
 
-    common = undefined
+    common = 0
     if DotaTime() < 0 then
         common += 0
     end
@@ -45,46 +45,45 @@ function UpdatePushLaneDesires()
 end
 
 function UpdateDefendLaneDesires()
-    local common = undefined
+    local common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local topCommon = common
 
-    common = undefined
+    common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local midCommon = common
 
-    common = undefined
-    if DotaTime() < 0 then
-        common += 0
+    common = 0
+    if (DotaTime() < 0) or (DotaTime() < 0) or (DotaTime() < 0) then
+        common = 10
     end
-
     local botCommon = common
 
     return {topCommon, midCommon, botCommon}
 end
 
 function UpdateFarmLaneDesires()
-    local common = undefined
+    local common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local topCommon = common
 
-    common = undefined
+    common = 0
     if DotaTime() < 0 then
         common += 0
     end
 
     local midCommon = common
 
-    common = undefined
+    common = 0
     if DotaTime() < 0 then
         common += 0
     end

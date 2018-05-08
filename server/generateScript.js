@@ -7,7 +7,7 @@ module.exports = {
         var scriptBuilder = ``;
 
         // Adds the script name and the description as a comment at the top of the file
-        scriptBuilder += `-- ` + req.body.teamDesires.name + `--\n[[ ` + req.body.teamDesires.description + ` ]]\n\n`;
+        scriptBuilder += `-- ` + req.body.teamDesires.name + ` --\n[[ ` + req.body.teamDesires.description + ` ]]\n\n`;
         
         // Creates the UpdateRoshanDesire function    
         scriptBuilder += this.generateRoshanDesires(req);        
@@ -29,11 +29,10 @@ module.exports = {
 
     // Generate roshan desires
     generateRoshanDesires(req) {                  
-        var roshan = req.body.teamDesires.config.roshan;    
-        console.log(req.body.teamDesires.config);                                                         
+        var roshan = req.body.teamDesires.config.roshan;                    
         var scriptBuilder = `function UpdateRoshanDesires()\n`;        
         scriptBuilder += `    local common = ${roshan.initialValue}\n`;        
-        scriptBuilder += this.getConditions(roshan.compoundConditions);                
+        scriptBuilder += this.getConditions(roshan.compoundConditions, false);                
         scriptBuilder += `    return common\n`;
         scriptBuilder += `end\n\n`;
         return scriptBuilder;
@@ -44,7 +43,7 @@ module.exports = {
         var roam = req.body.teamDesires.config.roam;
         var scriptBuilder = `function UpdateRoamDesires()\n`;        
         scriptBuilder += `    local common = ${roam.initialValue}\n`;
-        scriptBuilder += this.getConditions(roam.compoundConditions);        
+        scriptBuilder += this.getConditions(roam.compoundConditions, false);        
         scriptBuilder += `    return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
         scriptBuilder += `end\n\n`;    
         return scriptBuilder;
@@ -56,15 +55,15 @@ module.exports = {
         var scriptBuilder = `function UpdatePushLaneDesires()\n`;        
 
         scriptBuilder += `    local common = ${push.top.initialValue}\n`;
-        scriptBuilder += this.getConditions(push.top.compoundConditions);
+        scriptBuilder += this.getConditions(push.top.compoundConditions, true);
         scriptBuilder += `    local topCommon = common\n\n`;
 
         scriptBuilder += `    common = ${push.mid.initialValue}\n`;
-        scriptBuilder += this.getConditions(push.mid.compoundConditions);
+        scriptBuilder += this.getConditions(push.mid.compoundConditions, true);
         scriptBuilder += `    local midCommon = common\n\n`;
 
         scriptBuilder += `    common = ${push.bot.initialValue}\n`;
-        scriptBuilder += this.getConditions(push.bot.compoundConditions);
+        scriptBuilder += this.getConditions(push.bot.compoundConditions, true);
         scriptBuilder += `    local botCommon = common\n\n`;
 
         scriptBuilder += `    return {topCommon, midCommon, botCommon}\n`;
@@ -79,15 +78,15 @@ module.exports = {
         var scriptBuilder = `function UpdateDefendLaneDesires()\n`;        
 
         scriptBuilder += `    local common = ${defend.top.initialValue}\n`;
-        scriptBuilder += this.getConditions(defend.top.compoundConditions);
+        scriptBuilder += this.getConditions(defend.top.compoundConditions, true);
         scriptBuilder += `    local topCommon = common\n\n`;
 
         scriptBuilder += `    common = ${defend.mid.initialValue}\n`;
-        scriptBuilder += this.getConditions(defend.mid.compoundConditions);
+        scriptBuilder += this.getConditions(defend.mid.compoundConditions, true);
         scriptBuilder += `    local midCommon = common\n\n`;
 
         scriptBuilder += `    common = ${defend.bot.initialValue}\n`;
-        scriptBuilder += this.getConditions(defend.bot.compoundConditions);
+        scriptBuilder += this.getConditions(defend.bot.compoundConditions, true);
         scriptBuilder += `    local botCommon = common\n\n`;
 
         scriptBuilder += `    return {topCommon, midCommon, botCommon}\n`;
@@ -102,15 +101,15 @@ module.exports = {
         var scriptBuilder = `function UpdateFarmLaneDesires()\n`;        
 
         scriptBuilder += `    local common = ${farm.top.initialValue}\n`;
-        scriptBuilder += this.getConditions(farm.top.compoundConditions);
+        scriptBuilder += this.getConditions(farm.top.compoundConditions, true);
         scriptBuilder += `    local topCommon = common\n\n`;
 
         scriptBuilder += `    common = ${farm.mid.initialValue}\n`;
-        scriptBuilder += this.getConditions(farm.mid.compoundConditions);
+        scriptBuilder += this.getConditions(farm.mid.compoundConditions, true);
         scriptBuilder += `    local midCommon = common\n\n`;
 
         scriptBuilder += `    common = ${farm.bot.initialValue}\n`;
-        scriptBuilder += this.getConditions(farm.bot.compoundConditions);
+        scriptBuilder += this.getConditions(farm.bot.compoundConditions, true);
         scriptBuilder += `    local botCommon = common\n\n`;
 
         scriptBuilder += `    return {topCommon, midCommon, botCommon}\n`;
@@ -120,7 +119,9 @@ module.exports = {
     },
 
     // Get conditions in the compoundConditions array
-    getConditions(compoundConditions) {              
+    getConditions(compoundConditions, isLane) {              
+        var override = false;
+        var overrideValue;
         var trigger = ``;
         var operator = ``;
         var action = ``;
@@ -145,33 +146,49 @@ module.exports = {
                 scriptBuilder += `    end\n\n`;
                 
             }
-            else {                            
-                var conditions = compound.conditions;
-                var logicalOperators = compound.logicalOperator;
+            else {                                         
+                var conditions = compound.conditions;                                
 
                 // Begin if statement for the current CompoundCondition
                 scriptBuilder += `    if`;                
                 var totalValue = 0;
                 var i = 0;                
 
-                for (i = 0 ; i < conditions.length - 1 ; i++) { 
+                for (i = 0 ; i < conditions.length - 1 ; i++) {                                         
                     trigger = this.getTrigger(conditions[i].trigger);
-                    operator = this.getOperator(conditions[i].operator);
-                    action = this.getAction(conditions[i].action);
-                    logicalOperator = this.getLogicalOperator(logicalOperators[i]);
-
-                    scriptBuilder += ` (${trigger} ${operator} ${conditonal}) ${logicalOperator}`;
+                    operator = this.getOperator(conditions[i].operator);                    
+                    action = this.getAction(conditions[i].action);   
+                    logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);                    
                     totalValue += conditions[i].value;
-                }
 
+                    if (action == 'return') {
+                        override = true;
+                        overrideValue = conditions[i].value;
+                    }                        
+                    
+                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;                    
+                }                                
+                
                 // Get the properties of the last condition
                 trigger = this.getTrigger(conditions[i].trigger);
                 operator = this.getOperator(conditions[i].operator);
                 action = this.getAction(conditions[i].action);
                 totalValue += conditions[i].value;
+                
+                if (action == 'return'){
+                    override = true;
+                    overrideValue = conditions[i].value;
+                }                    
 
-                scriptBuilder += ` (${trigger} ${operator} ${conditonal}) then\n`;                
-                scriptBuilder += `        ${conditions[0].action} ${totalValue/conditions.length}\n`;
+                scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`; 
+                                
+                if (override == false)
+                    scriptBuilder += `        ${conditions[0].action} ${totalValue/conditions.length}\n`;                
+                else if (isLane == true) 
+                    scriptBuilder += `        common = ${overrideValue}\n`;
+                else 
+                    scriptBuilder += `        return ${overrideValue}\n`;
+                
                 scriptBuilder += `    end\n`;
             }                        
         });
@@ -297,8 +314,8 @@ const OPERATOR = {
 
 // Action enum
 const ACTION = {
-    Modify: 1,
-    Return: 2 // TODO: Decide what to do if a value is returned where there are multiple values to be outputted (eg. return {0,0,0})
+    Modify: 1, 
+    Return: 2 // OVERRIDE
 }
 
 // Logical Operator enum
