@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat, Condition, Trigger, Operator, Action, LogicalOperator } from '../ConfigurationFormat';
+import { 
+    ConfigurationFormat, 
+    Condition, 
+    Trigger, 
+    Operator, 
+    Action, 
+    LogicalOperator, 
+} from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
@@ -29,11 +36,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
             mid: {
                 compoundConditions: [{
@@ -42,11 +49,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0, 
             },
             bot: {
                 compoundConditions: [{
@@ -55,11 +62,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
         },
         farm: {
@@ -70,11 +77,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
             mid: {
                 compoundConditions: [{
@@ -83,11 +90,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
             bot: {
                 compoundConditions: [{
@@ -96,11 +103,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
         },
         defend: {
@@ -111,11 +118,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
             mid: {
                 compoundConditions: [{
@@ -124,11 +131,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
             bot: {
                 compoundConditions: [{
@@ -137,11 +144,11 @@ export class BotConfigComponent implements OnInit {
                         operator: Operator.LessThan,
                         conditional: 0,
                         action: Action.Modify,
-                        value: 0
+                        value: 0,
                     }],
-                    logicalOperator: []
+                    logicalOperator: [],
                 }],
-                initialValue: 0 
+                initialValue: 0,
             },
         },
         roam: {
@@ -151,11 +158,11 @@ export class BotConfigComponent implements OnInit {
                     operator: Operator.LessThan,
                     conditional: 0,
                     action: Action.Modify,
-                    value: 0
+                    value: 0,
                 }],
-                logicalOperator: []
+                logicalOperator: [],
             }],
-            initialValue: 0 
+            initialValue: 0,
         },
         roshan: {
             compoundConditions: [{
@@ -164,15 +171,15 @@ export class BotConfigComponent implements OnInit {
                     operator: Operator.LessThan,
                     conditional: 0,
                     action: Action.Modify,
-                    value: 0
+                    value: 0,
                 }],                
-                logicalOperator: []
+                logicalOperator: [],
             }],
-            initialValue: 0
+            initialValue: 0,
         },
     };
 
-    generateURL = "";
+    generateURL = '';
 
     constructor(private title: Title, private api: ApiConnectService) {
         this.title.setTitle(this.pageTitle);
@@ -182,12 +189,11 @@ export class BotConfigComponent implements OnInit {
 
     save() {
         if (this.validateInfo()) {
-            var requestObject = {
+            const requestObject = {
                 config: this.config,
                 name: this.name,
                 description: this.description,
-            };       
-            console.log(requestObject.config);                 
+            };                   
 
             // call generate from api service
             const response = this.api.generate(requestObject).subscribe((data) => {

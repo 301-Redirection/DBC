@@ -31,7 +31,8 @@ export interface Configuration {
 
 /*
  * A CompoundCondition will look as follows:
- * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} ... ${logicalOperator[n-1]} ${conditions[n]}) {
+ * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} 
+ *      ... ${logicalOperator[n-1]} ${conditions[n]}) {
  *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
  * }
  */
@@ -56,7 +57,7 @@ export interface Condition {
 
 export enum Action {
     Modify = 1,
-    Return
+    Return,
 }
 
 export enum Trigger {
@@ -64,12 +65,12 @@ export enum Trigger {
     EnemyHeroesAlive,
     AlliedHeroesAlive,
     NumEnemyHeroesVisible,
-    RadiusAlliedHeroes
+    RadiusAlliedHeroes,
 }
 
 export enum LogicalOperator {
     AND = 1,
-    OR
+    OR,
 }
 
 export enum Operator {
@@ -78,5 +79,5 @@ export enum Operator {
     EqualTo,
     GreaterThanEqualTo,
     GreaterThan,
-    NotEqual
+    NotEqual,
 }
