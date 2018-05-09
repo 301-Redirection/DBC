@@ -31,8 +31,8 @@ $slider-cursor: pointer;
     background-color: $radiant-card-background-color;
 }
 .alert-both {
-    box-shadow: 0 0 8px $btn-both-factions-background-color;
-    background-color: $btn-both-factions-background-color;
+    box-shadow: 0 0 8px $btn-edit-color;
+    background-color: $light-gold;
 }
 .alert-red {
     background-color: rgba($btn-cancel-border-color-hover,0.8);
@@ -53,13 +53,18 @@ $slider-cursor: pointer;
 .config-card-dire {
     box-shadow: 0 0 7px $dire-border-color;
     border: 0.5px solid $dire-border-color-dim;
-    background-color: $dire-card-background-color;
-    
+    background-color: $dire-card-background-color;    
 }
+
 .config-card-radiant {
     box-shadow: 0 0 7px $radiant-border-color;
     border: 0.5px solid $radiant-border-color-dim;
     background-color: $radiant-card-background-color;
+}
+
+.config-card-both {
+    box-shadow: 0 0 7px $light-gold;
+    border: 0.5px solid rgba($btn-edit-color,0.8);
 }
 
 .config-card-blur {
@@ -149,17 +154,14 @@ $slider-cursor: pointer;
     left: 51%;
     transform: translate(-60%, -50%);
     -ms-transform: translate(-60%, -50%);
-    background-color: $btn-both-factions-background-color;
-    box-shadow: 0 0 5rem $light-grey;
-    
-  }
+    background-color: $light-gold;
+    box-shadow: 0 0 5rem $light-grey;    
+}
 
-  .button-cover{
-      border: 2px solid;
-  }
+.button-cover{
+    border: 2px solid;
+}
 
-  .img-pointer {
+.img-pointer {
     cursor: pointer;
-  }
-
-  
+}

@@ -14,10 +14,11 @@ declare var $: any;
 })
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
-    imageURL = '../../assets/images/dota2-mini-map.png';
-    imageURLBothFactions = '../../assets/images/dota2-mini-map.png';
-    prevImageURL = this.imageURL;
-    alertText = '';
+    factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
+    bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';
+    prevFactionSelectionImageURL = this.factionSelectionImageURL;
+    prevBothFactionImageURL = this.bothFactionsImageURL;
+    factionEditAlert = '';
 
     // configuration object
     config: ConfigurationFormat = {
@@ -66,91 +67,82 @@ export class BotConfigComponent implements OnInit {
         return true;
     }
 
-    mouseOverEvent (event) {
-        if (event === 'dire') {
-            this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
-        } else {
-            this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
-        }
+    showHighlightSelectedFaction (faction) {
+        this.factionSelectionImageURL = 
+        '../../assets/images/dota2-mini-map-' + faction + '-hl.png';       
     }
 
-    mouseLeaveEvent() {
-        this.imageURL = this.prevImageURL;
+    unHighlightSelectedFaction() {
+        this.factionSelectionImageURL = this.prevFactionSelectionImageURL;
     }
 
-    mouseOverBoth () {
-        this.imageURLBothFactions = '../../assets/images/dota2-mini-map-both-blur.png';
+    showHighlightBothFactions () {
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
     }
 
-    mouseLeaveBoth() {
-        this.imageURLBothFactions = '../../assets/images/dota2-mini-map.png' ;
+    unHighlightBothFactions() {
+        this.bothFactionsImageURL = this.prevBothFactionImageURL ;
     }
 
-    clickEvent (event) {
-        $('#alertFractionSelect').hide();
-        this.imageURLBothFactions = '../../assets/images/dota2-mini-map.png';
-        if (event === 'dire') {
-            $('#dotaMiniMap2').removeClass('alert-radiant');
-            $('#dotaMiniMap').addClass('alert-dire');
-            this.imageURL = '../../assets/images/dota2-mini-map-dire-hl.png';
-            this.prevImageURL = this.imageURL;
-            this.alertText = 'You are now editing Dire faction';
-            $('#alert-config')
-                .removeClass('hide')
-                    .addClass('show')
-                        .show()
-                            .removeClass('alert-radiant')
-                                .removeClass('alert-both')
-                                    .addClass('alert-dire');
-            $('div').each(function () {
-                $(this)
-                .find('div.config-card')
-                    .removeClass('config-card-blur')
-                        .removeClass ('config-card-radiant')
-                            .addClass('config-card-dire');
-            });
-        } else {
-            $('#dotaMiniMap2').removeClass('alert-radiant');
-            $('#dotaMiniMap').addClass('alert-radiant');
-            this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
-            this.prevImageURL = this.imageURL;
-            this.alertText = 'You are now editing Radiant faction';
-            $('div').each(function () {
-                $(this)
-                .find('div.config-card')
-                    .removeClass('config-card-blur')
-                        .removeClass ('config-card-dire')
-                            .addClass('config-card-radiant');
-            });
-            $('#alert-config')
-                .removeClass('hide')
-                    .addClass('show')
-                        .show()
-                            .removeClass('alert-dire')
-                                .removeClass('alert-both')
-                                    .addClass('alert-radiant');
-        }
+    hideAlert() {
+        $('#alertConfig')
+        .addClass('hide')
+        .hide();
     }
 
-    clickEventBoth () {
-        $('#alertFractionSelect').hide();
-        $('#dotaMiniMap2').addClass('alert-radiant');
-        $('#dotaMiniMap').removeClass('alert-radiant');
-        $('#dotaMiniMap').removeClass('alert-dire');
-        this.alertText = 'You are now editing both factions';
+    selectFaction (selectedFaction,notSelectedFaction) {
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';  
+        this.prevBothFactionImageURL = this.bothFactionsImageURL;  
+        $('#dotaMiniMap2').removeClass('alert-both');
+        $('#dotaMiniMap')
+        .removeClass('alert-' + notSelectedFaction)
+        .addClass('alert-' + selectedFaction);
+        this.factionSelectionImageURL = 
+        '../../assets/images/dota2-mini-map-' + selectedFaction + '-hl.png';
+        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
+        this.factionEditAlert = 'You are now editing ' + selectedFaction + ' faction';
+        $('#alertConfig')
+        .removeClass('hide')
+        .addClass('show')                    
+        .show()
+        .removeClass('alert-' + notSelectedFaction)
+        .removeClass('alert-both')
+        .addClass('alert-' + selectedFaction);
         $('div').each(function () {
             $(this)
             .find('div.config-card')
-                .removeClass('config-card-blur')
-                    .removeClass ('config-card-radiant')
-                        .removeClass('config-card-dire');
+            .removeClass('config-card-blur')
+            .removeClass ('config-card-both')
+            .removeClass ('config-card-' + notSelectedFaction)
+            .addClass('config-card-' + selectedFaction);
         });
-        $('#alert-config')
-                .removeClass('hide')
-                    .addClass('show')
-                        .show()
-                            .removeClass('alert-dire')
-                                .removeClass('alert-radiant')
-                                    .addClass('alert-both');
+    }
+
+    selectBothFactions () {
+        $('#dotaMiniMap2').addClass('alert-both');
+        $('#dotaMiniMap')
+        .removeClass('alert-radiant')
+            .removeClass('alert-dire');
+        // Reset image for selectFaction
+        this.factionEditAlert = 'You are now editing both factions';
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
+        this.prevBothFactionImageURL = this.bothFactionsImageURL;
+        this.factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
+        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
+        $('div').each(function () {
+            $(this)
+            .find('div.config-card')
+            .removeClass('config-card-blur')
+            .removeClass ('config-card-radiant')
+            .removeClass('config-card-dire')
+            .addClass('config-card-both');
+        });
+        $('#alertConfig')
+        .removeClass('hide')
+        .addClass('show')
+        .show()
+        .removeClass('alert-dire')
+        .removeClass('alert-radiant')
+        .addClass('alert-both');
     }
 }
