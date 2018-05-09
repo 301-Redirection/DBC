@@ -8,33 +8,33 @@ The purpose of this document is to provide insight into the functions and code u
 
 Dota/Dota 2 - Defense of the Ancients 2, the game for which we are designing the bot configuration system.
 
-Ancient - The core building of each team, and must be protected at all costs. Losing this building loses the game.
+Ancient - The core building of each team which must be protected at all costs. Losing this building loses the game.
 
-Bot - a computer controlled hero in a team in Dota.
+Bot - A computer controlled hero in a team in Dota.
 
-Radiant - The team on the left hand-side of the Dota map.
+Radiant - The team on the bottom left hand side of the Dota map.
 
-Dire - The team on the right-hand side of the Dota map.
+Dire - The team on the top right hand side of the Dota map.
 
 HP - Hit Points, the amount of sustained damage a hero can take.
 
 MP - Mana Points, used for casting spells.
 
-Lane - One of three paths on the Dota map. The lanes are located on the Left/Top side of the map, Middle and Bottom/Right side of the map and are referred to as top, mid and bottom/bot lanes, respectively. Lanes can also be classified into 3 types: Safe Lane, Mid Lane and Offlane. The Safe Lane has its Tower placed furthest from base to provide additional support for the heroes in that lane. For Radiant, Safe Lane is the bot lane. For Dire, it is top lane. Both Radiant and Dire have their Mid lane in the mid lane, and the towers are placed mostly equally apart on each side of the map, providing a very equal match-up between the heroes in the lane. Offlane is the hardest lane, because the tower is closest to the base and the activity in the lane is likely futher away from this tower in this lane than the other team. For Radiant, Offlane is top lane and for Dire it is bottom lane. Note that a safe lane faces the offlane of the opposing team.
+Lane - One of three paths on the Dota map. The lanes are located on the Left/Top side of the map, Middle and Bottom/Right side of the map and are referred to as top, mid and bottom or bot lanes, respectively. Lanes can also be classified into 3 types: Safe Lane, Mid Lane and Off lane. The Safe Lane has its Tower placed furthest from the base to provide additional support for the heroes in that lane. For Radiant, Safe Lane is the bot lane. For Dire, it is top lane. Radiant and Dire have their mid towers placed mostly equally apart on each side of the map, providing a very equal match-up between the heroes in the lane. Offlane is the hardest lane, because the tower is closest to the base and the activity in the lane is likely futher away from this tower in this lane than the other team. For Radiant, Offlane is top lane and for Dire it is bottom lane. Note that a safe lane for one team faces the offlane of the opposing team.
 
-River - the river that divides the map into the Radiant and Dire sides.
+River - The river that divides the map into the Radiant and Dire sides.
 
-Jungle - The areas on the map that is not a lane or in the river.
+Jungle - The areas on the map that are not a lane and not in the river.
 
 Objective - An entity in the Dota game that is one of many steps in achieving victory. An objective can be a Tower, a Barracks or Roshan.
 
 Roshan - A massive ancient creep that grants bonuses to the heroes that kill him, including Aegis of Immortals, Cheese and a Refresher Shard. The Aegis will grant any hero who wields it a second life; the cheese will instantly restore 2000 HP and MP, and the Refresher Shard is a one-time use item that instantly refreshes all cooldowns of a hero.
 
-Tower - A defensive Turrent that can be destroyed by the opposing team. There are 3 turrets per lane, each placed more or less the same distance apart in the lane, but distances do vary. These towers are referred to as Tier x towers, where x is either 1, 2 or 3 with a Tier 1 tower being furthest from base and Tier 3 being closest to base. There are an additional 2 towers in front of the team's Ancient, called Tier 4 towers.
+Tower - A defensive turret that can be destroyed by the opposing team. There are 3 turrets per lane, each placed more or less the same distance apart in the lane, but distances do vary. These towers are referred to as Tier x towers, where x is either 1, 2 or 3 with a Tier 1 tower being furthest from base and Tier 3 being closest to base. There are an additional 2 towers in front of the team's Ancient, called Tier 4 towers.
 
-Teamfight - A big fight involving nearly all team members of both teams in any arbitrary location on the map. The victor of the teamfight is determined by the number of losses, and if it is even, it is then decided by the number of core heroes still alive, and if it is still even, then it is either decided by the net gold change of a team, or it is dubbed a draw. Victory in a teamfight will likely result in an objective being taken, whereas defeat will result in a very defense stance taken by the team.
+Teamfight - A big fight involving nearly all team members of both teams in any arbitrary location on the map. The victor of the teamfight is determined by the number of losses, and if it is even, it is then decided by the number of core heroes still alive, and if it is still even, then it is either decided by the net gold change of a team, or it is dubbed a draw. Victory in a teamfight will likely result in an objective being taken, whereas defeat will result in a very defensive stance being taken by the team.
 
-Creeps - Little minions that spawn and run down a lane to meet the opposing lane's creeps, also called a creep wave. There are also neutral creeps that spawn in the jungle areas of the map that give gold and experience when killed. If a team destroys a barracks of the enemy team, then the creeps of the team that destroyed the barracks will start spawning stronger, upgraded creeps in that lane, called super creeps. Once all barracks are destroyed, the creeps are further upgraded to mega creeps. An upgraded creep has more HP, and gives less gold and experience.
+Creeps - Little minions that spawn and run down a lane to meet the opposing team's creeps, also called a creep wave. There are also neutral creeps that spawn in the jungle areas of the map that give gold and experience when killed. If a team destroys a barracks of the enemy team, then the creeps of the team that destroyed the barracks will start spawning stronger, upgraded creeps in that lane, called super creeps. Once all barracks are destroyed, the creeps are further upgraded to mega creeps. An upgraded creep has more HP, and gives less gold and experience.
 
 Push - a collective effort from a team to attempt to advance down a lane to attempt to take an objective, a teamfight, or both.
 
@@ -42,7 +42,7 @@ Farm - The simple activity of a hero collecting gold and experience by killing c
 
 Defend - The act of staying close to or even behind your own tower and creep wave when the enemy team is pushing down your lane.
 
-Roaming - the act of not remaining in a lane for too long, but rather move between lanes to attempt to kill enemy heroes with the other heroes in that lane/ or in the jungle.
+Roaming - the act of not remaining in a lane for too long, but rather moving between lanes to attempt to kill enemy heroes with the other heroes in that lane or in the jungle.
 
 Ganking - The act of a group of team players grouping together to attempt to kill enemy heroes on the map.
 
@@ -95,7 +95,7 @@ export interface Condition {
 
 export enum Action {
     Modify = 1,
-    Return
+    Return,
 }
 
 export enum Trigger {
@@ -103,12 +103,12 @@ export enum Trigger {
     EnemyHeroesAlive,
     AlliedHeroesAlive,
     NumEnemyHeroesVisible,
-    RadiusAlliedHeroes
+    RadiusAlliedHeroes,
 }
 
 export enum LogicalOperator {
     AND = 1,
-    OR
+    OR,
 }
 
 export enum Operator {
@@ -117,7 +117,7 @@ export enum Operator {
     EqualTo,
     GreaterThanEqualTo,
     GreaterThan,
-    NotEqual
+    NotEqual,
 }
 ```
 
@@ -143,10 +143,10 @@ if (${trigger} ${operator} ${conditional}) {
 
 A CompoundCondition object has 2 properties:
 
-* an array of Conditions, and
-* an array of logicalOperator enumerated types
+* an array of n Conditions, and
+* an array of n - 1 logicalOperator enumerated types
 
-The array of conditions will be used to build a compound if statement joined together by the logical operators. In the event of a simple if statement with only one condition, then the logicalOperators array will be empty and the condition array will consist of one instance of Condition and use the format of a single Condition instance as shown above.
+The array of conditions will be used to build up a compound if statement joined together by the logical operators. In the event of a simple if statement with only one condition, then the logicalOperators array will be empty and the condition array will consist of one instance of Condition and use the format of a single Condition instance as shown above.
 
 The general format of a CompoundCondition instance is shown below:
 
@@ -161,7 +161,7 @@ A Configuration instance has 2 properties:
 * an array of CompoundConditions, and
 * an initial value
 
-An instance of Configuration represents the total configurations found within a function in team_desires.lua. The array of CompoundConditions represent all the if statement conditions that are to be evaluated, and the intial value the value that initialises the variable to be manipulated within the function.
+An instance of Configuration represents the total configurations found within a function in team_desires.lua. The array of CompoundConditions represent all the if statement conditions that are to be evaluated, and the intial value represents the starting number that the variable to be manipulated within the function will be.
 
 The general format of a Configuration instance expanded into the if conditions in a function is as follows:
 
@@ -186,7 +186,7 @@ return common
 `Trigger` determines what is being tested in an if statement. The possible values are
 
 * time (the time in the Dota Game),
-* EnemyHeroesAlive which corresponds the the number of enemy heroes that are alive
+* EnemyHeroesAlive which corresponds to the number of enemy heroes that are alive
 * AlliedHeroesAlive which corresponds to the number of allied heroes that are alive
 * NumEnemyHeroesVisible that corresponds to the number of enemy heroes that are currently visible on the minimap
 * RadiusAlliedHeroes which corresponds to the radius of the circle that covers all the allied heroes on the map
@@ -217,7 +217,7 @@ This functions returns a vector of 3 floating point values between 0 and 1 that 
 
 There are several factors that influence the desire of a team to push a specfic lane:
 
-* Whether the enemy team is alive or not, or rather, how many of the heroes on the enemy team is alive. Fewer heroes alive means a greater desire to push a lane.
+* Whether the enemy team is alive or not, or rather, how many of the heroes on the enemy team are alive. Fewer heroes alive will correlate with a greater desire to push any lane.
 * Whether the entire allied team is alive or not. There will be little to no desire to push if the team is mostly dead.
 * Where the creep waves have met in the lane. A creep wave closer to the team's base/tower will result in a higher desire to push the lane to the opposite side of the map.
 * Whether the team has any illusions/controllable minions with them, or can spawn any. If the team does, they will have a greater desire to push.
@@ -241,19 +241,19 @@ Factors influencing the desire to farm the lane:
 
 * It is early in the game and the heroes cannot sustain a full push
 * The heroes are spread out accross the map and cannot group together for a push
-* The heroes desire to Push/Defend is very low
+* The heroes desire to Push and Defend are very low
 
 #### 3.2.4 UpdateRoamDesire()
 
 This function returns a floating point value between 0 and 1, as well as a unit handle of a hero on the enemy team. The number represents the team's desire to go gank the specified target on the enemy team.
 
-Factors influencing the desire for a team to go gank:
+Factors influencing the desire for a player to go gank:
 
 * An enemy hero is alone in a lane
 * It is early in the game. (Note: Ganking is important throughout the game, but it is more so in the early game since a team wishes to **get** an advantage as soon as possible, later in the game you wish to **maintain** the advantage, if you have it. Recovering from a deficit is explained next)
 * If the team feels they are behind, in terms of kills or farm, the team will have a strong desire to go gank a target.
 
-Generally, the team will attempt to gank a/the enemy core, but any hero is still better than none. Priority therfore falls first to cores and then on to supports.
+Generally, the team will attempt to gank a/the enemy core, but any hero is still better than none. Priority therefore falls first to cores and then to supports.
 
 #### 3.2.5 UpdateRoshanDesire()
 

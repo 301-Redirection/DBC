@@ -64,7 +64,7 @@ export class BotConfigComponent implements OnInit {
 
             // call generate from api service
             const response = this.api.generate(requestObject).subscribe((data) => {
-                this.generateURL = globalConfig['app']['API_URL'] + '/download/' + data.id;
+                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
             });
         }
     }
