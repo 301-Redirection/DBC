@@ -6,6 +6,10 @@ const Sequelize = require('sequelize');
 const request = require('request');
 const sinon = require('sinon');
 const http = require('http');
+const { spawnSync } = require('child_process');
+const path = require('path');
+
+const IS_WIN = process.platform === 'win32';
 
 let app;
 let jwtStub;
@@ -42,12 +46,27 @@ describe('Bot API testing', () => {
                 dialectOptions: { multipleStatements: true },
             }
         );
-        sequelize.query(`USE ${config.test.database}`)
-            .then(() => { })
+        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
             .then(() => {
-                // clear all entries from table
-                sequelize.query('DELETE FROM BotConfigs');
-                done();
+                const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+                const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
+                if (child.error) {
+                    throw child.error;
+                }
+                const otherPath2 = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
+                const child2 = spawnSync(otherPath2, ['db:seed:all'], { stdio: [0, 1, 2] });
+                if (child2.error) {
+                    throw child2.error;
+                }
+                sequelize.query(`use ${config.test.database}`).then(() => { done(); });
+            })
+            .then(() => {
+                sequelize.query(`USE ${config.test.database}`)
+                    .then(() => {
+                        // clear all entries from table
+                        sequelize.query('DELETE FROM BotConfigs');
+                        done();
+                    });
             });
     });
     afterAll(() => {
