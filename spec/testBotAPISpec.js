@@ -358,32 +358,14 @@ describe('Bot API testing', () => {
         });
         it('-- Get bot with invalid id', (done) => {
             const options = {
-                hostname: 'localhost',
-                path: '/bots/get',
-                port: server.address().port,
-                method: 'GET',
+                url: `http://localhost:${server.address().port}/bots/get?botId=666`,
                 headers: header,
             };
-            const postParamters = {
-                botId: 666,
-            };
-            const postData = JSON.stringify(postParamters);
-            const req = http.request(options, (res) => {
-                res.setEncoding('utf8');
-                let allText = '';
-                res.on('data', (chunk) => {
-                    allText += chunk;
-                });
-                res.on('end', () => {
-                    expect(allText).toBe('');
-                    done();
-                });
+            request.get(options, (err, response, body) => {
+                const chunkJSON = JSON.parse(body);
+                expect(chunkJSON.botConfig.length).toBe(0);
+                done();
             });
-            req.on('error', (e) => {
-                throw e;
-            });
-            req.write(postData);
-            req.end();
         });
     });
 });
