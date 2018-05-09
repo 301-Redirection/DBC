@@ -1,4 +1,4 @@
-const heroData = require('./heroData.js');
+const heroData = require('./herodata.js');
 /** HELPER FUNCTIONS */
 /** this function removes the first underscore in a string
   *  example: antimage_mana_break -> mana_break
