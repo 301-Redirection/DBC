@@ -45,18 +45,17 @@ export class ApiConnectService {
     }
 
     public generate(config: any) {
-        
-
-        return this.http
-            .post(`${API_URL}/generate`, { 
-                teamDesires: config, 
-                responseType: 'JSON',                 
+        return this.http.post(
+            `${API_URL}/generate`,
+            {
+                teamDesires: config,
+                responseType: 'JSON',
             },
-            { 
-                headers: new HttpHeaders().set('Authorization', this.authHeader) 
+            {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
             },
         )
-            .pipe(catchError(this.handleError));
+        .pipe(catchError(this.handleError));
     }
 
     // Handle errors if any
