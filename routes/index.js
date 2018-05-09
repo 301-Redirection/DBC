@@ -109,7 +109,7 @@ router.post('/generate', jwtCheck, (req, res) => {
     res.status(200).send({ id: 'team_desires.lua' });
 });
 
-router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
+router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
     const file = `${__dirname}/../Lua/${req.params.id}`;
 
     const filename = path.basename(file);

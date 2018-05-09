@@ -207,7 +207,7 @@ module.exports = {
                 scriptBuilder += `    if ${trigger} ${operator} ${condition.conditional} then\n`;
                 scriptBuilder += `        ${action} ${condition.value}\n`;
                 scriptBuilder += '    end\n\n';
-            } else {
+            } else if (compound.conditions.length > 1) {
                 const { conditions } = compound;
 
                 // Begin if statement for the current CompoundCondition
