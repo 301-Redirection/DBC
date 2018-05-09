@@ -1,4 +1,3 @@
-
 module.exports = {
     up: (queryInterface, Sequelize) => queryInterface.createTable('BotConfigs', {
         id: {

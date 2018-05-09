@@ -95,19 +95,14 @@ function makeHeroObject(dataObject) {
 }
 /** Actual goal * */
 const heroes = [];
-for (const initialKey in heroData) {
-    // skip loop if the property is from prototype
-    if (!heroData.hasOwnProperty(initialKey)) continue;
-    const obj = heroData[initialKey];
-    for (const key in obj) {
-        if (!obj.hasOwnProperty(key)) continue;
-        const heroDataRecords = obj[key];
-        for (const finalKey in heroDataRecords) {
-            const specificHeroData = heroDataRecords[finalKey];
-            const heroObject = makeHeroObject(specificHeroData);
-            const heroStatsObject = makeHeroStatsObject(specificHeroData);
+Object.keys(heroData).map((initialKey) => {
+    Object.keys(heroData[initialKey]).map((key) => {
+        Object.keys(heroData[initialKey][key]).map((finalKey) => {
+            const specificHero = heroData[initialKey][key][finalKey];
+            const heroObject = makeHeroObject(specificHero);
+            const heroStatsObject = makeHeroStatsObject(specificHero);
             heroes.push({ hero: heroObject, heroStats: heroStatsObject });
-        }
-    }
-}
+        });
+    });
+});
 module.exports = heroes;
