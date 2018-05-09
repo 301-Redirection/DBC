@@ -11,6 +11,11 @@
             { "ts": "never", "js": "never" },
         ],
         "array-callback-return": 0,
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "functions": never,
+        }]
     },
     "globals": {
         "jasmine": false,
