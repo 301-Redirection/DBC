@@ -20,6 +20,26 @@ $slider-cursor: pointer;
     margin-bottom: $page-margin-bottom;
 }
 
+/* -- Alerts --*/
+.alert-dire {
+    box-shadow: 0 0 8px $dire-border-color;
+    background-color: $dire-card-background-color;
+}
+
+.alert-radiant {
+    box-shadow: 0 0 8px $radiant-border-color;
+    background-color: $radiant-card-background-color;
+}
+.alert-both {
+    box-shadow: 0 0 8px $btn-edit-color;
+    background-color: $light-gold;
+}
+.alert-red {
+    background-color: rgba($btn-cancel-border-color-hover,0.8);
+    border: 1px solid $btn-cancel-border-color;
+    color: $white;
+}
+
 
 /* -- Cards -- */
 
@@ -28,6 +48,28 @@ $slider-cursor: pointer;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
     color: $light-grey;    
+}
+
+.config-card-dire {
+    box-shadow: 0 0 7px $dire-border-color;
+    border: 0.5px solid $dire-border-color-dim;
+    background-color: $dire-card-background-color;    
+}
+
+.config-card-radiant {
+    box-shadow: 0 0 7px $radiant-border-color;
+    border: 0.5px solid $radiant-border-color-dim;
+    background-color: $radiant-card-background-color;
+}
+
+.config-card-both {
+    box-shadow: 0 0 7px $light-gold;
+    border: 0.5px solid rgba($btn-edit-color,0.8);
+}
+
+.config-card-blur {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .config-card-title {
@@ -46,7 +88,7 @@ $slider-cursor: pointer;
 
 #inputName:focus,
 #inputDescription:focus {
-    background-color: $dark-grey-1;
+    background-color: transparent;
 }
 
 
@@ -87,7 +129,7 @@ $slider-cursor: pointer;
     appearance: none;
     width: $slider-size;
     height: $slider-size;
-    border-radius: $slider-border-radius; 
+    border-radius: $slider-border-radius;
     background: $blue;
     cursor: $slider-cursor;
 }
@@ -98,4 +140,28 @@ $slider-cursor: pointer;
     border-radius: $slider-border-radius;
     background: $blue;
     cursor: $slider-cursor;
+}
+
+.vert-align-center {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.btn-over-img .button-cover {
+    position: absolute;
+    top: 55%;
+    left: 51%;
+    transform: translate(-60%, -50%);
+    -ms-transform: translate(-60%, -50%);
+    background-color: $light-gold;
+    box-shadow: 0 0 5rem $light-grey;
+}
+
+.button-cover{
+    border: 2px solid;
+}
+
+.img-pointer {
+    cursor: pointer;
 }

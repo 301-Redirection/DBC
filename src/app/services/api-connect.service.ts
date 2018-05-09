@@ -53,11 +53,12 @@ export class ApiConnectService {
             })
             .pipe(catchError(this.handleError));
     }
+    // Handle errors if any 
+    private handleError(err: HttpErrorResponse | any) { 
+        console.error('An error occurred', err); 
+        return Observable.throw(err.message || err); 
+    } 
 
-    // Handle errors if any
-    private handleError(err: HttpErrorResponse | any) {
-        return Observable.throw(err.message || err);
-    }
 }
 
 export default 'ApiConnectService';
