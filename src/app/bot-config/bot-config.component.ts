@@ -5,7 +5,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
 // Jquery imports
-// let $: any;
+declare var $: any;
 
 @Component({
     selector: 'app-bot-config',
@@ -102,7 +102,7 @@ export class BotConfigComponent implements OnInit {
                             .removeClass('alert-radiant')
                                 .removeClass('alert-both')
                                     .addClass('alert-dire');
-            $('div').each(function() {
+            $('div').each(function () {
                 $(this)
                 .find('div.config-card')
                     .removeClass('config-card-blur')
@@ -115,7 +115,7 @@ export class BotConfigComponent implements OnInit {
             this.imageURL = '../../assets/images/dota2-mini-map-radiant-hl.png';
             this.prevImageURL = this.imageURL;
             this.alertText = 'You are now editing Radiant faction';
-            $('div').each(function() {
+            $('div').each(function () {
                 $(this)
                 .find('div.config-card')
                     .removeClass('config-card-blur')
@@ -138,7 +138,7 @@ export class BotConfigComponent implements OnInit {
         $('#dotaMiniMap').removeClass('alert-radiant');
         $('#dotaMiniMap').removeClass('alert-dire');
         this.alertText = 'You are now editing both factions';
-        $('div').each(function() {
+        $('div').each(function () {
             $(this)
             .find('div.config-card')
                 .removeClass('config-card-blur')
