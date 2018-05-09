@@ -18,7 +18,6 @@ block that contains tests connected with that feature. */
 */
 
 const Request = require('request');
-// const app = require('../app');
 const sinon = require('sinon');
 
 let jwtStub;
