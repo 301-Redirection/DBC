@@ -8,11 +8,10 @@ import {
     Action, 
     LogicalOperator, 
 } from '../ConfigurationFormat';
+import { ConfigurationClass } from './configuration-class';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.json';
 
-// Jquery imports
-// let $: any;
 
 @Component({
     selector: 'app-bot-config',
@@ -29,154 +28,22 @@ export class BotConfigComponent implements OnInit {
     // configuration object
     config: ConfigurationFormat = {
         push: {
-            top: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0, 
-            },
-            bot: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
         },
         farm: {
-            top: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
-            bot: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
         },
         defend: {
-            top: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
-            bot: {
-                compoundConditions: [{
-                    conditions: [{
-                        trigger: Trigger.Time,
-                        operator: Operator.LessThan,
-                        conditional: 0,
-                        action: Action.Modify,
-                        value: 0,
-                    }],
-                    logicalOperator: [],
-                }],
-                initialValue: 0,
-            },
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
         },
-        roam: {
-            compoundConditions: [{
-                conditions: [{
-                    trigger: Trigger.Time,
-                    operator: Operator.LessThan,
-                    conditional: 0,
-                    action: Action.Modify,
-                    value: 0,
-                }],
-                logicalOperator: [],
-            }],
-            initialValue: 0,
-        },
-        roshan: {
-            compoundConditions: [{
-                conditions: [{
-                    trigger: Trigger.Time,
-                    operator: Operator.LessThan,
-                    conditional: 0,
-                    action: Action.Modify,
-                    value: 0,
-                }],                
-                logicalOperator: [],
-            }],
-            initialValue: 0,
-        },
+        roam: new ConfigurationClass(),
+        roshan: new ConfigurationClass(),
     };
 
     generateURL = '';

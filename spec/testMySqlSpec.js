@@ -20,7 +20,7 @@ describe('MySQL Intial Testing', () => {
                 dialect: 'mysql',
                 dialectOptions: { multipleStatements: true },
             }
-        );        
+        );
         sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
             .then(() => {
                 const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');

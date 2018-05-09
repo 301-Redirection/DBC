@@ -1,13 +1,14 @@
 const express = require('express');
-var router = express.Router();
+
+const router = express.Router();
 const models = require('../models');
 const sequelize = require('sequelize');
-var fs = require('fs');  
-var path = require('path');
-var mime = require('mime');
-const jwt = require('express-jwt'); 
-const jwks = require('jwks-rsa'); 
-var generateScript = require('../server/generateScript.js');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const generateScript = require('../server/generateScript.js');
 
 const env = {
     AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
@@ -91,11 +92,11 @@ router.get('/testAuthentication', jwtCheck, (request, response) => {
 });
 
 // Generates the bot TeamDesires script
-router.post('/generate', function(req, res) {        
-    var scriptBuilder = '';
-    
-    // Generates the team desire functions from ../server/generateScript.js    
-    scriptBuilder = generateScript.generateTeamDesires(req);    
+router.post('/generate', jwtCheck, (req, res) => {
+    let scriptBuilder = '';
+
+    // Generates the team desire functions from ../server/generateScript.js
+    scriptBuilder = generateScript.generateTeamDesires(req);
 
     try {
         fs.mkdirSync('./Lua');
