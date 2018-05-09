@@ -51,7 +51,13 @@ export class ApiConnectService {
             })
             .pipe(catchError(this.handleError));
     }
+    // Handle errors if any 
+    private handleError(err: HttpErrorResponse | any) { 
+        console.error('An error occurred', err); 
+        return Observable.throw(err.message || err); 
+    } 
 
+<<<<<<< HEAD
     public updateBot(config: ConfigurationFormat) {
         const httpHeaders = {
             headers: new HttpHeaders({
@@ -77,6 +83,8 @@ export class ApiConnectService {
     private handleError(err: HttpErrorResponse | any) {
         return Observable.throw(err.message || err);
     }
+=======
+>>>>>>> dev
 }
 
 export default 'ApiConnectService';
