@@ -1,7 +1,7 @@
 // TODO: Ensure this test runs first
 
 const models = require('../models');
-const config = require('../config/config.json');
+const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const { spawnSync } = require('child_process');
 const path = require('path');

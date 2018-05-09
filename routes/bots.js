@@ -31,6 +31,7 @@ router.post('/update', jwtCheck, [
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
         response.status(422).json({ errors: errors.mapped() });
+        return;
     }
     const {
         name, id, description, configuration,
@@ -74,7 +75,10 @@ router.post('/update', jwtCheck, [
 router.get('/get', jwtCheck, (request, response) => {
     const id = request.query.botId;
     models.BotConfig.findAll({
-        where: { userId: request.user.sub, id },
+        where: {
+            userId: request.user.sub,
+            id,
+        },
     })
         .then((botConfig) => {
             response.status(200).json({ botConfig });

@@ -19,9 +19,9 @@ module.exports = {
         dialect: 'mysql',
     },
     test: {
-        username: 'database_test',
-        password: null,
-        database: 'database_test',
+        username: config.development.username || 'root',
+        password: config.development.password || null,
+        database: config.development.database || 'test',
         host: '127.0.0.1',
         dialect: 'mysql',
     },

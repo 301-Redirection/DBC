@@ -18,17 +18,30 @@ block that contains tests connected with that feature. */
 */
 
 const Request = require('request');
-const app = require('../app');
+// const app = require('../app');
+const sinon = require('sinon');
+
+let jwtStub;
 
 describe('Server', () => {
     let server;
     beforeAll(() => {
+        const jwtCheck = require('../routes/jwtCheck');
+        jwtStub = sinon.stub(jwtCheck, 'jwtCheck')
+            .callsFake((req, res, next) => {
+                req.user = {};
+                req.user.sub = 'auth0|5aaad1a6aa9ad130c17479ba';
+                return next();
+            });
+        // after you can create app:
+        const app = require('../app');
         server = app.listen(3000, () => {
             console.log(`Listening on port ${server.address().port} ...`);
         });
     });
     afterAll(() => {
         server.close();
+        jwtStub.restore();
     });
     describe('GET /', () => {
         const data = {};

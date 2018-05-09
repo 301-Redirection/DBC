@@ -132,42 +132,8 @@ router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
     res.download(file);
 });
 
-/** The following routes are here to quickly demonstrate how one would use sequelize.
- *  please consult the documentation for all possible options
- *  http://docs.sequelizejs.com/manual/tutorial/querying.html
- */
-
-// const { Op } = sequelize;
-// router.get('/example/sequelizer/user/query', (request, res) => {
-//     models.User.findAll({
-//         include: [{
-//             model: models.BotConfig,
-//             as: 'botConfigs',
-//         }],
-//         where: {
-//             [Op.or]: [{ id: 12 }, { id: 13 }],
-//             // alternatives ways (syntax) to query
-//             //  id: {
-//             //     [Op.and]: {
-//             //       [Op.lt]: 13,
-//             //       [Op.gt]: 4
-//             //   }
-//             //  },
-//             // firstname: {
-//             //   [Op.like]: 'a%'
-//             // }
-//         },
-//     }).then((returnedModels) => {
-//         res.render('exampleSequelize', {
-//             title: 'Backend testing of auth0',
-//             models: returnedModels
-//         });
-//     });
-// });
-
 /* just to test request and via its details */
 router.get('/testAuthentication', jwtCheck, (request, response) => {
-    // console.log(request.headers);
     response.status(500).send({ message: 'you have been sucessfully authenticated' });
 });
 
