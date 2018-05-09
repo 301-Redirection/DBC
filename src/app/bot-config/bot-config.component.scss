@@ -124,23 +124,23 @@ $slider-cursor: pointer;
     opacity: 1; /* Fully shown on mouse-over */
 }
 
-.slider::-webkit-slider-thumb { 
-    -webkit-appearance: none; 
-    appearance: none; 
-    width: $slider-size; 
-    height: $slider-size; 
-    border-radius: $slider-border-radius;  
-    background: $blue; 
-    cursor: $slider-cursor; 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: $slider-size;
+    height: $slider-size;
+    border-radius: $slider-border-radius;
+    background: $blue;
+    cursor: $slider-cursor;
 }
 
-.slider::-moz-range-thumb { 
-    width: $slider-size; 
-    height: $slider-size; 
-    border-radius: $slider-border-radius; 
-    background: $blue; 
-    cursor: $slider-cursor; 
-} 
+.slider::-moz-range-thumb {
+    width: $slider-size;
+    height: $slider-size;
+    border-radius: $slider-border-radius;
+    background: $blue;
+    cursor: $slider-cursor;
+}
 
 .vert-align-center {
     display: inline-block;
@@ -148,14 +148,14 @@ $slider-cursor: pointer;
     float: none;
 }
 
-.btn-over-img  .button-cover {
+.btn-over-img .button-cover {
     position: absolute;
     top: 55%;
     left: 51%;
     transform: translate(-60%, -50%);
     -ms-transform: translate(-60%, -50%);
     background-color: $light-gold;
-    box-shadow: 0 0 5rem $light-grey;    
+    box-shadow: 0 0 5rem $light-grey;
 }
 
 .button-cover{

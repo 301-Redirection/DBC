@@ -95,26 +95,26 @@ export class BotConfigComponent implements OnInit {
         this.prevBothFactionImageURL = this.bothFactionsImageURL;  
         $('#dotaMiniMap2').removeClass('alert-both');
         $('#dotaMiniMap')
-        .removeClass('alert-' + notSelectedFaction)
-        .addClass('alert-' + selectedFaction);
-        this.factionSelectionImageURL = 
-        '../../assets/images/dota2-mini-map-' + selectedFaction + '-hl.png';
+            .removeClass(`alert-${notSelectedFaction}`)
+            .addClass(`alert-${selectedFaction}`);
+        this.factionSelectionImageURL =
+            `../../assets/images/dota2-mini-map-${selectedFaction}-hl.png`;
         this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
-        this.factionEditAlert = 'You are now editing ' + selectedFaction + ' faction';
+        this.factionEditAlert = `You are now editing ${selectedFaction} faction`;
         $('#alertConfig')
-        .removeClass('hide')
-        .addClass('show')                    
-        .show()
-        .removeClass('alert-' + notSelectedFaction)
-        .removeClass('alert-both')
-        .addClass('alert-' + selectedFaction);
+            .removeClass('hide')
+            .addClass('show')                    
+            .show()
+            .removeClass('alert-' + notSelectedFaction)
+            .removeClass('alert-both')
+            .addClass('alert-' + selectedFaction);
         $('div').each(function () {
             $(this)
-            .find('div.config-card')
-            .removeClass('config-card-blur')
-            .removeClass ('config-card-both')
-            .removeClass ('config-card-' + notSelectedFaction)
-            .addClass('config-card-' + selectedFaction);
+                .find('div.config-card')
+                .removeClass('config-card-blur')
+                .removeClass ('config-card-both')
+                .removeClass ('config-card-' + notSelectedFaction)
+                .addClass('config-card-' + selectedFaction);
         });
     }
 
@@ -131,18 +131,18 @@ export class BotConfigComponent implements OnInit {
         this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
         $('div').each(function () {
             $(this)
-            .find('div.config-card')
-            .removeClass('config-card-blur')
-            .removeClass ('config-card-radiant')
-            .removeClass('config-card-dire')
-            .addClass('config-card-both');
+                .find('div.config-card')
+                .removeClass('config-card-blur')
+                .removeClass ('config-card-radiant')
+                .removeClass('config-card-dire')
+                .addClass('config-card-both');
         });
         $('#alertConfig')
-        .removeClass('hide')
-        .addClass('show')
-        .show()
-        .removeClass('alert-dire')
-        .removeClass('alert-radiant')
-        .addClass('alert-both');
+            .removeClass('hide')
+            .addClass('show')
+            .show()
+            .removeClass('alert-dire')
+            .removeClass('alert-radiant')
+            .addClass('alert-both');
     }
 }
