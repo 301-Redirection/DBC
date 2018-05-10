@@ -43,13 +43,22 @@ const generateTeamDesires = function (req) {
     scriptBuilder += this.generateRoamDesires(req);
 
     // Creates the UpdatePushLaneDesires function
-    scriptBuilder += this.generatePushLaneDesires(req);
+    scriptBuilder += this.generateLaneDesires(
+        req.body.teamDesires.config.push, 
+        'UpdatePushLaneDesires()'
+    );
 
     // Creates the UpdateDefendLaneDesires function
-    scriptBuilder += this.generateDefendLaneDesires(req);
+    scriptBuilder += this.generateLaneDesires(
+        req.body.teamDesires.config.defend,
+        'UpdateDefendLaneDesires()'
+    );
 
     // Creates the UpdateFarmLaneDesires function
-    scriptBuilder += this.generateFarmLaneDesires(req);
+    scriptBuilder += this.generateLaneDesires(
+        req.body.teamDesires.config.farm,
+        'UpdateFarmLaneDesires()'
+    );
 
     return scriptBuilder;
 };
@@ -82,74 +91,10 @@ const generateRoamDesires = function (req) {
     return scriptBuilder;
 };
 
-// Generate push desire
-const generatePushLaneDesires = function (req) {
-    const { top, mid, bot } = req.body.teamDesires.config.push;
-    let scriptBuilder = 'function UpdatePushLaneDesires()\n';
-
-    scriptBuilder += `    local common = ${top.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        top.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local topCommon = common\n\n';
-
-    scriptBuilder += `    common = ${mid.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        mid.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local midCommon = common\n\n';
-
-    scriptBuilder += `    common = ${bot.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        bot.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local botCommon = common\n\n';
-
-    scriptBuilder += '    return {topCommon, midCommon, botCommon}\n';
-    scriptBuilder += 'end\n\n';
-
-    return scriptBuilder;
-};
-
-// Generate defend desire
-const generateDefendLaneDesires = function (req) {
-    const { top, mid, bot } = req.body.teamDesires.config.defend;
-    let scriptBuilder = 'function UpdateDefendLaneDesires()\n';
-
-    scriptBuilder += `    local common = ${top.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        top.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local topCommon = common\n\n';
-
-    scriptBuilder += `    common = ${mid.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        mid.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local midCommon = common\n\n';
-
-    scriptBuilder += `    common = ${bot.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        bot.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local botCommon = common\n\n';
-
-    scriptBuilder += '    return {topCommon, midCommon, botCommon}\n';
-    scriptBuilder += 'end\n\n';
-
-    return scriptBuilder;
-};
-
-// Generate farm desire
-const generateFarmLaneDesires = function (req) {
-    const { top, mid, bot } = req.body.teamDesires.config.farm;
-    let scriptBuilder = 'function UpdateFarmLaneDesires()\n';
+// Generic function for generating lane desires, with a 
+const generateLaneDesires = function (reqType, luaFunctionName) {
+    const { top, mid, bot } = reqType;
+    let scriptBuilder = `function ${luaFunctionName}\n`;
 
     scriptBuilder += `    local common = ${top.initialValue}\n`;
     scriptBuilder += this.getConditions(
@@ -365,9 +310,10 @@ module.exports = {
     generateTeamDesires,
     generateRoshanDesires,
     generateRoamDesires,
-    generatePushLaneDesires,
-    generateDefendLaneDesires,
-    generateFarmLaneDesires,
+    generateLaneDesires,
+    // generatePushLaneDesires,
+    // generateDefendLaneDesires,
+    // generateFarmLaneDesires,
     getConditions,
     getEnemyHeroesAlive,
     getAlliedHeroesAlive,
