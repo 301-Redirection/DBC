@@ -14,6 +14,13 @@ const indentString = function (string, numSpaces) {
 const LuaCodeManager = function () {
     this.helperFunctions = {};
     this.APIFunctions = {};
+    this.scriptHeadings = {};
+
+    this.addScriptHeading = function (headingName, luaString) {
+        if (!Object.prototype.hasOwnProperty.call(this.scriptHeadings, headingName)) {
+            this.scriptHeadings[headingName] = luaString;
+        }
+    };
 
     this.addHelperFunction = function (functionName) {
         if (!Object.prototype.hasOwnProperty.call(this.helperFunctions, functionName)) {
@@ -45,8 +52,12 @@ const LuaCodeManager = function () {
     this.generate = function () {
         let luaCodeString = '';
 
+        Object.keys(this.scriptHeadings).forEach((key) => {
+            luaCodeString += `${this.scriptHeadings[key]}\n\n`;
+        });
+
         Object.keys(this.helperFunctions).forEach((key) => {
-            luaCodeString += `${this.helperFunctions[key]}\n`;
+            luaCodeString += `${this.helperFunctions[key]}\n\n`;
         });
 
         Object.keys(this.APIFunctions).forEach((key) => {
@@ -60,7 +71,7 @@ const LuaCodeManager = function () {
             if (this.APIFunctions[key].end !== '') {
                 luaCodeString += this.APIFunctions[key].end;
             }
-            luaCodeString += 'end\n';
+            luaCodeString += 'end\n\n';
         });
 
         return luaCodeString;
@@ -69,6 +80,7 @@ const LuaCodeManager = function () {
     this.reset = function () {
         this.helperFunctions = { };
         this.APIFunctions = { };
+        this.scriptHeadings = { };
     };
 };
 const lcm = new LuaCodeManager();
