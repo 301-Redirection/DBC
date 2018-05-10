@@ -2,6 +2,7 @@
     "globals": {
         "describe": false,
         "beforeAll": false,
+        "beforeEach": false,
         "afterAll": false,
         "it": false,
         "expect": false,
