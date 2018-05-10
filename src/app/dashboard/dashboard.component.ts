@@ -11,15 +11,20 @@ import { ApiConnectService } from '../services/api-connect.service';
     styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-    bots = BOTS;
+    bots: any;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
 
     constructor(private title: Title, private api: ApiConnectService, private router: Router) {
-        this.title.setTitle(this.pageTitle);
+        this.title.setTitle(this.pageTitle);        
+    }
+
+    ngOnInit() { 
+        this.getUserBotScripts();
+    }
+
+    getUserBotScripts () {
         const response = this.api.recentBots().subscribe((data) => {
             this.bots = data.botConfigs;
         });
     }
-
-    ngOnInit() { }
 }
