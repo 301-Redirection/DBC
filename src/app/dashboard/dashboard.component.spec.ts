@@ -18,6 +18,7 @@ import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
+import { Observable } from 'rxjs/Rx';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -27,6 +28,56 @@ describe('DashboardComponent', () => {
     let auth: AuthService;
 
     beforeEach(async(() => {
+        const testBots = {
+            botConfigs: [
+                {
+                    id: 1,
+                    name: 'Test Bot 1',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 hours ago',
+                },
+                {
+                    id: 2,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+                {
+                    id: 3,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+                {
+                    id: 4,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+                {
+                    id: 5,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+                {
+                    id: 6,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+                {
+                    id: 7,
+                    name: 'Test Bot 2',
+                    description: 'This is the description of a bot script: ',
+                    lastEdit: '2 weeks ago',
+                },
+            ],
+        };
+
+        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['recentBots']);
+        const getQuoteSpy = apiConnectServiceStub.recentBots.and
+            .returnValue(Observable.of(testBots));
         TestBed.configureTestingModule({
             declarations: [
                 DashboardComponent,
@@ -43,7 +94,7 @@ describe('DashboardComponent', () => {
             providers: [
                 AuthService,
                 AuthGuard,
-                ApiConnectService,
+                { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 HttpClient,
                 HttpHandler,
                 Location,
