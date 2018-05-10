@@ -44,7 +44,7 @@ const generateTeamDesires = function (req) {
 
     // Creates the UpdatePushLaneDesires function
     scriptBuilder += this.generateLaneDesires(
-        req.body.teamDesires.config.push, 
+        req.body.teamDesires.config.push,
         'UpdatePushLaneDesires()'
     );
 
@@ -91,7 +91,7 @@ const generateRoamDesires = function (req) {
     return scriptBuilder;
 };
 
-// Generic function for generating lane desires, with a 
+// Generic function for generating lane desires, with a
 const generateLaneDesires = function (reqType, luaFunctionName) {
     const { top, mid, bot } = reqType;
     let scriptBuilder = `function ${luaFunctionName}\n`;
