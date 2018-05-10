@@ -55,6 +55,12 @@
                 ->Generate script
                 ->Delete Script
                 -->
+                <div *ngIf="bots == null || bots.length == 0">
+                    <li class="list-group-item manage-list-group-item text-center">
+                        <!-- <i class="fa fa-robot"></i><br> -->
+                        <h5>You currently have no bots</h5>
+                    </li>
+                </div>
                 <div *ngFor="let bot of bots; let i=index">
                     <li *ngIf="i<5" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
                         [attr.href]="'#bot'+bot.id+'Collapse'">
@@ -106,7 +112,7 @@
     </div>
 
     <div class="frame">
-        <div class="card bot-manage-card">
+        <div class="card bot-manage-card" id="botTeams">
             <div class="card-header">
                 <h5>YOUR BOT TEAMS</h5>
             </div>
