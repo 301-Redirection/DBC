@@ -53,6 +53,10 @@
                 ->Delete Script
                 -->
 
+                <li *ngIf="bots == null || bots.length == 0" class="list-group-item manage-list-group-item text-center">
+                    <!-- <i class="fa fa-robot"></i><br> -->
+                    <h5>You currently have no bots</h5>                                                
+                </li>
                 <li *ngFor="let bot of bots" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse"
                     data-parent="#accordion" [attr.href]="'#bot'+bot.id+'Collapse'">
                     <!--Bot Item Heading-->
