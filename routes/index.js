@@ -15,38 +15,11 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'Backend testing of auth0' });
 });
 
-// router.get(
-//     '/login',
-//     passport.authenticate('auth0', {
-//         clientID: env.AUTH0_CLIENT_ID,
-//         domain: env.AUTH0_DOMAIN,
-//         redirectUri: env.AUTH0_CALLBACK_URL,
-//         audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
-//         audience: 'dota-bot-scripting',
-//         responseType: 'code',
-//         scope: 'openid',
-//     }),
-//     (req, res) => {
-//         res.redirect('/');
-//     },
-// );
-
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
-
-// router.get(
-//     '/callback',
-//     passport.authenticate(
-//         'auth0',
-//         { failureRedirect: '/failure' },
-//     ),
-//     (req, res) => {
-//         res.redirect(req.session.returnTo || '/user');
-//     },
-// );
 
 router.get('/failure', (req, res) => {
     const error = req.flash('error');

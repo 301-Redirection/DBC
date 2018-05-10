@@ -1,6 +1,3 @@
-/* TODO: find a way to mock Auth0
- *       fix asynchronous calls and stuff...
- */
 const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const request = require('request');
@@ -17,7 +14,6 @@ let jwtStub;
 function hasText(string, text) {
     return string.indexOf(text) !== -1;
 }
-
 describe('Bot API testing', () => {
     let sequelize;
     let server;
@@ -57,7 +53,6 @@ describe('Bot API testing', () => {
                 if (child2.error) {
                     throw child2.error;
                 }
-                sequelize.query(`use ${config.test.database}`).then(() => { done(); });
             })
             .then(() => {
                 sequelize.query(`USE ${config.test.database}`)
@@ -101,7 +96,6 @@ describe('Bot API testing', () => {
             roshan: 0.6,
         },
     });
-
     let validId;
     describe('', () => {
         // creating a bot in a valid way
