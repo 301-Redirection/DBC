@@ -134,17 +134,19 @@ const getConditions = function (compoundConditions, isLane) {
     let logicalOperator = '';
     let scriptBuilder = '';
 
-    compoundConditions.forEach((compound) => {        
+    compoundConditions.forEach((compound) => {
         if (compound.conditions.length > 0) {
             const { conditions } = compound;
 
             let hasNumAlliesTrigger = false;
             let hasNumEnemiesTrigger = false;
-            for (let i = 0; i < conditions.length; i += 1) {                
-                if (conditions[i].trigger  === TRIGGER.AlliedHeroesAlive)
+            for (let i = 0; i < conditions.length; i += 1) {
+                if (conditions[i].trigger === TRIGGER.AlliedHeroesAlive) {
                     hasNumAlliesTrigger = true;
-                if (conditions[i].trigger  === TRIGGER.EnemyHeroesAlive)
+                }
+                if (conditions[i].trigger === TRIGGER.EnemyHeroesAlive) {
                     hasNumEnemiesTrigger = true;
+                }
             }
 
             if (hasNumAlliesTrigger) {
@@ -161,17 +163,16 @@ const getConditions = function (compoundConditions, isLane) {
             for (i = 0; i < conditions.length; i += 1) {
                 trigger = this.getTrigger(conditions[i].trigger);
                 operator = this.getOperator(conditions[i].operator);
-                action = this.getAction(conditions[i].action);                
+                action = this.getAction(conditions[i].action);
                 totalValue += conditions[i].value;
-                                                
+
                 if (action === 'return') {
                     override = true;
                     overrideValue = conditions[i].value;
                 }
-                
+
                 if (i < conditions.length - 1) {
-                    logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);    
-                    console.log(logicalOperator);                
+                    logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
                 } else {
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
@@ -183,11 +184,11 @@ const getConditions = function (compoundConditions, isLane) {
                     } else {
                         scriptBuilder += `        return ${overrideValue}\n`;
                     }
-                }                
-            }                                    
+                }
+            }
             scriptBuilder += '    end\n';
         }
-    });    
+    });
     return scriptBuilder;
 };
 
