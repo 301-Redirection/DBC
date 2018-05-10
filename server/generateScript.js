@@ -31,6 +31,7 @@ const LOGICAL_OPERTAOR = {
 
 // Generate the Lua script for team desires
 const generateTeamDesires = function (req) {
+    // const luaCodeManager = new luaCodeManager();
     let scriptBuilder = '';
 
     // Adds the script name and the description as a comment at the top of the file
@@ -133,71 +134,60 @@ const getConditions = function (compoundConditions, isLane) {
     let logicalOperator = '';
     let scriptBuilder = '';
 
-    compoundConditions.forEach((compound) => {
-        // If there is only 1 condition, then use the format of a single Condition instance.
-        if (compound.conditions.length === 1) {
-            const condition = compound.conditions[0];
-            trigger = this.getTrigger(condition.trigger);
-            operator = this.getOperator(condition.operator);
-            action = this.getAction(condition.action);
+    compoundConditions.forEach((compound) => {        
+        if (compound.conditions.length > 0) {
+            const { conditions } = compound;
 
-            if (condition.trigger === TRIGGER.AlliedHeroesAlive) {
-                scriptBuilder += this.getAlliedHeroesAlive();
-            } else if (condition.trigger === TRIGGER.EnemyHeroesAlive) {
-                scriptBuilder += this.getEnemyHeroesAlive();
+            let hasNumAlliesTrigger = false;
+            let hasNumEnemiesTrigger = false;
+            for (let i = 0; i < conditions.length; i += 1) {                
+                if (conditions[i].trigger  === TRIGGER.AlliedHeroesAlive)
+                    hasNumAlliesTrigger = true;
+                if (conditions[i].trigger  === TRIGGER.EnemyHeroesAlive)
+                    hasNumEnemiesTrigger = true;
             }
 
-            scriptBuilder += `    if ${trigger} ${operator} ${condition.conditional} then\n`;
-            scriptBuilder += `        ${action} ${condition.value}\n`;
-            scriptBuilder += '    end\n\n';
-        } else if (compound.conditions.length > 1) {
-            const { conditions } = compound;
+            if (hasNumAlliesTrigger) {
+                scriptBuilder += this.getAlliedHeroesAlive();
+            }
+            if (hasNumEnemiesTrigger) {
+                scriptBuilder += this.getEnemyHeroesAlive();
+            }
 
             // Begin if statement for the current CompoundCondition
             scriptBuilder += '    if';
             let totalValue = 0;
             let i = 0;
-
-            for (i = 0; i < conditions.length - 1; i += 1) {
+            for (i = 0; i < conditions.length; i += 1) {
                 trigger = this.getTrigger(conditions[i].trigger);
                 operator = this.getOperator(conditions[i].operator);
-                action = this.getAction(conditions[i].action);
-                logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);
+                action = this.getAction(conditions[i].action);                
                 totalValue += conditions[i].value;
-
+                                                
                 if (action === 'return') {
                     override = true;
                     overrideValue = conditions[i].value;
                 }
+                
+                if (i < conditions.length - 1) {
+                    logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);    
+                    console.log(logicalOperator);                
+                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
+                } else {
+                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
 
-                scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
-            }
-
-            // Get the properties of the last condition
-            trigger = this.getTrigger(conditions[i].trigger);
-            operator = this.getOperator(conditions[i].operator);
-            action = this.getAction(conditions[i].action);
-            totalValue += conditions[i].value;
-
-            if (action === 'return') {
-                override = true;
-                overrideValue = conditions[i].value;
-            }
-
-            scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
-
-            if (override === false) {
-                scriptBuilder += `        ${conditions[0].action} ${totalValue / conditions.length}\n`;
-            } else if (isLane === true) {
-                scriptBuilder += `        common = ${overrideValue}\n`;
-            } else {
-                scriptBuilder += `        return ${overrideValue}\n`;
-            }
-
+                    if (override === false) {
+                        scriptBuilder += `        ${action} ${totalValue / conditions.length}\n`;
+                    } else if (isLane === true) {
+                        scriptBuilder += `        common = ${overrideValue}\n`;
+                    } else {
+                        scriptBuilder += `        return ${overrideValue}\n`;
+                    }
+                }                
+            }                                    
             scriptBuilder += '    end\n';
         }
-    });
-
+    });    
     return scriptBuilder;
 };
 

@@ -25,7 +25,7 @@ export class ConfigurationClass {
         //     action: Action.Modify,
         //     value: 0,
         // });
-        
+       
         const compound = {
             conditions: this.conditions,
             logicalOperator: this.logicalOperator,
