@@ -84,7 +84,7 @@
                                     <p>{{bot.description}}</p>
                                 </div>
                             </div>
-                            <a href="#" class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'EditBtn'">
+                            <a class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'EditBtn'" [routerLink]="'/bot-config/' + bot.id">
                                 <i class="far fa-edit mr-1"></i>
                                 Edit
                             </a>
@@ -92,7 +92,7 @@
                                 <i class="fas fa-download mr-1"></i>
                                 Generate
                             </a>
-                            <a href="#" class="button button-cancel" #elem [attr.id]="'bot'+bot.id+'DeleteBtn'">
+                            <a class="button button-cancel" #elem [attr.id]="'bot'+bot.id+'DeleteBtn'" (click)="deleteBotScript(bot.id)">
                                 <i class="fas fa-trash-alt mr-1"></i>
                                 Delete
                             </a>

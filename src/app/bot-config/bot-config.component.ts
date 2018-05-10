@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigurationFormat } from '../ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
 
 // Jquery imports
@@ -47,8 +49,13 @@ export class BotConfigComponent implements OnInit {
     };
     generateURL = '';
 
-    constructor(private title: Title, private api: ApiConnectService) {
+    constructor(private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
         this.title.setTitle(this.pageTitle);
+        this.route.params.subscribe(params => {
+            if (params['botScriptID']) { 
+                this.loadBotScript(params['botScriptID']);
+            }
+        });
     }
 
     ngOnInit() { }
@@ -151,5 +158,19 @@ export class BotConfigComponent implements OnInit {
             .removeClass('alert-dire')
             .removeClass('alert-radiant')
             .addClass('alert-both');
+    }
+
+    clear () {
+        location.reload();
+    }
+
+    loadBotScript(id) {
+        console.log(id);
+        /*
+        const response = this.api.specificBot(id).subscribe((data) => {
+            res = data.botConfigs;
+        });
+        console.log(res);
+        */
     }
 }

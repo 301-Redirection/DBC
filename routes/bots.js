@@ -72,8 +72,8 @@ router.post('/update', jwtCheck, [
             });
     }
 });
-router.get('/get', jwtCheck, (request, response) => {
-    const id = request.query.botId;
+router.get('/get/:botId', jwtCheck, (request, response) => {
+    const id = request.params.botId;
     models.BotConfig.findAll({
         where: {
             userId: request.user.sub,
