@@ -33,6 +33,12 @@ export const ROUTES: Routes = [
         canActivate: [AuthGuard],
     },
     {
+        path: 'bot-config/:botScriptID',
+        component: BotConfigComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
+    {
         path: 'bot-management',
         component: BotManagementComponent,
         pathMatch: 'full',

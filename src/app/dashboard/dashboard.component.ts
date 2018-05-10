@@ -27,4 +27,8 @@ export class DashboardComponent implements OnInit {
             this.bots = data.botConfigs;
         });
     }
+
+    deleteBotScript (botScriptID: number) {
+        console.log('Delete this bot: ' + botScriptID);
+    }
 }
