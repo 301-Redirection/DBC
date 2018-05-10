@@ -49,9 +49,10 @@ export class BotConfigComponent implements OnInit {
     };
     generateURL = '';
 
-    constructor(private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
+    constructor
+    (private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
         this.title.setTitle(this.pageTitle);
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             if (params['botScriptID']) { 
                 this.loadBotScript(params['botScriptID']);
             }
@@ -167,8 +168,9 @@ export class BotConfigComponent implements OnInit {
     loadBotScript(id) {
         console.log(id);
         /*
+        let res;
         const response = this.api.specificBot(id).subscribe((data) => {
-            res = data.botConfigs;
+            res = data;
         });
         console.log(res);
         */

@@ -53,8 +53,9 @@ export class ApiConnectService {
     }
 
     public specificBot(botScriptID: number) {
+        console.log(this.authHeader);
         return this.http
-            .get(`${API_URL}/bots/get/` + botScriptID, {
+            .get(`${API_URL}/bots/get?id=` + botScriptID, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
