@@ -180,12 +180,14 @@ export class BotConfigComponent implements OnInit {
     }
 
     generateBotScript () {
+        /*
         let response = this.api.generate(this.bot).subscribe((data) => {
             console.log(data);
         });
         response = this.api.download(this.bot.id).subscribe((data) => {
             console.log(data);
         });
+        */
     }
 
     loadBotScript(id) {
