@@ -84,7 +84,7 @@ describe('NavbarComponent', () => {
         }
     }));
 
-    it('should redirect to Configuration page from configuration link, if logged in', fakeAsync(() => {
+    it('should redirect to Config page from config link, if logged in', fakeAsync(() => {
         auth.setLoggedIn(true);
         fixture.detectChanges();
         if (auth.loggedIn) {
@@ -110,7 +110,8 @@ describe('NavbarComponent', () => {
         auth.setLoggedIn(false);
         fixture.detectChanges();
         if (!auth.loggedIn) {
-            const logInButton = fixture.debugElement.query(By.css('button#logInButton')).nativeElement.innerHTML;
+            const logInButton = fixture.debugElement
+                .query(By.css('button#logInButton')).nativeElement.innerHTML;
             expect(logInButton).toContain('SIGN IN');
         }
     });

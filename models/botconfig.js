@@ -1,17 +1,18 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
-    var BotConfig = sequelize.define('BotConfig', {
+    const BotConfig = sequelize.define('BotConfig', {
         configuration: DataTypes.TEXT,
-        user_id: DataTypes.INTEGER
+        userId: DataTypes.STRING,
+        name: DataTypes.STRING,
+        description: DataTypes.STRING,
+        createdAt: DataTypes.DATE,
+        updatedAt: DataTypes.DATE,
     }, {});
-    BotConfig.associate = (models) => {
-        // associations can be defined here
-        // BotConfig.belongsTo(User);
-        BotConfig.belongsTo(models.User, {
-            foreignKey: 'user_id',
-            as: 'user',
-        });
-    };
+    // BotConfig.associate = (models) => {
+    //     associations can be defined here
+    //     BotConfig.belongsTo(models.User, {
+    //         foreignKey: 'userId',
+    //         as: 'user',
+    //     });
+    // };
     return BotConfig;
 };

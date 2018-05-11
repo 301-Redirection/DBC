@@ -1,0 +1,35 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "func-names": ["error", "never"],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "import/first": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/extensions": [
+            0,
+            "always",
+            { "ts": "never", "js": "never" },
+        ],
+        "array-callback-return": 0,
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "never",
+        }]
+    },
+    "globals": {
+        "jasmine": false,
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts",
+                ],
+            },
+        },
+    },
+}

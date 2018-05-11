@@ -1,6 +1,13 @@
 <div class="container-fluid container-fluid-custom background main-background">
     <div class="frame" id="botConfigTitle">
-        <h1>BOT CONFIGURATION</h1><br>
+        <h1>BOT CONFIGURATION</h1>
+        <div class="alert alert-dismissible fade hide" id="alertConfig" role="alert">
+            <strong>{{factionEditAlert}}</strong>
+            <button type="button" class="close" (click)="hideAlert()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br>
     </div>
 
     <!-- Start Row -->
@@ -13,51 +20,81 @@
                     <div class="card-title config-card-title">
                         <h4>Script Details</h4>
                     </div>
+                    <div class="alert alert-red show text-center" id="alertFactionSelect" role="alert">
+                        Please complete the following details and choose a faction to continue.
+                    </div>
                     <div class="form-group row mb-4">
                         <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="config.name">
+                            <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
                         <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="config.description"></textarea>
+                            <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="inputDescription" class="col-sm-3 col-form-label">Faction</label>
+                        <div class="col-sm-9 row">
+                            <div class="col-sm-6">
+                                <div class="mb-2" >
+                                    <h5 class="text-center">Edit a particular faction</h5>
+                                </div>
+                                <img [src]="factionSelectionImageURL" class="img-fluid rounded" id="dotaMiniMap" usemap="#imageMap">
+                                <map name="imageMap">
+                                    <area class="area img-pointer" id="direSide" alt="Dire Side" title="Dire Faction" (mouseover)="showHighlightSelectedFaction('dire')" (mouseleave)="unHighlightSelectedFaction()" (click)="selectFaction('dire' , 'radiant')"
+                                        coords="4,79,105,95,140,133,190,171,244,183,287,184,288,4,1,0" shape="poly">
+                                    <area class="img-pointer" id="radiantSide" alt="Radiant Side" title="Radiant Faction" (mouseover)="showHighlightSelectedFaction('radiant')" (mouseleave)="unHighlightSelectedFaction()" (click)="selectFaction('radiant' , 'dire')"
+                                        coords="1,81,98,99,133,140,183,172,223,188,290,191,290,265,3,262" shape="poly">
+                                </map>
+                            </div>
+                            <div class="col-sm-6 vert-align-center">   
+                                <div class="mb-2" >
+                                        <h5 class="text-center">Edit for both factions</h5>
+                                </div>  
+                                <div class="btn-over-img">
+                                    <img [src]="bothFactionsImageURL" class="img-fluid rounded" id="dotaMiniMap2"> 
+                                    <button type="button" class="button button-edit mx-2 button-cover" (mouseover)="showHighlightBothFactions()" (mouseleave)="unHighlightBothFactions()" (click)="selectBothFactions()">
+                                        EDIT BOTH
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- End Script Details -->
-
         <!-- Start Push Lane Desires -->
         <div class="col-md-6">
-            <div class="card config-card">
+            <div class="card config-card config-card-blur">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Push Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.push.top}}</label>
+                        <label for="pushTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.push.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.push.top" class="slider" id="pushTop" name="pushTop" [(ngModel)]="config.push.top">
+                                <input type="range" min="0" max="10" [value]="configuration.push.top.initialValue" class="slider" id="pushTop" name="pushTop" [(ngModel)]="configuration.push.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.push.mid}}</label>
+                        <label for="pushMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.push.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.push.mid" class="slider" id="pushMiddle" name="pushMiddle" [(ngModel)]="config.push.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.push.mid.initialValue" class="slider" id="pushMiddle" name="pushMiddle" [(ngModel)]="configuration.push.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.push.bot}}</label>
+                        <label for="pushBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.push.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.push.bot" class="slider" id="pushBottom" name="pushBottom" [(ngModel)]="config.push.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.push.bot.initialValue" class="slider" id="pushBottom" name="pushBottom" [(ngModel)]="configuration.push.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -74,33 +111,33 @@
 
         <!-- Start Defend Lane Desires -->
         <div class="col-md-6">
-            <div class="card config-card">
+            <div class="card config-card config-card-blur">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Defend Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.defend.top}}</label>
+                        <label for="defendTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.defend.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.defend.top" class="slider" id="defendTop" name="defendTop" [(ngModel)]="config.defend.top">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.top.initialValue" class="slider" id="defendTop" name="defendTop" [(ngModel)]="configuration.defend.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.defend.mid}}</label>
+                        <label for="defendMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.defend.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.defend.mid" class="slider" id="defendMiddle" name="defendMiddle" [(ngModel)]="config.defend.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.mid.initialValue" class="slider" id="defendMiddle" name="defendMiddle" [(ngModel)]="configuration.defend.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.defend.bot}}</label>
+                        <label for="defendBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.defend.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.defend.bot" class="slider" id="defendBottom" name="defendBottom"
-                                    [(ngModel)]="config.defend.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.bot.initialValue" class="slider" id="defendBottom" name="defendBottom"
+                                    [(ngModel)]="configuration.defend.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -111,16 +148,16 @@
 
         <!-- Start Roam Desires -->
         <div class="col-md-6">
-            <div class="card config-card">
+            <div class="card config-card config-card-blur">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Roam Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{config.roam}}</label>
+                        <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{configuration.roam.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.roam" class="slider" id="roam" name="roam" [(ngModel)]="config.roam">
+                                <input type="range" min="0" max="10" [value]="configuration.roam.initialValue" class="slider" id="roam" name="roam" [(ngModel)]="configuration.roam.initialValue">
                             </div>
                         </div>
                     </div>
@@ -137,32 +174,32 @@
 
         <!-- Start Farm Lane Desires -->
         <div class="col-md-6">
-            <div class="card config-card">
+            <div class="card config-card config-card-blur">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Farm Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{config.farm.top}}</label>
+                        <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.farm.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.farm.top" class="slider" id="farmTop" name="farmTop" [(ngModel)]="config.farm.top">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.top.initialValue" class="slider" id="farmTop" name="farmTop" [(ngModel)]="configuration.farm.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{config.farm.mid}}</label>
+                        <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.farm.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.farm.mid" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="config.farm.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.mid.initialValue" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="configuration.farm.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{config.farm.bot}}</label>
+                        <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.farm.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.farm.bot" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="config.farm.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.bot.initialValue" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="configuration.farm.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -173,16 +210,16 @@
 
         <!-- Start Roshan Desires -->
         <div class="col-md-6">
-            <div class="card config-card">
+            <div class="card config-card config-card-blur">
                 <div class="card-body">
                     <div class="card-title config-card-title">
                         <h4>Roshan Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{config.roshan}}</label>
+                        <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{configuration.roshan.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="config.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="config.roshan">
+                                <input type="range" min="0" max="10" [value]="configuration.roshan.initialValue" class="slider" id="roshan" name="roshan" [(ngModel)]="configuration.roshan.initialValue">
                             </div>
                         </div>
                     </div>
@@ -197,9 +234,9 @@
     <!-- Start Button Row -->
     <div class="row mb-4">
         <div class="button-container ml-auto">
-            <button type="button" class="button button-cancel mx-2" routerLink="/dashboard">
+            <button type="button" class="button button-cancel mx-2" (click)="reset()" >
                 <i class="fas fa-undo mr-1"></i>
-                CANCEL
+                RESET
             </button>
             <button type="button" class="button button-edit mx-2" (click)="save()">
                 <i class="fas fa-save mr-1"></i>

@@ -13,12 +13,9 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
-    - npm install -g angular-cli
-    - npm install -g karma
     - npm install
-    - ng build
+    - ./node_modules/.bin/ng build
 services:
     - mysql
 script:
-    - npm run test-backend
-    - karma start karma.conf.js --single-run
+    - npm run test-all

@@ -39,3 +39,5 @@ export class NavbarComponent implements OnInit {
         }
     }
 }
+
+export default 'NavbarComponent';

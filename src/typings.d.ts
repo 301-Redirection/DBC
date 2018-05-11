@@ -1,9 +1,9 @@
+/* eslint-disable */
 /* SystemJS module definition */
-declare var module: NodeModule;
-interface NodeModule {
+declare interface NodeModule{
   id: string;
 }
-declare module "*.json" {
+declare module '*.json' {
     const value: any;
     export default value;
 }
