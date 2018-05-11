@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const configJSON = require('./config.json');
 
-let configJSON = require('./config.json');
-
+let config;
 try {
     const jsonRaw = fs.readFileSync(path.join(__dirname, '..', '.env'));
     config = JSON.parse(jsonRaw);
 } catch (err) {
-    config = configJSON
+    config = configJSON;
     // This just falls back on the config
 }
 
