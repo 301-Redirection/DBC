@@ -28,11 +28,13 @@ export class BotConfigComponent implements OnInit {
     prevFactionSelectionImageURL = this.factionSelectionImageURL;
     prevBothFactionImageURL = this.bothFactionsImageURL;
     factionEditAlert = '';
+    
 
     // Bot variables
     name: string = 'test';
     description: string = 'test';
     id: number = -1;
+    factionSelected: string = 'both';
 
     // configuration object
     configuration: ConfigurationFormat = {
@@ -60,6 +62,7 @@ export class BotConfigComponent implements OnInit {
         name: this.name,
         description: this.description,
         configuration: this.configuration,
+        faction: this.factionSelected,
     };
 
     generateURL = '';
@@ -120,6 +123,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectFaction (selectedFaction,notSelectedFaction) {
+        this.bot.faction = selectedFaction;
         this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';  
         this.prevBothFactionImageURL = this.bothFactionsImageURL;  
         $('#dotaMiniMap2').removeClass('alert-both');
@@ -148,6 +152,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectBothFactions () {
+        this.bot.faction = 'both';
         $('#dotaMiniMap2').addClass('alert-both');
         $('#dotaMiniMap')
         .removeClass('alert-radiant')
@@ -201,7 +206,17 @@ export class BotConfigComponent implements OnInit {
                 this.bot.name = res.name;
                 this.bot.configuration = JSON.parse(res.configuration);
                 this.bot.description = res.description;
-                this.selectBothFactions();                
+                this.bot.faction = res.faction;
+                
+                if (this.bot.faction === 'radiant') {
+                    this.selectFaction('radiant','dire');
+                }else if (this.bot.faction === 'dire') {
+                    this.selectFaction('dire','radiant');
+                }else {
+                    this.selectBothFactions();
+                }
+                
+
             }
         });
     }

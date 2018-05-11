@@ -339,7 +339,7 @@ describe('Bot API testing', () => {
         });
         it('-- Get validId bot', (done) => {
             const options = {
-                url: `http://localhost:3000/bots/get?botId=${validId}`,
+                url: `http://localhost:3000/bots/get/${validId}`,
             };
             request.get(options, (err, response, body) => {
                 expect(body).not.toBe('{}');
@@ -353,7 +353,7 @@ describe('Bot API testing', () => {
         });
         it('-- Get bot with invalid id', (done) => {
             const options = {
-                url: 'http://localhost:3000/bots/get?botId=666',
+                url: 'http://localhost:3000/bots/get/666',
             };
             request.get(options, (err, response, body) => {
                 const responseObject = JSON.parse(body);
