@@ -96,9 +96,9 @@ router.get('/delete/:botID', jwtCheck, (request, response) => {
     const id = request.params.botID;
     // console.log(req.params);
     models.BotConfig.destroy({
-        where: { 
+        where: {
             userId: request.user.sub,
-            id,   
+            id,
         },
     })
         .then(() => {

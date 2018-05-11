@@ -55,6 +55,13 @@ export class BotConfigComponent implements OnInit {
         roshan: new ConfigurationClass(),
     };
 
+    bot = {
+        id: this.id,
+        name: this.name,
+        description: this.description,
+        configuration: this.configuration,
+    };
+
     generateURL = '';
 
     constructor
