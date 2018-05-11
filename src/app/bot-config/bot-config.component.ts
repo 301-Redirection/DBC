@@ -10,6 +10,8 @@ import {
 } from '../ConfigurationFormat';
 import { ConfigurationClass } from './configuration-class';
 import { ApiConnectService } from '../services/api-connect.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
 
 declare var $: any;
@@ -26,11 +28,13 @@ export class BotConfigComponent implements OnInit {
     prevFactionSelectionImageURL = this.factionSelectionImageURL;
     prevBothFactionImageURL = this.bothFactionsImageURL;
     factionEditAlert = '';
+    
 
     // Bot variables
     name: string = 'test';
     description: string = 'test';
     id: number = -1;
+    faction: string = 'both';
 
     // configuration object
     configuration: ConfigurationFormat = {
@@ -53,29 +57,42 @@ export class BotConfigComponent implements OnInit {
         roshan: new ConfigurationClass(),
     };
 
+    // bot = {
+    //     id: this.id,
+    //     name: this.name,
+    //     description: this.description,
+    //     configuration: this.configuration,
+    //     faction: this.factionSelected,
+    // };
+
     generateURL = '';
 
-    constructor(private title: Title, private api: ApiConnectService) {
+    constructor
+    (private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
         this.title.setTitle(this.pageTitle);
+        this.route.params.subscribe((params) => {
+            if (params['botScriptID']) {
+                this.loadBotScript(params['botScriptID']);
+            }
+        });
     }
 
     ngOnInit() { }
 
     save() {
         if (this.validateInfo()) {
-            const requestObject = {
-                configuration: this.configuration,
+            // call update bot from api service
+            const requestBot = {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-            };                   
-
-            // call update bot from api service
-            const response = this.api.updateBot(requestObject).subscribe((data) => {
+                configuration: this.configuration,
+                faction: this.faction,
+            };
+            const response = this.api.updateBot(requestBot).subscribe((data) => {
                 console.log(globalConfig);
                 this.generateURL =
                     `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
-                alert('successfully got the bot');
             });
         }
     }
@@ -112,6 +129,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectFaction (selectedFaction,notSelectedFaction) {
+        this.faction = selectedFaction;
         this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';  
         this.prevBothFactionImageURL = this.bothFactionsImageURL;  
         $('#dotaMiniMap2').removeClass('alert-both');
@@ -140,6 +158,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectBothFactions () {
+        this.faction = 'both';
         $('#dotaMiniMap2').addClass('alert-both');
         $('#dotaMiniMap')
         .removeClass('alert-radiant')
@@ -165,5 +184,46 @@ export class BotConfigComponent implements OnInit {
             .removeClass('alert-dire')
             .removeClass('alert-radiant')
             .addClass('alert-both');
+    }
+
+    reset () {
+        location.reload();
+    }
+
+    generateBotScript () {
+        /*
+        let response = this.api.generate(this.bot).subscribe((data) => {
+            console.log(data);
+        });
+        response = this.api.download(this.bot.id).subscribe((data) => {
+            console.log(data);
+        });
+        */
+    }
+
+    loadBotScript(id) {
+        let res: any;
+        const response = this.api.getSpecificBot(id).subscribe((data) => {
+            res = data['botConfig'];
+            res = res[0];
+            if (res != null) {
+                console.log(res);
+                this.id = res.id;
+                this.name = res.name;
+                this.configuration = JSON.parse(res.configuration);
+                this.description = res.description;
+                this.faction = res.faction;
+                
+                if (this.faction === 'radiant') {
+                    this.selectFaction('radiant','dire');
+                }else if (this.faction === 'dire') {
+                    this.selectFaction('dire','radiant');
+                }else {
+                    this.selectBothFactions();
+                }
+                
+
+            }
+        });
     }
 }

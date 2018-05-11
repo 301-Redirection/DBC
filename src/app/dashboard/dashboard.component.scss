@@ -11,6 +11,9 @@
     margin-bottom: $page-margin-bottom;
 }
  
+#botTeams {
+    margin-bottom: 100%;
+}
  
 /*
  |--------------------------------------
@@ -30,4 +33,8 @@
     #newConfigButton {
         font-size: 60%;
     }
+}
+
+.modal-confirmation .modal-dialog-centered {
+    background-color: $btn-general-background-color;
 }

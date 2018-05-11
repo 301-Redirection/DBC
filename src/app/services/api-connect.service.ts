@@ -52,6 +52,21 @@ export class ApiConnectService {
         )
         .pipe(catchError(this.handleError));
     }
+
+    public getSpecificBot(botScriptID: number) {
+        return this.http
+            .get(`${API_URL}/bots/get/` + botScriptID, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            })
+            .pipe(catchError(this.handleError));
+    }
+    public removeBot(botScriptID: number) {
+        return this.http
+            .get(`${API_URL}/bots/delete/` + botScriptID, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            })
+            .pipe(catchError(this.handleError));
+    }
     // Handle errors if any 
     private handleError(err: HttpErrorResponse | any) { 
         console.error('An error occurred', err); 
@@ -68,6 +83,17 @@ export class ApiConnectService {
             .post(`${API_URL}/bots/update`, config, httpHeaders)
             .pipe(catchError(this.handleError));
     }
+    /*
+    public generate(config: ConfigurationFormat) {
+        return this.http
+             .post(`${API_URL}/generate`, { 
+                 teamDesires: config, 
+                 responseType: 'JSON',
+                 headers: new HttpHeaders().set('Authorization', this.authHeader),
+             })
+             .pipe(catchError(this.handleError));
+    }
+    */
 }
 
 export default 'ApiConnectService';
