@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigurationFormat } from '../ConfigurationFormat';
+import { 
+    ConfigurationFormat, 
+    Condition, 
+    Trigger, 
+    Operator, 
+    Action, 
+    LogicalOperator, 
+} from '../ConfigurationFormat';
+import { ConfigurationClass } from './configuration-class';
 import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
 
-// Jquery imports
 declare var $: any;
 
 @Component({
@@ -22,31 +29,32 @@ export class BotConfigComponent implements OnInit {
     prevBothFactionImageURL = this.bothFactionsImageURL;
     factionEditAlert = '';
 
+    // Bot variables
+    name: string = 'test';
+    description: string = 'test';
+    id: number = -1;
+
     // configuration object
-    bot: ConfigurationFormat = {
-        id: -1,
-        name: 'test',
-        description: 'test',
-        configuration: {
-            push: {
-                top: 0,
-                mid: 0,
-                bot: 0,
-            },
-            farm: {
-                top: 0,
-                mid: 0,
-                bot: 0,
-            },
-            defend: {
-                top: 0,
-                mid: 0,
-                bot: 0,
-            },
-            roam: 0,
-            roshan: 0,
+    configuration: ConfigurationFormat = {
+        push: {
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
         },
+        farm: {
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
+        },
+        defend: {
+            top: new ConfigurationClass(),
+            mid: new ConfigurationClass(),
+            bot: new ConfigurationClass(),
+        },
+        roam: new ConfigurationClass(),
+        roshan: new ConfigurationClass(),
     };
+
     generateURL = '';
 
     constructor
@@ -63,20 +71,25 @@ export class BotConfigComponent implements OnInit {
 
     save() {
         if (this.validateInfo()) {
-            // call generate from api service
-            // const response = this.api.generate(this.config).subscribe((data) => {
-            //     this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
-            // });
+            const requestObject = {
+                configuration: this.configuration,
+                id: this.id,
+                name: this.name,
+                description: this.description,
+            };                   
 
-            const response = this.api.updateBot(this.bot).subscribe((data) => {
-                console.log(this.bot);
-                alert('successfully saved the bot');
+            // call update bot from api service
+            const response = this.api.updateBot(requestObject).subscribe((data) => {
+                console.log(globalConfig);
+                this.generateURL =
+                    `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                alert('successfully got the bot');
             });
         }
     }
 
     validateInfo(): boolean {
-        if (this.bot.name === '' || this.bot.description === '') {
+        if (this.name === '' || this.description === '') {
             alert('Please enter your bot script name and description');
             return false;
         }

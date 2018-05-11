@@ -132,12 +132,10 @@ describe('Bot API testing', () => {
                 headers: postHeader,
             };
             const postParamters = {
-                bot: {
-                    id: -1,
-                    name: 'Test bot 1',
-                    description: 'Bot made during jasmine testing of express',
-                    configuration: exampleConfig,
-                },
+                id: -1,
+                name: 'Test bot 1',
+                description: 'Bot made during jasmine testing of express',
+                configuration: exampleConfig,
             };
             const postData = JSON.stringify(postParamters);
             const req = http.request(options, (res) => {
@@ -170,10 +168,8 @@ describe('Bot API testing', () => {
                 headers: postHeader,
             };
             const postParamters = {
-                bot: {
-                    id: -1,
-                    name: 'Test bot 1',
-                },
+                id: -1,
+                name: 'Test bot 1',
             };
             const postData = JSON.stringify(postParamters);
             const req = http.request(options, (res) => {
@@ -229,13 +225,11 @@ describe('Bot API testing', () => {
                 headers: postHeader,
             };
             const postParamters = {
-                bot: {
-                    id: validId,
-                    // new value
-                    name: 'Test bot 666',
-                    description: 'Bot made during jasmine testing of express',
-                    configuration: exampleConfig,
-                },
+                id: validId,
+                // new value
+                name: 'Test bot 666',
+                description: 'Bot made during jasmine testing of express',
+                configuration: exampleConfig,
             };
             const postData = JSON.stringify(postParamters);
             const req = http.request(options, (res) => {
@@ -267,13 +261,11 @@ describe('Bot API testing', () => {
                 headers: postHeader,
             };
             const postParamters = {
-                bot: {
-                    id: 989,
-                    // new value
-                    name: 'Test bot 666',
-                    description: 'Bot made during jasmine testing of express',
-                    configuration: exampleConfig,
-                },
+                id: 989,
+                // new value
+                name: 'Test bot 666',
+                description: 'Bot made during jasmine testing of express',
+                configuration: exampleConfig,
             };
             const postData = JSON.stringify(postParamters);
             const req = http.request(options, (res) => {

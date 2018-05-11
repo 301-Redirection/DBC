@@ -26,13 +26,13 @@
                     <div class="form-group row mb-4">
                         <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="bot.name">
+                            <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
                         <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="bot.description"></textarea>
+                            <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
@@ -75,26 +75,26 @@
                         <h4>Push Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushTop" class="col-sm-3">Top:&nbsp;&nbsp;{{bot.configuration.push.top}}</label>
+                        <label for="pushTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.push.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.push.top" class="slider" id="pushTop" name="pushTop" [(ngModel)]="bot.configuration.push.top">
+                                <input type="range" min="0" max="10" [value]="configuration.push.top.initialValue" class="slider" id="pushTop" name="pushTop" [(ngModel)]="configuration.push.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{bot.configuration.push.mid}}</label>
+                        <label for="pushMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.push.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.push.mid" class="slider" id="pushMiddle" name="pushMiddle" [(ngModel)]="bot.configuration.push.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.push.mid.initialValue" class="slider" id="pushMiddle" name="pushMiddle" [(ngModel)]="configuration.push.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="pushBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{bot.configuration.push.bot}}</label>
+                        <label for="pushBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.push.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.push.bot" class="slider" id="pushBottom" name="pushBottom" [(ngModel)]="bot.configuration.push.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.push.bot.initialValue" class="slider" id="pushBottom" name="pushBottom" [(ngModel)]="configuration.push.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -117,27 +117,27 @@
                         <h4>Defend Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendTop" class="col-sm-3">Top:&nbsp;&nbsp;{{bot.configuration.defend.top}}</label>
+                        <label for="defendTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.defend.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.defend.top" class="slider" id="defendTop" name="defendTop" [(ngModel)]="bot.configuration.defend.top">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.top.initialValue" class="slider" id="defendTop" name="defendTop" [(ngModel)]="configuration.defend.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{bot.configuration.defend.mid}}</label>
+                        <label for="defendMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.defend.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.defend.mid" class="slider" id="defendMiddle" name="defendMiddle" [(ngModel)]="bot.configuration.defend.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.mid.initialValue" class="slider" id="defendMiddle" name="defendMiddle" [(ngModel)]="configuration.defend.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="defendBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{bot.configuration.defend.bot}}</label>
+                        <label for="defendBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.defend.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.defend.bot" class="slider" id="defendBottom" name="defendBottom"
-                                    [(ngModel)]="bot.configuration.defend.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.defend.bot.initialValue" class="slider" id="defendBottom" name="defendBottom"
+                                    [(ngModel)]="configuration.defend.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -154,10 +154,10 @@
                         <h4>Roam Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{bot.configuration.roam}}</label>
+                        <label for="roam" class="col-sm-3">Roam:&nbsp;&nbsp;{{configuration.roam.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.roam" class="slider" id="roam" name="roam" [(ngModel)]="bot.configuration.roam">
+                                <input type="range" min="0" max="10" [value]="configuration.roam.initialValue" class="slider" id="roam" name="roam" [(ngModel)]="configuration.roam.initialValue">
                             </div>
                         </div>
                     </div>
@@ -180,26 +180,26 @@
                         <h4>Farm Lane Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{bot.configuration.farm.top}}</label>
+                        <label for="farmTop" class="col-sm-3">Top:&nbsp;&nbsp;{{configuration.farm.top.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.farm.top" class="slider" id="farmTop" name="farmTop" [(ngModel)]="bot.configuration.farm.top">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.top.initialValue" class="slider" id="farmTop" name="farmTop" [(ngModel)]="configuration.farm.top.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{bot.configuration.farm.mid}}</label>
+                        <label for="farmMiddle" class="col-sm-3">Middle:&nbsp;&nbsp;{{configuration.farm.mid.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.farm.mid" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="bot.configuration.farm.mid">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.mid.initialValue" class="slider" id="farmMiddle" name="farmMiddle" [(ngModel)]="configuration.farm.mid.initialValue">
                             </div>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{bot.configuration.farm.bot}}</label>
+                        <label for="farmBottom" class="col-sm-3">Bottom:&nbsp;&nbsp;{{configuration.farm.bot.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.farm.bot" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="bot.configuration.farm.bot">
+                                <input type="range" min="0" max="10" [value]="configuration.farm.bot.initialValue" class="slider" id="farmBottom" name="farmBottom" [(ngModel)]="configuration.farm.bot.initialValue">
                             </div>
                         </div>
                     </div>
@@ -216,10 +216,10 @@
                         <h4>Roshan Desires</h4>
                     </div>
                     <div class="form-group row mb-4">
-                        <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{bot.configuration.roshan}}</label>
+                        <label for="roshan" class="col-sm-3">Roshan:&nbsp;&nbsp;{{configuration.roshan.initialValue}}</label>
                         <div class="col-sm-9">
                             <div class="slide-container">
-                                <input type="range" min="0" max="10" [value]="bot.configuration.roshan" class="slider" id="roshan" name="roshan" [(ngModel)]="bot.configuration.roshan">
+                                <input type="range" min="0" max="10" [value]="configuration.roshan.initialValue" class="slider" id="roshan" name="roshan" [(ngModel)]="configuration.roshan.initialValue">
                             </div>
                         </div>
                     </div>

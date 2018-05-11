@@ -23,10 +23,10 @@ router.get('/recent', jwtCheck, (request, response) => {
 
 /* will always return JSON of the new record details */
 router.post('/update', jwtCheck, [
-    check('bot.id').exists(),
-    check('bot.name').exists(),
-    check('bot.description').exists(),
-    check('bot.configuration').exists(),
+    check('id').exists(),
+    check('name').exists(),
+    check('description').exists(),
+    check('configuration').exists(),
 ], (request, response) => {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
@@ -35,7 +35,7 @@ router.post('/update', jwtCheck, [
     }
     const {
         name, id, description, configuration,
-    } = request.body.bot;
+    } = request.body;
     const userId = request.user.sub;
     // condition for creating a botconfig entry
     if (id === -1) {
