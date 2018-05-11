@@ -242,7 +242,7 @@
                 <i class="fas fa-save mr-1"></i>
                 SAVE
             </button>
-            <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+            <a class="button button-generate mx-2" id="generateButton" (click)="generateBotScript()" download>
                 <i class="fas fa-download mr-1"></i>
                 GENERATE
             </a>

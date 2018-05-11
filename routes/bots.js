@@ -92,5 +92,17 @@ router.get('/all', jwtCheck, (request, response) => {
             response.status(200).json({ botConfigs });
         });
 });
-
+router.get('/delete/:botID', jwtCheck, (request, response) => {
+    const id = request.params.botID;
+    // console.log(req.params);
+    models.BotConfig.destroy({
+        where: { 
+            userId: request.user.sub,
+            id,   
+        },
+    })
+        .then(() => {
+            response.status(200).json({ deleted: true });
+        });
+});
 module.exports = router;

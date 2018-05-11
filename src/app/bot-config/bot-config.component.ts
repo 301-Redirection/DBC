@@ -166,6 +166,15 @@ export class BotConfigComponent implements OnInit {
         location.reload();
     }
 
+    generateBotScript () {
+        let response = this.api.generate(this.bot).subscribe((data) => {
+            console.log(data);
+        });
+        response = this.api.download(this.bot.id).subscribe((data) => {
+            console.log(data);
+        });
+    }
+
     loadBotScript(id) {
         let res: any;
         const response = this.api.getSpecificBot(id).subscribe((data) => {

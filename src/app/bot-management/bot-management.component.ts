@@ -32,5 +32,9 @@ export class BotManagementComponent implements OnInit {
 
     deleteBotScript (botScriptID: number) {
         console.log('Delete this bot: ' + botScriptID);
+        const response = this.api.removeBot(botScriptID).subscribe((data) => {
+            console.log(data);
+        });
+        this.getUserBotScripts();
     }
 }
