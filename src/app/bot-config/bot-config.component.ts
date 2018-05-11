@@ -78,15 +78,8 @@ export class BotConfigComponent implements OnInit {
 
     save() {
         if (this.validateInfo()) {
-            const requestObject = {
-                configuration: this.configuration,
-                id: this.id,
-                name: this.name,
-                description: this.description,
-            };                   
-
             // call update bot from api service
-            const response = this.api.updateBot(requestObject).subscribe((data) => {
+            const response = this.api.updateBot(this.bot).subscribe((data) => {
                 console.log(globalConfig);
                 this.generateURL =
                     `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
@@ -96,7 +89,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     validateInfo(): boolean {
-        if (this.name === '' || this.description === '') {
+        if (this.bot.name === '' || this.bot.description === '') {
             alert('Please enter your bot script name and description');
             return false;
         }
@@ -182,7 +175,7 @@ export class BotConfigComponent implements OnInit {
             .addClass('alert-both');
     }
 
-    clear () {
+    reset () {
         location.reload();
     }
 
