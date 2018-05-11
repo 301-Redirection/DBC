@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 const { jwtCheck } = require('./jwtCheck');
+const generateScript = require('../server/generateScript.js');
 
 const router = express.Router();
 
@@ -37,61 +38,22 @@ router.get('/test', (request, response) => {
 
 // Generates the bot TeamDesires script
 router.post('/generate', jwtCheck, (req, res) => {
-    let scriptBuilder = '';
-
-    // Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += `-- ${req.body.teamDesires.name}--\n`;
-    scriptBuilder += `[[ ${req.body.teamDesires.description}]]\n`;
-
-    const { teamDesires } = req.body;
-    // Creates the UpdateRoshanDesire function
-    const roshanDesire = teamDesires.roshan / 10;
-    scriptBuilder += 'function UpdateRoshanDesires()\n';
-    scriptBuilder += `    return ${roshanDesire};\n`;
-    scriptBuilder += 'end\n\n';
-
-    // Creates the UpdateRoamDesire function
-    const roamDesire = teamDesires.roam / 10;
-    scriptBuilder += 'function UpdateRoamDesires()\n';
-    scriptBuilder += `    return {${roamDesire}, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n`;
-    scriptBuilder += 'end\n\n';
-
-    // Creates the UpdatePushLaneDesires function
-    Object.keys(teamDesires.push).map((lane) => {
-        teamDesires.push[lane] /= 10;
-    });
-    scriptBuilder += 'function UpdatePushLaneDesires() \n';
-    scriptBuilder += `    return {${teamDesires.push.top}, ${teamDesires.push.mid}, ${teamDesires.push.bot}}\n`;
-    scriptBuilder += 'end\n\n';
-
-    // Creates the UpdateDefendLaneDesires function
-    Object.keys(req.body.teamDesires.defend).map((lane) => {
-        req.body.teamDesires.defend[lane] /= 10;
-    });
-    scriptBuilder += 'function UpdateDefendLaneDesires() \n';
-    scriptBuilder += `    return {${teamDesires.defend.top}, ${teamDesires.defend.mid}, ${teamDesires.defend.bot}}\n`;
-    scriptBuilder += 'end\n\n';
-
-    // Creates the UpdateFarmLaneDesires function
-    Object.keys(req.body.teamDesires.farm).map((lane) => {
-        req.body.teamDesires.farm[lane] /= 10;
-    });
-    scriptBuilder += 'function UpdateFarmLaneDesires() \n';
-    scriptBuilder += `    return {${teamDesires.farm.top}, ${teamDesires.farm.mid}, ${teamDesires.farm.bot}}\n`;
-    scriptBuilder += 'end';
+    let luaCodeString = '';
+    const luaCodeManager = generateScript.generateTeamDesires(req);
+    luaCodeString = luaCodeManager.generate();
 
     try {
         fs.mkdirSync('./Lua');
     } catch (err) {
         if (err.code !== 'EEXIST') throw err;
     }
-    fs.writeFile('./Lua/team_desires.lua', scriptBuilder, (err) => {
+    fs.writeFile('./Lua/team_desires.lua', luaCodeString, (err) => {
         if (err) throw err;
     });
     res.status(200).send({ id: 'team_desires.lua' });
 });
 
-router.get('/download/:id([a-zA-Z0-9_\\.]+)', jwtCheck, (req, res) => {
+router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
     const file = `${__dirname}/../Lua/${req.params.id}`;
 
     const filename = path.basename(file);

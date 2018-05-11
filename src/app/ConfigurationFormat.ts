@@ -4,27 +4,80 @@
  * of the configuration options specified grows.
  */
 
-export class ConfigurationFormat {
-    id: number;
-    name: string;
-    description: string;
-    configuration: {
-        push: {
-            top: number;
-            mid: number;
-            bot: number;
-        };
-        farm: {
-            top: number;
-            mid: number;
-            bot: number;
-        };
-        defend: {
-            top: number;
-            mid: number;
-            bot: number;
-        };
-        roam: number;
-        roshan: number;
+export interface ConfigurationFormat {
+    push: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
     };
+    farm: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
+    };
+    defend: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
+    };
+    roam: Configuration;
+    roshan: Configuration;
+}
+
+export interface Configuration {
+    compoundConditions: CoumpoundCondition[];
+    initialValue: any;
+}
+
+/*
+ * A CompoundCondition will look as follows:
+ * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]} 
+ *      ... ${logicalOperator[n-1]} ${conditions[n]}) {
+ *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
+ * }
+ */
+export interface CoumpoundCondition {
+    conditions: Condition[];
+    logicalOperator: LogicalOperator[];
+}
+
+/*
+ * A Condition will look as follows:
+ * if (${trigger} ${operator} ${conditional}) {
+ *    ${action} ${value}
+ * }
+ */
+export interface Condition {
+    trigger: Trigger;
+    operator: Operator;
+    conditional: any;
+    action: Action; // TODO: Come up with action types
+    value: any;
+}
+
+export enum Action {
+    Modify = 1,
+    Return,
+}
+
+export enum Trigger {
+    Time = 1,
+    EnemyHeroesAlive,
+    AlliedHeroesAlive,
+    NumEnemyHeroesVisible,
+    RadiusAlliedHeroes,
+}
+
+export enum LogicalOperator {
+    AND = 1,
+    OR,
+}
+
+export enum Operator {
+    LessThan = 1,
+    LessThanEqualTo,
+    EqualTo,
+    GreaterThanEqualTo,
+    GreaterThan,
+    NotEqual,
 }
