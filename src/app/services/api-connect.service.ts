@@ -53,10 +53,10 @@ export class ApiConnectService {
         .pipe(catchError(this.handleError));
     }
 
-    public specificBot(botScriptID: number) {
+    public getSpecificBot(botScriptID: number) {
         console.log(this.authHeader);
         return this.http
-            .get(`${API_URL}/bots/get?id=` + botScriptID, {
+            .get(`${API_URL}/bots/get/` + botScriptID, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
