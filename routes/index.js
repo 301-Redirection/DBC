@@ -38,17 +38,16 @@ router.get('/test', (request, response) => {
 
 // Generates the bot TeamDesires script
 router.post('/generate', jwtCheck, (req, res) => {
-    let scriptBuilder = '';
-
-    // Generates the team desire functions from ../server/generateScript.js
-    scriptBuilder = generateScript.generateTeamDesires(req);
+    let luaCodeString = '';
+    const luaCodeManager = generateScript.generateTeamDesires(req);
+    luaCodeString = luaCodeManager.generate();
 
     try {
         fs.mkdirSync('./Lua');
     } catch (err) {
         if (err.code !== 'EEXIST') throw err;
     }
-    fs.writeFile('./Lua/team_desires.lua', scriptBuilder, (err) => {
+    fs.writeFile('./Lua/team_desires.lua', luaCodeString, (err) => {
         if (err) throw err;
     });
     res.status(200).send({ id: 'team_desires.lua' });

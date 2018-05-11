@@ -1,4 +1,4 @@
-// const ENUM = require('./enumConfig');
+const { lcm } = require('./LuaCodeManager.js');
 
 // Trigger enum
 const TRIGGER = {
@@ -31,101 +31,94 @@ const LOGICAL_OPERTAOR = {
 
 // Generate the Lua script for team desires
 const generateTeamDesires = function (req) {
-    // const luaCodeManager = new luaCodeManager();
-    let scriptBuilder = '';
+    // Reset helperFunction and APIFunction objects
+    lcm.reset();
 
     // Adds the script name and the description as a comment at the top of the file
-    scriptBuilder += `-- ${req.body.teamDesires.name} --\n[[ ${req.body.teamDesires.description} ]]\n\n`;
+    const { name, description } = req.body.teamDesires;
+    const scriptHeader = `-- ${name} --\n[[ ${description} ]]`;
+    lcm.addScriptHeading(
+        'NameAndDescription',
+        scriptHeader
+    );
 
     // Creates the UpdateRoshanDesire function
-    scriptBuilder += this.generateRoshanDesires(req);
+    lcm.addToAPIFunction(
+        'UpdateRoshaneDesires',
+        this.generateRoshanDesires(req)
+    );
 
     // Creates the UpdateRoamDesire function
-    scriptBuilder += this.generateRoamDesires(req);
+    lcm.addToAPIFunction(
+        'UpdateRoamDesires',
+        this.generateRoamDesires(req)
+    );
 
     // Creates the UpdatePushLaneDesires function
-    scriptBuilder += this.generateLaneDesires(
-        req.body.teamDesires.config.push,
-        'UpdatePushLaneDesires()'
+    lcm.addToAPIFunction(
+        'UpdatePushLaneDesires',
+        this.generateLaneDesires(req.body.teamDesires.config.push)
     );
 
     // Creates the UpdateDefendLaneDesires function
-    scriptBuilder += this.generateLaneDesires(
-        req.body.teamDesires.config.defend,
-        'UpdateDefendLaneDesires()'
+    lcm.addToAPIFunction(
+        'UpdateDefendLaneDesires',
+        this.generateLaneDesires(req.body.teamDesires.config.defend)
     );
 
     // Creates the UpdateFarmLaneDesires function
-    scriptBuilder += this.generateLaneDesires(
-        req.body.teamDesires.config.farm,
-        'UpdateFarmLaneDesires()'
+    lcm.addToAPIFunction(
+        'UpdateFarmLaneDesires',
+        this.generateLaneDesires(
+            req.body.teamDesires.config.farm,
+            'UpdateFarmLaneDesires()'
+        )
     );
-
-    return scriptBuilder;
+    return lcm;
 };
 
 // Generate roshan desires
 const generateRoshanDesires = function (req) {
     const { roshan } = req.body.teamDesires.config;
-    let scriptBuilder = 'function UpdateRoshanDesires()\n';
-    scriptBuilder += `    local common = ${roshan.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        roshan.compoundConditions,
-        false
-    );
-    scriptBuilder += '    return common\n';
-    scriptBuilder += 'end\n\n';
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roshan.initialValue}\n`;
+    scriptBuilder += this.getConditions(roshan.compoundConditions);
+    scriptBuilder += 'return common';
     return scriptBuilder;
 };
 
 // Generate roam desires
 const generateRoamDesires = function (req) {
     const { roam } = req.body.teamDesires.config;
-    let scriptBuilder = 'function UpdateRoamDesires()\n';
-    scriptBuilder += `    local common = ${roam.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        roam.compoundConditions,
-        false
-    );
-    scriptBuilder += '    return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}\n';
-    scriptBuilder += 'end\n\n';
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roam.initialValue}\n`;
+    scriptBuilder += this.getConditions(roam.compoundConditions);
+    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
     return scriptBuilder;
 };
 
 // Generic function for generating lane desires, with a
-const generateLaneDesires = function (reqType, luaFunctionName) {
+const generateLaneDesires = function (reqType) {
     const { top, mid, bot } = reqType;
-    let scriptBuilder = `function ${luaFunctionName}\n`;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${top.initialValue}\n`;
+    scriptBuilder += this.getConditions(top.compoundConditions);
+    scriptBuilder += 'local topCommon = common\n\n';
 
-    scriptBuilder += `    local common = ${top.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        top.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local topCommon = common\n\n';
+    scriptBuilder += `common = ${mid.initialValue}\n`;
+    scriptBuilder += this.getConditions(mid.compoundConditions);
+    scriptBuilder += 'local midCommon = common\n\n';
 
-    scriptBuilder += `    common = ${mid.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        mid.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local midCommon = common\n\n';
+    scriptBuilder += `common = ${bot.initialValue}\n`;
+    scriptBuilder += this.getConditions(bot.compoundConditions);
+    scriptBuilder += 'local botCommon = common\n\n';
 
-    scriptBuilder += `    common = ${bot.initialValue}\n`;
-    scriptBuilder += this.getConditions(
-        bot.compoundConditions,
-        true
-    );
-    scriptBuilder += '    local botCommon = common\n\n';
-
-    scriptBuilder += '    return {topCommon, midCommon, botCommon}\n';
-    scriptBuilder += 'end\n\n';
-
+    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
     return scriptBuilder;
 };
 
 // Get conditions in the compoundConditions array
-const getConditions = function (compoundConditions, isLane) {
+const getConditions = function (compoundConditions) {
     let override = false;
     let overrideValue;
     let trigger = '';
@@ -150,14 +143,16 @@ const getConditions = function (compoundConditions, isLane) {
             }
 
             if (hasNumAlliesTrigger) {
-                scriptBuilder += this.getAlliedHeroesAlive();
+                lcm.addHelperFunction('getAlliedHeroesAlive');
+                scriptBuilder += 'local alliesAlive = getAlliedHeroesAlive()\n';
             }
             if (hasNumEnemiesTrigger) {
-                scriptBuilder += this.getEnemyHeroesAlive();
+                lcm.addHelperFunction('getEnemyHeroesAlive');
+                scriptBuilder += 'local enemiesAlive = getEnemyHeroesAlive()\n';
             }
 
             // Begin if statement for the current CompoundCondition
-            scriptBuilder += '    if';
+            scriptBuilder += 'if';
             let totalValue = 0;
             let i = 0;
             for (i = 0; i < conditions.length; i += 1) {
@@ -178,42 +173,16 @@ const getConditions = function (compoundConditions, isLane) {
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
 
                     if (override === false) {
-                        scriptBuilder += `        ${action} ${totalValue / conditions.length}\n`;
-                    } else if (isLane === true) {
-                        scriptBuilder += `        common = ${overrideValue}\n`;
+                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
                     } else {
-                        scriptBuilder += `        return ${overrideValue}\n`;
+                        scriptBuilder += `    common = ${overrideValue}\n`;
                     }
                 }
             }
-            scriptBuilder += '    end\n';
+            scriptBuilder += 'end\n';
         }
     });
     return scriptBuilder;
-};
-
-// Get the number of Enemy Heroes alive
-const getEnemyHeroesAlive = function () {
-    let code = '';
-    code += '    local enemiesAlive = 0\n';
-    code += '    for _,h in pairs(UNIT_LIST_ENEMY_HEROES) do\n';
-    code += '        if h:IsAlive() then\n';
-    code += '            enemiesAlive = enemiesAlive + 1\n';
-    code += '        end\n';
-    code += '    end\n\n';
-    return code;
-};
-
-// Get the number of Allied Heroes alive
-const getAlliedHeroesAlive = function () {
-    let code = '';
-    code += '    local alliesAlive = 0\n';
-    code += '    for _,h in pairs(UNIT_LIST_ALLIED_HEROES) do\n';
-    code += '        if h:IsAlive() then\n';
-    code += '            alliesAlive = alliesAlive + 1\n';
-    code += '        end\n';
-    code += '    end\n\n';
-    return code;
 };
 
 // Return a string representation of the passed trigger
@@ -302,12 +271,7 @@ module.exports = {
     generateRoshanDesires,
     generateRoamDesires,
     generateLaneDesires,
-    // generatePushLaneDesires,
-    // generateDefendLaneDesires,
-    // generateFarmLaneDesires,
     getConditions,
-    getEnemyHeroesAlive,
-    getAlliedHeroesAlive,
     getTrigger,
     getOperator,
     getAction,
