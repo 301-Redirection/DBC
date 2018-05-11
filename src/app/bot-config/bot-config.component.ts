@@ -180,13 +180,18 @@ export class BotConfigComponent implements OnInit {
     }
 
     loadBotScript(id) {
-        console.log(id);
-        /*
-        let res;
-        const response = this.api.specificBot(id).subscribe((data) => {
-            res = data;
+        let res: any;
+        const response = this.api.getSpecificBot(id).subscribe((data) => {
+            res = data['botConfig'];
+            res = res[0];
+            if (res != null) {
+                console.log(res);
+                this.bot.id = res.id;
+                this.bot.name = res.name;
+                this.bot.configuration = JSON.parse(res.configuration);
+                this.bot.description = res.description;
+                this.selectBothFactions();                
+            }
         });
-        console.log(res);
-        */
     }
 }
