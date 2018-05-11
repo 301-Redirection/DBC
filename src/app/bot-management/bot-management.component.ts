@@ -6,6 +6,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 
+declare var $: any;
 @Component({
     selector: 'app-bot-management',
     templateUrl: './bot-management.component.html',
@@ -13,6 +14,7 @@ import { ROUTE_NAMES } from '../routes/routes.config';
 })
 export class BotManagementComponent implements OnInit {
     bots: any;
+    botID: number;
     showDetails = false;
     pageTitle = 'Dota 2 Bot Scripting - Management';
 
@@ -21,6 +23,7 @@ export class BotManagementComponent implements OnInit {
     }
 
     ngOnInit() {
+        $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
     }
 
@@ -36,5 +39,12 @@ export class BotManagementComponent implements OnInit {
             console.log(data);
         });
         this.getUserBotScripts();
+        this.botID = -1;
+        $('#deleteConfirmation').modal('hide');
+    }
+
+    showDeleteModal(id) {
+        $('#deleteConfirmation').modal('show');
+        this.botID = id;
     }
 }

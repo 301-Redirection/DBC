@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { ApiConnectService } from '../services/api-connect.service';
 
+// Import JQuery
+declare var $: any;
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -12,6 +14,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 })
 export class DashboardComponent implements OnInit {
     bots: any;
+    botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
 
     constructor(private title: Title, private api: ApiConnectService, private router: Router) {
@@ -19,6 +22,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() { 
+        $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
     }
 
@@ -34,5 +38,11 @@ export class DashboardComponent implements OnInit {
             console.log(data);
         });
         this.getUserBotScripts();
+        this.botID = -1;
+    }
+
+    showDeleteModal(id) {
+        $('#deleteConfirmation').modal('show');
+        this.botID = id;
     }
 }
