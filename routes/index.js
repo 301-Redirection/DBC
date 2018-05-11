@@ -1,37 +1,13 @@
 const express = require('express');
-
-const router = express.Router();
-const models = require('../models');
-const sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
+const { jwtCheck } = require('./jwtCheck');
 const generateScript = require('../server/generateScript.js');
 
-const env = {
-    AUTH0_CLIENT_ID: 'kYw-F9JzITYkyDZoQUiFE5PGqkeAvB_H',
-    AUTH0_DOMAIN: 'dota-bot-scripting.eu.auth0.com',
-    AUTH0_CALLBACK_URL: 'http://localhost:3000/callback',
-    AUTH0_API_AUDIENCE: 'dota-bot-scripting',
-};
-
-/* Authenticate JWT at route endpoints */
-const jwtCheck = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: `https://${env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-    }),
-    audience: env.AUTH0_API_AUDIENCE,
-    issuer: `https://${env.AUTH0_DOMAIN}/`,
-    algorithm: 'RS256',
-});
+const router = express.Router();
 
 /* GET home page. */
-
 router.get('/', (req, res) => {
     if (req.user) {
         res.redirect('/user');
@@ -40,38 +16,11 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'Backend testing of auth0' });
 });
 
-// router.get(
-//     '/login',
-//     passport.authenticate('auth0', {
-//         clientID: env.AUTH0_CLIENT_ID,
-//         domain: env.AUTH0_DOMAIN,
-//         redirectUri: env.AUTH0_CALLBACK_URL,
-//         audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
-//         audience: 'dota-bot-scripting',
-//         responseType: 'code',
-//         scope: 'openid',
-//     }),
-//     (req, res) => {
-//         res.redirect('/');
-//     },
-// );
-
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
-
-// router.get(
-//     '/callback',
-//     passport.authenticate(
-//         'auth0',
-//         { failureRedirect: '/failure' },
-//     ),
-//     (req, res) => {
-//         res.redirect(req.session.returnTo || '/user');
-//     },
-// );
 
 router.get('/failure', (req, res) => {
     const error = req.flash('error');
@@ -85,10 +34,6 @@ router.get('/failure', (req, res) => {
 
 router.get('/test', (request, response) => {
     response.status(500).send({ message: 'This is an error response' });
-});
-
-router.get('/testAuthentication', jwtCheck, (request, response) => {
-    response.status(200).send({ message: 'This is an error response' });
 });
 
 // Generates the bot TeamDesires script
@@ -123,69 +68,9 @@ router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
     res.download(file);
 });
 
-/** The following routes are here to quickly demonstrate how one would use sequelize.
- *  please consult the documentation for all possible options
- *  http://docs.sequelizejs.com/manual/tutorial/querying.html
- */
-router.get('/example/sequelizer', (request, res) => {
-    models.BotConfig.findAll({
-        include: [{
-            model: models.User,
-            as: 'user',
-        }],
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
-});
-
-router.get('/example/sequelizer/user', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
-});
-
-router.get('/example/sequelizer/user/5', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-        where: {
-            id: 5,
-        },
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
-});
-
-const { Op } = sequelize;
-router.get('/example/sequelizer/user/query', (request, res) => {
-    models.User.findAll({
-        include: [{
-            model: models.BotConfig,
-            as: 'botConfigs',
-        }],
-        where: {
-            [Op.or]: [{ id: 12 }, { id: 13 }],
-            // alternatives ways (syntax) to query
-            //  id: {
-            //     [Op.and]: {
-            //       [Op.lt]: 13,
-            //       [Op.gt]: 4
-            //   }
-            //  },
-            // firstname: {
-            //   [Op.like]: 'a%'
-            // }
-        },
-    }).then((returnedModels) => {
-        res.render('exampleSequelize', { title: 'Backend testing of auth0', models: returnedModels });
-    });
+/* just to test request and via its details */
+router.get('/testAuthentication', jwtCheck, (request, response) => {
+    response.status(500).send({ message: 'you have been sucessfully authenticated' });
 });
 
 module.exports = router;

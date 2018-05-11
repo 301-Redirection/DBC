@@ -31,11 +31,11 @@ module.exports = {
             };
 
             configs.push({
-                user_id: i,
-                name: `Test bot ${i}`,
+                name: `Test real ${i}`,
                 description: 'This bot was seeded into the database',
                 title: `Test bot ${i}`,
                 configuration: JSON.stringify(configurationDetails),
+                userId: 'auth0|5aaad1a6aa9ad130c17479ba',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });

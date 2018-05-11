@@ -10,8 +10,9 @@ import {
 } from '../ConfigurationFormat';
 import { ConfigurationClass } from './configuration-class';
 import { ApiConnectService } from '../services/api-connect.service';
-import * as globalConfig from '../../../config/config.json';
+import * as globalConfig from '../../../config/config.js';
 
+declare var $: any;
 
 @Component({
     selector: 'app-bot-config',
@@ -20,13 +21,19 @@ import * as globalConfig from '../../../config/config.json';
 })
 export class BotConfigComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
+    factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
+    bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';
+    prevFactionSelectionImageURL = this.factionSelectionImageURL;
+    prevBothFactionImageURL = this.bothFactionsImageURL;
+    factionEditAlert = '';
 
     // Bot variables
     name: string = 'test';
     description: string = 'test';
+    id: number = -1;
 
     // configuration object
-    config: ConfigurationFormat = {
+    configuration: ConfigurationFormat = {
         push: {
             top: new ConfigurationClass(),
             mid: new ConfigurationClass(),
@@ -57,14 +64,17 @@ export class BotConfigComponent implements OnInit {
     save() {
         if (this.validateInfo()) {
             const requestObject = {
-                config: this.config,
+                configuration: this.configuration,
+                id: this.id,
                 name: this.name,
                 description: this.description,
             };                   
 
-            // call generate from api service
-            const response = this.api.generate(requestObject).subscribe((data) => {
-                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.id}`;
+            // call update bot from api service
+            const response = this.api.updateBot(requestObject).subscribe((data) => {
+                console.log(globalConfig);
+                this.generateURL = `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                alert('successfully got the bot');
             });
         }
     }
@@ -75,5 +85,84 @@ export class BotConfigComponent implements OnInit {
             return false;
         }
         return true;
+    }
+
+    showHighlightSelectedFaction (faction) {
+        this.factionSelectionImageURL = 
+        '../../assets/images/dota2-mini-map-' + faction + '-hl.png';       
+    }
+
+    unHighlightSelectedFaction() {
+        this.factionSelectionImageURL = this.prevFactionSelectionImageURL;
+    }
+
+    showHighlightBothFactions () {
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
+    }
+
+    unHighlightBothFactions() {
+        this.bothFactionsImageURL = this.prevBothFactionImageURL ;
+    }
+
+    hideAlert() {
+        $('#alertConfig')
+        .addClass('hide')
+        .hide();
+    }
+
+    selectFaction (selectedFaction,notSelectedFaction) {
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';  
+        this.prevBothFactionImageURL = this.bothFactionsImageURL;  
+        $('#dotaMiniMap2').removeClass('alert-both');
+        $('#dotaMiniMap')
+            .removeClass(`alert-${notSelectedFaction}`)
+            .addClass(`alert-${selectedFaction}`);
+        this.factionSelectionImageURL =
+            `../../assets/images/dota2-mini-map-${selectedFaction}-hl.png`;
+        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
+        this.factionEditAlert = `You are now editing ${selectedFaction} faction`;
+        $('#alertConfig')
+            .removeClass('hide')
+            .addClass('show')                    
+            .show()
+            .removeClass('alert-' + notSelectedFaction)
+            .removeClass('alert-both')
+            .addClass('alert-' + selectedFaction);
+        $('div').each(function () {
+            $(this)
+                .find('div.config-card')
+                .removeClass('config-card-blur')
+                .removeClass ('config-card-both')
+                .removeClass ('config-card-' + notSelectedFaction)
+                .addClass('config-card-' + selectedFaction);
+        });
+    }
+
+    selectBothFactions () {
+        $('#dotaMiniMap2').addClass('alert-both');
+        $('#dotaMiniMap')
+        .removeClass('alert-radiant')
+            .removeClass('alert-dire');
+        // Reset image for selectFaction
+        this.factionEditAlert = 'You are now editing both factions';
+        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
+        this.prevBothFactionImageURL = this.bothFactionsImageURL;
+        this.factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
+        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
+        $('div').each(function () {
+            $(this)
+                .find('div.config-card')
+                .removeClass('config-card-blur')
+                .removeClass ('config-card-radiant')
+                .removeClass('config-card-dire')
+                .addClass('config-card-both');
+        });
+        $('#alertConfig')
+            .removeClass('hide')
+            .addClass('show')
+            .show()
+            .removeClass('alert-dire')
+            .removeClass('alert-radiant')
+            .addClass('alert-both');
     }
 }

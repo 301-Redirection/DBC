@@ -38,29 +38,35 @@ export class ApiConnectService {
 
     public test() {
         return this.http
-            .get(`${API_URL}/test`, {
+            .get(`${API_URL}/testAuthentication`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
     }
 
-    public generate(config: any) {
-        return this.http.post(
-            `${API_URL}/generate`,
-            {
-                teamDesires: config,
-                responseType: 'JSON',
-            },
-            {
+    public recentBots() {
+        return this.http
+            .get(`${API_URL}/bots/recent`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             },
         )
         .pipe(catchError(this.handleError));
     }
+    // Handle errors if any 
+    private handleError(err: HttpErrorResponse | any) { 
+        console.error('An error occurred', err); 
+        return Observable.throw(err.message || err); 
+    } 
 
-    // Handle errors if any
-    private handleError(err: HttpErrorResponse | any) {
-        return Observable.throw(err.message || err);
+    public updateBot(config) {
+        const httpHeaders = {
+            headers: new HttpHeaders({
+                Authorization: this.authHeader,
+            }),
+        };
+        return this.http
+            .post(`${API_URL}/bots/update`, config, httpHeaders)
+            .pipe(catchError(this.handleError));
     }
 }
 
