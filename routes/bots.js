@@ -2,6 +2,7 @@ const express = require('express');
 const models = require('../models');
 const { jwtCheck } = require('./jwtCheck');
 const { check, validationResult } = require('express-validator/check');
+const { writeScripts } = require('../server/generateScript.js');
 
 const router = express.Router();
 
@@ -48,6 +49,7 @@ router.post('/update', jwtCheck, [
             updatedAt: new Date(),
         })
             .then((botConfig) => {
+                writeScripts(request, botConfig.id);
                 response.status(200).json({ botConfig });
             });
     } else {
@@ -65,6 +67,7 @@ router.post('/update', jwtCheck, [
                         configuration: JSON.stringify(configuration),
                         updatedAt: new Date(),
                     });
+                    writeScripts(request, botConfig.id);
                     response.status(200).json({ botConfig });
                 } else {
                     response.status(200).json({});

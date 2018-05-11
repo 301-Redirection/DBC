@@ -1,4 +1,6 @@
 const { lcm } = require('./LuaCodeManager.js');
+const fs = require('fs');
+const archiver = require('archiver');
 
 // Trigger enum
 const TRIGGER = {
@@ -27,94 +29,6 @@ const ACTION = {
 const LOGICAL_OPERTAOR = {
     AND: 1,
     OR: 2,
-};
-
-// Generate the Lua script for team desires
-const generateTeamDesires = function (req) {
-    // Reset helperFunction and APIFunction objects
-    lcm.reset();
-
-    // Adds the script name and the description as a comment at the top of the file
-    const { name, description } = req.body.teamDesires;
-    const scriptHeader = `-- ${name} --\n[[ ${description} ]]`;
-    lcm.addScriptHeading(
-        'NameAndDescription',
-        scriptHeader
-    );
-
-    // Creates the UpdateRoshanDesire function
-    lcm.addToAPIFunction(
-        'UpdateRoshaneDesires',
-        this.generateRoshanDesires(req)
-    );
-
-    // Creates the UpdateRoamDesire function
-    lcm.addToAPIFunction(
-        'UpdateRoamDesires',
-        this.generateRoamDesires(req)
-    );
-
-    // Creates the UpdatePushLaneDesires function
-    lcm.addToAPIFunction(
-        'UpdatePushLaneDesires',
-        this.generateLaneDesires(req.body.teamDesires.config.push)
-    );
-
-    // Creates the UpdateDefendLaneDesires function
-    lcm.addToAPIFunction(
-        'UpdateDefendLaneDesires',
-        this.generateLaneDesires(req.body.teamDesires.config.defend)
-    );
-
-    // Creates the UpdateFarmLaneDesires function
-    lcm.addToAPIFunction(
-        'UpdateFarmLaneDesires',
-        this.generateLaneDesires(
-            req.body.teamDesires.config.farm,
-            'UpdateFarmLaneDesires()'
-        )
-    );
-    return lcm;
-};
-
-// Generate roshan desires
-const generateRoshanDesires = function (req) {
-    const { roshan } = req.body.teamDesires.config;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${roshan.initialValue}\n`;
-    scriptBuilder += this.getConditions(roshan.compoundConditions);
-    scriptBuilder += 'return common';
-    return scriptBuilder;
-};
-
-// Generate roam desires
-const generateRoamDesires = function (req) {
-    const { roam } = req.body.teamDesires.config;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${roam.initialValue}\n`;
-    scriptBuilder += this.getConditions(roam.compoundConditions);
-    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
-    return scriptBuilder;
-};
-
-// Generic function for generating lane desires, with a
-const generateLaneDesires = function (reqType) {
-    const { top, mid, bot } = reqType;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${top.initialValue}\n`;
-    scriptBuilder += this.getConditions(top.compoundConditions);
-    scriptBuilder += 'local topCommon = common\n\n';
-
-    scriptBuilder += `common = ${mid.initialValue}\n`;
-    scriptBuilder += this.getConditions(mid.compoundConditions);
-    scriptBuilder += 'local midCommon = common\n\n';
-
-    scriptBuilder += `common = ${bot.initialValue}\n`;
-    scriptBuilder += this.getConditions(bot.compoundConditions);
-    scriptBuilder += 'local botCommon = common\n\n';
-
-    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
-    return scriptBuilder;
 };
 
 // Get conditions in the compoundConditions array
@@ -182,6 +96,46 @@ const getConditions = function (compoundConditions) {
             scriptBuilder += 'end\n';
         }
     });
+    return scriptBuilder;
+};
+
+// Generate roshan desires
+const generateRoshanDesires = function (req) {
+    const { roshan } = req.body.configuration;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roshan.initialValue}\n`;
+    scriptBuilder += getConditions(roshan.compoundConditions);
+    scriptBuilder += 'return common';
+    return scriptBuilder;
+};
+
+// Generate roam desires
+const generateRoamDesires = function (req) {
+    const { roam } = req.body.configuration;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roam.initialValue}\n`;
+    scriptBuilder += getConditions(roam.compoundConditions);
+    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
+    return scriptBuilder;
+};
+
+// Generic function for generating lane desires, with a
+const generateLaneDesires = function (reqType) {
+    const { top, mid, bot } = reqType;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${top.initialValue}\n`;
+    scriptBuilder += getConditions(top.compoundConditions);
+    scriptBuilder += 'local topCommon = common\n\n';
+
+    scriptBuilder += `common = ${mid.initialValue}\n`;
+    scriptBuilder += getConditions(mid.compoundConditions);
+    scriptBuilder += 'local midCommon = common\n\n';
+
+    scriptBuilder += `common = ${bot.initialValue}\n`;
+    scriptBuilder += getConditions(bot.compoundConditions);
+    scriptBuilder += 'local botCommon = common\n\n';
+
+    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
     return scriptBuilder;
 };
 
@@ -266,6 +220,95 @@ const getLogicalOperator = function (logicalOperator) {
     }
     return operatorString;
 };
+
+// Generate the Lua script for team desires
+const generateTeamDesires = function (req) {
+    // Reset helperFunction and APIFunction objects
+    lcm.reset();
+
+    // Adds the script name and the description as a comment at the top of the file
+    const { name, description } = req.body;
+    const scriptHeader = `-- ${name} --\n[[ ${description} ]]`;
+    lcm.addScriptHeading(
+        'NameAndDescription',
+        scriptHeader
+    );
+
+    // Creates the UpdateRoshanDesire function
+    lcm.addToAPIFunction(
+        'UpdateRoshaneDesires',
+        generateRoshanDesires(req)
+    );
+
+    // Creates the UpdateRoamDesire function
+    lcm.addToAPIFunction(
+        'UpdateRoamDesires',
+        generateRoamDesires(req)
+    );
+
+    // Creates the UpdatePushLaneDesires function
+    lcm.addToAPIFunction(
+        'UpdatePushLaneDesires',
+        generateLaneDesires(req.body.configuration.push)
+    );
+
+    // Creates the UpdateDefendLaneDesires function
+    lcm.addToAPIFunction(
+        'UpdateDefendLaneDesires',
+        generateLaneDesires(req.body.configuration.defend)
+    );
+
+    // Creates the UpdateFarmLaneDesires function
+    lcm.addToAPIFunction(
+        'UpdateFarmLaneDesires',
+        generateLaneDesires(
+            req.body.configuration.farm,
+            'UpdateFarmLaneDesires()'
+        )
+    );
+    return lcm;
+};
+
+
+// Generates the bot TeamDesires script
+const writeScripts = function (req, id) {
+    let luaCodeString = '';
+    const luaCodeManager = generateTeamDesires(req);
+    luaCodeString = luaCodeManager.generate();
+
+    try {
+        fs.mkdirSync('./Lua');
+    } catch (err) {
+        if (err.code !== 'EEXIST') throw err;
+    }
+
+    try {
+        fs.mkdirSync(`./Lua/${id}`);
+    } catch (err) {
+        if (err.code !== 'EEXIST') throw err;
+    }
+    fs.writeFileSync(`./Lua/${id}/team_desires.lua`, luaCodeString, { flag: 'w+' });
+
+    const output = fs.createWriteStream(`./Lua/${id}.zip`);
+    const archive = archiver('zip', {
+        zlib: { level: 9 }, // Sets the compression level.
+    });
+
+    // good practice to catch this error explicitly
+    archive.on('error', (err) => {
+        throw err;
+    });
+
+    // pipe archive data to the file
+    archive.pipe(output);
+
+    // append a file from stream
+    const teamDesires = `./Lua/${id}/team_desires.lua`;
+    archive.append(fs.createReadStream(teamDesires), { name: 'team_desires.lua' });
+
+    archive.finalize();
+};
+
 module.exports = {
     generateTeamDesires,
     generateRoshanDesires,
@@ -276,4 +319,5 @@ module.exports = {
     getOperator,
     getAction,
     getLogicalOperator,
+    writeScripts,
 };

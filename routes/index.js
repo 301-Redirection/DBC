@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 const { jwtCheck } = require('./jwtCheck');
-const generateScript = require('../server/generateScript.js');
 
 const router = express.Router();
 
@@ -36,25 +35,8 @@ router.get('/test', (request, response) => {
     response.status(500).send({ message: 'This is an error response' });
 });
 
-// Generates the bot TeamDesires script
-router.post('/generate', jwtCheck, (req, res) => {
-    let luaCodeString = '';
-    const luaCodeManager = generateScript.generateTeamDesires(req);
-    luaCodeString = luaCodeManager.generate();
-
-    try {
-        fs.mkdirSync('./Lua');
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
-    }
-    fs.writeFile('./Lua/team_desires.lua', luaCodeString, (err) => {
-        if (err) throw err;
-    });
-    res.status(200).send({ id: 'team_desires.lua' });
-});
-
 router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
-    const file = `${__dirname}/../Lua/${req.params.id}`;
+    const file = `${__dirname}/../Lua/${req.params.id}.zip`;
 
     const filename = path.basename(file);
     const mimetype = mime.lookup(file);

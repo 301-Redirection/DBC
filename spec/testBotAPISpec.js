@@ -80,22 +80,25 @@ describe('Bot API testing', () => {
         'content-type': 'application/json',
     };
     // for config data that we post at some point
-    const exampleConfig = JSON.stringify({
-        teamDesires: {
-            defend: {
-                top: 0.6,
-                mid: 0.6,
-                bot: 0.6,
-            },
-            push: {
-                top: 0.6,
-                mid: 0.6,
-                bot: 0.6,
-            },
-            roam: 0.6,
-            roshan: 0.6,
+    const exampleConfig = {
+        defend: {
+            top: { initialValue: 0.6, compoundConditions: [] },
+            mid: { initialValue: 0.6, compoundConditions: [] },
+            bot: { initialValue: 0.6, compoundConditions: [] },
         },
-    });
+        push: {
+            top: { initialValue: 0.6, compoundConditions: [] },
+            mid: { initialValue: 0.6, compoundConditions: [] },
+            bot: { initialValue: 0.6, compoundConditions: [] },
+        },
+        farm: {
+            top: { initialValue: 0.6, compoundConditions: [] },
+            mid: { initialValue: 0.6, compoundConditions: [] },
+            bot: { initialValue: 0.6, compoundConditions: [] },
+        },
+        roam: { initialValue: 0.6, compoundConditions: [] },
+        roshan: { initialValue: 0.6, compoundConditions: [] },
+    };
     let validId;
     describe('', () => {
         // creating a bot in a valid way

@@ -34,7 +34,7 @@ export class BotConfigComponent implements OnInit {
     name: string = 'test';
     description: string = 'test';
     id: number = -1;
-    factionSelected: string = 'both';
+    faction: string = 'both';
 
     // configuration object
     configuration: ConfigurationFormat = {
@@ -57,13 +57,13 @@ export class BotConfigComponent implements OnInit {
         roshan: new ConfigurationClass(),
     };
 
-    bot = {
-        id: this.id,
-        name: this.name,
-        description: this.description,
-        configuration: this.configuration,
-        faction: this.factionSelected,
-    };
+    // bot = {
+    //     id: this.id,
+    //     name: this.name,
+    //     description: this.description,
+    //     configuration: this.configuration,
+    //     faction: this.factionSelected,
+    // };
 
     generateURL = '';
 
@@ -71,7 +71,7 @@ export class BotConfigComponent implements OnInit {
     (private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
         this.title.setTitle(this.pageTitle);
         this.route.params.subscribe((params) => {
-            if (params['botScriptID']) { 
+            if (params['botScriptID']) {
                 this.loadBotScript(params['botScriptID']);
             }
         });
@@ -82,17 +82,23 @@ export class BotConfigComponent implements OnInit {
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
-            const response = this.api.updateBot(this.bot).subscribe((data) => {
+            const requestBot = {
+                id: this.id,
+                name: this.name,
+                description: this.description,
+                configuration: this.configuration,
+                faction: this.faction,
+            };
+            const response = this.api.updateBot(requestBot).subscribe((data) => {
                 console.log(globalConfig);
                 this.generateURL =
                     `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
-                alert('successfully got the bot');
             });
         }
     }
 
     validateInfo(): boolean {
-        if (this.bot.name === '' || this.bot.description === '') {
+        if (this.name === '' || this.description === '') {
             alert('Please enter your bot script name and description');
             return false;
         }
@@ -123,7 +129,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectFaction (selectedFaction,notSelectedFaction) {
-        this.bot.faction = selectedFaction;
+        this.faction = selectedFaction;
         this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';  
         this.prevBothFactionImageURL = this.bothFactionsImageURL;  
         $('#dotaMiniMap2').removeClass('alert-both');
@@ -152,7 +158,7 @@ export class BotConfigComponent implements OnInit {
     }
 
     selectBothFactions () {
-        this.bot.faction = 'both';
+        this.faction = 'both';
         $('#dotaMiniMap2').addClass('alert-both');
         $('#dotaMiniMap')
         .removeClass('alert-radiant')
@@ -202,15 +208,15 @@ export class BotConfigComponent implements OnInit {
             res = res[0];
             if (res != null) {
                 console.log(res);
-                this.bot.id = res.id;
-                this.bot.name = res.name;
-                this.bot.configuration = JSON.parse(res.configuration);
-                this.bot.description = res.description;
-                this.bot.faction = res.faction;
+                this.id = res.id;
+                this.name = res.name;
+                this.configuration = JSON.parse(res.configuration);
+                this.description = res.description;
+                this.faction = res.faction;
                 
-                if (this.bot.faction === 'radiant') {
+                if (this.faction === 'radiant') {
                     this.selectFaction('radiant','dire');
-                }else if (this.bot.faction === 'dire') {
+                }else if (this.faction === 'dire') {
                     this.selectFaction('dire','radiant');
                 }else {
                     this.selectBothFactions();
