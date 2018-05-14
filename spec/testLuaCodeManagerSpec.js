@@ -1,4 +1,10 @@
 const { lcm } = require('../server/LuaCodeManager.js');
+const { writeScripts } = require('../server/generateScript.js');
+const fs = require('fs');
+const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
+const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
+
+const id = 't100';
 
 describe('Lua Code Manager tests', () => {
     beforeEach(() => {
@@ -98,5 +104,84 @@ describe('Lua Code Manager tests', () => {
         lcm.addHelperFunction('testHelperFunction');
 
         expect(lcm.generate()).toBe('-- nothing to see here\n\n-- Other snippet\n\nfunction test()\n    start code\n    start code\n    middle code\nend\n\nfunction test2()\n    start code\n    end code\nend\n\n');
+    });
+    describe('Lua code generation from object:', () => {
+        it('test generation from empty/default config object', () => {
+            writeScripts(exampleObjectDefault, id);
+
+            try {
+                fs.mkdirSync('./Lua');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync(`./Lua/${id}`);
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            const luaOutput = fs.readFileSync(`./Lua/${id}/team_desires.lua`).toString();
+
+            try {
+                fs.mkdirSync('./config');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync('./config/exampleConfigurationsBots');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync('./config/exampleConfigurationsBots/expectedOutput');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            const expectedOutput = fs.readFileSync('./config/exampleConfigurationsBots/expectedOutput/default.lua').toString();
+            expect(luaOutput).toBe(expectedOutput);
+        });
+        it('test generation from complex config object', () => {
+            // writeScripts(exampleObjectComplexOne, -100);
+            writeScripts(exampleObjectComplexOne, id);
+
+            try {
+                fs.mkdirSync('./Lua');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync(`./Lua/${id}`);
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            const luaOutput = fs.readFileSync(`./Lua/${id}/team_desires.lua`).toString();
+
+            try {
+                fs.mkdirSync('./config');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync('./config/exampleConfigurationsBots');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            try {
+                fs.mkdirSync('./config/exampleConfigurationsBots/expectedOutput');
+            } catch (err) {
+                if (err.code !== 'EEXIST') throw err;
+            }
+
+            const expectedOutput = fs.readFileSync('./config/exampleConfigurationsBots/expectedOutput/complexOne.lua').toString();
+            expect(luaOutput).toBe(expectedOutput);
+        });
     });
 });
