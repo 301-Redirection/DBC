@@ -109,37 +109,7 @@ describe('Lua Code Manager tests', () => {
         it('test generation from empty/default config object', () => {
             writeScripts(exampleObjectDefault, id);
 
-            try {
-                fs.mkdirSync('./Lua');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync(`./Lua/${id}`);
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
             const luaOutput = fs.readFileSync(`./Lua/${id}/team_desires.lua`).toString();
-
-            try {
-                fs.mkdirSync('./config');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync('./config/exampleConfigurationsBots');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync('./config/exampleConfigurationsBots/expectedOutput');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
 
             const expectedOutput = fs.readFileSync('./config/exampleConfigurationsBots/expectedOutput/default.lua').toString();
             expect(luaOutput).toBe(expectedOutput);
@@ -148,37 +118,7 @@ describe('Lua Code Manager tests', () => {
             // writeScripts(exampleObjectComplexOne, -100);
             writeScripts(exampleObjectComplexOne, id);
 
-            try {
-                fs.mkdirSync('./Lua');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync(`./Lua/${id}`);
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
             const luaOutput = fs.readFileSync(`./Lua/${id}/team_desires.lua`).toString();
-
-            try {
-                fs.mkdirSync('./config');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync('./config/exampleConfigurationsBots');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
-
-            try {
-                fs.mkdirSync('./config/exampleConfigurationsBots/expectedOutput');
-            } catch (err) {
-                if (err.code !== 'EEXIST') throw err;
-            }
 
             const expectedOutput = fs.readFileSync('./config/exampleConfigurationsBots/expectedOutput/complexOne.lua').toString();
             expect(luaOutput).toBe(expectedOutput);
