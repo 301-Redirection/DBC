@@ -31,112 +31,20 @@ const LOGICAL_OPERTAOR = {
     OR: 2,
 };
 
-// Get conditions in the compoundConditions array
-const getConditions = function (compoundConditions) {
-    let override = false;
-    let overrideValue;
-    let trigger = '';
-    let operator = '';
-    let action = '';
-    let logicalOperator = '';
-    let scriptBuilder = '';
-
-    compoundConditions.forEach((compound) => {
-        if (compound.conditions.length > 0) {
-            const { conditions } = compound;
-
-            let hasNumAlliesTrigger = false;
-            let hasNumEnemiesTrigger = false;
-            for (let i = 0; i < conditions.length; i += 1) {
-                if (conditions[i].trigger === TRIGGER.AlliedHeroesAlive) {
-                    hasNumAlliesTrigger = true;
-                }
-                if (conditions[i].trigger === TRIGGER.EnemyHeroesAlive) {
-                    hasNumEnemiesTrigger = true;
-                }
-            }
-
-            if (hasNumAlliesTrigger) {
-                lcm.addHelperFunction('getAlliedHeroesAlive');
-                scriptBuilder += 'local alliesAlive = getAlliedHeroesAlive()\n';
-            }
-            if (hasNumEnemiesTrigger) {
-                lcm.addHelperFunction('getEnemyHeroesAlive');
-                scriptBuilder += 'local enemiesAlive = getEnemyHeroesAlive()\n';
-            }
-
-            // Begin if statement for the current CompoundCondition
-            scriptBuilder += 'if';
-            let totalValue = 0;
-            let i = 0;
-            for (i = 0; i < conditions.length; i += 1) {
-                trigger = this.getTrigger(conditions[i].trigger);
-                operator = this.getOperator(conditions[i].operator);
-                action = this.getAction(conditions[i].action);
-                totalValue += conditions[i].value;
-
-                if (action === 'return') {
-                    override = true;
-                    overrideValue = conditions[i].value;
-                }
-
-                if (i < conditions.length - 1) {
-                    logicalOperator = this.getLogicalOperator(compound.logicalOperator[i]);
-                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
-                } else {
-                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
-
-                    if (override === false) {
-                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
-                    } else {
-                        scriptBuilder += `    common = ${overrideValue}\n`;
-                    }
-                }
-            }
-            scriptBuilder += 'end\n';
-        }
-    });
-    return scriptBuilder;
-};
-
-// Generate roshan desires
-const generateRoshanDesires = function (req) {
-    const { roshan } = req.body.configuration;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${roshan.initialValue}\n`;
-    scriptBuilder += getConditions(roshan.compoundConditions);
-    scriptBuilder += 'return common';
-    return scriptBuilder;
-};
-
-// Generate roam desires
-const generateRoamDesires = function (req) {
-    const { roam } = req.body.configuration;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${roam.initialValue}\n`;
-    scriptBuilder += getConditions(roam.compoundConditions);
-    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
-    return scriptBuilder;
-};
-
-// Generic function for generating lane desires, with a
-const generateLaneDesires = function (reqType) {
-    const { top, mid, bot } = reqType;
-    let scriptBuilder = '';
-    scriptBuilder += `local common = ${top.initialValue}\n`;
-    scriptBuilder += getConditions(top.compoundConditions);
-    scriptBuilder += 'local topCommon = common\n\n';
-
-    scriptBuilder += `common = ${mid.initialValue}\n`;
-    scriptBuilder += getConditions(mid.compoundConditions);
-    scriptBuilder += 'local midCommon = common\n\n';
-
-    scriptBuilder += `common = ${bot.initialValue}\n`;
-    scriptBuilder += getConditions(bot.compoundConditions);
-    scriptBuilder += 'local botCommon = common\n\n';
-
-    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
-    return scriptBuilder;
+// Return a string representation of the passed logical operator
+const getLogicalOperator = function (logicalOperator) {
+    let operatorString = '';
+    switch (logicalOperator) {
+        case LOGICAL_OPERTAOR.AND:
+            operatorString = 'and';
+            break;
+        case LOGICAL_OPERTAOR.OR:
+            operatorString = 'or';
+            break;
+        default:
+            operatorString = '';
+    }
+    return operatorString;
 };
 
 // Return a string representation of the passed trigger
@@ -205,20 +113,112 @@ const getAction = function (action) {
     return actionString;
 };
 
-// Return a string representation of the passed logical operator
-const getLogicalOperator = function (logicalOperator) {
-    let operatorString = '';
-    switch (logicalOperator) {
-        case LOGICAL_OPERTAOR.AND:
-            operatorString = 'and';
-            break;
-        case LOGICAL_OPERTAOR.OR:
-            operatorString = 'or';
-            break;
-        default:
-            operatorString = '';
-    }
-    return operatorString;
+// Get conditions in the compoundConditions array
+const getConditions = function (compoundConditions) {
+    let override = false;
+    let overrideValue;
+    let trigger = '';
+    let operator = '';
+    let action = '';
+    let logicalOperator = '';
+    let scriptBuilder = '';
+
+    compoundConditions.forEach((compound) => {
+        if (compound.conditions.length > 0) {
+            const { conditions } = compound;
+
+            let hasNumAlliesTrigger = false;
+            let hasNumEnemiesTrigger = false;
+            for (let i = 0; i < conditions.length; i += 1) {
+                if (conditions[i].trigger === TRIGGER.AlliedHeroesAlive) {
+                    hasNumAlliesTrigger = true;
+                }
+                if (conditions[i].trigger === TRIGGER.EnemyHeroesAlive) {
+                    hasNumEnemiesTrigger = true;
+                }
+            }
+
+            if (hasNumAlliesTrigger) {
+                lcm.addHelperFunction('getAlliedHeroesAlive');
+                scriptBuilder += 'local alliesAlive = getAlliedHeroesAlive()\n';
+            }
+            if (hasNumEnemiesTrigger) {
+                lcm.addHelperFunction('getEnemyHeroesAlive');
+                scriptBuilder += 'local enemiesAlive = getEnemyHeroesAlive()\n';
+            }
+
+            // Begin if statement for the current CompoundCondition
+            scriptBuilder += 'if';
+            let totalValue = 0;
+            let i = 0;
+            for (i = 0; i < conditions.length; i += 1) {
+                trigger = getTrigger(conditions[i].trigger);
+                operator = getOperator(conditions[i].operator);
+                action = getAction(conditions[i].action);
+                totalValue += conditions[i].value;
+
+                if (action === 'return') {
+                    override = true;
+                    overrideValue = conditions[i].value;
+                }
+
+                if (i < conditions.length - 1) {
+                    logicalOperator = getLogicalOperator(compound.logicalOperator[i]);
+                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
+                } else {
+                    scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
+
+                    if (override === false) {
+                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
+                    } else {
+                        scriptBuilder += `    common = ${overrideValue}\n`;
+                    }
+                }
+            }
+            scriptBuilder += 'end\n';
+        }
+    });
+    return scriptBuilder;
+};
+
+// Generate roshan desires
+const generateRoshanDesires = function (req) {
+    const { roshan } = req.body.configuration;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roshan.initialValue}\n`;
+    scriptBuilder += getConditions(roshan.compoundConditions);
+    scriptBuilder += 'return common';
+    return scriptBuilder;
+};
+
+// Generate roam desires
+const generateRoamDesires = function (req) {
+    const { roam } = req.body.configuration;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${roam.initialValue}\n`;
+    scriptBuilder += getConditions(roam.compoundConditions);
+    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
+    return scriptBuilder;
+};
+
+// Generic function for generating lane desires, with a
+const generateLaneDesires = function (reqType) {
+    const { top, mid, bot } = reqType;
+    let scriptBuilder = '';
+    scriptBuilder += `local common = ${top.initialValue}\n`;
+    scriptBuilder += getConditions(top.compoundConditions);
+    scriptBuilder += 'local topCommon = common\n\n';
+
+    scriptBuilder += `common = ${mid.initialValue}\n`;
+    scriptBuilder += getConditions(mid.compoundConditions);
+    scriptBuilder += 'local midCommon = common\n\n';
+
+    scriptBuilder += `common = ${bot.initialValue}\n`;
+    scriptBuilder += getConditions(bot.compoundConditions);
+    scriptBuilder += 'local botCommon = common\n\n';
+
+    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
+    return scriptBuilder;
 };
 
 // Generate the Lua script for team desires
