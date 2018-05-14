@@ -2,6 +2,7 @@ const express = require('express');
 const models = require('../models');
 const { jwtCheck } = require('./jwtCheck');
 const { check, validationResult } = require('express-validator/check');
+const { writeScripts } = require('../server/generateScript.js');
 
 const router = express.Router();
 
@@ -23,18 +24,19 @@ router.get('/recent', jwtCheck, (request, response) => {
 
 /* will always return JSON of the new record details */
 router.post('/update', jwtCheck, [
-    check('bot.id').exists(),
-    check('bot.name').exists(),
-    check('bot.description').exists(),
-    check('bot.configuration').exists(),
+    check('id').exists(),
+    check('name').exists(),
+    check('description').exists(),
+    check('configuration').exists(),
 ], (request, response) => {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
         response.status(422).json({ errors: errors.mapped() });
+        return;
     }
     const {
         name, id, description, configuration,
-    } = request.body.bot;
+    } = request.body;
     const userId = request.user.sub;
     // condition for creating a botconfig entry
     if (id === -1) {
@@ -47,6 +49,7 @@ router.post('/update', jwtCheck, [
             updatedAt: new Date(),
         })
             .then((botConfig) => {
+                writeScripts(request, botConfig.id);
                 response.status(200).json({ botConfig });
             });
     } else {
@@ -64,6 +67,7 @@ router.post('/update', jwtCheck, [
                         configuration: JSON.stringify(configuration),
                         updatedAt: new Date(),
                     });
+                    writeScripts(request, botConfig.id);
                     response.status(200).json({ botConfig });
                 } else {
                     response.status(200).json({});
@@ -71,10 +75,13 @@ router.post('/update', jwtCheck, [
             });
     }
 });
-router.get('/get', jwtCheck, (request, response) => {
-    const id = request.query.botId;
+router.get('/get/:botID', jwtCheck, (request, response) => {
+    const id = request.params.botID;
     models.BotConfig.findAll({
-        where: { userId: request.user.sub, id },
+        where: {
+            userId: request.user.sub,
+            id,
+        },
     })
         .then((botConfig) => {
             response.status(200).json({ botConfig });
@@ -88,5 +95,17 @@ router.get('/all', jwtCheck, (request, response) => {
             response.status(200).json({ botConfigs });
         });
 });
-
+router.get('/delete/:botID', jwtCheck, (request, response) => {
+    const id = request.params.botID;
+    // console.log(req.params);
+    models.BotConfig.destroy({
+        where: {
+            userId: request.user.sub,
+            id,
+        },
+    })
+        .then(() => {
+            response.status(200).json({ deleted: true });
+        });
+});
 module.exports = router;

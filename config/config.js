@@ -1,14 +1,17 @@
 const fs = require('fs');
 const path = require('path');
+const configJSON = require('./config.json');
 
-let config = { development: { } };
-
+let config;
 try {
     const jsonRaw = fs.readFileSync(path.join(__dirname, '..', '.env'));
     config = JSON.parse(jsonRaw);
 } catch (err) {
+    config = configJSON;
     // This just falls back on the config
 }
+
+config.app = configJSON.app;
 
 module.exports = {
     development: {
@@ -19,48 +22,11 @@ module.exports = {
         dialect: 'mysql',
     },
     test: {
-        username: 'database_test',
-        password: null,
-        database: 'database_test',
+        username: config.development.username || 'root',
+        password: config.development.password || null,
+        database: config.development.database || 'test',
         host: '127.0.0.1',
         dialect: 'mysql',
     },
-    // production: {
-    //   username: process.env.DB_USERNAME,
-    //   password: process.env.DB_PASSWORD,
-    //   database: process.env.DB_NAME,
-    //   host: process.env.DB_HOSTNAME,
-    //   dialect: 'mysql',
-    //   dialectOptions: {
-    //     ssl: {
-    //       ca: fs.readFileSync(__dirname + '/mysql-ca-master.crt')
-    //     }
-    //   }
-    // }
+    app: config.app,
 };
-// {
-//     "development": {
-//         "username": "root",
-//         "password": "pw4root",
-//         "database": "test",
-//         "host": "127.0.0.1",
-//         "dialect": "mysql"
-//     },
-//     "test": {
-//         "username": "someusername",
-//         "password": "somepassword",
-//         "database": "database_test",
-//         "host": "127.0.0.1",
-//         "dialect": "mysql"
-//     },
-//     "production": {
-//         "username": "someusername",
-//         "password": "somepassword",
-//         "database": "database_production",
-//         "host": "127.0.0.1",
-//         "dialect": "mysql"
-//     },
-//     "app": {
-//         "API_URL": "http://localhost:3000"
-//     }
-// }

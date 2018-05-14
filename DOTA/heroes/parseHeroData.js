@@ -79,7 +79,7 @@ function makeHeroStatsObject(dataObject) {
     return heroStats;
 }
 // accepts the hero specific object and builds hero json object
-function makeHeroObject(dataObject) {
+function makeHeroObject(dataObject, heroID) {
     if (!dataObject) { return null; }
     const heroObject = {};
     heroObject.name = dataObject.workshop_guide_name;
@@ -91,17 +91,20 @@ function makeHeroObject(dataObject) {
     heroObject.complexity = dataObject.Complexity;
     const roleObject = makeRoleObject(dataObject);
     heroObject.roles = JSON.stringify(roleObject);
+    heroObject.id = heroID;
     return heroObject;
 }
 /** Actual goal * */
 const heroes = [];
+let i = 0;
 Object.keys(heroData).map((initialKey) => {
     Object.keys(heroData[initialKey]).map((key) => {
         Object.keys(heroData[initialKey][key]).map((finalKey) => {
             const specificHero = heroData[initialKey][key][finalKey];
-            const heroObject = makeHeroObject(specificHero);
+            const heroObject = makeHeroObject(specificHero, i);
             const heroStatsObject = makeHeroStatsObject(specificHero);
             heroes.push({ hero: heroObject, heroStats: heroStatsObject });
+            i += 1;
         });
     });
 });
