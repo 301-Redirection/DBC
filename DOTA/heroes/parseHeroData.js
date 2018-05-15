@@ -111,9 +111,4 @@ Object.keys(heroData).map((initialKey) => {
         });
     });
 });
-console.log(heroes);
-heroes.forEach((hero) => {
-    console.log(hero.hero.name);
-});
-console.log(heroes.length);
 module.exports = heroes;
