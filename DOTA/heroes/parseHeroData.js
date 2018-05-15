@@ -90,6 +90,7 @@ function makeHeroObject(dataObject, heroID) {
     }
     heroObject.complexity = dataObject.Complexity;
     const roleObject = makeRoleObject(dataObject);
+    if (!roleObject) { return null; }
     heroObject.roles = JSON.stringify(roleObject);
     heroObject.id = heroID;
     return heroObject;
@@ -103,9 +104,16 @@ Object.keys(heroData).map((initialKey) => {
             const specificHero = heroData[initialKey][key][finalKey];
             const heroObject = makeHeroObject(specificHero, i);
             const heroStatsObject = makeHeroStatsObject(specificHero);
-            heroes.push({ hero: heroObject, heroStats: heroStatsObject });
+            if (heroObject && heroStatsObject) {
+                heroes.push({ hero: heroObject, heroStats: heroStatsObject });
+            }
             i += 1;
         });
     });
 });
+console.log(heroes);
+heroes.forEach((hero) => {
+    console.log(hero.hero.name);
+});
+console.log(heroes.length);
 module.exports = heroes;
