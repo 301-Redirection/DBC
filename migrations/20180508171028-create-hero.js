@@ -1,5 +1,5 @@
 module.exports = {
-    up: (queryInterface, Sequelize) => queryInterface.createTable('BotConfigs', {
+    up: (queryInterface, Sequelize) => queryInterface.createTable('Hero', {
         id: {
             allowNull: false,
             autoIncrement: true,
@@ -9,19 +9,14 @@ module.exports = {
         name: {
             type: Sequelize.STRING,
         },
-        description: {
+        alignment: {
             type: Sequelize.STRING,
         },
-        title: {
+        roles: {
             type: Sequelize.STRING,
         },
-        configuration: {
-            type: Sequelize.TEXT,
-        },
-        userId: {
-            // note: this is the sub field of Auth0 token
-            type: Sequelize.STRING,
-            underscore: false,
+        complexity: {
+            type: Sequelize.INTEGER,
         },
         createdAt: {
             allowNull: false,
@@ -32,5 +27,5 @@ module.exports = {
             type: Sequelize.DATE,
         },
     }),
-    down: queryInterface => queryInterface.dropTable('BotConfigs'),
+    down: queryInterface => queryInterface.dropTable('Hero'),
 };
