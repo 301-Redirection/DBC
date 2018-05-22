@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { NavbarModule } from '../navbar/navbar.module';
 import { BotConfigComponent } from './bot-config.component';
 
-
 @NgModule({
     imports: [
         CommonModule,

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { NavbarModule } from '../navbar/navbar.module';
 import { DashboardComponent } from './dashboard.component';
 
-
 @NgModule({
     imports: [
         CommonModule,
