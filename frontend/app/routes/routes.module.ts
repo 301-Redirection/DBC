@@ -10,7 +10,7 @@ import { CallbackComponent } from '../callback/callback.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 export const ROUTES: Routes = [
-    { 
+    {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full',

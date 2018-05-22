@@ -18,10 +18,10 @@ export class DashboardComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
 
     constructor(private title: Title, private api: ApiConnectService, private router: Router) {
-        this.title.setTitle(this.pageTitle);        
+        this.title.setTitle(this.pageTitle);
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
     }
@@ -33,7 +33,6 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteBotScript (botScriptID: number) {
-        console.log('Delete this bot: ' + botScriptID);
         const response = this.api.removeBot(botScriptID).subscribe((data) => {
             console.log(data);
         });

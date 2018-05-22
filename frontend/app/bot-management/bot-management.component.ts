@@ -33,18 +33,17 @@ export class BotManagementComponent implements OnInit {
         });
     }
 
-    deleteBotScript (botScriptID: number) {
-        console.log('Delete this bot: ' + botScriptID);
-        const response = this.api.removeBot(botScriptID).subscribe((data) => {
-            console.log(data);
-        });
-        this.getUserBotScripts();
-        this.botID = -1;
-        $('#deleteConfirmation').modal('hide');
-    }
+    // deleteBotScript (botScriptID: number) {
+    //     const response = this.api.removeBot(botScriptID).subscribe((data) => {
+    //         // TODO: add visual response to the deletion
+    //     });
+    //     this.getUserBotScripts();
+    //     this.botID = -1;
+    //     $('#deleteConfirmation').modal('hide');
+    // }
 
-    showDeleteModal(id) {
-        $('#deleteConfirmation').modal('show');
-        this.botID = id;
-    }
+    // showDeleteModal(id) {
+    //     $('#deleteConfirmation').modal('show');
+    //     this.botID = id;
+    // }
 }

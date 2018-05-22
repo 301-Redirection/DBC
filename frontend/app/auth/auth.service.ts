@@ -28,7 +28,6 @@ export class AuthService {
 
         if (this.isTokenValid) {
             this.userProfile = JSON.parse(localProfile);
-            console.log(this.userProfile);
             this.setLoggedIn(true);
         } else if (!this.isTokenValid && localProfile) {
             this.logout();
@@ -52,10 +51,10 @@ export class AuthService {
         // When Auth0 hash parsed, get profile
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken) {
-                window.location.hash = '';                
+                window.location.hash = '';
                 this.getProfile(authResult);
             } else if (err) {
-                this.clearRedirect();                                
+                this.clearRedirect();
                 this.router.navigate([ROUTE_NAMES.HOME]);
                 console.error(`Error authenticating: ${err.error}`);
             }
@@ -83,7 +82,6 @@ export class AuthService {
         localStorage.setItem('expires_at', expiresAt);
         localStorage.setItem('profile', JSON.stringify(profile));
         this.userProfile = profile;
-        console.log(this.userProfile);
         // Update login status in loggedIn$ stream
         this.setLoggedIn(true);
         // Redirect to Dashboard

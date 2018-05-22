@@ -1,9 +1,0 @@
-{
-    "extends": "tslint-config-airbnb",
-    "rulesDirectory": [
-        "../node_modules/codelyzer"
-    ],
-    "rules": {
-        "ter-indent": [true, 4]
-    }
-}
