@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const contents = fs.readFileSync(path.join(__dirname, 'helperFunctions.lua')).toString();
+// const contents = fs.readFileSync(process.env.NODE_PATH + 'lua/helperFunctions.lua').toString();
+const contents = fs.readFileSync(path.join(process.env.NODE_PATH, 'lua/helperFunctions.lua')).toString();
 
 const helperFunctions = {};
 

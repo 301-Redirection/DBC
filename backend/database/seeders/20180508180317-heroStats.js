@@ -1,4 +1,4 @@
-const heroData = require('../DOTA/heroes/parseHeroData.js');
+const heroData = require('../../static/converters/parseHeroData.js');
 
 module.exports = {
     up: (queryInterface) => {

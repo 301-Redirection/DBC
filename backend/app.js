@@ -8,9 +8,9 @@ const methodOverride = require('method-override');
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const cors = require('cors');
-const index = require('./routes/index');
-const users = require('./routes/users');
-const bots = require('./routes/bots');
+const index = require('routes/index');
+const users = require('routes/users');
+const bots = require('routes/bots');
 const validator = require('express-validator');
 
 const app = express();

@@ -1,10 +1,9 @@
-// TODO: Ensure this test runs first
-
-const models = require('../models');
+const path = require('path');
+process.env.NODE_PATH = path.join(__dirname, '../backend');
+const models = require('models');
 const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const { spawnSync } = require('child_process');
-const path = require('path');
 
 const IS_WIN = process.platform === 'win32';
 

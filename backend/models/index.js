@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const configuration = require('../config/config.js');
+const configuration = require('../../config/config.js');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';

@@ -1,10 +1,11 @@
+const path = require('path');
+process.env.NODE_PATH = path.join(__dirname, '../backend');
 const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const request = require('request');
 const sinon = require('sinon');
 const http = require('http');
 const { spawnSync } = require('child_process');
-const path = require('path');
 
 const IS_WIN = process.platform === 'win32';
 
@@ -18,7 +19,7 @@ describe('Bot API testing', () => {
     let sequelize;
     let server;
     beforeAll((done) => {
-        const jwtCheck = require('../routes/jwtCheck');
+        const jwtCheck = require('routes/jwtCheck');
         jwtStub = sinon.stub(jwtCheck, 'jwtCheck')
             .callsFake((req, res, next) => {
                 req.user = {};
@@ -27,7 +28,7 @@ describe('Bot API testing', () => {
             });
 
         // after you can create app:
-        app = require('../app');
+        app = require('app.js');
         server = app.listen(3000, () => {
             console.log(`Listening on port ${server.address().port} ...`);
         });

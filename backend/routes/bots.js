@@ -1,8 +1,8 @@
 const express = require('express');
-const models = require('../models');
+const models = require('models');
 const { jwtCheck } = require('./jwtCheck');
 const { check, validationResult } = require('express-validator/check');
-const { writeScripts } = require('../server/generateScript.js');
+const { writeScripts } = require('controllers/generateScript.js');
 
 const router = express.Router();
 

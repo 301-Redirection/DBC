@@ -1,5 +1,8 @@
-const { lcm } = require('../server/LuaCodeManager.js');
-const { writeScripts } = require('../server/generateScript.js');
+const path = require('path');
+process.env.NODE_PATH = path.join(__dirname, '../backend');
+require('module').Module._initPaths();
+const { lcm } = require('controllers/LuaCodeManager.js');
+const { writeScripts } = require('controllers/generateScript.js');
 const fs = require('fs');
 const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
 const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
@@ -7,6 +10,9 @@ const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/com
 const id = 't100';
 
 describe('Lua Code Manager tests', () => {
+    beforeAll(() => {
+    });
+
     beforeEach(() => {
         lcm.reset();
     });
