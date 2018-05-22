@@ -8,9 +8,9 @@ const methodOverride = require('method-override');
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const cors = require('cors');
-const index = require('routes/index');
-const users = require('routes/users');
-const bots = require('routes/bots');
+const index = require('routes/index.js');
+const users = require('routes/users.js');
+const bots = require('routes/bots.js');
 const validator = require('express-validator');
 
 const app = express();
@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(sassMiddleware({
-    src: path.join(__dirname, 'public'),
-    dest: path.join(__dirname, 'public'),
+    src: path.join(__dirname, '../public'),
+    dest: path.join(__dirname, '../public'),
     indentedSyntax: true, // true = .sass and false = .scss
     sourceMap: true,
 }));
@@ -35,13 +35,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
 }));
-
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(flash());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use(validator({}));
-
 app.use('/', index);
 app.use('/user', users);
 app.use('/bots', bots);
@@ -65,35 +63,3 @@ app.use((err, req, res) => {
 });
 
 module.exports = app;
-
-
-/**
- * Stuff that doesn't seem to be working too well for us
- * */
-
-// Set port
-// const port = process.env.PORT || '3000';
-// app.set('port', port);
-
-// Set static path to Angular app in dist
-// Don't run in dev
-// if (process.env.NODE_ENV !== 'dev') {
-//     app.use('/', express.static(path.join(__dirname, './dist')));
-// }
-
-/*
- |--------------------------------------
- | Routes
- |--------------------------------------
- */
-
-// require('./server/api')(app, config);
-
-// Pass routing to Angular app
-// Don't run in dev
-// if (process.env.NODE_ENV !== 'dev') {
-//     app.get('*', function(req, res) {
-//         res.sendFile(path.join(__dirname, '/dist/index.html'));
-//     });
-// }
-

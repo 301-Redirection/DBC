@@ -7,7 +7,7 @@ const { writeScripts } = require('controllers/generateScript.js');
 const router = express.Router();
 
 const LIMIT_NUMBER = 5;
-
+// console.log(jwtCheck);
 /* will always return a JSON object of at most 5 bots */
 router.get('/recent', jwtCheck, (request, response) => {
     models.BotConfig.findAll({

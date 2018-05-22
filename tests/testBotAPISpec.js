@@ -1,5 +1,6 @@
 const path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../backend');
+require('module').Module._initPaths();
 const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const request = require('request');
@@ -109,6 +110,7 @@ describe('Bot API testing', () => {
             };
             request.get(options, (err, response, body) => {
                 if (err) { throw err; }
+                console.log(body);
                 const responseObject = JSON.parse(body);
                 expect(responseObject.botConfigs).toBeDefined();
                 expect(responseObject.botConfigs.length).toBe(0);

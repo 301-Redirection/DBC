@@ -1,5 +1,6 @@
 const path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../backend');
+require('module').Module._initPaths();
 const models = require('models');
 const config = require('../config/config.js');
 const Sequelize = require('sequelize');
