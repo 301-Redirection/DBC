@@ -84,17 +84,6 @@ describe('NavbarComponent', () => {
         }
     }));
 
-    it('should redirect to Config page from config link, if logged in', fakeAsync(() => {
-        auth.setLoggedIn(true);
-        fixture.detectChanges();
-        if (auth.loggedIn) {
-            fixture.debugElement.query(By.css('a#configLink')).nativeElement.click();
-            fixture.whenStable().then(() => {
-                expect(location.path()).toEqual(ROUTE_NAMES.BOT_CONFIGURATION);
-            });
-        }
-    }));
-
     it('should redirect to Manage page from manage link, if logged in', fakeAsync(() => {
         auth.setLoggedIn(true);
         fixture.detectChanges();
