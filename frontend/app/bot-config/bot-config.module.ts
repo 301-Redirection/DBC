@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarModule } from '../navbar/navbar.module';
 import { BotConfigComponent } from './bot-config.component';
+import { ConfiguratorComponent, EnumToArrayPipe } from './configurator/configurator.component';
 
 @NgModule({
     imports: [
@@ -14,6 +15,8 @@ import { BotConfigComponent } from './bot-config.component';
     ],
     declarations: [
         BotConfigComponent,
+        ConfiguratorComponent,
+        EnumToArrayPipe,
     ],
     exports: [BotConfigComponent],
 })

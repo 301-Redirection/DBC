@@ -4,7 +4,7 @@
  * of the configuration options specified grows.
  */
 
-export interface ConfigurationFormat {
+export class ConfigurationFormat {
     push: {
         top: Configuration;
         mid: Configuration;
@@ -22,6 +22,104 @@ export interface ConfigurationFormat {
     };
     roam: Configuration;
     roshan: Configuration;
+
+    constructor() {
+        for (const lane in this.push) {
+            this.push[lane] = {
+                compoundConditions: [
+                    {
+                        conditions: [
+                            {
+                                trigger: 1,
+                                operator: 3,
+                                conditional: 0.0,
+                                action: 2,
+                                value: 0.25,
+                            },
+                        ],
+                        logicalOperator: [],
+                    },
+                ],
+                initialValue: 0,
+            };
+        }
+
+        for (const lane in this.farm) {
+            this.farm[lane] = {
+                compoundConditions: [
+                    {
+                        conditions: [
+                            {
+                                trigger: 1,
+                                operator: 3,
+                                conditional: 0.0,
+                                action: 2,
+                                value: 0.25,
+                            },
+                        ],
+                        logicalOperator: [],
+                    },
+                ],
+                initialValue: 0,
+            };
+        }
+
+        for (const lane in this.defend) {
+            this.defend[lane] = {
+                compoundConditions: [
+                    {
+                        conditions: [
+                            {
+                                trigger: 1,
+                                operator: 3,
+                                conditional: 0.0,
+                                action: 2,
+                                value: 0.25,
+                            },
+                        ],
+                        logicalOperator: [],
+                    },
+                ],
+                initialValue: 0,
+            };
+        }
+
+        this.roshan = {
+            compoundConditions: [
+                {
+                    conditions: [
+                        {
+                            trigger: 1,
+                            operator: 3,
+                            conditional: 0.0,
+                            action: 2,
+                            value: 0.25,
+                        },
+                    ],
+                    logicalOperator: [],
+                },
+            ],
+            initialValue: 0,
+        };
+
+        this.roam = {
+            compoundConditions: [
+                {
+                    conditions: [
+                        {
+                            trigger: 1,
+                            operator: 3,
+                            conditional: 0.0,
+                            action: 2,
+                            value: 0.25,
+                        },
+                    ],
+                    logicalOperator: [],
+                },
+            ],
+            initialValue: 0,
+        };
+    }
 }
 
 export interface Configuration {
