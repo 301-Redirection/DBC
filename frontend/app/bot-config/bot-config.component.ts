@@ -56,6 +56,30 @@ export class BotConfigComponent implements OnInit {
         roshan: new ConfigurationClass(),
     };
 
+    sampleConditions: Condition[] = [
+        {
+            trigger: 1,
+            operator: 3,
+            conditional: 0.0,
+            action: 2,
+            value: 0.25,
+        },
+        {
+            trigger: 3,
+            operator: 2,
+            conditional: 0.0,
+            action: 2,
+            value: 0.25,
+        },
+        {
+            trigger: 1,
+            operator: 4,
+            conditional: 0.3,
+            action: 1,
+            value: 0.5,
+        },
+    ];
+
     // bot = {
     //     id: this.id,
     //     name: this.name,
