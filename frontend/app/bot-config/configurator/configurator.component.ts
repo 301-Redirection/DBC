@@ -1,8 +1,12 @@
 import {
     Component,
     Input,
+    Output,
+    EventEmitter,
     Pipe,
     PipeTransform,
+    SimpleChanges,
+    OnInit,
 } from '@angular/core';
 import {
     Action,
@@ -19,11 +23,14 @@ import {
 
 export class ConfiguratorComponent {
     @Input() condition: Condition;
+    @Output() conditionChange = new EventEmitter<Condition>();
     triggers = Trigger;
     actions = Action;
     operators = Operator;
 
-    constructor() {
+    constructor() {}
+
+    ngOnInit() {
         if (typeof this.condition === 'undefined') {
             this.condition = {
                 trigger: 0,
@@ -35,8 +42,8 @@ export class ConfiguratorComponent {
         }
     }
 
-    log(data: any) {
-        console.log(data);
+    changeCondition() {
+        this.conditionChange.emit(this.condition);
     }
 }
 

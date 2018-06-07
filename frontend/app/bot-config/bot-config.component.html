@@ -14,7 +14,7 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <div class="card card-config">
-                <configurator *ngFor="let i of sampleConditions" [condition]="i"></configurator>
+                <configurator *ngFor="let c of sampleConditions; let i=index; trackBy: trackByFn" [condition]="c" (conditionChange)="updateCondition($event, i)"></configurator>
             </div>
         </div>
         <!-- Start Script Details -->
