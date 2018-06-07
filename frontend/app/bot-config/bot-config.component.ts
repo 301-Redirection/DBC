@@ -69,20 +69,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             action: 2,
             value: 0.25,
         },
-        {
-            trigger: 3,
-            operator: 2,
-            conditional: 0.0,
-            action: 2,
-            value: 0.25,
-        },
-        {
-            trigger: 1,
-            operator: 4,
-            conditional: 0.3,
-            action: 1,
-            value: 0.5,
-        },
     ];
 
     // bot = {
@@ -117,6 +103,16 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     trackByFn(index, item) {
         return index;
+    }
+
+    addCondition() {
+        this.sampleConditions.push({
+            trigger: 3,
+            operator: 2,
+            conditional: 0.53,
+            action: 1,
+            value: 0.45,
+        });
     }
 
     save() {

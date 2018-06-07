@@ -13,6 +13,8 @@
     <!-- Start Row -->
     <div class="row mb-4">
         <div class="col-md-12">
+            <button (click)="addCondition()" type="button" class="btn btn-outline-primary">Add Condition</button>
+            <button (click)="sampleConditions.pop()" type="button" class="btn btn-outline-warning">Remove Last</button>
             <div class="card card-config">
                 <configurator *ngFor="let c of sampleConditions; let i=index; trackBy: trackByFn" [condition]="c" (conditionChange)="updateCondition($event, i)"></configurator>
             </div>
