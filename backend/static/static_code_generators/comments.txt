@@ -6,7 +6,19 @@
 			bot: 0.3,
 		}
 	},
-	heroes: ['drow_ranger', 'nature's phrophet'],
+	heroes: {
+		paritioned: false,
+		pool: ['drow_ranger', 'nature's phrophet']
+	}
+	// OR
+	heroes: {
+		paritioned: true,
+		pool1: ['drow_ranger'],
+		pool2: ['clinkz'],
+		pool3: ['zuus'],
+		pool4: ['crystal maiden'],
+		pool5: ['viper'],
+	}
 	drow_ranger: {
 		abilities: {
 			skills: "qweqqrewqetnqrnt", 
