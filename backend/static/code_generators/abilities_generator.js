@@ -40,23 +40,6 @@ fs = require('fs');
 let filename = `ability_item_usage_${hero}.lua`;
 let final = generateAbilityFileContent(hero, input);
 console.log(final);
-// fs.writeFile(filename, final, function(err) {
-//     if(err) {
-//         return console.log(err);
-//     }
-//     console.log("The file was saved!");
-// });
-
-// fs.writeFile(filename, final, function(err) {
-//     if(err) {
-//         return console.log(err);
-//     }
-//     console.log("The file was saved!");
-// });
-
-// console.log(generateLevelingAbilityCode(input.abilities));
-// console.log(generateTalentCode(input.talents));
-// console.log(generateItemCode(items));
 
 /**
  *  Given a character, returns a string which contains the code to select the ability 
