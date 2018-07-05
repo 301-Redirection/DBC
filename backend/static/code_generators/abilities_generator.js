@@ -109,6 +109,7 @@ function generateTalentCode(talents) {
         level += 2;
     }
     code += '\nend';
+    code += '\n}';
     return code;
 }
 
@@ -186,7 +187,7 @@ function generateAbilityUsageFile(hero, input) {
 function generateItemCode(items) {
     let code = 'local ItemsToBuy = \n{';
     for(let i = 0; i < items.length; i+=1) {
-        code += '\n\t' + items[i] + ',';
+        code += '\n\t\'' + items[i] + '\',';
     }
     code += '\n}';
     return code;
@@ -395,6 +396,7 @@ function copyScript(filename, destinationFilename) {
 }
 
 const essentialFilesToInclude = [
+    'BotNameUtility.lua',
     'mode_attack_spirit_breaker.lua',
     'mode_laning_generic.lua',
     'mode_push_tower_mid_generic.lua',
@@ -403,12 +405,13 @@ const essentialFilesToInclude = [
     'mode_roam_spirit_breaker.lua',
     'mode_rune_generic.lua',
     'mode_secret_shop_generic.lua',
-    'mode_ward_generic.lua',
     'mode_side_shop_generic.lua',
     'mode_side_shop_enigma.lua',
     'mode_side_shop_keeper_of_the_light.lua',
     'mode_side_shop_shadow_shaman.lua',
     'mode_side_shop_windrunner.lua',
+    'mode_team_roam_generic.lua.lua',
+    'mode_ward_generic.lua',
     'MinionUtility.lua',
     'NewMinionUtil.lua',
     'PushUtility.lua',
