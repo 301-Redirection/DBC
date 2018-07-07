@@ -12,6 +12,8 @@ local ItemsToBuy =
 	'item_tango',
 }
 
+
+
 utility.checkItemBuild(ItemsToBuy)
 
 function ItemPurchaseThink()
