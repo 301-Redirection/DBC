@@ -4,13 +4,13 @@
 ----------------------------------------------------------------------------
 local utility = require( GetScriptDirectory().."/utility" ) 
 
-local ItemsToBuy = 
-{
-	'item_slippers',
-	'item_circlet',
-	'item_recipe_wraith_band',
-	'item_tango',
+local ItemsToBuy ={
+	"item_slippers",
+	"item_circlet",
+	"item_recipe_wraith_band",
+	"item_tango",
 }
+
 
 
 

@@ -23,7 +23,7 @@
     "app": {
         "API_URL": "http://localhost:3000"
     },
-    "lua": {
+    "LUA": {
         "essentialFilesToInclude":   [
             "BotNameUtility.lua",
             "mode_attack_spirit_breaker.lua",

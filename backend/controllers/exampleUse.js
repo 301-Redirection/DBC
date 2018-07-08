@@ -1,4 +1,4 @@
-const { templateGenerator } = require('./template_based_generator.js');
+const { templateGenerator } = require('./TemplateBasedGenerator.js');
 
 const items = ['item_slippers',
     'item_circlet',

@@ -1,4 +1,5 @@
 const { lcm } = require('./LuaCodeManager.js');
+const { templateGenerator } = require('./TemplateBasedGenerator.js');
 const fs = require('fs');
 const archiver = require('archiver');
 
@@ -220,6 +221,9 @@ const generateLaneDesires = function (reqType) {
     scriptBuilder += 'return {topCommon, midCommon, botCommon}';
     return scriptBuilder;
 };
+const generateTemplateFiles = function(req) {
+
+}
 
 // Generate the Lua script for team desires
 const generateTeamDesires = function (req) {
@@ -310,6 +314,7 @@ const writeScripts = function (req, id) {
 };
 
 module.exports = {
+    templateGenerator.()
     generateTeamDesires,
     generateRoshanDesires,
     generateRoamDesires,

@@ -434,36 +434,31 @@ allBotHeroes = {
 	"npc_dota_hero_zuus",
 }
 
-hero_pool_position_1={
+local hero_pool_position_1 ={
 	"drow_ranger",
 	"bane",
 	"alchemist",
 }
 
-
-hero_pool_position_2={
+local hero_pool_position_2 ={
 	"abaddon",
 	"antimage",
 }
 
-
-hero_pool_position_3={
+local hero_pool_position_3 ={
 	"axe",
 	"bloodseeker",
 }
 
-
-hero_pool_position_4={
+local hero_pool_position_4 ={
 	"centaur",
 	"chen",
 }
 
-
-hero_pool_position_5={
+local hero_pool_position_5 ={
 	"chaos_knight",
 	"crystal_maiden",
 }
-
 
 
 

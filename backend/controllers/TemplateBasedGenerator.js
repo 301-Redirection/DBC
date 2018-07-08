@@ -2,6 +2,7 @@ const LEFT = 1;
 const RIGHT = 2;
 const fs = require('fs');
 const path = require('path');
+const config = require('../../config/config.js');
 
 // Note: this relative to root dir
 const PATH_TO_CODE_DUMP = path.join('backend', 'static', 'code_generators', 'code_dump');
@@ -10,40 +11,35 @@ const PATH_TO_TEMPLATE_SCRIPTS = path.join('backend', 'static', 'scripts', 'code
 const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
 const ITEM_TEMPLATE_FOLDER_NAME = 'item_templates';
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
+const NEW_LINE = '\r\n';
+const TAB = '\t';
 
 const TemplateBasedGenerator = function () {
-    this.essentialFilesToInclude = [
-        'BotNameUtility.lua',
-        'mode_attack_spirit_breaker.lua',
-        'mode_laning_generic.lua',
-        'mode_push_tower_mid_generic.lua',
-        'mode_push_tower_top_generic.lua',
-        'mode_push_tower_bot_generic.lua',
-        'mode_roam_spirit_breaker.lua',
-        'mode_rune_generic.lua',
-        'mode_secret_shop_generic.lua',
-        'mode_side_shop_generic.lua',
-        'mode_side_shop_enigma.lua',
-        'mode_side_shop_keeper_of_the_light.lua',
-        'mode_side_shop_shadow_shaman.lua',
-        'mode_side_shop_windrunner.lua',
-        'mode_team_roam_generic.lua',
-        'mode_ward_generic.lua',
-        'MinionUtility.lua',
-        'NewMinionUtil.lua',
-        'PushUtility.lua',
-        'RoleUtility.lua',
-        'utility.lua',
-        'WardUtility.lua',
-    ];
 
-    this.poolNames = [
-        'hero_pool_position_1',
-        'hero_pool_position_2',
-        'hero_pool_position_3',
-        'hero_pool_position_4',
-        'hero_pool_position_5',
-    ];
+    // Helper functions
+    this.createLuaFunction = function(indentString, content) {
+        let code = '';
+        code += `${indentString} function()`;
+        for(let i = 0; i < content.length; i += 1) {
+            code += `${indentString}${TAB}${content[i]}`;
+        }
+        code += `${indentString} end`;
+        return code;
+    }
+
+    this.createLuaTable = function(variableName, array, quoted) {
+        let code = `local ${variableName} ={\n`;
+        for(let i = 0; i < array.length; i += 1) {
+            if (quoted === true) {
+                code += `${TAB}"` + array[i] + `",${NEW_LINE}`;
+            }
+            else {
+                code += `${TAB}` + array[i] + `,${NEW_LINE}`;
+            }
+        }
+        code += `}${NEW_LINE}`;
+        return code;
+    }
 
     /**
      *  Given a character, returns a string which contains the code to select the ability
@@ -88,9 +84,7 @@ const TemplateBasedGenerator = function () {
             } else {
                 talentIndex = level + RIGHT;
             }
-            code += '\n\tfunction()';
-            code += `\n\t\treturn Talents[${talentIndex}]`;
-            code += '\n\tend';
+            code = this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`])
             level += 2;
         }
         code += '\nend';
@@ -104,12 +98,8 @@ const TemplateBasedGenerator = function () {
      *  to generate the code
      */
     this.generateLevelingAbilityCode = function (str) {
-        let code = 'local AbilityToLevelUp=\n{';
-        const arr = this.generateAbilityArray(str);
-        for (let i = 0; i < arr.length; i += 1) {
-            code += `\t${arr[i]},\n`;
-        }
-        code += '}';
+        const abilityArray = this.generateAbilityArray(str);
+        let code = this.createLuaTable('AbilityToLevelUp', abilityArray, false);
         return code;
     };
 
@@ -152,11 +142,7 @@ const TemplateBasedGenerator = function () {
      *
      */
     this.generateItemCode = function (itemArray) {
-        let code = 'local ItemsToBuy = \n{';
-        for (let i = 0; i < itemArray.length; i += 1) {
-            code += `\n\t'${itemArray[i]}',`;
-        }
-        code += '\n}';
+        let code = this.createLuaTable('ItemsToBuy', itemArray, true);
         return code;
     };
 
@@ -189,6 +175,26 @@ const TemplateBasedGenerator = function () {
     // ///////////////////////////////////////////////////////////////////////
 
     /**
+     * This function generates the code to be used by hero_selection.lua
+     */
+    this.generateHeroesCode = function (heroes) {
+        const final = [];
+        if (heroes.partitioned === 'false') {
+            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
+                final.push('');
+                final[i] = this.createLuaTable(config.lua.poolNames[i], heroes.pool, true);
+            }
+        } else {
+            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
+                final.push('');
+                final[i] = this.createLuaTable(config.lua.poolNames[i], heroes.pool[i], true);
+            }
+        }
+        // console.log(final)
+        return final;
+    };
+
+    /**
      * This generates the content of the hero_selection.lua
      *
      * This this.expects an object like the following
@@ -213,27 +219,29 @@ const TemplateBasedGenerator = function () {
      *
      * const heroes2 = {
      *       partitioned: 'true',
-     *       pool1: [
-     *           'drow_ranger',
-     *           'bane',
-     *           'alchemist',
-     *       ],
-     *       pool2: [
-     *           'abaddon',
-     *           'antimage',
-     *       ],
-     *       pool3: [
-     *           'axe',
-     *           'bloodseeker',
-     *       ],
-     *       pool4: [
-     *           'centaur',
-     *           'chen',
-     *       ],
-     *       pool5: [
-     *           'chaos_knight',
-     *           'crystal_maiden',
-     *       ],
+     *       pool: [
+     *           [
+     *               'drow_ranger',
+     *               'bane',
+     *               'alchemist',
+     *           ],
+     *           [
+     *               'abaddon',
+     *               'antimage',
+     *           ],
+     *           [
+     *               'axe',
+     *               'bloodseeker',
+     *           ],
+     *           [
+     *               'centaur',
+     *               'chen',
+     *           ],
+     *           [
+     *               'chaos_knight',
+     *               'crystal_maiden',
+     *           ],
+     *       ]
      *   };
      * ^ so that one bot picks one hero from each of the pools
      *
@@ -253,35 +261,7 @@ const TemplateBasedGenerator = function () {
         fileContents = fileContents.replace('{{- pos-pool-heroes -}}', replaceStr);
         return fileContents;
     };
-    /**
-     * This this.generates the code to be used by hero_selection.lua
-     */
-    this.generateHeroesCode = function (heroes) {
-        const final = [];
-        if (heroes.partitioned === 'false') {
-            for (let i = 0; i < this.poolNames.length; i += 1) {
-                final.push('');
-                final[i] += (`${this.poolNames[i]}={\r\n`);
-                for (let j = 0; j < heroes.pool.length; j += 1) {
-                    final[i] += (`\t"${heroes.pool[j]}",\r\n`);
-                }
-                final[i] += '}\r\n\r\n';
-            }
-        } else {
-            for (let i = 0; i < this.poolNames.length; i += 1) {
-                final.push('');
-                final[i] += (`${this.poolNames[i]}={\r\n`);
-                let arr = heroes.pool[i];
-                for (let j = 0; j < arr.length; j += 1) {
-                    final[i] += (`\t"${arr[j]}",\r\n`);
-                }
-                final[i] += '}\r\n\r\n';
-            }
-        }
-        // console.log(final)
-        return final;
-    };
-
+    
     /**
      * This this.generates the file to be used by hero_selection.lua
      */
@@ -298,7 +278,7 @@ const TemplateBasedGenerator = function () {
         if (heroObject.partitioned === 'false') {
             allHeroes = heroObject.pool;
         } else {
-            for (let i = 0; i < this.poolNames.length; i += 1) {
+            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
                 let arr = heroObject.pool[i];
                 for (let j = 0; j < arr.length; j += 1) {
                     allHeroes.push(arr[j]);
@@ -371,12 +351,14 @@ const TemplateBasedGenerator = function () {
             }
         }
         // include all essential files
-        for (let i = 0; i < this.essentialFilesToInclude.length; i += 1) {
-            const filename = this.essentialFilesToInclude[i];
+        for (let i = 0; i < config.lua.essentialFilesToInclude.length; i += 1) {
+            const filename = config.lua.essentialFilesToInclude[i];
             this.copyScript(filename, filename);
         }
     };
+
 };
 
 const templateGenerator = new TemplateBasedGenerator();
 module.exports.templateGenerator = templateGenerator;
+    
