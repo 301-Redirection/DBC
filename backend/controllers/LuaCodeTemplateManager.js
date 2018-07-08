@@ -91,8 +91,8 @@ const LuaCodeTemplateManager = function () {
             case 'w': return 'Abilities[2]';
             case 'e': return 'Abilities[3]';
             case 'r': return 'Abilities[4]';
-            case 't': return 'talent';
-            case 'n': return 'nil';
+            case 't': return '"talent"';
+            case 'n': return '"nil"';
             default: return '';
         }
     };
@@ -124,11 +124,12 @@ const LuaCodeTemplateManager = function () {
             } else {
                 talentIndex = level + RIGHT;
             }
-            code = this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`]);
+            code += this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`]) + ',';
             level += 2;
         }
-        code += '\nend';
         code += '\n}';
+        console.log(talents);
+        console.log(code);
         return code;
     };
 
@@ -347,48 +348,53 @@ const LuaCodeTemplateManager = function () {
 
 
     this.generateBotScripts = function (configObject) {
-        // console.log(configObject);
+        console.log(configObject);
         this.generateHeroesSelectionFile(configObject.heroPool);
         const allHeroes = this.getHeroesArray(configObject.heroPool);
         // console.log(allHeroes);
         for (let i = 0; i < allHeroes.length; i += 1) {
-            const hero = configObject.heroes[allHeroes[i]];
-            const heroName = allHeroes[i];
-            if (hero !== undefined) {
-                if (hero.abilities !== undefined) {
-                    this.generateAbilityUsageFile(heroName, hero.abilities);
-                    // console.log(`Just generated ${heroName} ability script`);
+            if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
+                const hero = configObject.heroes[allHeroes[i]];
+                const heroName = allHeroes[i];
+                if (typeof hero !== 'undefined' && hero) {
+                    if (typeof hero.abilities !== 'undefined' && hero.abilities) {
+                        this.generateAbilityUsageFile(heroName, hero.abilities);
+                        // console.log(`Just generated ${heroName} ability script`);
+                    } else {
+                        // include default bot ability file
+                        const filename = `ability_item_usage_${heroName}.lua`;
+                        this.copyScript(filename, filename);
+                        // console.log(`Just copied ${heroName} ability script`);
+                    }
+                    if (typeof hero.items !== 'undefined' && hero.items) {
+                        this.generateItemFile(heroName, hero.items);
+                        // console.log(`Just generated ${heroName} item script`);
+                    } else {
+                        // include default bot item file
+                        const filename = `item_purchase_${heroName}.lua`;
+                        this.copyScript(filename, filename);
+                        // console.log(`Just copied ${heroName} item script`);
+                    }
                 } else {
-                    // include default bot ability file
-                    const filename = `ability_item_usage_${heroName}.lua`;
-                    this.copyScript(filename, filename);
-                    // console.log(`Just copied ${heroName} ability script`);
+                    // include default bot files
+                    let filename = `item_purchase_${heroName}.lua`;
+                    let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                    let destinationLocation = path.join(this.pathToStoreCode, filename);
+                    this.copyFile(pathToScript, destinationLocation);
+                    filename = `ability_item_usage_${heroName}.lua`;
+                    pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                    destinationLocation = path.join(this.pathToStoreCode, filename);
+                    this.copyFile(pathToScript, destinationLocation);
                 }
-                if (hero.items !== undefined) {
-                    this.generateItemFile(heroName, hero.items);
-                    // console.log(`Just generated ${heroName} item script`);
-                } else {
-                    // include default bot item file
-                    const filename = `item_purchase_${heroName}.lua`;
-                    this.copyScript(filename, filename);
-                    // console.log(`Just copied ${heroName} item script`);
+                // including any bot_${heroName}.lua files if they exist
+                const filename = `bot_${heroName}.lua`;
+                const pathToScript = path.join(__dirname, '..', 'scripts', filename);
+                if (fs.existsSync(pathToScript)) {
+                    this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                 }
-            } else {
-                // include default bot files
-                let filename = `item_purchase_${heroName}.lua`;
-                let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                let destinationLocation = path.join(this.pathToStoreCode, filename);
-                this.copyFile(pathToScript, destinationLocation);
-                filename = `ability_item_usage_${heroName}.lua`;
-                pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                destinationLocation = path.join(this.pathToStoreCode, filename);
-                this.copyFile(pathToScript, destinationLocation);
             }
-            // including any bot_${heroName}.lua files if they exist
-            const filename = `bot_${heroName}.lua`;
-            const pathToScript = path.join(__dirname, '..', 'scripts', filename);
-            if (fs.existsSync(pathToScript)) {
-                this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
+            else {
+                throw 'No heroes array specified. Invalid Configuration';
             }
         }
         // include all essential files

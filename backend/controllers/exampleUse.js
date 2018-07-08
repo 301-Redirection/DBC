@@ -9,22 +9,22 @@ const items = ['item_slippers',
 const input = {
     abilities: 'qweqqrewqetnqrnt', talents: ['l', 'r', 'l', 'l'],
 };
-// const heroes1 = {
-//     partitioned: 'false',
-//     pool: [
-//             'drow_ranger',
-//             'bane',
-//             'alchemist',
-//             'abaddon',
-//             'antimage',
-//             'axe',
-//             'bloodseeker',
-//             'centaur',
-//             'chen',
-//             'chaos_knight',
-//             'crystal_maiden',
-//         ],
-// };
+const heroes1 = {
+    partitioned: 'false',
+    pool: [
+            'drow_ranger',
+            'bane',
+            'alchemist',
+            'abaddon',
+            'antimage',
+            'axe',
+            'bloodseeker',
+            'centaur',
+            'chen',
+            'chaos_knight',
+            'crystal_maiden',
+        ],
+};
 const heroes2 = {
     partitioned: 'true',
     pool: [
@@ -52,7 +52,7 @@ const heroes2 = {
     ],
 };
 const configObject = {
-    heroPool: heroes2,
+    heroPool: heroes1,
     heroes: {
         drow_ranger: {
             abilities: input,
@@ -142,7 +142,5 @@ const officialRequest = {
     },
 };
 
+console.log(officialRequest.body.configuration.heroes);
 writeScripts(officialRequest, '_____', 2);
-
-// codeGenerator.generateBotScripts(configObject);
-// codeGenerator.generateBotScripts(configObject);
