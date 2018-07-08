@@ -1,4 +1,5 @@
-const { templateGenerator } = require('./TemplateBasedGenerator.js');
+// const { codeGenerator } = require('./LuaCodeTemplateManager.js');
+const { writeScripts } = require('./generateScript.js');
 
 const items = ['item_slippers',
     'item_circlet',
@@ -48,7 +49,7 @@ const heroes2 = {
             'chaos_knight',
             'crystal_maiden',
         ],
-    ]
+    ],
 };
 const configObject = {
     heroes: heroes2,
@@ -56,6 +57,90 @@ const configObject = {
         abilities: input,
         items,
     },
+    desires: {
+        push: {
+            top: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            mid: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            bot:{
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+        },
+        farm: {
+            top: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            mid: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            bot: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+        },
+        defend: {
+            top: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            mid: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+            bot: {
+                conditions: [],
+                logicalOperator: [],
+                compoundConditions: [],
+                initialValue: 0.5,
+            },
+        },
+        roam: {
+            conditions: [],
+            logicalOperator: [],
+            compoundConditions: [],
+            initialValue: 0.5,
+        },
+        roshan: {
+            conditions: [],
+            logicalOperator: [],
+            compoundConditions: [],
+            initialValue: 0.5,
+        },
+    },
+    name: 'yay',
+    description: 'boo'
 };
+const officialRequest = {
+    body: {
+        configuration: configObject
+    }
+}
 
-templateGenerator.generateBotScripts(configObject);
+writeScripts(officialRequest, '_____');
+
+// codeGenerator.generateBotScripts(configObject);
+// codeGenerator.generateBotScripts(configObject);

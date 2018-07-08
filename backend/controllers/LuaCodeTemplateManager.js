@@ -3,9 +3,9 @@ const RIGHT = 2;
 const fs = require('fs');
 const path = require('path');
 const config = require('../../config/config.js');
+const LuaCodeManager = require('./LuaCodeManager.js');
 
 // Note: this relative to root dir
-const PATH_TO_CODE_DUMP = path.join('backend', 'static', 'code_generators', 'code_dump');
 const PATH_TO_SCRIPTS = path.join('backend', 'static', 'scripts');
 const PATH_TO_TEMPLATE_SCRIPTS = path.join('backend', 'static', 'scripts', 'code_templates');
 const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
@@ -14,32 +14,73 @@ const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
 const NEW_LINE = '\r\n';
 const TAB = '\t';
 
-const TemplateBasedGenerator = function () {
+const LuaCodeTemplateManager = function () {
+
+    this.pathToStoreCode = path.join('backend', 'static', 'code_generators', 'code_dump');
+
+    //extending lua code manager (LCM) without explicit inheritance
+    this.lcm = new LuaCodeManager();
+
+    // LCM functions
+    this.addScriptHeading = function (headingName, luaString) {
+        this.lcm.addScriptHeading(headingName, luaString);
+    }
+
+    this.addHelperFunction = function (functionName) {
+        this.lcm.addHelperFunction(functionName);
+    }
+
+    this.addToAPIFunction = function (functionName, luaString) {
+        this.lcm.addToAPIFunction(functionName, luaString)
+    }
+
+    this.addToStartAPIFunction = function (functionName, luaString) {
+        this.lcm.addToStartAPIFunction(functionName, luaString);
+    }
+
+    this.addToEndAPIFunction = function (functionName, luaString) {
+        this.lcm.addToEndAPIFunction(functionName, luaString);
+    }
+
+    this.checkAPIExistence = function (functionName) {
+        this.lcm.checkAPIExistence(functionName);
+    };
+
+    this.generate = function () {
+        return this.lcm.generate();
+    }
+
+    this.reset = function () {
+        this.lcm.reset();
+    } 
+
+    this.setPath = function(pathToFolder) {
+        this.pathToStoreCode = pathToFolder;
+    }
 
     // Helper functions
-    this.createLuaFunction = function(indentString, content) {
+    this.createLuaFunction = function (indentString, content) {
         let code = '';
         code += `${indentString} function()`;
-        for(let i = 0; i < content.length; i += 1) {
+        for (let i = 0; i < content.length; i += 1) {
             code += `${indentString}${TAB}${content[i]}`;
         }
         code += `${indentString} end`;
         return code;
-    }
+    };
 
-    this.createLuaTable = function(variableName, array, quoted) {
+    this.createLuaTable = function (variableName, array, quoted) {
         let code = `local ${variableName} ={\n`;
-        for(let i = 0; i < array.length; i += 1) {
+        for (let i = 0; i < array.length; i += 1) {
             if (quoted === true) {
-                code += `${TAB}"` + array[i] + `",${NEW_LINE}`;
-            }
-            else {
-                code += `${TAB}` + array[i] + `,${NEW_LINE}`;
+                code += `${TAB}"${array[i]}",${NEW_LINE}`;
+            } else {
+                code += `${TAB}${array[i]},${NEW_LINE}`;
             }
         }
         code += `}${NEW_LINE}`;
         return code;
-    }
+    };
 
     /**
      *  Given a character, returns a string which contains the code to select the ability
@@ -84,7 +125,7 @@ const TemplateBasedGenerator = function () {
             } else {
                 talentIndex = level + RIGHT;
             }
-            code = this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`])
+            code = this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`]);
             level += 2;
         }
         code += '\nend';
@@ -99,7 +140,7 @@ const TemplateBasedGenerator = function () {
      */
     this.generateLevelingAbilityCode = function (str) {
         const abilityArray = this.generateAbilityArray(str);
-        let code = this.createLuaTable('AbilityToLevelUp', abilityArray, false);
+        const code = this.createLuaTable('AbilityToLevelUp', abilityArray, false);
         return code;
     };
 
@@ -130,7 +171,7 @@ const TemplateBasedGenerator = function () {
     this.generateAbilityUsageFile = function (hero, abilityObject) {
         const content = this.generateAbilityFileContent(hero, abilityObject);
         const filename = `ability_item_usage_${hero}.lua`;
-        const pathToFile = path.join(PATH_TO_CODE_DUMP, filename);
+        const pathToFile = path.join(this.pathToStoreCode, filename);
         fs.writeFile(pathToFile, content, (err) => {
             if (err) throw err;
         });
@@ -142,7 +183,7 @@ const TemplateBasedGenerator = function () {
      *
      */
     this.generateItemCode = function (itemArray) {
-        let code = this.createLuaTable('ItemsToBuy', itemArray, true);
+        const code = this.createLuaTable('ItemsToBuy', itemArray, true);
         return code;
     };
 
@@ -166,7 +207,7 @@ const TemplateBasedGenerator = function () {
     this.generateItemFile = function (hero, itemArray) {
         const filename = `item_purchase_${hero}.lua`;
         const content = this.generateItemFileContent(hero, itemArray);
-        const pathToFile = path.join(PATH_TO_CODE_DUMP, filename);
+        const pathToFile = path.join(this.pathToStoreCode, filename);
         fs.writeFile(pathToFile, content, (err) => {
             if (err) throw err;
         });
@@ -261,13 +302,13 @@ const TemplateBasedGenerator = function () {
         fileContents = fileContents.replace('{{- pos-pool-heroes -}}', replaceStr);
         return fileContents;
     };
-    
+
     /**
      * This this.generates the file to be used by hero_selection.lua
      */
     this.generateHeroesSelectionFile = function (heroes) {
         const final = this.generateHeroSelectionFileContent(heroes);
-        const pathToFile = path.join(PATH_TO_CODE_DUMP, 'hero_selection.lua');
+        const pathToFile = path.join(this.pathToStoreCode, 'hero_selection.lua');
         fs.writeFile(pathToFile, final, (err) => {
             if (err) throw err;
         });
@@ -279,7 +320,7 @@ const TemplateBasedGenerator = function () {
             allHeroes = heroObject.pool;
         } else {
             for (let i = 0; i < config.lua.poolNames.length; i += 1) {
-                let arr = heroObject.pool[i];
+                const arr = heroObject.pool[i];
                 for (let j = 0; j < arr.length; j += 1) {
                     allHeroes.push(arr[j]);
                 }
@@ -301,12 +342,13 @@ const TemplateBasedGenerator = function () {
      */
     this.copyScript = function (filename, destinationFilename) {
         const pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-        const destinationLocation = path.join(PATH_TO_CODE_DUMP, destinationFilename);
+        const destinationLocation = path.join(this.pathToStoreCode, destinationFilename);
         this.copyFile(pathToScript, destinationLocation);
     };
 
 
     this.generateBotScripts = function (configObject) {
+        console.log(configObject);
         this.generateHeroesSelectionFile(configObject.heroes);
         const allHeroes = this.getHeroesArray(configObject.heroes);
         // console.log(allHeroes);
@@ -336,18 +378,18 @@ const TemplateBasedGenerator = function () {
                 // include default bot files
                 let filename = `item_purchase_${heroName}.lua`;
                 let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                let destinationLocation = path.join(PATH_TO_CODE_DUMP, filename);
+                let destinationLocation = path.join(this.pathToStoreCode, filename);
                 this.copyFile(pathToScript, destinationLocation);
                 filename = `ability_item_usage_${heroName}.lua`;
                 pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                destinationLocation = path.join(PATH_TO_CODE_DUMP, filename);
+                destinationLocation = path.join(this.pathToStoreCode, filename);
                 this.copyFile(pathToScript, destinationLocation);
             }
             // including any bot_${heroName}.lua files if they exist
             const filename = `bot_${heroName}.lua`;
             const pathToScript = path.join(__dirname, '..', 'scripts', filename);
             if (fs.existsSync(pathToScript)) {
-                this.copyFile(pathToScript, path.join(PATH_TO_CODE_DUMP, filename));
+                this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
             }
         }
         // include all essential files
@@ -356,9 +398,8 @@ const TemplateBasedGenerator = function () {
             this.copyScript(filename, filename);
         }
     };
-
 };
 
-const templateGenerator = new TemplateBasedGenerator();
-module.exports.templateGenerator = templateGenerator;
-    
+const codeGenerator = new LuaCodeTemplateManager();
+module.exports.codeGenerator = codeGenerator;
+
