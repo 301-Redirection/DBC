@@ -271,27 +271,7 @@ const TemplateBasedGenerator = function () {
             for (let i = 0; i < this.poolNames.length; i += 1) {
                 final.push('');
                 final[i] += (`${this.poolNames[i]}={\r\n`);
-                let arr;
-                switch (i) {
-                    case 0:
-                        arr = heroes.pool1;
-                        break;
-                    case 1:
-                        arr = heroes.pool2;
-                        break;
-                    case 2:
-                        arr = heroes.pool3;
-                        break;
-                    case 3:
-                        arr = heroes.pool4;
-                        break;
-                    case 4:
-                        arr = heroes.pool5;
-                        break;
-                    default:
-                        arr = [];
-                        break;
-                }
+                let arr = heroes.pool[i];
                 for (let j = 0; j < arr.length; j += 1) {
                     final[i] += (`\t"${arr[j]}",\r\n`);
                 }
@@ -319,27 +299,7 @@ const TemplateBasedGenerator = function () {
             allHeroes = heroObject.pool;
         } else {
             for (let i = 0; i < this.poolNames.length; i += 1) {
-                let arr;
-                switch (i) {
-                    case 0:
-                        arr = heroObject.pool1;
-                        break;
-                    case 1:
-                        arr = heroObject.pool2;
-                        break;
-                    case 2:
-                        arr = heroObject.pool3;
-                        break;
-                    case 3:
-                        arr = heroObject.pool4;
-                        break;
-                    case 4:
-                        arr = heroObject.pool5;
-                        break;
-                    default:
-                        arr = [];
-                        break;
-                }
+                let arr = heroObject.pool[i];
                 for (let j = 0; j < arr.length; j += 1) {
                     allHeroes.push(arr[j]);
                 }

@@ -26,27 +26,29 @@ const input = {
 // };
 const heroes2 = {
     partitioned: 'true',
-    pool1: [
-        'drow_ranger',
-        'bane',
-        'alchemist',
-    ],
-    pool2: [
-        'abaddon',
-        'antimage',
-    ],
-    pool3: [
-        'axe',
-        'bloodseeker',
-    ],
-    pool4: [
-        'centaur',
-        'chen',
-    ],
-    pool5: [
-        'chaos_knight',
-        'crystal_maiden',
-    ],
+    pool: [
+        [
+            'drow_ranger',
+            'bane',
+            'alchemist',
+        ],
+        [
+            'abaddon',
+            'antimage',
+        ],
+        [
+            'axe',
+            'bloodseeker',
+        ],
+        [
+            'centaur',
+            'chen',
+        ],
+        [
+            'chaos_knight',
+            'crystal_maiden',
+        ],
+    ]
 };
 const configObject = {
     heroes: heroes2,
