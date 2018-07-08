@@ -15,32 +15,31 @@ const NEW_LINE = '\r\n';
 const TAB = '\t';
 
 const LuaCodeTemplateManager = function () {
-
     this.pathToStoreCode = path.join('backend', 'static', 'code_generators', 'code_dump');
 
-    //extending lua code manager (LCM) without explicit inheritance
+    // extending lua code manager (LCM) without explicit inheritance
     this.lcm = new LuaCodeManager();
 
     // LCM functions
     this.addScriptHeading = function (headingName, luaString) {
         this.lcm.addScriptHeading(headingName, luaString);
-    }
+    };
 
     this.addHelperFunction = function (functionName) {
         this.lcm.addHelperFunction(functionName);
-    }
+    };
 
     this.addToAPIFunction = function (functionName, luaString) {
-        this.lcm.addToAPIFunction(functionName, luaString)
-    }
+        this.lcm.addToAPIFunction(functionName, luaString);
+    };
 
     this.addToStartAPIFunction = function (functionName, luaString) {
         this.lcm.addToStartAPIFunction(functionName, luaString);
-    }
+    };
 
     this.addToEndAPIFunction = function (functionName, luaString) {
         this.lcm.addToEndAPIFunction(functionName, luaString);
-    }
+    };
 
     this.checkAPIExistence = function (functionName) {
         this.lcm.checkAPIExistence(functionName);
@@ -48,15 +47,15 @@ const LuaCodeTemplateManager = function () {
 
     this.generate = function () {
         return this.lcm.generate();
-    }
+    };
 
     this.reset = function () {
         this.lcm.reset();
-    } 
+    };
 
-    this.setPath = function(pathToFolder) {
+    this.setPath = function (pathToFolder) {
         this.pathToStoreCode = pathToFolder;
-    }
+    };
 
     // Helper functions
     this.createLuaFunction = function (indentString, content) {
@@ -348,12 +347,12 @@ const LuaCodeTemplateManager = function () {
 
 
     this.generateBotScripts = function (configObject) {
-        console.log(configObject);
-        this.generateHeroesSelectionFile(configObject.heroes);
-        const allHeroes = this.getHeroesArray(configObject.heroes);
+        // console.log(configObject);
+        this.generateHeroesSelectionFile(configObject.heroPool);
+        const allHeroes = this.getHeroesArray(configObject.heroPool);
         // console.log(allHeroes);
         for (let i = 0; i < allHeroes.length; i += 1) {
-            const hero = configObject[allHeroes[i]];
+            const hero = configObject.heroes[allHeroes[i]];
             const heroName = allHeroes[i];
             if (hero !== undefined) {
                 if (hero.abilities !== undefined) {

@@ -1,6 +1,6 @@
 const lhfi = require('./LuaHelperFunctionInterpreter.js');
 
-const indentString = function(string, numSpaces) {
+const indentString = function (string, numSpaces) {
     const lines = string.split('\n');
     const indentCharacter = Array(numSpaces + 1).join(' ');
     let newLines = '';
@@ -12,7 +12,6 @@ const indentString = function(string, numSpaces) {
 };
 
 class LuaCodeManager {
-
     constructor() {
         this.helperFunctions = {};
         this.APIFunctions = {};
@@ -23,34 +22,34 @@ class LuaCodeManager {
         if (!Object.prototype.hasOwnProperty.call(this.scriptHeadings, headingName)) {
             this.scriptHeadings[headingName] = luaString;
         }
-    };
+    }
 
     addHelperFunction(functionName) {
         if (!Object.prototype.hasOwnProperty.call(this.helperFunctions, functionName)) {
             this.helperFunctions[functionName] = lhfi.getFunction(functionName);
         }
-    };
+    }
 
     addToAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].middle += indentString(luaString, 4);
-    };
+    }
 
     addToStartAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].start += indentString(luaString, 4);
-    };
+    }
 
     addToEndAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].end += indentString(luaString, 4);
-    };
+    }
 
     checkAPIExistence(functionName) {
         if (!Object.prototype.hasOwnProperty.call(this.APIFunctions, functionName)) {
             this.APIFunctions[functionName] = { start: '', middle: '', end: '' };
         }
-    };
+    }
 
     generate() {
         let luaCodeString = '';
@@ -78,12 +77,12 @@ class LuaCodeManager {
         });
 
         return luaCodeString;
-    };
+    }
 
     reset() {
         this.helperFunctions = { };
         this.APIFunctions = { };
         this.scriptHeadings = { };
-    };
-};
+    }
+}
 module.exports = LuaCodeManager;

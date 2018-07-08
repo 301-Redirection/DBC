@@ -49,7 +49,7 @@ router.post('/update', jwtCheck, [
             updatedAt: new Date(),
         })
             .then((botConfig) => {
-                writeScripts(request, botConfig.id);
+                writeScripts(request, request.user.sub, botConfig.id);
                 response.status(200).json({ botConfig });
             });
     } else {
@@ -67,7 +67,7 @@ router.post('/update', jwtCheck, [
                         configuration: JSON.stringify(configuration),
                         updatedAt: new Date(),
                     });
-                    writeScripts(request, botConfig.id);
+                    writeScripts(request, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
                 } else {
                     response.status(200).json({});

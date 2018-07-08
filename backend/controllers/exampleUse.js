@@ -52,10 +52,12 @@ const heroes2 = {
     ],
 };
 const configObject = {
-    heroes: heroes2,
-    drow_ranger: {
-        abilities: input,
-        items,
+    heroPool: heroes2,
+    heroes: {
+        drow_ranger: {
+            abilities: input,
+            items,
+        },
     },
     desires: {
         push: {
@@ -71,7 +73,7 @@ const configObject = {
                 compoundConditions: [],
                 initialValue: 0.5,
             },
-            bot:{
+            bot: {
                 conditions: [],
                 logicalOperator: [],
                 compoundConditions: [],
@@ -132,15 +134,15 @@ const configObject = {
         },
     },
     name: 'yay',
-    description: 'boo'
+    description: 'boo',
 };
 const officialRequest = {
     body: {
-        configuration: configObject
-    }
-}
+        configuration: configObject,
+    },
+};
 
-writeScripts(officialRequest, '_____');
+writeScripts(officialRequest, '_____', 2);
 
 // codeGenerator.generateBotScripts(configObject);
 // codeGenerator.generateBotScripts(configObject);

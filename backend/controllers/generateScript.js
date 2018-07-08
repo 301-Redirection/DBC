@@ -223,7 +223,7 @@ const generateLaneDesires = function (reqType) {
 };
 
 /**
- * Generate the Lua script for team desires 
+ * Generate the Lua script for team desires
  * -- used LCM functions, changed to codeGenerator because it "has-a" LCM
  * -- and hence uses those functions of codeGenerator
  */
@@ -281,39 +281,35 @@ const generateTemplateFiles = function (req) {
 
 /**
  *  Will return the user's public directory
- *  
+ *
  *  Note: If Public/Lua/{id} does not exist in the root,
  *  the folders will be created in that order
  *
  */
-const getBotScriptDirectory = function(id) {
-    // const contents = fs.readFileSync(path.join(process.env.NODE_PATH, 'lua/helperFunctions.lua')).toString();
+const getBotScriptDirectory = function (id, botId) {
     const nodePath = path.join(__dirname, '..', '..');
-    // console.log(nodePath);
     let publicPath = path.join(nodePath, 'Public');
     if (!fs.existsSync(publicPath)) {
-        fs.mkdirSync(publicPath);    
+        fs.mkdirSync(publicPath);
     }
     publicPath = path.join(publicPath, 'Lua');
     if (!fs.existsSync(publicPath)) {
-        fs.mkdirSync(publicPath);  
+        fs.mkdirSync(publicPath);
     }
     publicPath = path.join(publicPath, id);
     if (!fs.existsSync(publicPath)) {
-        fs.mkdirSync(publicPath);  
+        fs.mkdirSync(publicPath);
     }
-    const tempDir = path.join(publicPath, 'temp');
+    const tempDir = path.join(publicPath, String(botId));
     if (!fs.existsSync(tempDir)) {
-        fs.mkdirSync(tempDir);  
+        fs.mkdirSync(tempDir);
     }
-    return publicPath; 
+    return publicPath;
+};
 
-}
-
-const writeScripts = function (req, id) {
-
-    const directory = getBotScriptDirectory(id);
-    const tempDir = path.join(directory, 'temp');
+const writeScripts = function (req, id, botId) {
+    const directory = getBotScriptDirectory(id, botId);
+    const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);
     generateTemplateFiles(req);
 
@@ -321,10 +317,10 @@ const writeScripts = function (req, id) {
     const luaCodeManager = generateTeamDesires(req);
     const luaCodeString = luaCodeManager.generate();
 
-    const tempPath = path.join(directory, 'temp', 'team_desires.lua');
+    const tempPath = path.join(tempDir, 'team_desires.lua');
     fs.writeFileSync(tempPath, luaCodeString, { flag: 'w+' });
 
-    const zipDir = path.join(directory, `${id}.zip`)
+    const zipDir = path.join(directory, `${botId}.zip`);
     const output = fs.createWriteStream(zipDir);
     const archive = archiver('zip', {
         zlib: { level: 9 }, // Sets the compression level.
