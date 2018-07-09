@@ -11,11 +11,13 @@ const exampleObjectDefaultHeroesByPos = require('../config/exampleConfigurations
 const exampleObjectDefaultItemsSpecified = require('../config/exampleConfigurationsBots/defaultItemsSpecified.js');
 const exampleObjectDefaultAbilitiesSpecified = require('../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
 const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
+const mocks = require('node-mocks-http');
 
+let response = mocks.createResponse();
 const id = 't100';
-const botId = '666';
+const botId = 't666';
 
-describe('Lua Code Manager tests', () => {
+describe('Lua Code Manager tests:\n', () => {
     beforeAll(() => {
     });
 
@@ -120,14 +122,31 @@ describe('Lua Code Manager tests', () => {
     describe('Lua code generation from object:', () => {
         const pathToFiles = path.join(process.env.NODE_PATH, '..', 'Public', 'Lua', id, botId);
         const pathToZip = path.join(process.env.NODE_PATH, '..', 'Public', 'Lua', id, `${botId}.zip`);
-        const pathToTempFile = path.join(process.env.NODE_PATH, '..', 'Public', 'Lua', id);
+        const pathToTempFile = path.join(process.env.NODE_PATH, '..', 'Public', 'Lua', id, botId);
         const pathToExpectedOutput = path.join('config','exampleConfigurationsBots','expectedOutput');
 
-        it('test if zip has same files as in <botId> folder', () => {
-            writeScripts(exampleObjectDefaultAllHeroes, id, botId);
+        function unzipProcedure(func) {
             fs.createReadStream(pathToZip)
             .pipe(unzip.Parse())
-            .on('entry', (entry) => {
+            .on('entry', func);
+        }
+
+        it('test if appropriate folders are created', (done) => {
+            writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
+            const rootNodeDir = __dirname;
+            let filePath = path.join(rootNodeDir, 'Public');
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(filePath, 'Lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(filePath, String(id));
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(filePath, String(botId));
+            expect(fs.existsSync(filePath)).toBe(true);
+            done()
+        });
+        it('test if zip has same files as in <botId> folder', (done) => {
+            writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
+            unzipProcedure((entry) => {
                 const fileName = entry.path;
                 const type = entry.type;
                 const size = entry.size;
@@ -142,182 +161,123 @@ describe('Lua Code Manager tests', () => {
                     entry.autodrain();
                 }
             });
+            done();
         });
-        it('test if that heroes changes specified, the hero selection file should match expected file', () => {
-            writeScripts(exampleObjectDefaultAllHeroes, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "hero_selection.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    let expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
-                    let expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                    expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
-                    expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).not.toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if that heroes changes specified by position, the hero selection file should match expected file', () => {
-            writeScripts(exampleObjectDefaultHeroesByPos, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "hero_selection.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    let expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
-                    let expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                    expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
-                    expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).not.toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if item changes specified, the items file should match expected file', () => {
-            writeScripts(exampleObjectDefaultItemsSpecified, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "item_purchase_drow_ranger.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if no ability changes specified, the ability file should not match expected file', () => {
-            writeScripts(exampleObjectDefaultAllHeroes, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type; 
-                const size = entry.size;
-                if (fileName === "ability_usage_drow_ranger.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).not.toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if no item changes specified, the items file should not match expected file', () => {
-            writeScripts(exampleObjectDefaultAllHeroes, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "item_purchase_drow_ranger.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).not.toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if ability specified changes abilities of hero accordingly', () => {
-            writeScripts(exampleObjectDefaultAbilitiesSpecified, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type; // 'Directory' or 'File' 
-                const size = entry.size;
-                if (fileName === "ability_usage_drow_ranger.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-        it('test if item changes specified, the items file should match expected file', () => {
-            writeScripts(exampleObjectDefaultItemsSpecified, id, botId);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "item_purchase_drow_ranger.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
-        });
-
-
-        it('test generation from empty/default config object', () => {
-            writeScripts(exampleObjectDefault, id, botId);
-
-            const luaOutput = fs.readFileSync(`./Public/Lua/${id}/team_desires.lua`).toString();
-
-            const expectedOutput = fs.readFileSync('./config/exampleConfigurationsBots/expectedOutput/default.lua').toString();
+        it('test if that heroes changes specified, the hero selection file should match expected file', (done) => {
+            writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            let expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
+            let expectedOutput = fs.readFileSync(expectedFilePath).toString();
             expect(luaOutput).toBe(expectedOutput);
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            done();
         });
-        it('test generation from complex config object', () => {
-            writeScripts(exampleObjectComplexOne, id);
-            fs.createReadStream(pathToZip)
-            .pipe(unzip.Parse())
-            .on('entry', (entry) => {
-                const fileName = entry.path;
-                const type = entry.type;
-                const size = entry.size;
-                if (fileName === "team_desires.lua") {
-                    const extractedFileDir = path.join(pathToTempFile, fileName);
-                    entry.pipe(fs.createWriteStream(extractedFileDir));
-                    const luaOutput = fs.readFileSync(extractedFileDir).toString();
-                    const expectedFilePath = path.join(pathToExpectedOutput, fileName);
-                    const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-                    expect(luaOutput).toBe(expectedOutput);
-                } else {
-                    entry.autodrain();
-                }
-            });
+        it('test if that heroes changes specified by position, the hero selection file should match expected file', (done) => {
+            writeScripts(exampleObjectDefaultHeroesByPos, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            let expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
+            let expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            done();
+        });
+        it('test if item changes specified, the items file should match expected file', (done) => {
+            writeScripts(exampleObjectDefaultItemsSpecified, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'item_purcahase_drow_ranger.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'item_purchase_drow_ranger.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            done();
+        });
+        it('test if no ability changes specified, the ability file should not match expected file', (done) => {
+            writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
+            writeScripts(exampleObjectDefaultItemsSpecified, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'ability_usage_drow_ranger.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'ability_usage_drow_ranger.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            done();
+        });
+        it('test if no item changes specified, the items file should not match expected file', (done) => {
+            writeScripts(exampleObjectDefaultItemsSpecified, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'item_purchase_drow_ranger.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'item_purchase_drow_ranger.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            done();
+        });
+        it('test if ability specified changes abilities of hero accordingly', (done) => {
+            writeScripts(exampleObjectDefaultAbilitiesSpecified, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'ability_usage_drow_ranger.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'ability_usage_drow_ranger.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            done();
+        });
+        it('test if item changes specified, the items file should match expected file', (done) => {
+            writeScripts(exampleObjectDefaultItemsSpecified, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'item_purchase_drow_ranger.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'item_purchase_drow_ranger.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            done();
+        });
+        it('test generation from empty/default config object', (done) => {
+            writeScripts(exampleObjectDefault, response, id, botId);
+            let filePath = path.join(pathToTempFile, 'team_desires.lua');
+            let luaOutput = fs.readFileSync(filePath).toString();
+            let expectedFilePath = path.join(pathToExpectedOutput, 'default.lua');
+            let expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            // testing that the default hero selection file is used
+            // by ensuring that it does not match any of our expected 
+            // hero selection outputs
+            filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            luaOutput = fs.readFileSync(filePath).toString();
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            luaOutput = fs.readFileSync(filePath).toString();
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            //checking if random hero .lua files exists despite not specifying heroes
+            filePath = path.join(pathToTempFile, 'ability_usage_drow.lua');
+            console.log(filePath);
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(pathToTempFile, 'item_purchase_dazzle.lua');
+            console.log(filePath);
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(pathToTempFile, 'bot_chen.lua');
+            console.log(filePath);
+            expect(fs.existsSync(filePath)).toBe(true);
+            done();
+        });
+        it('test generation from complex config object', (done) => {
+            writeScripts(exampleObjectComplexOne, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'team_desires.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'complexOne.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            done();
+        });
+        it('test FAIL', (done) => {
+            expect(20).toBe(21);
+            done();
         });
     });
 });

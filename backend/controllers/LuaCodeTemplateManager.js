@@ -1,13 +1,14 @@
 const LEFT = 1;
 const RIGHT = 2;
-const fs = require('fs');
+// const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const config = require('../../config/config.js');
 const LuaCodeManager = require('./LuaCodeManager.js');
 
 // Note: this relative to root dir
 const PATH_TO_SCRIPTS = path.join('backend', 'static', 'scripts');
-const PATH_TO_TEMPLATE_SCRIPTS = path.join('backend', 'static', 'scripts', 'code_templates');
+const PATH_TO_TEMPLATE_SCRIPTS = path.join('backend', 'static', 'code_templates');
 const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
 const ITEM_TEMPLATE_FOLDER_NAME = 'item_templates';
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
@@ -128,8 +129,6 @@ const LuaCodeTemplateManager = function () {
             level += 2;
         }
         code += '\n}';
-        console.log(talents);
-        console.log(code);
         return code;
     };
 
@@ -314,15 +313,25 @@ const LuaCodeTemplateManager = function () {
         });
     };
 
+    /**
+     *  This function will return an array of heroes given the heroPool object of the 
+     *  config, if there are any errors, an array of size 0 will be returned
+     */
     this.getHeroesArray = function (heroObject) {
         let allHeroes = [];
-        if (heroObject.partitioned === 'false') {
-            allHeroes = heroObject.pool;
-        } else {
-            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
-                const arr = heroObject.pool[i];
-                for (let j = 0; j < arr.length; j += 1) {
-                    allHeroes.push(arr[j]);
+        if (typeof heroObject.partitioned !== 'undefined' && heroObject.partitioned) {
+            if (heroObject.partitioned === 'false') {
+                if (typeof heroObject.pool !== 'undefined' && heroObject.pool) {
+                    allHeroes = heroObject.pool;
+                }
+            } else {
+                for (let i = 0; i < config.lua.poolNames.length; i += 1) {
+                    if (typeof heroObject.pool[i] !== 'undefined' && heroObject.pool[i]) {
+                        const arr = heroObject.pool[i];
+                        for (let j = 0; j < arr.length; j += 1) {
+                            allHeroes.push(arr[j]);
+                        }
+                    }
                 }
             }
         }
@@ -346,57 +355,74 @@ const LuaCodeTemplateManager = function () {
         this.copyFile(pathToScript, destinationLocation);
     };
 
-
+    /**
+     *  The main method to be used to analyze the config object,
+     *  It does all the error control 
+     */
     this.generateBotScripts = function (configObject) {
-        console.log(configObject);
-        this.generateHeroesSelectionFile(configObject.heroPool);
-        const allHeroes = this.getHeroesArray(configObject.heroPool);
-        // console.log(allHeroes);
-        for (let i = 0; i < allHeroes.length; i += 1) {
-            if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
-                const hero = configObject.heroes[allHeroes[i]];
-                const heroName = allHeroes[i];
-                if (typeof hero !== 'undefined' && hero) {
-                    if (typeof hero.abilities !== 'undefined' && hero.abilities) {
-                        this.generateAbilityUsageFile(heroName, hero.abilities);
-                        // console.log(`Just generated ${heroName} ability script`);
-                    } else {
-                        // include default bot ability file
-                        const filename = `ability_item_usage_${heroName}.lua`;
-                        this.copyScript(filename, filename);
-                        // console.log(`Just copied ${heroName} ability script`);
-                    }
-                    if (typeof hero.items !== 'undefined' && hero.items) {
-                        this.generateItemFile(heroName, hero.items);
-                        // console.log(`Just generated ${heroName} item script`);
-                    } else {
-                        // include default bot item file
-                        const filename = `item_purchase_${heroName}.lua`;
-                        this.copyScript(filename, filename);
-                        // console.log(`Just copied ${heroName} item script`);
-                    }
-                } else {
-                    // include default bot files
-                    let filename = `item_purchase_${heroName}.lua`;
-                    let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                    let destinationLocation = path.join(this.pathToStoreCode, filename);
-                    this.copyFile(pathToScript, destinationLocation);
-                    filename = `ability_item_usage_${heroName}.lua`;
-                    pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                    destinationLocation = path.join(this.pathToStoreCode, filename);
-                    this.copyFile(pathToScript, destinationLocation);
-                }
-                // including any bot_${heroName}.lua files if they exist
-                const filename = `bot_${heroName}.lua`;
-                const pathToScript = path.join(__dirname, '..', 'scripts', filename);
-                if (fs.existsSync(pathToScript)) {
-                    this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
-                }
+
+        if (typeof configObject.heroPool !== 'undefined' && configObject.heroPool) {
+
+            const allSelectedHeroes = this.getHeroesArray(configObject.heroPool);
+            if (allSelectedHeroes.length === 0) {
+                // if heroPool is an empty object, copy all scripts to the temp dir
+                // so that all heroes are selected as a "default"
+                fs.copy(PATH_TO_SCRIPTS, this.pathToStoreCode, (err) => {
+                    if (err) throw err;
+                });
             }
             else {
-                throw 'No heroes array specified. Invalid Configuration';
+                this.generateHeroesSelectionFile(configObject.heroPool);
+                for (let i = 0; i < allSelectedHeroes.length; i += 1) {
+                    if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
+                        const heroSpecification = configObject.heroes[allSelectedHeroes[i]];
+                        const heroName = allSelectedHeroes[i];
+                        if (typeof heroSpecification !== 'undefined' && heroSpecification) {
+                            if (typeof heroSpecification.abilities !== 'undefined' && heroSpecification.abilities) {
+                                this.generateAbilityUsageFile(heroName, heroSpecification.abilities);
+                            } else {
+                                // include default bot ability file if abilities unspecified
+                                const filename = `ability_item_usage_${heroName}.lua`;
+                                this.copyScript(filename, filename);
+                            }
+                            if (typeof heroSpecification.items !== 'undefined' && heroSpecification.items) {
+                                this.generateItemFile(heroName, heroSpecification.items);
+                            } else {
+                                // include default bot item file if items unspecified
+                                const filename = `item_purchase_${heroName}.lua`;
+                                this.copyScript(filename, filename);
+                            }
+                        } else {
+                            // include all default bot files for that hero
+                            let filename = `item_purchase_${heroName}.lua`;
+                            let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                            let destinationLocation = path.join(this.pathToStoreCode, filename);
+                            this.copyFile(pathToScript, destinationLocation);
+                            filename = `ability_item_usage_${heroName}.lua`;
+                            pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                            destinationLocation = path.join(this.pathToStoreCode, filename);
+                            this.copyFile(pathToScript, destinationLocation);
+                        }
+                        // including any bot_${heroName}.lua files if they exist
+                        // since they override a lot of the normal bot logic
+                        const filename = `bot_${heroName}.lua`;
+                        const pathToScript = path.join(__dirname, '..', 'static', 'scripts', filename);
+                        if (fs.existsSync(pathToScript)) {
+                            this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
+                        }
+                    }
+                    else {
+                        return res
+                        // throw 'No heroes array specified. Invalid Configuration';
+                    }
+                }
             }
+
         }
+        else {
+            throw new Error('heroPool object is absent from configuration');
+        }
+        
         // include all essential files
         for (let i = 0; i < config.lua.essentialFilesToInclude.length; i += 1) {
             const filename = config.lua.essentialFilesToInclude[i];

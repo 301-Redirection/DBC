@@ -1,6 +1,8 @@
 module.exports = {
     body: {
         configuration: {
+            heroPool: [],
+            heroes: [],
             desires: {
                 push: {
                     top: {

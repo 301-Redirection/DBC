@@ -274,11 +274,6 @@ const generateTeamDesires = function (req) {
     return codeGenerator;
 };
 
-
-const generateTemplateFiles = function (req) {
-    codeGenerator.generateBotScripts(req.body.configuration);
-};
-
 /**
  *  Will return the user's public directory
  *
@@ -307,11 +302,17 @@ const getBotScriptDirectory = function (id, botId) {
     return publicPath;
 };
 
-const writeScripts = function (req, id, botId) {
+const writeScripts = function (req, res, id, botId) {
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);
-    generateTemplateFiles(req);
+    try {
+        codeGenerator.generateBotScripts(req.body.configuration);
+    }
+    catch(err) {
+        res.status(422); 
+        return res.send(err.message); 
+    }
 
     // TODO: get the desires thing working again
     const luaCodeManager = generateTeamDesires(req);

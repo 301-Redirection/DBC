@@ -1,5 +1,6 @@
 // const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const { writeScripts } = require('./generateScript.js');
+const mocks = require('node-mocks-http');
 
 const items = ['item_slippers',
     'item_circlet',
@@ -52,7 +53,8 @@ const heroes2 = {
     ],
 };
 const configObject = {
-    heroPool: heroes1,
+    // heroPool: heroes1,
+    heroPool: {},
     heroes: {
         drow_ranger: {
             abilities: input,
@@ -143,4 +145,4 @@ const officialRequest = {
 };
 
 console.log(officialRequest.body.configuration.heroes);
-writeScripts(officialRequest, '_____', 2);
+writeScripts(officialRequest, mocks.createResponse(), '_____', 2);
