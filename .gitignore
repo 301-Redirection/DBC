@@ -106,3 +106,5 @@ package-lock.json
 
 # Generated Lua Scripts
 /Lua/*.lua
+
+/Lua
