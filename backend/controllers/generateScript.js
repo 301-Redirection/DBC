@@ -283,11 +283,11 @@ const generateTeamDesires = function (req) {
  */
 const getBotScriptDirectory = function (id, botId) {
     const nodePath = path.join(__dirname, '..', '..');
-    let publicPath = path.join(nodePath, 'Public');
+    let publicPath = path.join(nodePath, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
-    publicPath = path.join(publicPath, 'Lua');
+    publicPath = path.join(publicPath, 'lua');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -306,38 +306,28 @@ const writeScripts = function (req, res, id, botId) {
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);
-    try {
-        codeGenerator.generateBotScripts(req.body.configuration);
-    }
-    catch(err) {
-        res.status(422); 
-        return res.send(err.message); 
-    }
+    codeGenerator.generateBotScripts(req.body.configuration, () => {
+        const luaCodeManager = generateTeamDesires(req);
+        const luaCodeString = luaCodeManager.generate();
+        const tempPath = path.join(tempDir, 'team_desires.lua');
+        fs.writeFileSync(tempPath, luaCodeString, { flag: 'w+' });
 
-    // TODO: get the desires thing working again
-    const luaCodeManager = generateTeamDesires(req);
-    const luaCodeString = luaCodeManager.generate();
-
-    const tempPath = path.join(tempDir, 'team_desires.lua');
-    fs.writeFileSync(tempPath, luaCodeString, { flag: 'w+' });
-
-    const zipDir = path.join(directory, `${botId}.zip`);
-    const output = fs.createWriteStream(zipDir);
-    const archive = archiver('zip', {
-        zlib: { level: 9 }, // Sets the compression level.
+        const zipDir = path.join(directory, `${botId}.zip`);
+        const output = fs.createWriteStream(zipDir);
+        const archive = archiver('zip', {
+            zlib: { level: 9 }, // Sets the compression level.
+        });
+        // good practice to catch this error explicitly
+        archive.on('error', (err) => {
+            throw err;
+        });
+        // pipe archive data to the file
+        archive.pipe(output);
+        // append files from stream
+        archive.directory(tempDir, '');
+        archive.finalize();
     });
-
-    // good practice to catch this error explicitly
-    archive.on('error', (err) => {
-        throw err;
-    });
-
-    // pipe archive data to the file
-    archive.pipe(output);
-
-    // append files from stream
-    archive.directory(tempDir, '');
-    archive.finalize();
+    
 };
 
 module.exports = {

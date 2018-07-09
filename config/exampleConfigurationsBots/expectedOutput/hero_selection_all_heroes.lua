@@ -438,24 +438,68 @@ local hero_pool_position_1 ={
 	"drow_ranger",
 	"bane",
 	"alchemist",
+	"abaddon",
+	"antimage",
+	"axe",
+	"bloodseeker",
+	"centaur",
+	"chen",
+	"chaos_knight",
+	"crystal_maiden",
 }
 
 local hero_pool_position_2 ={
+	"drow_ranger",
+	"bane",
+	"alchemist",
 	"abaddon",
 	"antimage",
+	"axe",
+	"bloodseeker",
+	"centaur",
+	"chen",
+	"chaos_knight",
+	"crystal_maiden",
 }
 
 local hero_pool_position_3 ={
+	"drow_ranger",
+	"bane",
+	"alchemist",
+	"abaddon",
+	"antimage",
 	"axe",
 	"bloodseeker",
+	"centaur",
+	"chen",
+	"chaos_knight",
+	"crystal_maiden",
 }
 
 local hero_pool_position_4 ={
+	"drow_ranger",
+	"bane",
+	"alchemist",
+	"abaddon",
+	"antimage",
+	"axe",
+	"bloodseeker",
 	"centaur",
 	"chen",
+	"chaos_knight",
+	"crystal_maiden",
 }
 
 local hero_pool_position_5 ={
+	"drow_ranger",
+	"bane",
+	"alchemist",
+	"abaddon",
+	"antimage",
+	"axe",
+	"bloodseeker",
+	"centaur",
+	"chen",
 	"chaos_knight",
 	"crystal_maiden",
 }

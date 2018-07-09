@@ -2,13 +2,14 @@ const LEFT = 1;
 const RIGHT = 2;
 // const fs = require('fs');
 const fs = require('fs-extra');
+const copyFileSync = require('fs-copy-file-sync');
 const path = require('path');
 const config = require('../../config/config.js');
 const LuaCodeManager = require('./LuaCodeManager.js');
 
 // Note: this relative to root dir
-const PATH_TO_SCRIPTS = path.join('backend', 'static', 'scripts');
-const PATH_TO_TEMPLATE_SCRIPTS = path.join('backend', 'static', 'code_templates');
+const PATH_TO_SCRIPTS = path.join(__dirname, '..', 'static', 'scripts');
+const PATH_TO_TEMPLATE_SCRIPTS = path.join(__dirname, '..', 'static', 'code_templates');
 const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
 const ITEM_TEMPLATE_FOLDER_NAME = 'item_templates';
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
@@ -70,7 +71,7 @@ const LuaCodeTemplateManager = function () {
     };
 
     this.createLuaTable = function (variableName, array, quoted) {
-        let code = `local ${variableName} ={\n`;
+        let code = `local ${variableName} ={${NEW_LINE}`;
         for (let i = 0; i < array.length; i += 1) {
             if (quoted === true) {
                 code += `${TAB}"${array[i]}",${NEW_LINE}`;
@@ -125,10 +126,10 @@ const LuaCodeTemplateManager = function () {
             } else {
                 talentIndex = level + RIGHT;
             }
-            code += this.createLuaFunction('\n\t', [`return Talents[${talentIndex}]`]) + ',';
+            code += this.createLuaFunction(`${NEW_LINE}\t`, [`return Talents[${talentIndex}]`]) + ',';
             level += 2;
         }
-        code += '\n}';
+        code += `${NEW_LINE}`;
         return code;
     };
 
@@ -158,7 +159,7 @@ const LuaCodeTemplateManager = function () {
         let fileContents = fs.readFileSync(path.join(PATH_TO_TEMPLATE_SCRIPTS, ABILITY_TEMPLATE_FOLDER_NAME, filename), 'utf8', (err) => {
             if (err) throw err;
         });
-        fileContents = fileContents.replace('{{- abilities-to-level -}}', `${this.generateLevelingAbilityCode(abilityObject.abilities)}\r\n\r\n${this.generateTalentCode(abilityObject.talents)}\r\n`);
+        fileContents = fileContents.replace('{{- abilities-to-level -}}', `${this.generateLevelingAbilityCode(abilityObject.abilities)}${NEW_LINE}${NEW_LINE}${this.generateTalentCode(abilityObject.talents)}${NEW_LINE}`);
         return fileContents;
     };
 
@@ -171,7 +172,7 @@ const LuaCodeTemplateManager = function () {
         const content = this.generateAbilityFileContent(hero, abilityObject);
         const filename = `ability_item_usage_${hero}.lua`;
         const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFile(pathToFile, content, (err) => {
+        fs.writeFileSync(pathToFile, content, (err) => {
             if (err) throw err;
         });
     };
@@ -199,7 +200,7 @@ const LuaCodeTemplateManager = function () {
         let fileContents = fs.readFileSync(path.join(PATH_TO_TEMPLATE_SCRIPTS, ITEM_TEMPLATE_FOLDER_NAME, filename), 'utf8', (err) => {
             if (err) throw err;
         });
-        fileContents = fileContents.replace('{{- items-to-buy -}}', `${this.generateItemCode(itemArray)}\r\n`);
+        fileContents = fileContents.replace('{{- items-to-buy -}}', `${this.generateItemCode(itemArray)}${NEW_LINE}`);
         return fileContents;
     };
 
@@ -207,7 +208,7 @@ const LuaCodeTemplateManager = function () {
         const filename = `item_purchase_${hero}.lua`;
         const content = this.generateItemFileContent(hero, itemArray);
         const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFile(pathToFile, content, (err) => {
+        fs.writeFileSync(pathToFile, content, (err) => {
             if (err) throw err;
         });
     };
@@ -296,7 +297,7 @@ const LuaCodeTemplateManager = function () {
         });
         let replaceStr = '';
         for (let i = 0; i < heroPools.length; i += 1) {
-            replaceStr += `${heroPools[i]}\r\n`;
+            replaceStr += `${heroPools[i]}${NEW_LINE}`;
         }
         fileContents = fileContents.replace('{{- pos-pool-heroes -}}', replaceStr);
         return fileContents;
@@ -308,7 +309,7 @@ const LuaCodeTemplateManager = function () {
     this.generateHeroesSelectionFile = function (heroes) {
         const final = this.generateHeroSelectionFileContent(heroes);
         const pathToFile = path.join(this.pathToStoreCode, 'hero_selection.lua');
-        fs.writeFile(pathToFile, final, (err) => {
+        fs.writeFileSync(pathToFile, final, (err) => {
             if (err) throw err;
         });
     };
@@ -342,8 +343,9 @@ const LuaCodeTemplateManager = function () {
      *  Copies files at path specifed to destination path
      */
     this.copyFile = function (pathToFile, destinationPath) {
-        fs.createReadStream(pathToFile)
-            .pipe(fs.createWriteStream(destinationPath));
+        // const stream = fs.createReadStream(pathToFile)
+        //     .pipe(fs.createWriteStream(destinationPath));
+        copyFileSync(pathToFile, destinationPath);
     };
 
     /**
@@ -355,26 +357,32 @@ const LuaCodeTemplateManager = function () {
         this.copyFile(pathToScript, destinationLocation);
     };
 
+    this.copyAllFilesFromFolder = function(pathToScriptFolder) {
+        const files = fs.readdirSync(pathToScriptFolder);
+        for (let i = 0; i < files.length; i += 1) {
+            if (files[i] != 'team_desires.lua') {
+                this.copyFile(path.join(pathToScriptFolder, files[i]), path.join(this.pathToStoreCode, files[i]));
+            }
+        }
+    }
+
     /**
      *  The main method to be used to analyze the config object,
      *  It does all the error control 
      */
-    this.generateBotScripts = function (configObject) {
+    this.generateBotScripts = function (configObject, callback) {
 
         if (typeof configObject.heroPool !== 'undefined' && configObject.heroPool) {
-
             const allSelectedHeroes = this.getHeroesArray(configObject.heroPool);
             if (allSelectedHeroes.length === 0) {
                 // if heroPool is an empty object, copy all scripts to the temp dir
                 // so that all heroes are selected as a "default"
-                fs.copy(PATH_TO_SCRIPTS, this.pathToStoreCode, (err) => {
-                    if (err) throw err;
-                });
+                this.copyAllFilesFromFolder(PATH_TO_SCRIPTS);
             }
             else {
                 this.generateHeroesSelectionFile(configObject.heroPool);
-                for (let i = 0; i < allSelectedHeroes.length; i += 1) {
-                    if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
+                if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
+                    for (let i = 0; i < allSelectedHeroes.length; i += 1) {
                         const heroSpecification = configObject.heroes[allSelectedHeroes[i]];
                         const heroName = allSelectedHeroes[i];
                         if (typeof heroSpecification !== 'undefined' && heroSpecification) {
@@ -411,22 +419,38 @@ const LuaCodeTemplateManager = function () {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
                     }
-                    else {
-                        return res
-                        // throw 'No heroes array specified. Invalid Configuration';
+                }
+                else {
+                    for (let i = 0; i < allSelectedHeroes.length; i += 1) {
+                        const heroName = allSelectedHeroes[i];
+                        let filename = `item_purchase_${heroName}.lua`;
+                        let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                        let destinationLocation = path.join(this.pathToStoreCode, filename);
+                        this.copyFile(pathToScript, destinationLocation);
+                        filename = `ability_item_usage_${heroName}.lua`;
+                        pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                        destinationLocation = path.join(this.pathToStoreCode, filename);
+                        this.copyFile(pathToScript, destinationLocation);
+                        filename = `bot_${heroName}.lua`;
+                        pathToScript = path.join(__dirname, '..', 'static', 'scripts', filename);
+                        if (fs.existsSync(pathToScript)) {
+                            this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
+                        }
                     }
                 }
             }
-
+            // include all essential files
+            for (let i = 0; i < config.lua.essentialFilesToInclude.length; i += 1) {
+                const filename = config.lua.essentialFilesToInclude[i];
+                this.copyScript(filename, filename);
+            }
         }
         else {
-            throw new Error('heroPool object is absent from configuration');
+            // if no hero options specified, give the user all the scripts
+            this.copyAllFilesFromFolder(PATH_TO_SCRIPTS);
         }
-        
-        // include all essential files
-        for (let i = 0; i < config.lua.essentialFilesToInclude.length; i += 1) {
-            const filename = config.lua.essentialFilesToInclude[i];
-            this.copyScript(filename, filename);
+        if (typeof callback === 'function') {
+            callback();
         }
     };
 };

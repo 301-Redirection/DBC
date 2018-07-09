@@ -1,7 +1,22 @@
 module.exports = {
     body: {
         configuration: {
-            heroPool: [],
+            heroPool: {
+                partitioned: 'false',
+                pool: [
+                        'drow_ranger',
+                        'bane',
+                        'alchemist',
+                        'abaddon',
+                        'antimage',
+                        'axe',
+                        'bloodseeker',
+                        'centaur',
+                        'chen',
+                        'chaos_knight',
+                        'crystal_maiden',
+                ],
+            },
             heroes: [],
             desires: {
                 push: {
