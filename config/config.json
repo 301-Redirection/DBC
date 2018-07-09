@@ -22,13 +22,14 @@
     },
     "app": {
         "API_URL": "http://localhost:3000",
-        "static_urls": {
+        "staticURLS": {
             "items": "http://www.dota2.com/jsfeed/itemdata",
+            "itemsRecipes": "http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001?key=C35B5F501B9CF8FCEBF7E3109355E004&language=english",
             "abilities": "http://www.dota2.com/jsfeed/abilitydata",
-            "hero_picker": "http://www.dota2.com/jsfeed/heropickerdata?v=0",
+            "heroPicker": "http://www.dota2.com/jsfeed/heropickerdata?v=0",
             "heroes": "http://www.dota2.com/jsfeed/heropediadata?feeds=herodata",
-            "image": "http://media.steampowered.com/apps/dota2/images/items/",
-            "items2": "http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v1?key=C35B5F501B9CF8FCEBF7E3109355E004&language=english"
+            "heroesOfficial": "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=C35B5F501B9CF8FCEBF7E3109355E004&language=en_us",
+            "image": "http://media.steampowered.com/apps/dota2/images/items/"
         }
     }
 }
