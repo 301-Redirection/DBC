@@ -1,0 +1,42 @@
+{
+	desires: {
+		push: {
+			top: 0.2,
+			mid: 0.5,
+			bot: 0.3,
+		}
+	},
+	heroes: {
+		paritioned: false,
+		pool: ['drow_ranger', 'nature's phrophet']
+	}
+	// OR
+	heroes: {
+		paritioned: true,
+		pool1: ['drow_ranger'],
+		pool2: ['clinkz'],
+		pool3: ['zuus'],
+		pool4: ['crystal maiden'],
+		pool5: ['viper'],
+	}
+	drow_ranger: {
+		abilities: {
+			skills: "qweqqrewqetnqrnt", 
+			talents: ['l','r','l','l'],
+		}
+		items: [
+			item_tango,
+			item_tango,
+			item_tango,
+			item_tango,
+			item_circlet,
+			item_cloak_of_the_magi,
+			item_null_talisman,
+			item_recipe_dagon,
+			item_recipe_dagon,
+			item_recipe_dagon,
+			item_recipe_dagon,
+			item_recipe_dagon,
+		]
+	}
+}

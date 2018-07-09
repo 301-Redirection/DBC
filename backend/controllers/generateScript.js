@@ -1,5 +1,6 @@
-const { lcm } = require('./LuaCodeManager.js');
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
+const path = require('path');
 const archiver = require('archiver');
 
 // Trigger enum
@@ -139,11 +140,11 @@ const getConditions = function (compoundConditions) {
             }
 
             if (hasNumAlliesTrigger) {
-                lcm.addHelperFunction('getAlliedHeroesAlive');
+                codeGenerator.addHelperFunction('getAlliedHeroesAlive');
                 scriptBuilder += 'local alliesAlive = getAlliedHeroesAlive()\n';
             }
             if (hasNumEnemiesTrigger) {
-                lcm.addHelperFunction('getEnemyHeroesAlive');
+                codeGenerator.addHelperFunction('getEnemyHeroesAlive');
                 scriptBuilder += 'local enemiesAlive = getEnemyHeroesAlive()\n';
             }
 
@@ -183,7 +184,7 @@ const getConditions = function (compoundConditions) {
 
 // Generate roshan desires
 const generateRoshanDesires = function (req) {
-    const { roshan } = req.body.configuration;
+    const { roshan } = req.body.configuration.desires;
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roshan.initialValue}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
@@ -193,7 +194,7 @@ const generateRoshanDesires = function (req) {
 
 // Generate roam desires
 const generateRoamDesires = function (req) {
-    const { roam } = req.body.configuration;
+    const { roam } = req.body.configuration.desires;
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roam.initialValue}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
@@ -221,75 +222,107 @@ const generateLaneDesires = function (reqType) {
     return scriptBuilder;
 };
 
-// Generate the Lua script for team desires
+/**
+ * Generate the Lua script for team desires
+ * -- used LCM functions, changed to codeGenerator because it "has-a" LCM
+ * -- and hence uses those functions of codeGenerator
+ */
 const generateTeamDesires = function (req) {
     // Reset helperFunction and APIFunction objects
-    lcm.reset();
+    codeGenerator.reset();
 
     // Adds the script name and the description as a comment at the top of the file
     const { name, description } = req.body;
     const scriptHeader = `-- ${name} --\n[[ ${description} ]]`;
-    lcm.addScriptHeading(
+    codeGenerator.addScriptHeading(
         'NameAndDescription',
         scriptHeader
     );
 
     // Creates the UpdateRoshanDesire function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateRoshaneDesires',
         generateRoshanDesires(req)
     );
 
     // Creates the UpdateRoamDesire function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateRoamDesires',
         generateRoamDesires(req)
     );
 
     // Creates the UpdatePushLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdatePushLaneDesires',
-        generateLaneDesires(req.body.configuration.push)
+        generateLaneDesires(req.body.configuration.desires.push)
     );
 
     // Creates the UpdateDefendLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateDefendLaneDesires',
-        generateLaneDesires(req.body.configuration.defend)
+        generateLaneDesires(req.body.configuration.desires.defend)
     );
 
     // Creates the UpdateFarmLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateFarmLaneDesires',
         generateLaneDesires(
-            req.body.configuration.farm,
+            req.body.configuration.desires.farm,
             'UpdateFarmLaneDesires()'
         )
     );
-    return lcm;
+    return codeGenerator;
 };
 
+/**
+ *  Will return the user's public directory
+ *
+ *  Note: If Public/Lua/{id} does not exist in the root,
+ *  the folders will be created in that order
+ *
+ */
+const getBotScriptDirectory = function (id, botId) {
+    const nodePath = path.join(__dirname, '..', '..');
+    let publicPath = path.join(nodePath, 'Public');
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
+    }
+    publicPath = path.join(publicPath, 'Lua');
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
+    }
+    publicPath = path.join(publicPath, id);
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
+    }
+    const tempDir = path.join(publicPath, String(botId));
+    if (!fs.existsSync(tempDir)) {
+        fs.mkdirSync(tempDir);
+    }
+    return publicPath;
+};
 
-// Generates the bot TeamDesires script
-const writeScripts = function (req, id) {
-    let luaCodeString = '';
+const writeScripts = function (req, res, id, botId) {
+    const directory = getBotScriptDirectory(id, botId);
+    const tempDir = path.join(directory, String(botId));
+    codeGenerator.setPath(tempDir);
+    try {
+        codeGenerator.generateBotScripts(req.body.configuration);
+    }
+    catch(err) {
+        res.status(422); 
+        return res.send(err.message); 
+    }
+
+    // TODO: get the desires thing working again
     const luaCodeManager = generateTeamDesires(req);
-    luaCodeString = luaCodeManager.generate();
+    const luaCodeString = luaCodeManager.generate();
 
-    try {
-        fs.mkdirSync('./Lua');
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
-    }
+    const tempPath = path.join(tempDir, 'team_desires.lua');
+    fs.writeFileSync(tempPath, luaCodeString, { flag: 'w+' });
 
-    try {
-        fs.mkdirSync(`./Lua/${id}`);
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
-    }
-    fs.writeFileSync(`./Lua/${id}/team_desires.lua`, luaCodeString, { flag: 'w+' });
-
-    const output = fs.createWriteStream(`./Lua/${id}.zip`);
+    const zipDir = path.join(directory, `${botId}.zip`);
+    const output = fs.createWriteStream(zipDir);
     const archive = archiver('zip', {
         zlib: { level: 9 }, // Sets the compression level.
     });
@@ -302,10 +335,8 @@ const writeScripts = function (req, id) {
     // pipe archive data to the file
     archive.pipe(output);
 
-    // append a file from stream
-    const teamDesires = `./Lua/${id}/team_desires.lua`;
-    archive.append(fs.createReadStream(teamDesires), { name: 'team_desires.lua' });
-
+    // append files from stream
+    archive.directory(tempDir, '');
     archive.finalize();
 };
 
