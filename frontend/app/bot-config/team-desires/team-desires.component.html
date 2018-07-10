@@ -1,0 +1,92 @@
+<div class="background main-background">
+    <div class="container-fluid container-fluid-custom">
+        <div class="frame">
+            <h1>TEAM DESIRES</h1>
+            <div class="d-inline-block">
+                <a class="active" href="#">Team Desires</a>
+                <span>&nbsp;|&nbsp;</span>
+                <a href="#">Hero Configuration</a>
+            </div>
+        </div>
+
+        <div class="frame">
+            <div id="accordion" class="card bot-manage-card">
+                <!-- Push Desires -->
+                <!-- Heading -->
+                <button class="button-profile card-header heading-desire" id="headingPush" data-toggle="collapse" data-target="#collapsePush" aria-expanded="true" aria-controls="collapsePush">
+                    Team's Push Desires
+                </button>
+                <!-- Card Body -->
+                <div id="collapsePush" class="collapse show" aria-labelledby="headingPush" data-parent="#accordion">
+                    <div class="card-body bot-manage-card-body">
+                        <ul class="nav nav-tabs nav-fill" id="pushTabs" role="tablist">
+                            <li *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="nav-item">
+                                <a class="nav-link" [class.active]="lane=='Top'" id="tab{{lane}}" data-toggle="tab" href="#push{{lane}}" role="tab" [attr.aria-controls]="'push' + lane" [attr.aria-selected]="lane=='Top'?true:false">
+                                    {{lane}}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pushTabContent">
+                            <div *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="container-fluid-custom list-group tab-pane fade" [class.show]="lane == 'Top'" [class.active]="lane == 'Top'" id="push{{lane}}" [attr.aria-labelledby]="'tab' + lane">
+                                <span *ngFor="let c of getConditions('push', lane); let i=index;" class="list-group-item d-flex justify-content-between align-items-center">
+                                    <configurator [condition]="c"></configurator>
+                                    <span class="pointer icon"><i class="fas fa-trash m-1"></i></span>
+                                </span>
+                                
+                                <button class="list-group-item btn btn-outline-succss btn-add-cond" type="button">Add Condition</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Defend Desires -->
+                <!-- Heading -->
+                <button class="button-profile card-header heading-desire" id="headingDefend" data-toggle="collapse" data-target="#collapseDefend" aria-expanded="true" aria-controls="collapseDefend">
+                    Team's Defend Desires
+                </button>
+                <!-- Card Body -->
+                <div id="collapseDefend" class="collapse" aria-labelledby="headingDefend" data-parent="#accordion">
+                    <div class="card-body bot-manage-card-body">
+                        Here is where the defend desires configuration will be
+                    </div>
+                </div>
+
+                <!-- Farm Desires -->
+                <!-- Heading -->
+                <button class="button-profile card-header heading-desire" id="headingFarm" data-toggle="collapse" data-target="#collapseFarm" aria-expanded="true" aria-controls="collapseFarm">
+                    Team's Farm Desires
+                </button>
+                <!-- Card Body -->
+                <div id="collapseFarm" class="collapse" aria-labelledby="headingFarm" data-parent="#accordion">
+                    <div class="card-body bot-manage-card-body">
+                        Here is where the defend desires configuration will be
+                    </div>
+                </div>
+
+                <!-- Roam Desires -->
+                <!-- Heading -->
+                <button class="button-profile card-header heading-desire" id="headingRoam" data-toggle="collapse" data-target="#collapseRoam" aria-expanded="true" aria-controls="collapseRoam">
+                    Team's Roam Desires
+                </button>
+                <!-- Card Body -->
+                <div id="collapseRoam" class="collapse" aria-labelledby="headingRoam" data-parent="#accordion">
+                    <div class="card-body bot-manage-card-body">
+                        
+                    </div>
+                </div>
+
+                <!-- Roshan Desires -->
+                <!-- Heading -->
+                <button class="button-profile card-header heading-desire" id="headingRoshan" data-toggle="collapse" data-target="#collapseRoshan" aria-expanded="true" aria-controls="collapseRoshan">
+                    Team's Roshan Desires
+                </button>
+                <!-- Card Body -->
+                <div id="collapseRoshan" class="collapse" aria-labelledby="headingRoshan" data-parent="#accordion">
+                    <div class="card-body bot-manage-card-body">
+                        Here is where the push desires configuration will be
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

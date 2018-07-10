@@ -1,0 +1,53 @@
+/* Global Styles */
+@import '../../../variables';
+
+.heading-desire {
+    border: 1pt solid $dark-grey-2;
+    text-shadow: 2px 2px 5px black;
+    font-family: $font-family;
+    letter-spacing: 2px;
+    font-size: 14pt;
+}
+
+/* Desires Section Styles */
+.btn-add-cond {
+    border: 2pt dashed $grey;
+    color: $grey;
+    width: 100%;
+}
+
+.btn-add-cond:hover {
+    background: $dark-grey-1;
+}
+
+.list-group-item {
+    background: $dark-grey-2;
+}
+
+span.icon {
+    color: $grey;
+}
+
+span.icon:hover {
+    color: $light-grey;
+}
+
+span.pointer {
+    cursor: pointer;
+}
+
+ul.nav-tabs {
+    border-bottom: 1pt solid $dark-grey-2;
+}
+
+ul.nav-tabs>li>a {
+    color: $light-grey;
+}
+
+ul.nav-tabs>li>a.active {
+    background: $dark-grey-1;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1pt solid $dark-grey-2;
+}
