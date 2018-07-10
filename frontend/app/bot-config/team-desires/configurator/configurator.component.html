@@ -1,0 +1,30 @@
+<form>
+    <div class="form-row d-flex">
+        <div class="dropdown pr-2 col-md-3">
+            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownTrigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                If {{condition.trigger == 0 ? "(Trigger)" : triggers[condition.trigger]}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownTrigger">
+            <a class="dropdown-item" *ngFor="let t of triggers | enumToArray" (click)="condition.trigger = triggers[t]; changeCondition()">{{t}}</a>
+            </div>
+        </div>
+        <div class="dropdown px-2 col-md-3">
+            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownOperator" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                is {{condition.operator == 0 ? "(Operator)" : operators[condition.operator]}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownOperator">
+            <a class="dropdown-item" *ngFor="let t of operators | enumToArray" (click)="condition.operator = operators[t]; changeCondition()">{{t}}</a>
+            </div>
+        </div>
+        <input class="form-control px-2 col-md-1" type="text" [(ngModel)]="condition.conditional" name="conditional" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
+        <div class="dropdown px-2 col-md-3">
+            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    then {{condition.action == 0 ? "(Action)" : actions[condition.action]}} desire {{condition.action == 1 ? 'by' : ''}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownAction">
+            <a class="dropdown-item" *ngFor="let t of actions | enumToArray" (click)="condition.action = actions[t]; changeCondition()">{{t}}</a>
+            </div>
+        </div>
+        <input class="form-control pl-2 col-md-1" type="text" [(ngModel)]="condition.value" name="value" [(value)]="condition.value" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
+    </div>
+</form>

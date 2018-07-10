@@ -13,7 +13,7 @@ import {
     Condition,
     Operator,
     Trigger,
-} from '../../ConfigurationFormat';
+} from '../../../ConfigurationFormat';
 
 @Component({
     selector: 'configurator',
@@ -30,17 +30,7 @@ export class ConfiguratorComponent {
 
     constructor() {}
 
-    ngOnInit() {
-        if (typeof this.condition === 'undefined') {
-            this.condition = {
-                trigger: 0,
-                operator: 0,
-                conditional: 0,
-                action: 0,
-                value: 0.25,
-            };
-        }
-    }
+    ngOnInit() {}
 
     changeCondition() {
         this.conditionChange.emit(this.condition);
