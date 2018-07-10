@@ -1,3 +1,15 @@
+/**
+ *  This function uses the LuaCodeTemplateManager class to generate
+ *  the code in the appropriate directory specified.
+ *
+ *  The directory (from the node route): public/lua/<user_id>/<bot_id>
+ *
+ *  TO DO: Get team_desires.lua that we generate to replace the
+ *         team_desires.lua copied from the code templates
+ *         (There seems to be a synchronousity issue...)
+ *
+ * */
+
 const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
 const path = require('path');
@@ -302,6 +314,19 @@ const getBotScriptDirectory = function (id, botId) {
     return publicPath;
 };
 
+/**
+ *  This is  the function that does the code generation
+ *  via the Lua Code Manager Objects.
+ *
+ *  TO DO: Get team_desires.lua that we generate to replace the
+ *         team_desires.lua copied from the code templates
+ *         (There seems to be a synchronousity issue...)
+ *
+ *  The function takes the code at the specific folder
+ *  and then joins it in a zip file for download by the download
+ *  route specified in index.js
+ *
+ * */
 const writeScripts = function (req, res, id, botId) {
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
@@ -327,7 +352,6 @@ const writeScripts = function (req, res, id, botId) {
         archive.directory(tempDir, '');
         archive.finalize();
     });
-    
 };
 
 module.exports = {

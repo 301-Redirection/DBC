@@ -31,68 +31,68 @@ module.exports = {
                 drow_ranger: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 bane: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 alchemist: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 abaddon: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 antimage: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 axe: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 bloodseeker: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 centaur: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 chen: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 chaos_knight: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
                 crystal_maiden: {
                     abilities: {
                         abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l']
-                    }
+                        talents: ['l', 'r', 'l', 'l'],
+                    },
                 },
             },
             desires: {
