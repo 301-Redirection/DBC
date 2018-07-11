@@ -2,99 +2,101 @@ module.exports = {
     body: {
         configuration: {
             heroPool: {
-                partitioned: 'true',
+                partitioned: true,
                 pool: [
-                    [
-                        'drow_ranger',
-                        'bane',
-                        'alchemist',
-                    ],
-                    [
-                        'abaddon',
-                        'antimage',
-                    ],
-                    [
-                        'axe',
-                        'bloodseeker',
-                    ],
-                    [
-                        'centaur',
-                        'chen',
-                    ],
-                    [
-                        'chaos_knight',
-                        'crystal_maiden',
-                    ],
+                    {
+                        name: 'drow_ranger',
+                        position: 1,
+                    },
+                    {
+                        name: 'bane',
+                        position: 1,
+                    },
+                    {
+                        name: 'alchemist',
+                        position: 1,
+                    },
+                    {
+                        name: 'abaddon',
+                        position: 2,
+                    },
+                    {
+                        name: 'antimage',
+                        position: 2,
+                    },
+                    {
+                        name: 'axe',
+                        position: 3,
+                    },
+                    {
+                        name: 'bloodseeker',
+                        position: 3,
+                    },
+                    {
+                        name: 'centaur',
+                        position: 4,
+                    },
+                    {
+                        name: 'chen',
+                        position: 4,
+                    },
+                    {
+                        name: 'chaos_knight',
+                        position: 5,
+                    },
+                    {
+                        name: 'crystal_maiden',
+                        position: 5,
+                    },
                 ],
             },
-            heroes: {
-                drow_ranger: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+            heroes: [
+                {
+                    name: 'drow_ranger',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                bane: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'crystal_maiden',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                alchemist: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'chaos_knight',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                abaddon: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'centaur',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                antimage: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'chen',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                axe: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'bloodseeker',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                bloodseeker: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'axe',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                centaur: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'antimage',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                chen: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
+                {
+                    name: 'abaddon',
+                    abilities: 'qweqqrewqetnqrnt',
+                    talents: ['l', 'r', 'l', 'l'],
                 },
-                chaos_knight: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
-                },
-                crystal_maiden: {
-                    abilities: {
-                        abilities: 'qweqqrewqetnqrnt',
-                        talents: ['l', 'r', 'l', 'l'],
-                    },
-                },
-            },
+            ],
             desires: {
                 push: {
                     top: {

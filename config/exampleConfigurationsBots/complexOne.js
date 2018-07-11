@@ -2,19 +2,52 @@ module.exports = {
     body: {
         configuration: {
             heroPool: {
-                partitioned: 'false',
+                partitioned: false,
                 pool: [
-                    'drow_ranger',
-                    'bane',
-                    'alchemist',
-                    'abaddon',
-                    'antimage',
-                    'axe',
-                    'bloodseeker',
-                    'centaur',
-                    'chen',
-                    'chaos_knight',
-                    'crystal_maiden',
+                    {
+                        name: 'drow_ranger',
+                        position: -1,
+                    },
+                    {
+                        name: 'bane',
+                        position: -1,
+                    },
+                    {
+                        name: 'alchemist',
+                        position: -1,
+                    },
+                    {
+                        name: 'abaddon',
+                        position: -1,
+                    },
+                    {
+                        name: 'antimage',
+                        position: -1,
+                    },
+                    {
+                        name: 'axe',
+                        position: -1,
+                    },
+                    {
+                        name: 'bloodseeker',
+                        position: -1,
+                    },
+                    {
+                        name: 'centaur',
+                        position: -1,
+                    },
+                    {
+                        name: 'chen',
+                        position: -1,
+                    },
+                    {
+                        name: 'chaos_knight',
+                        position: -1,
+                    },
+                    {
+                        name: 'crystal_maiden',
+                        position: -1,
+                    },
                 ],
             },
             heroes: [],

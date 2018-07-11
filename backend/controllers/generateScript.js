@@ -14,6 +14,9 @@ const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
+const moment = require('moment');
+
+const NODE_PATH = path.join(__dirname, '..', '..');
 
 // Trigger enum
 const TRIGGER = {
@@ -294,8 +297,7 @@ const generateTeamDesires = function (req) {
  *
  */
 const getBotScriptDirectory = function (id, botId) {
-    const nodePath = path.join(__dirname, '..', '..');
-    let publicPath = path.join(nodePath, 'public');
+    let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -354,6 +356,33 @@ const writeScripts = function (req, res, id, botId) {
     });
 };
 
+const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
+    let publicPath = path.join(NODE_PATH, 'public');
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, 'lua');
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, id);
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, String(botId));
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath += '.zip';
+    // console.log(publicPath);
+    fs.stat(publicPath, (err, stats) => {
+        if (err) return true; // signal to create the "missing" script
+        // console.log(stats.mtime);
+        return moment(timeLastUpdated).isAfter(stats.mtime);
+    });
+    return publicPath;
+};
+
 module.exports = {
     generateTeamDesires,
     generateRoshanDesires,
@@ -365,4 +394,5 @@ module.exports = {
     getAction,
     getLogicalOperator,
     writeScripts,
+    shouldRegenerateBotScripts,
 };

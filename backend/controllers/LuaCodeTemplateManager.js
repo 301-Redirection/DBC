@@ -226,79 +226,101 @@ const LuaCodeTemplateManager = function () {
 
     // ///////////////////////////////////////////////////////////////////////
 
-    /**
-     * This function generates the code to be used by hero_selection.lua
-     */
-    this.generateHeroesCode = function (heroes) {
-        const final = [];
-        if (heroes.partitioned === 'false') {
-            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
-                final.push('');
-                final[i] = this.createLuaTable(config.lua.poolNames[i], heroes.pool, true);
-            }
-        } else {
-            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
-                final.push('');
-                final[i] = this.createLuaTable(config.lua.poolNames[i], heroes.pool[i], true);
-            }
-        }
-        // console.log(final)
-        return final;
-    };
 
     /**
      * This generates the content of the hero_selection.lua
      *
-     * This this.expects an object like the following
+     * This expects an object like the following:
      *
      *  const heroes1 = {
-     *       partitioned: 'false',
+     *       partitioned: false,
      *       pool: [
-     *               'drow_ranger',
-     *               'bane',
-     *               'alchemist',
-     *               'abaddon',
-     *               'antimage',
-     *               'axe',
-     *               'bloodseeker',
-     *               'centaur',
-     *               'chen',
-     *               'chaos_knight',
-     *               'crystal_maiden',
-     *       ],
-     *   };
-     *  ^ for all heroes equally likely to be picked
+     *               {
+     *                   name: 'drow_ranger',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'bane',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'alchemist',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'abaddon',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'antimage',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'axe',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'bloodseeker',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'centaur',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'chen',
+     *                   position: -1,
+     *               },
+     *               {
+     *                   name: 'chaos_knight',
+     *                   position: -1,
+     *               },
+     *               {
+     *                    name: 'crystal_maiden',
+     *                    position: -1,
+     *                },
+     *           ],
      *
-     * const heroes2 = {
-     *       partitioned: 'true',
-     *       pool: [
-     *           [
-     *               'drow_ranger',
-     *               'bane',
-     *               'alchemist',
-     *           ],
-     *           [
-     *               'abaddon',
-     *               'antimage',
-     *           ],
-     *           [
-     *               'axe',
-     *               'bloodseeker',
-     *           ],
-     *           [
-     *               'centaur',
-     *               'chen',
-     *           ],
-     *           [
-     *               'chaos_knight',
-     *               'crystal_maiden',
-     *           ],
-     *       ]
-     *   };
-     * ^ so that one bot picks one hero from each of the pools
+     * This uses the static bot script as a template and generates the corresponding pools
+     * as lua tables in an array where each element is the associated pool
      *
-     * This this.uses the static bot script as a template
-     *
+     */
+    this.generateHeroesCode = function (heroes) {
+        const final = [];
+        // return if not
+        if (!this.exists(heroes.pool)) {
+            return final;
+        }
+
+        if (heroes.partitioned === false) {
+            const heroesArr = [];
+            for (let i = 0; i < heroes.pool.length; i += 1) {
+                heroesArr.push(heroes.pool[i].name);
+            }
+            for (let i = 0; i < config.lua.poolNames.length; i += 1) {
+                final.push('');
+                final[i] = this.createLuaTable(config.lua.poolNames[i], heroesArr, true);
+            }
+        } else {
+            const tempArr = [];
+            const numPools = config.lua.poolNames.length;
+            for (let i = 0; i < numPools; i += 1) {
+                tempArr.push([]);
+            }
+            for (let i = 0; i < heroes.pool.length; i += 1) {
+                const hero = heroes.pool[i];
+                tempArr[(hero.position - 1) % numPools].push(hero.name);
+            }
+            for (let i = 0; i < numPools; i += 1) {
+                final[i] = this.createLuaTable(config.lua.poolNames[i], tempArr[i], true);
+            }
+        }
+        return final;
+    };
+
+
+    /**
+     * This function generates the code to be placed in hero_selection.lua
      */
     this.generateHeroSelectionFileContent = function (heroes) {
         const heroPools = this.generateHeroesCode(heroes);
@@ -332,7 +354,7 @@ const LuaCodeTemplateManager = function () {
     this.getHeroesArray = function (heroObject) {
         let allHeroes = [];
         if (typeof heroObject.partitioned !== 'undefined' && heroObject.partitioned) {
-            if (heroObject.partitioned === 'false') {
+            if (heroObject.partitioned === false) {
                 if (typeof heroObject.pool !== 'undefined' && heroObject.pool) {
                     allHeroes = heroObject.pool;
                 }
@@ -379,32 +401,35 @@ const LuaCodeTemplateManager = function () {
         }
     };
 
+    this.exists = function (variable) {
+        return typeof variable !== 'undefined' && variable;
+    };
+
     /**
      *  The main method to be used to analyze the config object,
      *  It does all the error control
      */
     this.generateBotScripts = function (configObject, callback) {
-        if (typeof configObject.heroPool !== 'undefined' && configObject.heroPool) {
-            const allSelectedHeroes = this.getHeroesArray(configObject.heroPool);
-            if (allSelectedHeroes.length === 0) {
+        if (this.exists(configObject.heroPool) && this.exists(configObject.heroPool.pool.length)) {
+            if (configObject.heroPool.pool.length === 0) {
                 // if heroPool is an empty object, copy all scripts to the temp dir
                 // so that all heroes are selected as a "default"
                 this.copyAllFilesFromFolder(PATH_TO_SCRIPTS);
             } else {
                 this.generateHeroesSelectionFile(configObject.heroPool);
-                if (typeof configObject.heroes !== 'undefined' && configObject.heroes) {
-                    for (let i = 0; i < allSelectedHeroes.length; i += 1) {
-                        const heroSpec = configObject.heroes[allSelectedHeroes[i]];
-                        const heroName = allSelectedHeroes[i];
-                        if (typeof heroSpec !== 'undefined' && heroSpec) {
-                            if (typeof heroSpec.abilities !== 'undefined' && heroSpec.abilities) {
-                                this.generateAbilityUsageFile(heroName, heroSpec.abilities);
+                if (this.exists(configObject.heroes)) {
+                    for (let i = 0; i < configObject.heroes.length; i += 1) {
+                        const heroSpec = configObject.heroes[i];
+                        const heroName = heroSpec.name;
+                        if (this.exists(heroSpec)) {
+                            if (this.exists(heroSpec.abilities)) {
+                                this.generateAbilityUsageFile(heroName, heroSpec);
                             } else {
                                 // include default bot ability file if abilities unspecified
                                 const filename = `ability_item_usage_${heroName}.lua`;
                                 this.copyScript(filename, filename);
                             }
-                            if (typeof heroSpec.items !== 'undefined' && heroSpec.items) {
+                            if (this.exists(heroSpec.items)) {
                                 this.generateItemFile(heroName, heroSpec.items);
                             } else {
                                 // include default bot item file if items unspecified
@@ -430,9 +455,9 @@ const LuaCodeTemplateManager = function () {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
                     }
-                } else {
-                    for (let i = 0; i < allSelectedHeroes.length; i += 1) {
-                        const heroName = allSelectedHeroes[i];
+                } else if (this.exists(configObject.heroPool.pool)) {
+                    for (let i = 0; i < configObject.heroPool.pool.length; i += 1) {
+                        const heroName = configObject.heroPool.pool[i].name;
                         let filename = `item_purchase_${heroName}.lua`;
                         let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
                         let destinationLocation = path.join(this.pathToStoreCode, filename);

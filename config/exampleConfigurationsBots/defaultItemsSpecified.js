@@ -2,33 +2,57 @@ module.exports = {
     body: {
         configuration: {
             heroPool: {
-                partitioned: 'true',
+                partitioned: true,
                 pool: [
-                    [
-                        'drow_ranger',
-                        'bane',
-                        'alchemist',
-                    ],
-                    [
-                        'abaddon',
-                        'antimage',
-                    ],
-                    [
-                        'axe',
-                        'bloodseeker',
-                    ],
-                    [
-                        'centaur',
-                        'chen',
-                    ],
-                    [
-                        'chaos_knight',
-                        'crystal_maiden',
-                    ],
+                    {
+                        name: 'drow_ranger',
+                        position: 1,
+                    },
+                    {
+                        name: 'bane',
+                        position: 1,
+                    },
+                    {
+                        name: 'alchemist',
+                        position: 1,
+                    },
+                    {
+                        name: 'abaddon',
+                        position: 2,
+                    },
+                    {
+                        name: 'antimage',
+                        position: 2,
+                    },
+                    {
+                        name: 'axe',
+                        position: 3,
+                    },
+                    {
+                        name: 'bloodseeker',
+                        position: 3,
+                    },
+                    {
+                        name: 'centaur',
+                        position: 4,
+                    },
+                    {
+                        name: 'chen',
+                        position: 4,
+                    },
+                    {
+                        name: 'chaos_knight',
+                        position: 5,
+                    },
+                    {
+                        name: 'crystal_maiden',
+                        position: 5,
+                    },
                 ],
             },
-            heroes: {
-                drow_ranger: {
+            heroes: [
+                {
+                    name: 'drow_ranger',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -36,7 +60,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                bane: {
+                {
+                    name: 'bane',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -44,7 +69,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                alchemist: {
+                {
+                    name: 'alchemist',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -52,7 +78,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                abaddon: {
+                {
+                    name: 'abaddon',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -60,7 +87,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                antimage: {
+                {
+                    name: 'antimage',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -68,7 +96,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                axe: {
+                {
+                    name: 'axe',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -76,7 +105,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                bloodseeker: {
+                {
+                    name: 'bloodseeker',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -84,7 +114,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                centaur: {
+                {
+                    name: 'centaur',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -92,7 +123,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                chen: {
+                {
+                    name: 'chen',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -100,7 +132,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                chaos_knight: {
+                {
+                    name: 'chaos_knight',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -108,7 +141,8 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-                crystal_maiden: {
+                {
+                    name: 'crystal_maiden',
                     items: [
                         'item_slippers',
                         'item_circlet',
@@ -116,7 +150,7 @@ module.exports = {
                         'item_tango',
                     ],
                 },
-            },
+            ],
             desires: {
                 push: {
                     top: {

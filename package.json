@@ -50,6 +50,7 @@
     "jquery": "^3.3.1",
     "jwks-rsa": "^1.2.1",
     "method-override": "^2.3.10",
+    "momentjs": "^2.0.0",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",

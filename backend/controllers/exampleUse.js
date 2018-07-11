@@ -1,8 +1,7 @@
-const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '..');
-require('module').Module._initPaths();
-// const { codeGenerator } = require('./LuaCodeTemplateManager.js');
-const { writeScripts } = require('./generateScript.js');
+// const path = require('path');
+// process.env.NODE_PATH = path.join(__dirname, '..');
+// require('module').Module._initPaths();
+const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
 const mocks = require('node-mocks-http');
 
 const items = ['item_slippers',
@@ -11,58 +10,150 @@ const items = ['item_slippers',
     'item_tango'];
 
 const input = {
-    abilities: 'qweqqrewqetnqrnt', talents: ['l', 'r', 'l', 'l'],
+    abilities: 'qweqqrewqetnqrnt',
+    talents: ['l', 'r', 'l', 'l'],
 };
 // const heroes1 = {
-//     partitioned: 'false',
+//     partitioned: false,
 //     pool: [
-//         'drow_ranger',
-//         'bane',
-//         'alchemist',
-//         'abaddon',
-//         'antimage',
-//         'axe',
-//         'bloodseeker',
-//         'centaur',
-//         'chen',
-//         'chaos_knight',
-//         'crystal_maiden',
+//         {
+//             name: 'drow_ranger',
+//             position: -1,
+//         },
+//         {
+//             name: 'bane',
+//             position: -1,
+//         },
+//         {
+//             name: 'alchemist',
+//             position: -1,
+//         },
+//         {
+//             name: 'abaddon',
+//             position: -1,
+//         },
+//         {
+//             name: 'antimage',
+//             position: -1,
+//         },
+//         {
+//             name: 'axe',
+//             position: -1,
+//         },
+//         {
+//             name: 'bloodseeker',
+//             position: -1,
+//         },
+//         {
+//             name: 'centaur',
+//             position: -1,
+//         },
+//         {
+//             name: 'chen',
+//             position: -1,
+//         },
+//         {
+//             name: 'chaos_knight',
+//             position: -1,
+//         },
+//         {
+//             name: 'crystal_maiden',
+//             position: -1,
+//         },
 //     ],
 // };
 const heroes2 = {
-    partitioned: 'true',
+    partitioned: true,
     pool: [
-        [
-            'drow_ranger',
-            'bane',
-            'alchemist',
-        ],
-        [
-            'abaddon',
-            'antimage',
-        ],
-        [
-            'axe',
-            'bloodseeker',
-        ],
-        [
-            'centaur',
-            'chen',
-        ],
-        [
-            'chaos_knight',
-            'crystal_maiden',
-        ],
+        {
+            name: 'drow_ranger',
+            position: 1,
+        },
+        {
+            name: 'bane',
+            position: 1,
+        },
+        {
+            name: 'alchemist',
+            position: 1,
+        },
+        {
+            name: 'abaddon',
+            position: 2,
+        },
+        {
+            name: 'antimage',
+            position: 2,
+        },
+        {
+            name: 'axe',
+            position: 3,
+        },
+        {
+            name: 'bloodseeker',
+            position: 3,
+        },
+        {
+            name: 'centaur',
+            position: 4,
+        },
+        {
+            name: 'chen',
+            position: 4,
+        },
+        {
+            name: 'chaos_knight',
+            position: 5,
+        },
+        {
+            name: 'crystal_maiden',
+            position: 5,
+        },
     ],
 };
 const configObject = {
     heroPool: heroes2,
-    heroes: {
-        drow_ranger: {
+    heroes: [
+        {
+            name: 'drow_ranger',
             abilities: input,
             items,
         },
-    },
+        {
+            name: 'chen',
+            abilities: input,
+            items,
+        },
+        {
+            name: 'crystal_maiden',
+            abilities: null,
+            input: null,
+        },
+        {
+            name: 'chaos_knight',
+        },
+        {
+            name: 'centaur',
+        },
+        {
+            name: 'chen',
+        },
+        {
+            name: 'bloodseeker',
+        },
+        {
+            name: 'antimage',
+        },
+        {
+            name: 'abaddon',
+        },
+        {
+            name: 'alchemist',
+        },
+        {
+            name: 'bane',
+        },
+    ],
     desires: {
         push: {
             top: {
@@ -146,4 +237,5 @@ const officialRequest = {
     },
 };
 
-writeScripts(officialRequest, mocks.createResponse(), '_____', 2);
+writeScripts(officialRequest, mocks.createResponse(), 'LOL', 69);
+shouldRegenerateBotScripts('LOL', 69);
