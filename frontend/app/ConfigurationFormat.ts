@@ -3,55 +3,30 @@
  * to and from lua scripts to JSON.This file will change as the complexity
  * of the configuration options specified grows.
  */
+
 export interface ConfigurationFormat {
-    heroPool: HeroPoolConfiguration;
-    heroes: HeroSpecification[];
-    desires: {
-        push: {
-            top: Configuration;
-            mid: Configuration;
-            bot: Configuration;
-        };
-        farm: {
-            top: Configuration;
-            mid: Configuration;
-            bot: Configuration;
-        };
-        defend: {
-            top: Configuration;
-            mid: Configuration;
-            bot: Configuration;
-        };
-        roam: Configuration;
-        roshan: Configuration;
-    }
+    push: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
+    };
+    farm: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
+    };
+    defend: {
+        top: Configuration;
+        mid: Configuration;
+        bot: Configuration;
+    };
+    roam: Configuration;
+    roshan: Configuration;
 }
 
 export interface Configuration {
     compoundConditions: CoumpoundCondition[];
     initialValue: any;
-}
-
-export interface HeroSpecification {
-    name: string;
-    abilities: AbilityConfiguration;
-    items: string[];
-}
-
-export interface AbilityConfiguration {
-    abilities: string;
-    // specifically an array of 4
-    talents: string[];
-}
-
-export interface HeroPoolConfiguration{
-    partitioned: boolean;
-    pool: HeroConfiguration[];
-}
-
-export interface HeroConfiguration {
-    name: string;
-    position: number;
 }
 
 /*
