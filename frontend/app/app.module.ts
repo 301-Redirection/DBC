@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { SortablejsModule } from 'angular-sortablejs';
+import {SortablejsModule} from 'angular-sortablejs';
 
 // Custom Modules
 import { HomeModule } from './home/home.module';
@@ -46,7 +46,7 @@ import { ItemsComponent } from './items/items.component';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule,
+        SortablejsModule.forRoot({ animation: 10 }),
     ],
     providers: [
         ApiConnectService,
