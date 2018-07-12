@@ -19,6 +19,18 @@
             "exports": "always-multiline",
             "functions": "never",
         }],
+        "no-mixed-operators": [
+            "error",
+            {
+                "groups": [
+                    ["&", "|", "^", "~", "<<", ">>", ">>>"],
+                    ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+                    ["&&", "||"],
+                    ["in", "instanceof"]
+                ],
+                "allowSamePrecedence": true
+            }
+        ],
     },
     "globals": {
         "jasmine": false,

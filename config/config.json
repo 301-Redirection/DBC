@@ -29,7 +29,9 @@
             "heroPicker": "http://www.dota2.com/jsfeed/heropickerdata?v=0",
             "heroes": "http://www.dota2.com/jsfeed/heropediadata?feeds=herodata",
             "heroesOfficial": "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=C35B5F501B9CF8FCEBF7E3109355E004&language=en_us",
-            "image": "http://media.steampowered.com/apps/dota2/images/items/"
+            "image": "http://media.steampowered.com/apps/dota2/images/items/",
+            "heroAbilities": "http://www.dota2.com/hero/",
+            "heroAbilityReference": "http://www.dota2.com/heroes/"
         }
     }
 }
