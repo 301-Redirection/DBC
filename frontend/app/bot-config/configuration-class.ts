@@ -1,5 +1,5 @@
 import {
-    CoumpoundCondition,
+    CompoundCondition,
     Condition,
     Trigger,
     Operator,
@@ -10,7 +10,7 @@ import {
 export class ConfigurationClass {
     conditions: Condition[];
     logicalOperator: LogicalOperator[];
-    compoundConditions: CoumpoundCondition[];
+    compoundConditions: CompoundCondition[];
     initialValue: any;
 
     constructor() {
