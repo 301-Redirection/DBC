@@ -21,6 +21,7 @@ import { AuthService } from './auth/auth.service';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
+import { TeamDesiresService } from './services/team-desires.service';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { LoadingComponent } from './core/loading.component';
         ApiConnectService,
         Title,
         AuthService,
+        TeamDesiresService,
     ],
     bootstrap: [AppComponent],
 })
