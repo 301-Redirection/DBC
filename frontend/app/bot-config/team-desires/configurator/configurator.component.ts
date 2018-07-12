@@ -5,8 +5,6 @@ import {
     EventEmitter,
     Pipe,
     PipeTransform,
-    SimpleChanges,
-    OnInit,
 } from '@angular/core';
 import {
     Action,
