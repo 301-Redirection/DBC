@@ -5,7 +5,7 @@ import {
     ConfigurationFormat,
     Condition,
     CompoundCondition,
-} from "../ConfigurationFormat";
+} from '../ConfigurationFormat';
 
 @Injectable()
 export class TeamDesiresService {
@@ -30,7 +30,7 @@ export class TeamDesiresService {
         return {
             conditions: [],
             logicalOperators: [],
-        }
+        };
     }
 
 }
