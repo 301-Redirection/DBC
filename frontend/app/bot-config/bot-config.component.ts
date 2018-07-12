@@ -17,7 +17,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
-import { ConfiguratorComponent } from './configurator/configurator.component';
+import { ConfiguratorComponent } from './team-desires/configurator/configurator.component';
 
 declare var $: any;
 
