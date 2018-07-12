@@ -1,6 +1,6 @@
 /*
  * Definition of the Configuration format for the parsing and transpiling
- * to and from lua scripts to JSON.This file will change as the complexity
+ * to and from lua scripts to JSON. This file will change as the complexity
  * of the configuration options specified grows.
  */
 
@@ -24,79 +24,99 @@ export class ConfigurationFormat {
     roshan: Configuration;
 
     constructor() {
-        for (const lane in this.push) {
-            this.push[lane] = {
+        this.push = {
+            top: {
                 compoundConditions: [
                     {
-                        conditions: [
-                            {
-                                trigger: 1,
-                                operator: 3,
-                                conditional: 0.0,
-                                action: 2,
-                                value: 0.25,
-                            },
-                        ],
-                        logicalOperator: [],
+                        conditions: [],
+                        logicalOperators: [],
                     },
                 ],
                 initialValue: 0,
-            };
-        }
-
-        for (const lane in this.farm) {
-            this.farm[lane] = {
+            },
+            mid: {
                 compoundConditions: [
                     {
-                        conditions: [
-                            {
-                                trigger: 1,
-                                operator: 3,
-                                conditional: 0.0,
-                                action: 2,
-                                value: 0.25,
-                            },
-                        ],
-                        logicalOperator: [],
+                        conditions: [],
+                        logicalOperators: [],
                     },
                 ],
                 initialValue: 0,
-            };
-        }
-
-        for (const lane in this.defend) {
-            this.defend[lane] = {
+            },
+            bot: {
                 compoundConditions: [
                     {
-                        conditions: [
-                            {
-                                trigger: 1,
-                                operator: 3,
-                                conditional: 0.0,
-                                action: 2,
-                                value: 0.25,
-                            },
-                        ],
-                        logicalOperator: [],
+                        conditions: [],
+                        logicalOperators: [],
                     },
                 ],
                 initialValue: 0,
-            };
-        }
+            },
+        };
+        this.farm = {
+            top: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+            mid: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+            bot: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+        };
+        this.defend= {
+            top: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+            mid: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+            bot: {
+                compoundConditions: [
+                    {
+                        conditions: [],
+                        logicalOperators: [],
+                    },
+                ],
+                initialValue: 0,
+            },
+        };
 
         this.roshan = {
             compoundConditions: [
                 {
-                    conditions: [
-                        {
-                            trigger: 1,
-                            operator: 3,
-                            conditional: 0.0,
-                            action: 2,
-                            value: 0.25,
-                        },
-                    ],
-                    logicalOperator: [],
+                    conditions: [],
+                    logicalOperators: [],
                 },
             ],
             initialValue: 0,
@@ -105,16 +125,8 @@ export class ConfigurationFormat {
         this.roam = {
             compoundConditions: [
                 {
-                    conditions: [
-                        {
-                            trigger: 1,
-                            operator: 3,
-                            conditional: 0.0,
-                            action: 2,
-                            value: 0.25,
-                        },
-                    ],
-                    logicalOperator: [],
+                    conditions: [],
+                    logicalOperators: [],
                 },
             ],
             initialValue: 0,
@@ -123,20 +135,20 @@ export class ConfigurationFormat {
 }
 
 export interface Configuration {
-    compoundConditions: CoumpoundCondition[];
+    compoundConditions: CompoundCondition[];
     initialValue: any;
 }
 
 /*
  * A CompoundCondition will look as follows:
- * if (${conditions[0]} ${logicalOperator[0]} ${conditions[1]}
- *      ... ${logicalOperator[n-1]} ${conditions[n]}) {
+ * if (${conditions[0]} ${logicalOperators[0]} ${conditions[1]}
+ *      ... ${logicalOperators[n-1]} ${conditions[n]}) {
  *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
  * }
  */
-export interface CoumpoundCondition {
+export interface CompoundCondition {
     conditions: Condition[];
-    logicalOperator: LogicalOperator[];
+    logicalOperators: logicalOperators[];
 }
 
 /*
@@ -166,7 +178,7 @@ export enum Trigger {
     RadiusAlliedHeroes,
 }
 
-export enum LogicalOperator {
+export enum logicalOperators {
     AND = 1,
     OR,
 }
