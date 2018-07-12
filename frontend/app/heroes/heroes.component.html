@@ -1,0 +1,43 @@
+<div class="container-fluid container-fluid-custom background main-background">
+    <div class="row mt-5 mb-5">
+        <div class="col-12" id="heroesTitle">
+            <h3>HERO SELECTION</h3>
+            <br>
+            Select your preferred heroes by clicking and dragging from the list below.
+        </div>        
+    </div>  
+
+    <!-- Hero list -->
+    <div class="row mb-5">        
+        <div class="card heroes-card">
+            <div class="card-header">
+                <h5>HEROES</h5>                                
+            </div>
+            <div class="card-body">
+                <div class="drop-zone" [sortablejs]="heroes" [sortablejsOptions]="options">
+                    <div class="hero-item" *ngFor="let hero of heroes">{{ hero }}</div>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div id="toggleButtonDiv" class="mb-2">        
+        <button class="btn btn-default" (click)="togglePools()">Toggle Pools</button>        
+    </div>
+
+    <!-- Pool table -->
+    <div class="row mb-5">
+        <div class="card heroes-card">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" *ngFor="let pool of numberOfPools">
+                    <a class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragover)="setSelectedPool(pool)">Pool {{ pool }}</a>
+                </li>                
+            </ul>
+            <div class="card-body">
+                <div class="drop-zone" [sortablejs]="selectedPoolArray" [sortablejsOptions]="options">
+                    <div class="hero-item" *ngFor="let hero of selectedPoolArray">{{ hero }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
