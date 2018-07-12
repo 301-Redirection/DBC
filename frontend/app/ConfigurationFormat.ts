@@ -148,7 +148,7 @@ export interface Configuration {
  */
 export interface CompoundCondition {
     conditions: Condition[];
-    logicalOperators: logicalOperators[];
+    logicalOperators: LogicalOperator[];
 }
 
 /*
