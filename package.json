@@ -26,6 +26,7 @@
     "@angular/platform-browser": "^5.2.10",
     "@angular/platform-browser-dynamic": "^5.2.10",
     "@angular/router": "^5.2.10",
+    "angular-sortablejs": "^2.5.2",
     "archiver": "^2.1.1",
     "auth0-js": "^9.4.2",
     "body-parser": "~1.18.2",
@@ -65,6 +66,7 @@
     "serve-favicon": "~2.4.5",
     "sinon": "^5.0.7",
     "webdriver": "^5.0.0-alpha.7",
+    "sortablejs": "^1.7.0",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

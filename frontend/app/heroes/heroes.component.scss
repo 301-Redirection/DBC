@@ -1,0 +1,51 @@
+/* Global Variables */
+@import '../../variables';
+
+.nav-item {
+    cursor: pointer;
+    width: 20%;
+}
+
+.heroes-card {
+    height: 100%;
+    background-color: rgba($dark-grey-2, 0.8);
+    text-align: left;
+    color: $light-grey;  
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;  
+}
+
+#heroesTitle {
+    color: $grey;
+    text-align: center;
+}
+
+.drop-zone {
+    min-height: 90px;
+}
+
+.hero-item {
+    display: inline-block;
+    margin-right: 5px;
+    background-color: $black;
+    height: 85px;
+    width: 85px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#toggleButtonDiv {    
+    margin-left: 10%;
+    margin-right: 10%;    
+    text-align: right;    
+}
+
+#toggleButtonDiv button {
+    color: $btn-generate-color;
+    border-color: $btn-generate-border-color;
+}
+
+#toggleButtonDiv button:hover {
+    border-color: $btn-generate-border-color-hover;
+}
