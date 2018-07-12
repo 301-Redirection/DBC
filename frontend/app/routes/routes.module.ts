@@ -7,6 +7,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
 import { BotManagementComponent } from '../bot-management/bot-management.component';
 import { CallbackComponent } from '../callback/callback.component';
+import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 export const ROUTES: Routes = [
@@ -43,6 +44,11 @@ export const ROUTES: Routes = [
         component: BotManagementComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
+    },
+    {
+        path: 'desires',
+        component: TeamDesiresComponent,
+        pathMatch: 'full',
     },
     {
         path: 'callback',
