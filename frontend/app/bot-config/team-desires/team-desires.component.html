@@ -27,13 +27,25 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pushTabContent">
-                            <div *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="container-fluid-custom list-group tab-pane fade" [class.show]="lane == 'Top'" [class.active]="lane == 'Top'" id="push{{lane}}" [attr.aria-labelledby]="'tab' + lane">
-                                <span *ngFor="let c of getConditions('push', lane); let i=index;" class="list-group-item d-flex justify-content-between align-items-center">
-                                    <configurator [condition]="c"></configurator>
-                                    <span class="pointer icon"><i class="fas fa-trash m-1"></i></span>
-                                </span>
-                                
-                                <button class="list-group-item btn btn-outline-succss btn-add-cond" type="button">Add Condition</button>
+                            <div *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="container-fluid-custom tab-pane fade" [class.show]="lane == 'Top'" [class.active]="lane == 'Top'" id="push{{lane}}" [attr.aria-labelledby]="'tab' + lane">
+                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup('push', lane)">Add Condition Group</button>
+                                <div *ngIf="teamDesires.compoundConditions != []">
+                                    <div class="compound-cond container list-group" *ngFor="let comp of teamDesires['push'][lane.toLowerCase()].compoundConditions | reverse; let j = index">
+                                        <h5>Condition Group</h5>
+                                        <button *ngIf="teamDesires['push'][lane.toLowerCase()].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition('push', j, lane)">New Condition</button>
+                                        <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                            <span class="list-group-item d-flex justify-content-between align-items-center">
+                                                <configurator [condition]="c"></configurator>
+                                                <span class="pointer icon" (click)="delCondition('push', j, i, lane)">
+                                                    <i class="fas fa-trash m-1"></i>
+                                                </span>
+                                            </span>
+                                            <button type="button" class="btn btn-secondary" (click)="addCondition('push', j, lane)">
+                                                <i class="fas fa-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -47,7 +59,35 @@
                 <!-- Card Body -->
                 <div id="collapseDefend" class="collapse" aria-labelledby="headingDefend" data-parent="#accordion">
                     <div class="card-body bot-manage-card-body">
-                        Here is where the defend desires configuration will be
+                        <ul class="nav nav-tabs nav-fill" id="defendTabs" role="tablist">
+                            <li *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="nav-item">
+                                <a class="nav-link" [class.active]="lane=='Top'" id="tab{{lane}}" data-toggle="tab" href="#defend{{lane}}" role="tab" [attr.aria-controls]="'defend' + lane" [attr.aria-selected]="lane=='Top'?true:false">
+                                    {{lane}}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="defendTabContent">
+                            <div *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="container-fluid-custom tab-pane fade" [class.show]="lane == 'Top'" [class.active]="lane == 'Top'" id="defend{{lane}}" [attr.aria-labelledby]="'tab' + lane">
+                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup('defend', lane)">Add Condition Group</button>
+                                <div *ngIf="teamDesires.compoundConditions != []">
+                                    <div class="compound-cond container list-group" *ngFor="let comp of teamDesires['defend'][lane.toLowerCase()].compoundConditions | reverse; let j = index">
+                                        <h5>Condition Group</h5>
+                                        <button *ngIf="teamDesires['defend'][lane.toLowerCase()].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition('defend', j, lane)">New Condition</button>
+                                        <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                            <span class="list-group-item d-flex justify-content-between align-items-center">
+                                                <configurator [condition]="c"></configurator>
+                                                <span class="pointer icon" (click)="delCondition('defend', j, i, lane)">
+                                                    <i class="fas fa-trash m-1"></i>
+                                                </span>
+                                            </span>
+                                            <button type="button" class="btn btn-secondary" (click)="addCondition('defend', j, lane)">
+                                                <i class="fas fa-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -59,7 +99,35 @@
                 <!-- Card Body -->
                 <div id="collapseFarm" class="collapse" aria-labelledby="headingFarm" data-parent="#accordion">
                     <div class="card-body bot-manage-card-body">
-                        Here is where the defend desires configuration will be
+                        <ul class="nav nav-tabs nav-fill" id="farmTabs" role="tablist">
+                            <li *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="nav-item">
+                                <a class="nav-link" [class.active]="lane=='Top'" id="tab{{lane}}" data-toggle="tab" href="#farm{{lane}}" role="tab" [attr.aria-controls]="'farm' + lane" [attr.aria-selected]="lane=='Top'?true:false">
+                                    {{lane}}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="farmTabContent">
+                            <div *ngFor="let lane of ['Top', 'Mid', 'Bot']" class="container-fluid-custom tab-pane fade" [class.show]="lane == 'Top'" [class.active]="lane == 'Top'" id="farm{{lane}}" [attr.aria-labelledby]="'tab' + lane">
+                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup('farm', lane)">Add Condition Group</button>
+                                <div *ngIf="teamDesires.compoundConditions != []">
+                                    <div class="compound-cond container list-group" *ngFor="let comp of teamDesires['farm'][lane.toLowerCase()].compoundConditions | reverse; let j = index">
+                                        <h5>Condition Group</h5>
+                                        <button *ngIf="teamDesires['farm'][lane.toLowerCase()].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition('farm', j, lane)">New Condition</button>
+                                        <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                            <span class="list-group-item d-flex justify-content-between align-items-center">
+                                                <configurator [condition]="c"></configurator>
+                                                <span class="pointer icon" (click)="delCondition('farm', j, i, lane)">
+                                                    <i class="fas fa-trash m-1"></i>
+                                                </span>
+                                            </span>
+                                            <button type="button" class="btn btn-secondary" (click)="addCondition('farm', j, lane)">
+                                                <i class="fas fa-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -71,7 +139,24 @@
                 <!-- Card Body -->
                 <div id="collapseRoam" class="collapse" aria-labelledby="headingRoam" data-parent="#accordion">
                     <div class="card-body bot-manage-card-body">
-                        
+                        <button type="button" class="btn btn-outline-success" (click)="addConditionGroup('roam')">Add Condition Group</button>
+                        <div *ngIf="teamDesires.compoundConditions != []">
+                            <div class="compound-cond container list-group" *ngFor="let comp of teamDesires['roam'].compoundConditions | reverse; let j = index">
+                                <h5>Condition Group</h5>
+                                <button *ngIf="teamDesires['roam'].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition('roam', j)">New Condition</button>
+                                <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                    <span class="list-group-item d-flex justify-content-between align-items-center">
+                                        <configurator [condition]="c"></configurator>
+                                        <span class="pointer icon" (click)="delCondition('roam', j, i)">
+                                            <i class="fas fa-trash m-1"></i>
+                                        </span>
+                                    </span>
+                                    <button type="button" class="btn btn-secondary" (click)="addCondition('roam', j)">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -83,7 +168,24 @@
                 <!-- Card Body -->
                 <div id="collapseRoshan" class="collapse" aria-labelledby="headingRoshan" data-parent="#accordion">
                     <div class="card-body bot-manage-card-body">
-                        Here is where the push desires configuration will be
+                        <button type="button" class="btn btn-outline-success" (click)="addConditionGroup('roshan')">Add Condition Group</button>
+                        <div *ngIf="teamDesires.compoundConditions != []">
+                            <div class="compound-cond container list-group" *ngFor="let comp of teamDesires['roshan'].compoundConditions | reverse; let j = index">
+                                <h5>Condition Group</h5>
+                                <button *ngIf="teamDesires['roshan'].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition('roshan', j)">New Condition</button>
+                                <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                    <span class="list-group-item d-flex justify-content-between align-items-center">
+                                        <configurator [condition]="c"></configurator>
+                                        <span class="pointer icon" (click)="delCondition('roshan', j, i)">
+                                            <i class="fas fa-trash m-1"></i>
+                                        </span>
+                                    </span>
+                                    <button type="button" class="btn btn-secondary" (click)="addCondition('roshan', j)">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
