@@ -82,7 +82,7 @@ export class ConfigurationFormat {
                 initialValue: 0,
             },
         };
-        this.defend= {
+        this.defend = {
             top: {
                 compoundConditions: [
                     {
