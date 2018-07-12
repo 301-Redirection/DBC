@@ -178,7 +178,7 @@ export enum Trigger {
     RadiusAlliedHeroes,
 }
 
-export enum logicalOperators {
+export enum LogicalOperator {
     AND = 1,
     OR,
 }
