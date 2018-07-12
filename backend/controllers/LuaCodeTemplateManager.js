@@ -24,7 +24,7 @@ const PATH_TO_TEMPLATE_SCRIPTS = path.join(__dirname, '..', 'static', 'code_temp
 const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
 const ITEM_TEMPLATE_FOLDER_NAME = 'item_templates';
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
-const NEW_LINE = '\r\n';
+const NEW_LINE = '\n';
 const TAB = '\t';
 
 const LuaCodeTemplateManager = function () {
