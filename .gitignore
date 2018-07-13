@@ -105,6 +105,6 @@ typings/
 package-lock.json
 
 # Generated Lua Scripts
-/Lua/*.lua
-/Lua
-/Public
+/lua/*.lua
+/lua
+/public
