@@ -356,10 +356,6 @@ const writeScripts = function (req, res, id, botId) {
     });
 };
 
-const async functionName = function(timeLastUpdated) {
-
-}
-
 const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
     let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
@@ -382,12 +378,9 @@ const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
     try {
         const stats = fs.stat(publicPath);
         return moment(timeLastUpdated).isAfter(stats.mtime);
-
-    }
-    catch(err) {
+    } catch (err) {
         return true; // signal to create the "missing" script
     }
-    return publicPath;
 };
 
 module.exports = {

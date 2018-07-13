@@ -176,20 +176,6 @@ const LuaCodeTemplateManager = function () {
     };
 
     /**
-     *  This this.creates the file (ability_item_usage) which specifies which abilities
-     *  a bot should get using the original bot script file as a template
-     *  only replacing the relevant code
-     */
-    this.generateAbilityUsageFile = function (hero, abilityObject) {
-        const content = this.generateAbilityFileContent(hero, abilityObject);
-        const filename = `ability_item_usage_${hero}.lua`;
-        const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFileSync(pathToFile, content, (err) => {
-            if (err) throw err;
-        });
-    };
-
-    /**
      * This generates the item_purchase file content as string,
      * specifying which items the bot must get and in what order
      *
@@ -216,18 +202,6 @@ const LuaCodeTemplateManager = function () {
         fileContents = fileContents.replace('{{- items-to-buy -}}', `${contents}${NEW_LINE}`);
         return fileContents;
     };
-
-    this.generateItemFile = function (hero, itemArray) {
-        const filename = `item_purchase_${hero}.lua`;
-        const content = this.generateItemFileContent(hero, itemArray);
-        const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFileSync(pathToFile, content, (err) => {
-            if (err) throw err;
-        });
-    };
-
-    // ///////////////////////////////////////////////////////////////////////
-
 
     /**
      * This generates the content of the hero_selection.lua
@@ -289,8 +263,8 @@ const LuaCodeTemplateManager = function () {
      */
     this.generateHeroesCode = function (heroes) {
         const final = [];
-        // return if not
-        if (!this.exists(heroes.pool)) {
+        // return if hero object not proper not
+        if (!heroes.pool) {
             return final;
         }
 
@@ -338,6 +312,31 @@ const LuaCodeTemplateManager = function () {
         return fileContents;
     };
 
+    // Generating of physical files
+
+    /**
+     *  This this.creates the file (ability_item_usage) which specifies which abilities
+     *  a bot should get using the original bot script file as a template
+     *  only replacing the relevant code
+     */
+    this.generateAbilityUsageFile = function (hero, abilityObject) {
+        const content = this.generateAbilityFileContent(hero, abilityObject);
+        const filename = `ability_item_usage_${hero}.lua`;
+        const pathToFile = path.join(this.pathToStoreCode, filename);
+        fs.writeFileSync(pathToFile, content, (err) => {
+            if (err) throw err;
+        });
+    };
+
+    this.generateItemFile = function (hero, itemArray) {
+        const filename = `item_purchase_${hero}.lua`;
+        const content = this.generateItemFileContent(hero, itemArray);
+        const pathToFile = path.join(this.pathToStoreCode, filename);
+        fs.writeFileSync(pathToFile, content, (err) => {
+            if (err) throw err;
+        });
+    };
+
     /**
      * This this.generates the file to be used by hero_selection.lua
      */
@@ -376,35 +375,31 @@ const LuaCodeTemplateManager = function () {
         }
     };
 
-    this.exists = function (variable) {
-        return variable;
-    };
-
     /**
      *  The main method to be used to analyze the config object,
      *  It does all the error control
      */
     this.generateBotScripts = function (configObject, callback) {
-        if (this.exists(configObject.heroPool) && this.exists(configObject.heroPool.pool.length)) {
+        if (configObject.heroPool) {
             if (configObject.heroPool.pool.length === 0) {
                 // if heroPool is an empty object, copy all scripts to the temp dir
                 // so that all heroes are selected as a "default"
                 this.copyAllFilesFromFolder(PATH_TO_SCRIPTS);
             } else {
                 this.generateHeroesSelectionFile(configObject.heroPool);
-                if (this.exists(configObject.heroes)) {
+                if (configObject.heroes) {
                     for (let i = 0; i < configObject.heroes.length; i += 1) {
                         const heroSpec = configObject.heroes[i];
                         const heroName = heroSpec.name;
-                        if (this.exists(heroSpec)) {
-                            if (this.exists(heroSpec.abilities)) {
+                        if (heroSpec) {
+                            if (heroSpec.abilities) {
                                 this.generateAbilityUsageFile(heroName, heroSpec);
                             } else {
                                 // include default bot ability file if abilities unspecified
                                 const filename = `ability_item_usage_${heroName}.lua`;
                                 this.copyScript(filename, filename);
                             }
-                            if (this.exists(heroSpec.items)) {
+                            if (heroSpec.items) {
                                 this.generateItemFile(heroName, heroSpec.items);
                             } else {
                                 // include default bot item file if items unspecified
@@ -426,7 +421,7 @@ const LuaCodeTemplateManager = function () {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
                     }
-                } else if (this.exists(configObject.heroPool.pool)) {
+                } else if (configObject.heroPoolpool) {
                     for (let i = 0; i < configObject.heroPool.pool.length; i += 1) {
                         const heroName = configObject.heroPool.pool[i].name;
                         let filename = `item_purchase_${heroName}.lua`;
@@ -434,7 +429,7 @@ const LuaCodeTemplateManager = function () {
                         filename = `ability_item_usage_${heroName}.lua`;
                         this.copyScript(filename, filename);
                         filename = `bot_${heroName}.lua`;
-                        let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
+                        const pathToScript = path.join(PATH_TO_SCRIPTS, filename);
                         if (fs.existsSync(pathToScript)) {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
