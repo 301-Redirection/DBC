@@ -4,7 +4,7 @@ import { SortablejsOptions } from 'angular-sortablejs';
 @Component({
     selector: 'app-heroes',
     templateUrl: './heroes.component.html',
-    styleUrls: ['./heroes.component.scss']
+    styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent implements OnInit {
 
@@ -33,30 +33,30 @@ export class HeroesComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.numberOfPools = [1, 2, 3, 4, 5];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
-    } 
+    }
 
     setSelectedPool(pool: number): void {
         this.selectedPool = pool;
         switch (pool) {
-            case 1:
-                this.selectedPoolArray = this.pool1;
-                break;
-            case 2:
-                this.selectedPoolArray = this.pool2;
-                break;
-            case 3:
-                this.selectedPoolArray = this.pool3;
-                break;
-            case 4:
-                this.selectedPoolArray = this.pool4;
-                break;
-            case 5:
-                this.selectedPoolArray = this.pool5;
-                break;
+        case 1:
+            this.selectedPoolArray = this.pool1;
+            break;
+        case 2:
+            this.selectedPoolArray = this.pool2;
+            break;
+        case 3:
+            this.selectedPoolArray = this.pool3;
+            break;
+        case 4:
+            this.selectedPoolArray = this.pool4;
+            break;
+        case 5:
+            this.selectedPoolArray = this.pool5;
+            break;
         }
     }
 
@@ -71,10 +71,9 @@ export class HeroesComponent implements OnInit {
 
         if (this.numberOfPools.length > 1) {
             this.numberOfPools = [1];
-        } 
-        else {
+        } else {
             this.numberOfPools = [1, 2, 3, 4, 5];
-        }        
+        }
     }
 
 }
