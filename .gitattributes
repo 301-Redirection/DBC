@@ -1,5 +1,5 @@
-public/ linguist-detectable=false
-backend/static/codeTemplates linguist-detectable=false
-backend/static/codeTemplates/abilityTemplates/*.lua linguist-detectable=false
-backend/static/codeTemplates/itemTemplates/*.lua linguist-detectable=false
-backend/static/codeTemplates/heroSelectionTemplate/*.lua linguist-detectable=false
+public/ linguist-generated=true
+backend/static/codeTemplates linguist-generated=true
+backend/static/codeTemplates/abilityTemplates/*.lua linguist-generated=true
+backend/static/codeTemplates/itemTemplates/*.lua linguist-generated=true
+backend/static/codeTemplates/heroSelectionTemplate/*.lua linguist-generated=true
