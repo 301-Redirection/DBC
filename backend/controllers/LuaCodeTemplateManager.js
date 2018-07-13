@@ -20,10 +20,10 @@ const LuaCodeManager = require('./LuaCodeManager.js');
 
 // Note: this relative to root dir
 const PATH_TO_SCRIPTS = path.join(__dirname, '..', 'static', 'scripts');
-const PATH_TO_TEMPLATE_SCRIPTS = path.join(__dirname, '..', 'static', 'code_templates');
-const ABILITY_TEMPLATE_FOLDER_NAME = 'ability_templates';
-const ITEM_TEMPLATE_FOLDER_NAME = 'item_templates';
-const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'hero_selection_template';
+const PATH_TO_TEMPLATE_SCRIPTS = path.join(__dirname, '..', 'static', 'codeTemplates');
+const ABILITY_TEMPLATE_FOLDER_NAME = 'abilityTemplates';
+const ITEM_TEMPLATE_FOLDER_NAME = 'itemTemplates';
+const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'heroSelectionTemplate';
 const NEW_LINE = '\n';
 const TAB = '\t';
 
