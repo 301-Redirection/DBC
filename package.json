@@ -14,7 +14,8 @@
     "lint-ts": "ng lint",
     "lint-js": "./node_modules/.bin/eslint ./ --ext js",
     "e2e": "ng e2e",
-    "test-init": "./node_modules/jasmine/bin/jasmine.js init"
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
+    "scrape": "node ./backend/static/converters/updateDotaDefinitions.js"
   },
   "dependencies": {
     "@angular/animations": "^5.2.10",
@@ -28,7 +29,8 @@
     "archiver": "^2.1.1",
     "auth0-js": "^9.4.2",
     "body-parser": "~1.18.2",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "4.1.1",
+    "cheerio": "^1.0.0-rc.2",
     "connect-ensure-login": "^0.1.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
