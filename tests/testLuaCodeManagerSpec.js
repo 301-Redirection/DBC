@@ -5,12 +5,12 @@ const { codeGenerator } = require('controllers/LuaCodeTemplateManager.js');
 const { writeScripts } = require('controllers/generateScript.js');
 const fs = require('fs');
 const unzip = require('unzip');
-// const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
+const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
 const exampleObjectDefaultAllHeroes = require('../config/exampleConfigurationsBots/defaultAllHeroes.js');
 const exampleObjectDefaultHeroesByPos = require('../config/exampleConfigurationsBots/defaultHeroesByPosition.js');
 const exampleObjectDefaultItemsSpecified = require('../config/exampleConfigurationsBots/defaultItemsSpecified.js');
 const exampleObjectDefaultAbilitiesSpecified = require('../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
-// const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
+const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
 const mocks = require('node-mocks-http');
 
 const response = mocks.createResponse();
@@ -223,47 +223,47 @@ describe('Lua Code Manager tests:\n', () => {
             done();
         });
 
-        // it('test generation from empty/default config object', (done) => {
-        //     // console.log(exampleObjectDefault);
-        //     writeScripts(exampleObjectDefault, response, id, botId);
-        //     let filePath = path.join(pathToTempFile, 'team_desires.lua');
-        //     let luaOutput = fs.readFileSync(filePath).toString();
-        //     let expectedFilePath = path.join(pathToExpectedOutput, 'default.lua');
-        //     let expectedOutput = fs.readFileSync(expectedFilePath).toString();
-        //     expect(luaOutput).toBe(expectedOutput);
-        //     // testing that the default hero selection file is used
-        //     // by ensuring that it does not match any of our expected
-        //     // hero selection outputs
-        //     filePath = path.join(pathToTempFile, 'hero_selection.lua');
-        //     expect(fs.existsSync(filePath)).toBe(true);
-        //     luaOutput = fs.readFileSync(filePath).toString();
-        //     expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
-        //     expectedOutput = fs.readFileSync(expectedFilePath).toString();
-        //     expect(luaOutput).not.toBe(expectedOutput);
-        //     filePath = path.join(pathToTempFile, 'hero_selection.lua');
-        //     luaOutput = fs.readFileSync(filePath).toString();
-        //     expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
-        //     expectedOutput = fs.readFileSync(expectedFilePath).toString();
-        //     expect(luaOutput).not.toBe(expectedOutput);
-        //     //checking if random hero .lua files exists despite not specifying heroes
-        //     filePath = path.join(pathToTempFile, 'ability_item_usage_drow_ranger.lua');
-        //     expect(fs.existsSync(filePath)).toBe(true);
-        //     filePath = path.join(pathToTempFile, 'item_purchase_dazzle.lua');
-        //     expect(fs.existsSync(filePath)).toBe(true);
-        //     filePath = path.join(pathToTempFile, 'bot_chen.lua');
-        //     expect(fs.existsSync(filePath)).toBe(true);
-        //     done();
-        // });
-        // it('test generation from complex config object', (done) => {
-        //     writeScripts(exampleObjectComplexOne, response, id, botId);
-        //     const filePath = path.join(pathToTempFile, 'team_desires.lua');
-        //     const luaOutput = fs.readFileSync(filePath).toString();
-        //     const expectedFilePath = path.join(pathToExpectedOutput, 'complexOne.lua');
-        //     const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-        //     // console.log("expectedOutput");
-        //     // console.log(expectedOutput);
-        //     expect(luaOutput).toBe(expectedOutput);
-        //     done();
-        // });
+        it('test generation from empty/default config object', (done) => {
+            // console.log(exampleObjectDefault);
+            writeScripts(exampleObjectDefault, response, id, botId);
+            let filePath = path.join(pathToTempFile, 'team_desires.lua');
+            let luaOutput = fs.readFileSync(filePath).toString();
+            let expectedFilePath = path.join(pathToExpectedOutput, 'default.lua');
+            let expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).toBe(expectedOutput);
+            // testing that the default hero selection file is used
+            // by ensuring that it does not match any of our expected
+            // hero selection outputs
+            filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            luaOutput = fs.readFileSync(filePath).toString();
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_all_heroes.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            filePath = path.join(pathToTempFile, 'hero_selection.lua');
+            luaOutput = fs.readFileSync(filePath).toString();
+            expectedFilePath = path.join(pathToExpectedOutput, 'hero_selection_by_position.lua');
+            expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            expect(luaOutput).not.toBe(expectedOutput);
+            // checking if random hero .lua files exists despite not specifying heroes
+            filePath = path.join(pathToTempFile, 'ability_item_usage_drow_ranger.lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(pathToTempFile, 'item_purchase_dazzle.lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            filePath = path.join(pathToTempFile, 'bot_chen.lua');
+            expect(fs.existsSync(filePath)).toBe(true);
+            done();
+        });
+        it('test generation from complex config object', (done) => {
+            writeScripts(exampleObjectComplexOne, response, id, botId);
+            const filePath = path.join(pathToTempFile, 'team_desires.lua');
+            const luaOutput = fs.readFileSync(filePath).toString();
+            const expectedFilePath = path.join(pathToExpectedOutput, 'complexOne.lua');
+            const expectedOutput = fs.readFileSync(expectedFilePath).toString();
+            // console.log("expectedOutput");
+            // console.log(expectedOutput);
+            expect(luaOutput).toBe(expectedOutput);
+            done();
+        });
     });
 });

@@ -138,10 +138,10 @@ const LuaCodeTemplateManager = function () {
                 talentIndex = level + RIGHT;
             }
             const content = this.createLuaFunction(`${NEW_LINE}${TAB}`, [`return Talents[${talentIndex}]`]);
-            code += content;
+            code += `${content},`;
             level += 2;
         }
-        code += `${NEW_LINE}`;
+        code += `${NEW_LINE}}`;
         return code;
     };
 
@@ -171,7 +171,9 @@ const LuaCodeTemplateManager = function () {
         let fileContents = fs.readFileSync(path.join(PATH_TO_TEMPLATE_SCRIPTS, ABILITY_TEMPLATE_FOLDER_NAME, filename), 'utf8', (err) => {
             if (err) throw err;
         });
-        fileContents = fileContents.replace('{{- abilities-to-level -}}', `${this.generateLevelingAbilityCode(abilityObject.abilities)}${NEW_LINE}${NEW_LINE}${this.generateTalentCode(abilityObject.talents)}${NEW_LINE}`);
+        const abilities = this.generateLevelingAbilityCode(abilityObject.abilities);
+        const talents = this.generateTalentCode(abilityObject.talents);
+        fileContents = fileContents.replace('{{- abilities-to-level -}}', `${abilities}${NEW_LINE}${NEW_LINE}${talents}${NEW_LINE}`);
         return fileContents;
     };
 

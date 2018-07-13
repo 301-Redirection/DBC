@@ -49,7 +49,7 @@ local TalentTree={
 	 function()
 		return Talents[7]
 	 end,
-
+}
 
 
 utility.CheckAbilityBuild(AbilityToLevelUp)
