@@ -14,28 +14,62 @@
                 <h5>HEROES</h5>                                
             </div>
             <div class="card-body">
-                <div class="drop-zone" [sortablejs]="heroes" [sortablejsOptions]="options">
-                    <div class="hero-item" *ngFor="let hero of heroes">{{ hero }}</div>
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/7/7a/Strength_attribute_symbol.png/30px-Strength_attribute_symbol.png?version=6306b398d1e0dddfd5f3d1719c6e3c71" alt="Strength symbol">&nbsp;
+                    <h6>Strength</h6>
+                </div>
+                
+                <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes">{{ hero.name }}</div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/2/2d/Agility_attribute_symbol.png/30px-Agility_attribute_symbol.png?version=2bb35660c66454fc3b024fdb19b9ee29" alt="Agility symbol">&nbsp;
+                    <h6>Agility</h6>
+                </div>
+                <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes">{{ hero.name }}</div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/5/56/Intelligence_attribute_symbol.png/30px-Intelligence_attribute_symbol.png?version=aea75b8d40acffb8f90549a9ff6cdecb" alt="Intelligence symbol">&nbsp;
+                    <h6>Intelligence</h6>
+                </div>                
+                <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes">{{ hero.name }}</div>
                 </div>
             </div>
         </div>        
     </div>
 
     <div id="toggleButtonDiv" class="mb-2">        
-        <button class="btn btn-default" (click)="togglePools()">Toggle Pools</button>        
+        <button type="button" class="button button-cancel mx-2" (click)="resetPools()">Reset</button>
+        <button id="togglePoolsBtn" class="button button-generate mx-2" (click)="togglePools()">Toggle Pools</button>        
     </div>
 
     <!-- Pool table -->
     <div class="row mb-5">
         <div class="card heroes-card">
-            <ul class="nav nav-tabs">
-                <li class="nav-item" *ngFor="let pool of numberOfPools">
-                    <a class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragover)="setSelectedPool(pool)">Pool {{ pool }}</a>
-                </li>                
+            <div class="card-header">
+                <h6>SELECTED</h6>
+            </div>
+            <ul id="poolTabs" class="nav nav-tabs">
+                <li class="nav-item" *ngFor="let pool of numberOfPools; let i = index;">
+                    <a [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)">Pool {{ pool }}</a>
+                </li>
             </ul>
             <div class="card-body">
-                <div class="drop-zone" [sortablejs]="selectedPoolArray" [sortablejsOptions]="options">
-                    <div class="hero-item" *ngFor="let hero of selectedPoolArray">{{ hero }}</div>
+                <div class="drop-zone" [sortablejs]="selectedPoolArray" [sortablejsOptions]="optionsTarget">
+                    <div class="card hero-item" *ngFor="let hero of selectedPoolArray">
+                        <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
+                            <i id="removeIcon" class="fas fa-times" ></i>
+                        </div>
+                        <div class="card-body">
+                            {{ hero.name }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

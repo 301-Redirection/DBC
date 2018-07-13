@@ -93,6 +93,9 @@ p {
 
 /* -- Buttons -- */
 
+button:focus {
+    outline: none;
+}
 
 /* -- Custom Button Styles to mimic Dota 2 -- */ 
 

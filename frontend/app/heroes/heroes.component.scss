@@ -1,9 +1,22 @@
 /* Global Variables */
 @import '../../variables';
 
+#poolTabs {
+    border-bottom-color: $light-grey;
+}
+
 .nav-item {
     cursor: pointer;
-    width: 20%;
+    width: 20%;    
+}
+
+.nav-link.active {
+    background-color: $light-grey;    
+    border-color: $light-grey;
+}
+
+.nav-link.active:hover {
+    color: $dark-grey-2;
 }
 
 .heroes-card {
@@ -35,17 +48,33 @@
     cursor: pointer;
 }
 
+.hero-item .card-header {
+    padding: 1px;
+}
+
+.hero-item .card-body {
+    padding: 1px;
+}
+
+.class-title {
+    margin-bottom: 5px;
+}
+
+.class-title h6 {
+    display: inline-block;
+}
+
+.class-title img {
+    height: 25px;
+}
+
+#removeIcon {
+    color: $red;
+    float: right;
+}
+
 #toggleButtonDiv {    
     margin-left: 10%;
     margin-right: 10%;    
     text-align: right;    
-}
-
-#toggleButtonDiv button {
-    color: $btn-generate-color;
-    border-color: $btn-generate-border-color;
-}
-
-#toggleButtonDiv button:hover {
-    border-color: $btn-generate-border-color-hover;
 }
