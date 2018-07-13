@@ -356,6 +356,10 @@ const writeScripts = function (req, res, id, botId) {
     });
 };
 
+const async functionName = function(timeLastUpdated) {
+
+}
+
 const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
     let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
@@ -375,11 +379,14 @@ const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
     }
     publicPath += '.zip';
     // console.log(publicPath);
-    fs.stat(publicPath, (err, stats) => {
-        if (err) return true; // signal to create the "missing" script
-        // console.log(stats.mtime);
+    try {
+        const stats = fs.stat(publicPath);
         return moment(timeLastUpdated).isAfter(stats.mtime);
-    });
+
+    }
+    catch(err) {
+        return true; // signal to create the "missing" script
+    }
     return publicPath;
 };
 

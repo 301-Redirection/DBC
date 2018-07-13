@@ -137,7 +137,8 @@ const LuaCodeTemplateManager = function () {
             } else {
                 talentIndex = level + RIGHT;
             }
-            code += `${this.createLuaFunction(`${NEW_LINE}\t`, [`return Talents[${talentIndex}]`])},`;
+            const content = this.createLuaFunction(`${NEW_LINE}${TAB}`, [`return Talents[${talentIndex}]`]);
+            code += content;
             level += 2;
         }
         code += `${NEW_LINE}`;
@@ -211,7 +212,8 @@ const LuaCodeTemplateManager = function () {
         let fileContents = fs.readFileSync(path.join(PATH_TO_TEMPLATE_SCRIPTS, ITEM_TEMPLATE_FOLDER_NAME, filename), 'utf8', (err) => {
             if (err) throw err;
         });
-        fileContents = fileContents.replace('{{- items-to-buy -}}', `${this.generateItemCode(itemArray)}${NEW_LINE}`);
+        const contents = this.generateItemCode(itemArray);
+        fileContents = fileContents.replace('{{- items-to-buy -}}', `${contents}${NEW_LINE}`);
         return fileContents;
     };
 
@@ -348,36 +350,9 @@ const LuaCodeTemplateManager = function () {
     };
 
     /**
-     *  This function will return an array of heroes given the heroPool object of the
-     *  config, if there are any errors, an array of size 0 will be returned
-     */
-    this.getHeroesArray = function (heroObject) {
-        let allHeroes = [];
-        if (typeof heroObject.partitioned !== 'undefined' && heroObject.partitioned) {
-            if (heroObject.partitioned === false) {
-                if (typeof heroObject.pool !== 'undefined' && heroObject.pool) {
-                    allHeroes = heroObject.pool;
-                }
-            } else {
-                for (let i = 0; i < config.lua.poolNames.length; i += 1) {
-                    if (typeof heroObject.pool[i] !== 'undefined' && heroObject.pool[i]) {
-                        const arr = heroObject.pool[i];
-                        for (let j = 0; j < arr.length; j += 1) {
-                            allHeroes.push(arr[j]);
-                        }
-                    }
-                }
-            }
-        }
-        return allHeroes;
-    };
-
-    /**
      *  Copies files at path specifed to destination path
      */
     this.copyFile = function (pathToFile, destinationPath) {
-        // const stream = fs.createReadStream(pathToFile)
-        //     .pipe(fs.createWriteStream(destinationPath));
         copyFileSync(pathToFile, destinationPath);
     };
 
@@ -402,7 +377,7 @@ const LuaCodeTemplateManager = function () {
     };
 
     this.exists = function (variable) {
-        return typeof variable !== 'undefined' && variable;
+        return variable;
     };
 
     /**
@@ -439,13 +414,9 @@ const LuaCodeTemplateManager = function () {
                         } else {
                             // include all default bot files for that hero
                             let filename = `item_purchase_${heroName}.lua`;
-                            let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                            let destinationLocation = path.join(this.pathToStoreCode, filename);
-                            this.copyFile(pathToScript, destinationLocation);
+                            this.copyScript(filename, filename);
                             filename = `ability_item_usage_${heroName}.lua`;
-                            pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                            destinationLocation = path.join(this.pathToStoreCode, filename);
-                            this.copyFile(pathToScript, destinationLocation);
+                            this.copyScript(filename, filename);
                         }
                         // including any bot_${heroName}.lua files if they exist
                         // since they override a lot of the normal bot logic
@@ -459,15 +430,11 @@ const LuaCodeTemplateManager = function () {
                     for (let i = 0; i < configObject.heroPool.pool.length; i += 1) {
                         const heroName = configObject.heroPool.pool[i].name;
                         let filename = `item_purchase_${heroName}.lua`;
-                        let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                        let destinationLocation = path.join(this.pathToStoreCode, filename);
-                        this.copyFile(pathToScript, destinationLocation);
+                        this.copyScript(filename, filename);
                         filename = `ability_item_usage_${heroName}.lua`;
-                        pathToScript = path.join(PATH_TO_SCRIPTS, filename);
-                        destinationLocation = path.join(this.pathToStoreCode, filename);
-                        this.copyFile(pathToScript, destinationLocation);
+                        this.copyScript(filename, filename);
                         filename = `bot_${heroName}.lua`;
-                        pathToScript = path.join(__dirname, '..', 'static', 'scripts', filename);
+                        let pathToScript = path.join(PATH_TO_SCRIPTS, filename);
                         if (fs.existsSync(pathToScript)) {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
