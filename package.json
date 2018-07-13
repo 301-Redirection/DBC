@@ -14,8 +14,7 @@
     "lint-ts": "ng lint",
     "lint-js": "./node_modules/.bin/eslint ./ --ext js",
     "e2e": "ng e2e",
-    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
-    "scrape": "node ./backend/static/converters/updateDotaDefinitions.js"
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init"
   },
   "dependencies": {
     "@angular/animations": "^5.2.10",
@@ -80,13 +79,13 @@
     "htmllint": "^0.7.2",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^2.0.4",
+    "karma": "~2.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-sass": "^4.8.3",
-    "protractor": "^5.3.2",
+    "protractor": "~5.1.2",
     "proxyquire": "^2.0.1",
     "seedquelize": "^1.0.1",
     "sequelize-cli": "^4.0.0",
