@@ -421,7 +421,7 @@ const LuaCodeTemplateManager = function () {
                             this.copyFile(pathToScript, path.join(this.pathToStoreCode, filename));
                         }
                     }
-                } else if (configObject.heroPoolpool) {
+                } else if (configObject.heroPool.pool) {
                     for (let i = 0; i < configObject.heroPool.pool.length; i += 1) {
                         const heroName = configObject.heroPool.pool[i].name;
                         let filename = `item_purchase_${heroName}.lua`;
