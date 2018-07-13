@@ -14,21 +14,47 @@ export class HeroesComponent implements OnInit {
     selectedPoolArray: any;
 
     // Temporary test data
-    heroes = [
-        'Axe',
-        'Viper',
-        'Luna',
-        'Litch',
-        'Bristleback',
+    allHeroes = [
+        {
+            name: 'Axe',
+            class: 'Strength',
+        }, {
+            name: 'Sven',
+            class: 'Strength',
+        }, {
+            name: 'Viper',
+            class: 'Agility',
+        }, {
+            name: 'Sniper',
+            class: 'Agility',
+        }, {
+            name: 'Lina',
+            class: 'Intelligence',
+        }, {
+            name: 'Chen',
+            class: 'Intelligence',
+        },
     ];
+    strengthHeroes = [];
+    agilityHeroes = [];
+    intelligenceHeroes = [];
+
     pool1 = [];
     pool2 = [];
     pool3 = [];
     pool4 = [];
     pool5 = [];
 
-    options: SortablejsOptions = {
-        group: 'normal-group',
+    optionsSource: SortablejsOptions = {
+        group: {
+            name: 'clone-group',
+            pull: 'clone',
+            put: false,
+        },
+    };
+
+    optionsTarget: SortablejsOptions = {
+        group: 'clone-group',
     };
 
     constructor() { }
@@ -37,6 +63,21 @@ export class HeroesComponent implements OnInit {
         this.numberOfPools = [1, 2, 3, 4, 5];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
+        this.getHeroes();
+    }
+
+    getHeroes(): void {
+        // database call to retrieve all dota heroes
+
+        this.allHeroes.forEach((hero) => {
+            if (hero.class === 'Strength') {
+                this.strengthHeroes.push(hero);
+            } else if (hero.class === 'Agility') {
+                this.agilityHeroes.push(hero);
+            } else if (hero.class === 'Intelligence') {
+                this.intelligenceHeroes.push(hero);
+            }
+        });
     }
 
     setSelectedPool(pool: number): void {
@@ -71,9 +112,31 @@ export class HeroesComponent implements OnInit {
 
         if (this.numberOfPools.length > 1) {
             this.numberOfPools = [1];
+            document.getElementById('poolTabs').style.height = '0';
+            document.getElementById('poolTabs').style.visibility = 'hidden';
         } else {
             this.numberOfPools = [1, 2, 3, 4, 5];
+            document.getElementById('poolTabs').style.height = '42px';
+            document.getElementById('poolTabs').style.visibility = 'visible';
         }
+    }
+
+    removeHero(hero, pool): void {
+        const index = pool.indexOf(hero);
+        if (index !== -1) {
+            pool.splice(index, 1);
+        }
+        document.getElementById(`poolLink ${this.selectedPool - 1}`).click();
+    }
+
+    resetPools(): void {
+        this.pool1 = [];
+        this.pool2 = [];
+        this.pool3 = [];
+        this.pool4 = [];
+        this.pool5 = [];
+        this.selectedPool = 1;
+        this.selectedPoolArray = this.pool1;
     }
 
 }
