@@ -197,4 +197,22 @@ export class HeroesComponent implements OnInit {
         this.selectedPoolArray = this.pool1;
     }
 
+    removeHero(hero, pool): void {
+        const index = pool.indexOf(hero);
+        if (index !== -1) {
+            pool.splice(index, 1);
+        }
+        document.getElementById(`poolLink ${this.selectedPool - 1}`).click();
+    }
+
+    resetPools(): void {
+        this.pool1 = [];
+        this.pool2 = [];
+        this.pool3 = [];
+        this.pool4 = [];
+        this.pool5 = [];
+        this.selectedPool = 1;
+        this.selectedPoolArray = this.pool1;
+    }
+
 }
