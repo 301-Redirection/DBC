@@ -1,6 +1,22 @@
-const { lcm } = require('./LuaCodeManager.js');
+/**
+ *  This function uses the LuaCodeTemplateManager class to generate
+ *  the code in the appropriate directory specified.
+ *
+ *  The directory (from the node route): public/lua/<user_id>/<bot_id>
+ *
+ *  TO DO: Get team_desires.lua that we generate to replace the
+ *         team_desires.lua copied from the code templates
+ *         (There seems to be a synchronousity issue...)
+ *
+ * */
+
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
+const path = require('path');
 const archiver = require('archiver');
+const moment = require('moment');
+
+const NODE_PATH = path.join(__dirname, '..', '..');
 
 // Trigger enum
 const TRIGGER = {
@@ -139,11 +155,11 @@ const getConditions = function (compoundConditions) {
             }
 
             if (hasNumAlliesTrigger) {
-                lcm.addHelperFunction('getAlliedHeroesAlive');
+                codeGenerator.addHelperFunction('getAlliedHeroesAlive');
                 scriptBuilder += 'local alliesAlive = getAlliedHeroesAlive()\n';
             }
             if (hasNumEnemiesTrigger) {
-                lcm.addHelperFunction('getEnemyHeroesAlive');
+                codeGenerator.addHelperFunction('getEnemyHeroesAlive');
                 scriptBuilder += 'local enemiesAlive = getEnemyHeroesAlive()\n';
             }
 
@@ -183,7 +199,7 @@ const getConditions = function (compoundConditions) {
 
 // Generate roshan desires
 const generateRoshanDesires = function (req) {
-    const { roshan } = req.body.configuration;
+    const { roshan } = req.body.configuration.desires;
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roshan.initialValue}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
@@ -193,7 +209,7 @@ const generateRoshanDesires = function (req) {
 
 // Generate roam desires
 const generateRoamDesires = function (req) {
-    const { roam } = req.body.configuration;
+    const { roam } = req.body.configuration.desires;
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roam.initialValue}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
@@ -221,92 +237,150 @@ const generateLaneDesires = function (reqType) {
     return scriptBuilder;
 };
 
-// Generate the Lua script for team desires
+/**
+ * Generate the Lua script for team desires
+ * -- used LCM functions, changed to codeGenerator because it "has-a" LCM
+ * -- and hence uses those functions of codeGenerator
+ */
 const generateTeamDesires = function (req) {
     // Reset helperFunction and APIFunction objects
-    lcm.reset();
+    codeGenerator.reset();
 
     // Adds the script name and the description as a comment at the top of the file
     const { name, description } = req.body;
     const scriptHeader = `-- ${name} --\n[[ ${description} ]]`;
-    lcm.addScriptHeading(
+    codeGenerator.addScriptHeading(
         'NameAndDescription',
         scriptHeader
     );
 
     // Creates the UpdateRoshanDesire function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateRoshaneDesires',
         generateRoshanDesires(req)
     );
 
     // Creates the UpdateRoamDesire function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateRoamDesires',
         generateRoamDesires(req)
     );
 
     // Creates the UpdatePushLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdatePushLaneDesires',
-        generateLaneDesires(req.body.configuration.push)
+        generateLaneDesires(req.body.configuration.desires.push)
     );
 
     // Creates the UpdateDefendLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateDefendLaneDesires',
-        generateLaneDesires(req.body.configuration.defend)
+        generateLaneDesires(req.body.configuration.desires.defend)
     );
 
     // Creates the UpdateFarmLaneDesires function
-    lcm.addToAPIFunction(
+    codeGenerator.addToAPIFunction(
         'UpdateFarmLaneDesires',
         generateLaneDesires(
-            req.body.configuration.farm,
+            req.body.configuration.desires.farm,
             'UpdateFarmLaneDesires()'
         )
     );
-    return lcm;
+    return codeGenerator;
 };
 
-
-// Generates the bot TeamDesires script
-const writeScripts = function (req, id) {
-    let luaCodeString = '';
-    const luaCodeManager = generateTeamDesires(req);
-    luaCodeString = luaCodeManager.generate();
-
-    try {
-        fs.mkdirSync('./Lua');
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
+/**
+ *  Will return the user's public directory
+ *
+ *  Note: If Public/Lua/{id} does not exist in the root,
+ *  the folders will be created in that order
+ *
+ */
+const getBotScriptDirectory = function (id, botId) {
+    let publicPath = path.join(NODE_PATH, 'public');
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
     }
-
-    try {
-        fs.mkdirSync(`./Lua/${id}`);
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
+    publicPath = path.join(publicPath, 'lua');
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
     }
-    fs.writeFileSync(`./Lua/${id}/team_desires.lua`, luaCodeString, { flag: 'w+' });
+    publicPath = path.join(publicPath, id);
+    if (!fs.existsSync(publicPath)) {
+        fs.mkdirSync(publicPath);
+    }
+    const tempDir = path.join(publicPath, String(botId));
+    if (!fs.existsSync(tempDir)) {
+        fs.mkdirSync(tempDir);
+    }
+    return publicPath;
+};
 
-    const output = fs.createWriteStream(`./Lua/${id}.zip`);
-    const archive = archiver('zip', {
-        zlib: { level: 9 }, // Sets the compression level.
+/**
+ *  This is  the function that does the code generation
+ *  via the Lua Code Manager Objects.
+ *
+ *  TO DO: Get team_desires.lua that we generate to replace the
+ *         team_desires.lua copied from the code templates
+ *         (There seems to be a synchronousity issue...)
+ *
+ *  The function takes the code at the specific folder
+ *  and then joins it in a zip file for download by the download
+ *  route specified in index.js
+ *
+ * */
+const writeScripts = function (req, res, id, botId) {
+    const directory = getBotScriptDirectory(id, botId);
+    const tempDir = path.join(directory, String(botId));
+    codeGenerator.setPath(tempDir);
+    codeGenerator.generateBotScripts(req.body.configuration, () => {
+        const luaCodeManager = generateTeamDesires(req);
+        const luaCodeString = luaCodeManager.generate();
+        const tempPath = path.join(tempDir, 'team_desires.lua');
+        fs.writeFileSync(tempPath, luaCodeString, { flag: 'w+' });
+
+        const zipDir = path.join(directory, `${botId}.zip`);
+        const output = fs.createWriteStream(zipDir);
+        const archive = archiver('zip', {
+            zlib: { level: 9 }, // Sets the compression level.
+        });
+        // good practice to catch this error explicitly
+        archive.on('error', (err) => {
+            throw err;
+        });
+        // pipe archive data to the file
+        archive.pipe(output);
+        // append files from stream
+        archive.directory(tempDir, '');
+        archive.finalize();
     });
+};
 
-    // good practice to catch this error explicitly
-    archive.on('error', (err) => {
-        throw err;
-    });
-
-    // pipe archive data to the file
-    archive.pipe(output);
-
-    // append a file from stream
-    const teamDesires = `./Lua/${id}/team_desires.lua`;
-    archive.append(fs.createReadStream(teamDesires), { name: 'team_desires.lua' });
-
-    archive.finalize();
+const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
+    let publicPath = path.join(NODE_PATH, 'public');
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, 'lua');
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, id);
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath = path.join(publicPath, String(botId));
+    if (!fs.existsSync(publicPath)) {
+        return true;
+    }
+    publicPath += '.zip';
+    // console.log(publicPath);
+    try {
+        const stats = fs.stat(publicPath);
+        return moment(timeLastUpdated).isAfter(stats.mtime);
+    } catch (err) {
+        return true; // signal to create the "missing" script
+    }
 };
 
 module.exports = {
@@ -320,4 +394,5 @@ module.exports = {
     getAction,
     getLogicalOperator,
     writeScripts,
+    shouldRegenerateBotScripts,
 };

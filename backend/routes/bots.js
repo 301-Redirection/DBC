@@ -1,13 +1,17 @@
 const express = require('express');
 const models = require('models');
+const path = require('path');
+const mime = require('mime');
+const fs = require('fs');
 const { jwtCheck } = require('./jwtCheck');
 const { check, validationResult } = require('express-validator/check');
-const { writeScripts } = require('controllers/generateScript.js');
+const { writeScripts, shouldRegenerateBotScripts } = require('controllers/generateScript.js');
+
+const PATH_TO_LUA = path.join(__dirname, '..', '..', '..', 'public', 'lua');
 
 const router = express.Router();
-
 const LIMIT_NUMBER = 5;
-// console.log(jwtCheck);
+
 /* will always return a JSON object of at most 5 bots */
 router.get('/recent', jwtCheck, (request, response) => {
     models.BotConfig.findAll({
@@ -21,7 +25,6 @@ router.get('/recent', jwtCheck, (request, response) => {
             response.status(200).json({ botConfigs });
         });
 });
-
 /* will always return JSON of the new record details */
 router.post('/update', jwtCheck, [
     check('id').exists(),
@@ -49,7 +52,7 @@ router.post('/update', jwtCheck, [
             updatedAt: new Date(),
         })
             .then((botConfig) => {
-                writeScripts(request, botConfig.id);
+                writeScripts(request, response, request.user.sub, botConfig.id);
                 response.status(200).json({ botConfig });
             });
     } else {
@@ -67,7 +70,7 @@ router.post('/update', jwtCheck, [
                         configuration: JSON.stringify(configuration),
                         updatedAt: new Date(),
                     });
-                    writeScripts(request, botConfig.id);
+                    writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
                 } else {
                     response.status(200).json({});
@@ -97,7 +100,6 @@ router.get('/all', jwtCheck, (request, response) => {
 });
 router.get('/delete/:botID', jwtCheck, (request, response) => {
     const id = request.params.botID;
-    // console.log(req.params);
     models.BotConfig.destroy({
         where: {
             userId: request.user.sub,
@@ -106,6 +108,35 @@ router.get('/delete/:botID', jwtCheck, (request, response) => {
     })
         .then(() => {
             response.status(200).json({ deleted: true });
+        })
+        .catch(() => {
+            response.status(500).json({ error: true, deleted: false });
+        });
+});
+router.get('/getScripts/:botId', (request, response) => {
+    const id = request.params.botID;
+    models.BotConfig.find({
+        where: {
+            userId: request.user.sub,
+            id,
+        },
+    })
+        .then((botConfig) => {
+            request.body = JSON.parse(botConfig.configuration);
+            if (shouldRegenerateBotScripts(request.user.sub, botConfig.id, botConfig.updatedAt)) {
+                writeScripts(request, response, request.user.sub, botConfig.id);
+            }
+            const file = path.join(PATH_TO_LUA, request.user.sub, `${botConfig.id}.zip`);
+            const filename = path.basename(file);
+            const mimetype = mime.lookup(file);
+            response.setHeader('Content-disposition', `attachment; filename=${filename}`);
+            response.setHeader('Content-type', mimetype);
+            const filestream = fs.createReadStream(file);
+            filestream.pipe(response);
+            response.download(file);
+        })
+        .catch((err) => {
+            response.status(500).json({ error: true, message: err });
         });
 });
 module.exports = router;
