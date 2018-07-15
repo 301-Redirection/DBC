@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
+import { ApiConnectService } from '../services/api-connect.service';
 
 @Component({
     selector: 'app-heroes',
@@ -35,6 +36,8 @@ export class HeroesComponent implements OnInit {
             class: 'Intelligence',
         },
     ];
+
+    // hero category objects
     strengthHeroes = [];
     agilityHeroes = [];
     intelligenceHeroes = [];
@@ -57,7 +60,7 @@ export class HeroesComponent implements OnInit {
         group: 'clone-group',
     };
 
-    constructor() { }
+    constructor(private api: ApiConnectService) { }
 
     ngOnInit() {
         this.numberOfPools = [1, 2, 3, 4, 5];
@@ -68,7 +71,15 @@ export class HeroesComponent implements OnInit {
 
     getHeroes(): void {
         // database call to retrieve all dota heroes
+        // this.api.getAllHeroes().subscribe((data) => {
+        //     this.allHeroes = data;
+        //     this.sortHeroData();
+        // });
 
+        this.sortHeroData();
+    }
+
+    sortHeroData(): void {
         this.allHeroes.forEach((hero) => {
             if (hero.class === 'Strength') {
                 this.strengthHeroes.push(hero);
@@ -126,7 +137,7 @@ export class HeroesComponent implements OnInit {
         if (index !== -1) {
             pool.splice(index, 1);
         }
-        document.getElementById(`poolLink ${this.selectedPool - 1}`).click();
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
     }
 
     resetPools(): void {

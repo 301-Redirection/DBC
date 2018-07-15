@@ -20,7 +20,11 @@
                 </div>
                 
                 <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes">{{ hero.name }}</div>
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes">
+                        <div class="hero-name">
+                            {{ hero.name }}
+                        </div>                        
+                    </div>
                 </div>
                 <br>
 
@@ -29,7 +33,11 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes">{{ hero.name }}</div>
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes">
+                        <div class="hero-name">
+                            {{ hero.name }}
+                        </div>                    
+                    </div>
                 </div>
                 <br>
 
@@ -38,15 +46,24 @@
                     <h6>Intelligence</h6>
                 </div>                
                 <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes">{{ hero.name }}</div>
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes">
+                        <div class="hero-name">
+                            {{ hero.name }}
+                        </div>                    
+                    </div>
                 </div>
             </div>
         </div>        
     </div>
 
     <div id="toggleButtonDiv" class="mb-2">        
-        <button type="button" class="button button-cancel mx-2" (click)="resetPools()">Reset</button>
-        <button id="togglePoolsBtn" class="button button-generate mx-2" (click)="togglePools()">Toggle Pools</button>        
+        <button type="button" class="button button-cancel mx-2" (click)="resetPools()">
+            <i class="fas fa-undo mr-1"></i>
+            Reset
+        </button>
+        <button id="togglePoolsBtn" class="button button-generate mx-2" (click)="togglePools()">
+            Toggle Pools
+        </button>        
     </div>
 
     <!-- Pool table -->
@@ -67,7 +84,9 @@
                             <i id="removeIcon" class="fas fa-times" ></i>
                         </div>
                         <div class="card-body">
-                            {{ hero.name }}
+                            <div class="hero-name">
+                                {{ hero.name }}
+                            </div>                            
                         </div>
                     </div>
                 </div>

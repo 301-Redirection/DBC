@@ -41,19 +41,29 @@
 .hero-item {
     display: inline-block;
     margin-right: 5px;
+    border: 2px solid $btn-generate-border-color;
     background-color: $black;
     height: 85px;
-    width: 85px;
+    width: 120px;
     border-radius: 4px;
     cursor: pointer;
+    position: relative;    
 }
 
-.hero-item .card-header {
-    padding: 1px;
+.hero-item:hover {
+    border: 2px solid $btn-generate-border-color-hover;
 }
 
+.hero-item .card-header,
 .hero-item .card-body {
     padding: 1px;
+}
+
+.hero-name {     
+    position: absolute;
+    bottom: 0;    
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .class-title {
@@ -71,10 +81,15 @@
 #removeIcon {
     color: $red;
     float: right;
+    z-index: 2;
 }
 
-#toggleButtonDiv {    
-    margin-left: 10%;
-    margin-right: 10%;    
+#toggleButtonDiv {        
+    margin-left: 9%;
+    margin-right: 9%;    
     text-align: right;    
+}
+
+#togglePoolsBtn {
+    margin-right: 1px !important;
 }
