@@ -202,7 +202,7 @@ export class HeroesComponent implements OnInit {
         if (index !== -1) {
             pool.splice(index, 1);
         }
-        document.getElementById(`poolLink ${this.selectedPool - 1}`).click();
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
     }
 
     resetPools(): void {
