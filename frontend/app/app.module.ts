@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { ItemsComponent } from './items/items.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { HeroesComponent } from './heroes/heroes.component';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
+        ItemsComponent,
     ],
     imports: [
         BrowserModule,
