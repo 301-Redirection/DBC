@@ -59,6 +59,7 @@
     "sequelize": "^4.37.6",
     "serve-favicon": "~2.4.5",
     "sinon": "^5.0.7",
+    "why-is-node-running": "^2.0.2",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

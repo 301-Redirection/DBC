@@ -9,8 +9,9 @@ const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const cors = require('cors');
 const index = require('routes/index.js');
-const users = require('routes/users.js');
-const bots = require('routes/bots.js');
+const userRoutes = require('routes/users.js');
+const botRoutes = require('routes/bots.js');
+const staticRoutes = require('routes/static.js');
 const validator = require('express-validator');
 
 const app = express();
@@ -41,8 +42,9 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use(validator({}));
 app.use('/', index);
-app.use('/user', users);
-app.use('/bots', bots);
+app.use('/user', userRoutes);
+app.use('/bots', botRoutes);
+app.use('/static', staticRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

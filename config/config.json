@@ -32,6 +32,7 @@
             "image": "http://media.steampowered.com/apps/dota2/images/items/",
             "heroAbilities": "http://www.dota2.com/hero/",
             "heroAbilityReference": "http://www.dota2.com/heroes/"
-        }
+        },
+        "imagePath": "/backend/static/images/"
     }
 }
