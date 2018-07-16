@@ -9,6 +9,7 @@ import { BotManagementComponent } from '../bot-management/bot-management.compone
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { HeroesComponent } from '../heroes/heroes.component';
+import { ItemsComponent } from '../items/items.component';
 
 export const ROUTES: Routes = [
     {
@@ -52,6 +53,12 @@ export const ROUTES: Routes = [
     {
         path: 'heroes',
         component: HeroesComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'items',
+        component: ItemsComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },

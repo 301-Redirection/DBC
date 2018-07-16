@@ -23,7 +23,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
-import { FilterPipe } from './filter.pipe';
+import { ItemsComponent } from './items/items.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +31,7 @@ import { FilterPipe } from './filter.pipe';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
-        FilterPipe,
+        ItemsComponent,
     ],
     imports: [
         BrowserModule,
