@@ -34,6 +34,7 @@ import { ItemsComponent } from './items/items.component';
         HeroesComponent,
         FilterPipe,
         ItemsComponent,
+        FilterPipe,
     ],
     imports: [
         BrowserModule,
@@ -46,7 +47,7 @@ import { ItemsComponent } from './items/items.component';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule.forRoot({ animation: 10 }),
+        SortablejsModule,
     ],
     providers: [
         ApiConnectService,

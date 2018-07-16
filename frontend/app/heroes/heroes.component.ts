@@ -197,12 +197,31 @@ export class HeroesComponent implements OnInit {
         this.selectedPoolArray = this.pool1;
     }
 
-    removeHero(hero, pool): void {
+    removeHero(hero: any, pool: any): void {
         const index = pool.indexOf(hero);
         if (index !== -1) {
             pool.splice(index, 1);
         }
         document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+    }
+
+    addHero(hero: any, pool: number): void {
+        // console.log('Drop: ' + pool);
+        this.setSelectedPool(pool);
+        this.selectedPoolArray.push(hero);
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+    }
+
+    setSelectedHero(hero: any): void {
+        this.selectedHero = hero;
+    }
+
+    highlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool - 1}`).style.borderColor = '#a3a3a3';
+    }
+
+    unhighlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool - 1}`).style.borderColor = 'transparent';
     }
 
     resetPools(): void {
