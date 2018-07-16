@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { FilterPipe } from './filter.pipe';
 import { ItemsComponent } from './items/items.component';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ItemsComponent } from './items/items.component';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
+        FilterPipe,
         ItemsComponent,
     ],
     imports: [
@@ -44,7 +46,7 @@ import { ItemsComponent } from './items/items.component';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule.forRoot({ animation: 10 }),
+        SortablejsModule,
     ],
     providers: [
         ApiConnectService,
