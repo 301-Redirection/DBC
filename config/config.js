@@ -30,4 +30,5 @@ module.exports = {
         dialect: 'mysql',
     },
     app: config.app,
+    lua: config.LUA,
 };

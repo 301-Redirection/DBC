@@ -11,45 +11,47 @@ const indentString = function (string, numSpaces) {
     return newLines;
 };
 
-const LuaCodeManager = function () {
-    this.helperFunctions = {};
-    this.APIFunctions = {};
-    this.scriptHeadings = {};
+class LuaCodeManager {
+    constructor() {
+        this.helperFunctions = {};
+        this.APIFunctions = {};
+        this.scriptHeadings = {};
+    }
 
-    this.addScriptHeading = function (headingName, luaString) {
+    addScriptHeading(headingName, luaString) {
         if (!Object.prototype.hasOwnProperty.call(this.scriptHeadings, headingName)) {
             this.scriptHeadings[headingName] = luaString;
         }
-    };
+    }
 
-    this.addHelperFunction = function (functionName) {
+    addHelperFunction(functionName) {
         if (!Object.prototype.hasOwnProperty.call(this.helperFunctions, functionName)) {
             this.helperFunctions[functionName] = lhfi.getFunction(functionName);
         }
-    };
+    }
 
-    this.addToAPIFunction = function (functionName, luaString) {
+    addToAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].middle += indentString(luaString, 4);
-    };
+    }
 
-    this.addToStartAPIFunction = function (functionName, luaString) {
+    addToStartAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].start += indentString(luaString, 4);
-    };
+    }
 
-    this.addToEndAPIFunction = function (functionName, luaString) {
+    addToEndAPIFunction(functionName, luaString) {
         this.checkAPIExistence(functionName);
         this.APIFunctions[functionName].end += indentString(luaString, 4);
-    };
+    }
 
-    this.checkAPIExistence = function (functionName) {
+    checkAPIExistence(functionName) {
         if (!Object.prototype.hasOwnProperty.call(this.APIFunctions, functionName)) {
             this.APIFunctions[functionName] = { start: '', middle: '', end: '' };
         }
-    };
+    }
 
-    this.generate = function () {
+    generate() {
         let luaCodeString = '';
 
         Object.keys(this.scriptHeadings).forEach((key) => {
@@ -75,14 +77,12 @@ const LuaCodeManager = function () {
         });
 
         return luaCodeString;
-    };
+    }
 
-    this.reset = function () {
+    reset() {
         this.helperFunctions = { };
         this.APIFunctions = { };
         this.scriptHeadings = { };
-    };
-};
-const lcm = new LuaCodeManager();
-
-module.exports.lcm = lcm;
+    }
+}
+module.exports = LuaCodeManager;
