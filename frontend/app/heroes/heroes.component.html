@@ -11,7 +11,8 @@
     <div class="row mb-5">        
         <div class="card heroes-card">
             <div class="card-header">
-                <h5>HEROES</h5>                                
+                <h5 id="heroesHeader">HEROES</h5>                
+                <input [(ngModel)]="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002;">
             </div>
             <div class="card-body">
                 <div class="class-title">
@@ -20,7 +21,7 @@
                 </div>
                 
                 <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes">
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                        
@@ -33,7 +34,7 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes">
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                    
@@ -46,7 +47,7 @@
                     <h6>Intelligence</h6>
                 </div>                
                 <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes">
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                    
@@ -74,7 +75,7 @@
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
                 <li class="nav-item" *ngFor="let pool of numberOfPools; let i = index;">
-                    <a [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)">Pool {{ pool }}</a>
+                    <a [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (drop)="addHero(selectedHero, pool)" (dragenter)="highlightPool(pool)" (dragleave)="unhighlightPool(pool)">Pool {{ pool }}</a>
                 </li>
             </ul>
             <div class="card-body">

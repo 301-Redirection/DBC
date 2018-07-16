@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { HeroesComponent } from './heroes/heroes.component';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
+        FilterPipe,
     ],
     imports: [
         BrowserModule,
@@ -42,7 +44,7 @@ import { HeroesComponent } from './heroes/heroes.component';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule.forRoot({ animation: 10 }),
+        SortablejsModule,
     ],
     providers: [
         ApiConnectService,

@@ -40,7 +40,7 @@
 
 .hero-item {
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
     border: 2px solid $btn-generate-border-color;
     background-color: $black;
     height: 85px;
@@ -92,4 +92,18 @@
 
 #togglePoolsBtn {
     margin-right: 1px !important;
+}
+
+#heroesHeader {
+    display: inline-block;   
+}
+
+#heroSearch {    
+    font-family: Arial, FontAwesome;    
+    width: 20%;
+    float: right;
+    border-radius: 100px;
+    background-color: $dark-grey-1;
+    border-color: $dark-grey-3;
+    color: $light-grey;
 }
