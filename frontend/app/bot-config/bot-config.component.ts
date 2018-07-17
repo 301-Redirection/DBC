@@ -61,24 +61,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         roshan: new ConfigurationClass(),
     };
 
-    sampleConditions: Condition[] = [
-        {
-            trigger: 1,
-            operator: 3,
-            conditional: 0.0,
-            action: 2,
-            value: 0.25,
-        },
-    ];
-
-    // bot = {
-    //     id: this.id,
-    //     name: this.name,
-    //     description: this.description,
-    //     configuration: this.configuration,
-    //     faction: this.factionSelected,
-    // };
-
     generateURL = '';
 
     constructor
@@ -94,26 +76,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     ngOnInit() { }
 
     ngAfterViewInit() {}
-
-    updateCondition(condition: Condition, index: number): void {
-        this.sampleConditions[index] = condition;
-        console.log(condition);
-        console.log(this.sampleConditions);
-    }
-
-    trackByFn(index, item) {
-        return index;
-    }
-
-    addCondition() {
-        this.sampleConditions.push({
-            trigger: 3,
-            operator: 2,
-            conditional: 0.53,
-            action: 1,
-            value: 0.45,
-        });
-    }
 
     save() {
         if (this.validateInfo()) {
