@@ -24,6 +24,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { ItemsComponent } from './items/items.component';
+import { AbilitiesComponent } from './abilities/abilities.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { ItemsComponent } from './items/items.component';
         LoadingComponent,
         HeroesComponent,
         ItemsComponent,
+        AbilitiesComponent,
     ],
     imports: [
         BrowserModule,

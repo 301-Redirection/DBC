@@ -12,6 +12,7 @@ export class AbilitiesComponent implements OnInit {
     selectedPool: number;
     selectedPoolArray: any;
     abilityPrioArray: any;
+    abilityToLevelArray: any;
 
     // Temporary test data
       tempTestData = [
@@ -49,8 +50,6 @@ export class AbilitiesComponent implements OnInit {
     pool4 = [];
     pool5 = [];
 
-    
-
   ngOnInit() {
     this.numberOfPools = [1, 2, 3, 4, 5];
     this.selectedPool = 1;
@@ -58,6 +57,11 @@ export class AbilitiesComponent implements OnInit {
     this.getHeroes();
     console.log(this.abilityPrioArray);
     this.initAbilityPrioArray();
+    this.abilityToLevelArray = [];
+    for(let i = 0; i < 25; i += 1) {
+        this.abilityToLevelArray.push('n');
+    }
+    console.log(this.abilityToLevelArray);
   }
 
   getHeroes(): void {
@@ -86,6 +90,16 @@ export class AbilitiesComponent implements OnInit {
   initAbilityPrioArray() {
       this.abilityPrioArray = [
           {
+              name: 'Borrowed Time',
+              type: 'R',
+              src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/7/78/Borrowed_Time_icon.png?version=849b71406c8c433ebb4f077b1516cd2b',
+          },
+          {
+              name: 'Talent',
+              type: 'T',
+              src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGVudHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
+          },
+          {
               name: 'Mist Coil',
               type: 'Q',
               src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/c/ce/Mist_Coil_icon.png?version=32a1cebecf57f997259c1f5e12439d72',
@@ -100,11 +114,7 @@ export class AbilitiesComponent implements OnInit {
               type: 'E',
               src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/d/d2/Curse_of_Avernus_icon.png?version=8db283662c09832ae9c22806cce00436',
           },
-          {
-              name: 'Borrowed Time',
-              type: 'R',
-              src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/7/78/Borrowed_Time_icon.png?version=849b71406c8c433ebb4f077b1516cd2b',
-          },
+          
       ];
   }
 
@@ -130,10 +140,6 @@ export class AbilitiesComponent implements OnInit {
                   console.log(prevIndex);
                   temp = this.abilityPrioArray[prevIndex];
               }
-              
-              // this.abilityPrioArray.splice(prevIndex, 1);
-              // this.abilityPrioArray.splice(i, 0, temp);
-              // 
               this.abilityPrioArray[prevIndex] = this.abilityPrioArray[i];
               this.abilityPrioArray[i] = temp;
               break;
@@ -143,14 +149,92 @@ export class AbilitiesComponent implements OnInit {
       console.log(this.abilityPrioArray);
   }
 
-  levelArrayDescription(): string[] {
-      let arr = [];
-      for(let i = 0; i < 25; i += 1) {
-          arr.push(`${i+1}`);
+  getLevelOfAbility(type):number {
+      let count = 0;
+      for(let i = 0; i < this.abilityToLevelArray.length; i += 1) {
+          if (this.abilityToLevelArray[i] === type) {
+              count++;
+          }
       }
-      return arr;
+      return count;
   }
 
+  getLevelOfAbilityLimted(type, limitIndex):number {
+      let count = 0;
+      for(let i = 0; i < limitIndex; i += 1) {
+          if (this.abilityToLevelArray[i] === type) {
+              count++;
+          }
+      }
+      return count;
+  }
 
+  // assuming normal hero i.e. not invoker
+  canLevelAbility(type, level):boolean {
+      const abilityLevel = this.getLevelOfAbilityLimted(type, level-1);
+      if (type === 'R') {
+          // only allowed to max ult if 
+          // 6 * ability level + 6 < level
+          // Example
+          // lvl 2 and r level 0 => 6 <= 2 which is false hence cannot upgrade
+          // lvl 6 and r level 0 => 6 <= 6 which is true hence can upgrade
+          // lvl 8 and r level 0 => 0*6 + 6 <= 8 which is true hence can upgrade
+          // lvl 8 and r level 1 => 1*6 + 6 <= 8 which is false hence cannot upgrade
+          // lvl 18 and r level 2 => 2*6 + 6 <= 18 which is false hence cannot upgrade
+          // console.log()
+          return abilityLevel < 3 && (6 * abilityLevel + 6) <= level;
+      }
+      if (type === 'T') {
+          // only allowed to level talent if 
+          // 5 * ability level + 10 < level
+          // Example
+          // lvl 2 and t level 1 => 10 <= 2 which is false hence cannot upgrade
+          // lvl 10 and t level 0 => 10 <= 10 which is true hence can upgrade
+          // lvl 12 and t level 0 => 0*5 + 10 <= 12 which is true hence can upgrade
+          // lvl 11 and t level 1 => 1*5 + 10 <= 11 which is false hence cannot upgrade
+          // lvl 18 and t level 2 => 2*6 + 6 <= 18 which is false hence cannot upgrade
+          return abilityLevel < 4 && (5 * abilityLevel + 10) <= level;
+      }
+      // the general case for basic abilities
+      // Example
+      // lvl 1 q level 0 => 0 < 2 which is true hence can upgrade
+      // lvl 2 q level 1 => 2*1 < 2 which is false hence cannot upgrade
+      // lvl 3 q level 1 => 2*1 < 3 which is true hence can upgrade
+      // lvl 4 q level 2 => 2*2 < 4 which is false hence cannot upgrade
+      // lvl 5 q level 2 => 2*2 < 5 which is true hence can upgrade
+      return abilityLevel < 4 && abilityLevel * 2 < level;
+  }
+
+      
+
+    createArrayFromPrios():void {
+        console.log('this.abilityToLevelArray');
+        console.log(this.abilityToLevelArray);
+        for(let i = 0; i < this.abilityToLevelArray.length; i += 1) {
+            for(let j = 0; j < this.abilityPrioArray.length; j += 1) {
+                const ability = this.abilityPrioArray[j];
+                if (this.canLevelAbility(ability.type, i + 1)) {
+                    this.abilityToLevelArray[i] = ability.type;
+                    break;
+                }
+            }
+        }
+        console.log('this.abilityToLevelArray after');
+        console.log(this.abilityToLevelArray);
+    }
+
+    overwritePrio(level, abilityType):void {
+        console.log(level);
+        console.log(abilityType);
+        if (this.canLevelAbility(abilityType, level)) {
+            console.log('overwriting..');
+            this.abilityToLevelArray[level-1] = abilityType;
+        }
+        else {
+            alert(`cannot get ${abilityType} at this level`);
+            console.log("BITCH");
+        }
+        console.log("Please");
+    }
 
 }
