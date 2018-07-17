@@ -11,6 +11,47 @@ export class TeamDesiresComponent implements OnInit {
 
     teamDesires: ConfigurationFormat;
 
+    lanes = [
+        {
+            title: 'Top',
+            prop: 'top',
+        },
+        {
+            title: 'Mid',
+            prop: 'mid',
+        },
+        {
+            title: 'Bot',
+            prop: 'bot',
+        },
+    ];
+
+    sectionsLanes = [
+        {
+            title: 'Push',
+            prop: 'push',
+        },
+        {
+            title: 'Defend',
+            prop: 'defend',
+        },
+        {
+            title: 'Farm',
+            prop: 'farm',
+        },
+    ];
+
+    sectionsNoLanes = [
+        {
+            title: 'Roshan',
+            prop: 'roshan',
+        },
+        {
+            title: 'Roam',
+            prop: 'roam',
+        },
+    ];
+
     constructor(private tdService: TeamDesiresService) {}
 
     ngOnInit() {
@@ -25,8 +66,7 @@ export class TeamDesiresComponent implements OnInit {
         if (lane === undefined) {
             return this.teamDesires[prop].compoundConditions.length - index - 1;
         }
-        const lowerLane = lane.toLowerCase();
-        return this.teamDesires[prop][lowerLane].compoundConditions.length - index - 1;
+        return this.teamDesires[prop][lane].compoundConditions.length - index - 1;
     }
 
     private addCondition(prop: string, condGroup: number, lane?: string): void {
@@ -35,8 +75,7 @@ export class TeamDesiresComponent implements OnInit {
             this.teamDesires[prop].compoundConditions[index].
             conditions.push(this.tdService.newCondition());
         } else {
-            const lowerLane = lane.toLowerCase();
-            this.teamDesires[prop][lowerLane].compoundConditions[index].
+            this.teamDesires[prop][lane].compoundConditions[index].
             conditions.push(this.tdService.newCondition());
         }
     }
@@ -48,8 +87,7 @@ export class TeamDesiresComponent implements OnInit {
             if (lane === undefined) {
                 this.teamDesires[prop].compoundConditions[condIndex].conditions.splice(index, 1);
             } else {
-                const lowerLane = lane.toLowerCase();
-                this.teamDesires[prop][lowerLane].compoundConditions[condIndex].
+                this.teamDesires[prop][lane].compoundConditions[condIndex].
                 conditions.splice(index, 1);
             }
         }
@@ -59,8 +97,7 @@ export class TeamDesiresComponent implements OnInit {
         if (lane === undefined) {
             this.teamDesires[prop].compoundConditions.push(this.tdService.newCondGroup());
         } else {
-            const lowerLane = lane.toLowerCase();
-            this.teamDesires[prop][lowerLane].
+            this.teamDesires[prop][lane].
             compoundConditions.push(this.tdService.newCondGroup());
         }
     }

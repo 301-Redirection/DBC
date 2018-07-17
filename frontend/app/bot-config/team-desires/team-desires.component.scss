@@ -48,24 +48,17 @@ ul.nav-tabs {
     border-bottom: 2pt solid $dark-grey-2;
 }
 
-ul.nav-tabs>li {
-    border-left: 1pt solid $dark-grey-2;
-    border-right: 1pt solid $dark-grey-2;
-}
-
 ul.nav-tabs>li>a {
     color: $light-grey;
+    border: 1pt solid $light-grey;
+    border-radius: 0;
 }
 
 ul.nav-tabs>li>a.active {
-    background: transparent;
-    border: none;
-    // border-top: none;
-    // border-left: none;
-    // border-right: none;
-    // border-bottom: 1pt solid $dark-grey-2;
-    border-radius: 0px;
-    -webkit-box-shadow: inset 0px -15px 30px -30px rgba(175,175,175,0.75);
-    -moz-box-shadow: inset 0px -15px 30px -30px rgba(175,175,175,0.75);
-    box-shadow: 0px 10px 15px -15px rgba(175,175,175,0.75);
+    background-color: $light-grey;
+    // background: transparent;
+    color: $dark-grey-1;
+    // -webkit-box-shadow: inset 0px -15px 30px -30px rgba(175,175,175,0.75);
+    // -moz-box-shadow: inset 0px -15px 30px -30px rgba(175,175,175,0.75);
+    // box-shadow: 0px 10px 15px -5px rgba(240, 240, 240,0.75);
 }
