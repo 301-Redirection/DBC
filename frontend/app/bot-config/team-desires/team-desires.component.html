@@ -19,35 +19,41 @@
                     <!-- Card Body -->
                     <div id="collapse{{s.title}}" class="collapse" [class.show]="s.prop == 'push'" [attr.aria-labelledby]="'heading' + s.title" data-parent="#accordion">
                         <div class="card-body bot-manage-card-body">
-                            <ul class="nav nav-tabs nav-fill" id="{{s.prop}}Tabs" role="tablist">
-                                <li *ngFor="let lane of lanes" class="nav-item">
-                                    <a class="nav-link" [class.active]="lane.title=='Top'" id="tab{{lane.title}}" data-toggle="tab" href="#{{s.prop + lane.title}}" role="tab" [attr.aria-controls]="s.prop + lane.title" [attr.aria-selected]="lane.title == 'Top' ? true : false">
-                                        {{lane.title}}
-                                    </a>
-                                </li>
-                            </ul>
+                            <div class="container">
+                                <ul class="nav nav-tabs nav-fill" id="{{s.prop}}Tabs" role="tablist">
+                                    <li *ngFor="let lane of lanes" class="nav-item">
+                                        <a class="nav-link" [class.active]="lane.title=='Top'" id="tab{{lane.title}}" data-toggle="tab" href="#{{s.prop + lane.title}}" role="tab" [attr.aria-controls]="s.prop + lane.title" [attr.aria-selected]="lane.title == 'Top' ? true : false">
+                                            {{lane.title}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                             <!-- Tab Content -->
                             <div class="tab-content" id="{{s.prop}}TabContent">
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{s.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
-                                    <div class="form-group">
+                                    <div class="form-group container">
                                         <label for="{{s.prop + lane.title}}Default">Default Value</label>
-                                        <input type="text" id="{{s.prop + lane.title}}Default">
+                                        <input type="text" id="{{s.prop + lane.title}}Default" [(value)]="teamDesires[s.prop][lane.prop].initialValue">
                                     </div>
-                                    <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(s.prop, lane.prop)">Add Condition Group</button>
-                                    <div *ngIf="teamDesires[s.prop][lane.prop].compoundConditions.length != 0">
-                                        <div class="compound-cond container list-group" *ngFor="let comp of teamDesires[s.prop][lane.prop].compoundConditions | reverse; let j = index">
-                                            <h5>Condition Group</h5>
-                                            <button *ngIf="teamDesires[s.prop][lane.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(s.prop, j, lane.prop)">New Condition</button>
-                                            <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
-                                                <span class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <configurator [condition]="c"></configurator>
-                                                    <span class="pointer icon" (click)="delCondition(s.prop, j, i, lane.prop)">
-                                                        <i class="fas fa-trash m-1"></i>
+                                    <div class="container">
+                                        <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(s.prop, lane.prop)">Add Condition Group</button>
+                                    </div>
+                                    <div class="container">
+                                        <div *ngIf="teamDesires[s.prop][lane.prop].compoundConditions.length != 0">
+                                            <div class="compound-cond list-group" *ngFor="let comp of teamDesires[s.prop][lane.prop].compoundConditions | reverse; let j = index">
+                                                <h5>Condition Group</h5>
+                                                <button *ngIf="teamDesires[s.prop][lane.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(s.prop, j, lane.prop)">New Condition</button>
+                                                <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                                    <span class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <configurator [condition]="c"></configurator>
+                                                        <span class="pointer icon" (click)="delCondition(s.prop, j, i, lane.prop)">
+                                                            <i class="fas fa-trash m-1"></i>
+                                                        </span>
                                                     </span>
-                                                </span>
-                                                <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j, lane.prop)">
-                                                    <i class="fas fa-link"></i>
-                                                </button>
+                                                    <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j, lane.prop)">
+                                                        <i class="fas fa-link"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -63,21 +69,29 @@
                     </button>
                     <div id="collapse{{s.title}}" class="collapse" [attr.aria-labelledby]="'heading' + s.title"  data-parent="#accordion">
                         <div class="card-body bot-manage-card-body">
-                            <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(s.prop)">Add Condition Group</button>
-                            <div *ngIf="teamDesires[s.prop].compoundConditions != []">
-                                <div class="compound-cond container list-group" *ngFor="let comp of teamDesires[s.prop].compoundConditions | reverse; let j = index">
-                                    <h5>Condition Group</h5>
-                                    <button *ngIf="teamDesires[s.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(s.prop, j)">New Condition</button>
-                                    <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
-                                        <span class="list-group-item d-flex justify-content-between align-items-center">
-                                            <configurator [condition]="c"></configurator>
-                                            <span class="pointer icon" (click)="delCondition(s.prop, j, i)">
-                                                <i class="fas fa-trash m-1"></i>
+                            <div class="form-group container">
+                                <label for="{{s.prop}}Default">Default Value</label>
+                                <input type="text" id="{{s.prop}}Default" [(value)]="teamDesires[s.prop].initialValue">
+                            </div>
+                            <div class="container">
+                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(s.prop)">Add Condition Group</button>
+                            </div>
+                            <div class="container">
+                                <div *ngIf="teamDesires[s.prop].compoundConditions != []">
+                                    <div class="compound-cond container list-group" *ngFor="let comp of teamDesires[s.prop].compoundConditions | reverse; let j = index">
+                                        <h5>Condition Group</h5>
+                                        <button *ngIf="teamDesires[s.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(s.prop, j)">New Condition</button>
+                                        <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                            <span class="list-group-item d-flex justify-content-between align-items-center">
+                                                <configurator [condition]="c"></configurator>
+                                                <span class="pointer icon" (click)="delCondition(s.prop, j, i)">
+                                                    <i class="fas fa-trash m-1"></i>
+                                                </span>
                                             </span>
-                                        </span>
-                                        <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j)">
-                                            <i class="fas fa-link"></i>
-                                        </button>
+                                            <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j)">
+                                                <i class="fas fa-link"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
