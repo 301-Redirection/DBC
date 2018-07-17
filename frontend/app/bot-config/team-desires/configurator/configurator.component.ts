@@ -35,6 +35,10 @@ export class ConfiguratorComponent {
     }
 }
 
+/*
+ * This Pipe creates an iterable array to iterate over for the frontend with the keys
+ *  An enumerated data type wasn't working with Angular's *ngFor
+ */
 @Pipe({
     name: 'enumToArray',
 })
