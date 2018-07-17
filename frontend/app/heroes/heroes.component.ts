@@ -19,22 +19,22 @@ export class HeroesComponent implements OnInit {
     allHeroes = [
         {
             name: 'Axe',
-            class: 'Strength',
+            primaryAttribute: 'Str',
         }, {
             name: 'Sven',
-            class: 'Strength',
+            primaryAttribute: 'Str',
         }, {
             name: 'Viper',
-            class: 'Agility',
+            primaryAttribute: 'Agi',
         }, {
             name: 'Sniper',
-            class: 'Agility',
+            primaryAttribute: 'Agi',
         }, {
             name: 'Lina',
-            class: 'Intelligence',
+            primaryAttribute: 'Int',
         }, {
             name: 'Chen',
-            class: 'Intelligence',
+            primaryAttribute: 'Int',
         },
     ];
 
@@ -85,11 +85,11 @@ export class HeroesComponent implements OnInit {
 
     sortHeroData(): void {
         this.allHeroes.forEach((hero) => {
-            if (hero.class === 'Strength') {
+            if (hero.primaryAttribute === 'Str') {
                 this.strengthHeroes.push(hero);                
-            } else if (hero.class === 'Agility') {
+            } else if (hero.primaryAttribute === 'Agi') {
                 this.agilityHeroes.push(hero);                
-            } else if (hero.class === 'Intelligence') {
+            } else if (hero.primaryAttribute === 'Int') {
                 this.intelligenceHeroes.push(hero);                
             }
         });
@@ -154,15 +154,7 @@ export class HeroesComponent implements OnInit {
                 this.resetPools();
             }
         }
-    }
-
-    removeHero(hero: any, pool: any): void {
-        const index = pool.indexOf(hero);
-        if (index !== -1) {
-            pool.splice(index, 1);
-        }
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
-    }
+    }    
 
     addHero(hero: any, pool: number): void {
         this.unhighlightPool(pool);
@@ -174,16 +166,26 @@ export class HeroesComponent implements OnInit {
         }
     }
 
+    removeHero(hero: any, pool: any): void {
+        const index = pool.indexOf(hero);
+        if (index !== -1) {
+            pool.splice(index, 1);
+        }
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+    }
+
     setSelectedHero(hero: any): void {
         this.selectedHero = hero;
     }
 
     highlightPool(pool: number): void {
         document.getElementById(`poolLink${pool - 1}`).style.borderColor = '#a3a3a3';
+        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'visible';
     }
 
     unhighlightPool(pool: number): void {
         document.getElementById(`poolLink${pool - 1}`).style.borderColor = 'transparent';
+        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'hidden';
     }
 
     resetPools(): void {

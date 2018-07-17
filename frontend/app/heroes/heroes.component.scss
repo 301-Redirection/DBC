@@ -16,7 +16,7 @@
 }
 
 .nav-link:hover {
-    border-color: $light-grey !important;
+    border-color: $light-grey !important;    
 }
 
 .nav-link.active:hover {
@@ -56,6 +56,8 @@
 
 .hero-item:hover {
     border: 2px solid $btn-generate-border-color-hover;
+    transform: scale(1.05);
+    transition: 0.4s;
 }
 
 .hero-item .card-header,
@@ -114,4 +116,13 @@
 
 #heroSearch:focus {
     outline: none !important;
+}
+
+.pool-plus-icon {    
+    color: $green;    
+}
+
+.pool-plus-icon-cont {
+    float: right;
+    visibility: hidden;
 }

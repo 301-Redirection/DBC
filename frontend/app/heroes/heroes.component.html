@@ -75,7 +75,12 @@
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
                 <li class="nav-item" *ngFor="let pool of numberOfPools; let i = index;">                    
-                    <a sortablejs [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragenter)="highlightPool(pool)" (dragleave)="unhighlightPool(pool)" (drop)="addHero(selectedHero, pool)">Pool {{ pool }}</a>
+                    <a sortablejs [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragenter)="highlightPool(pool)" (dragleave)="unhighlightPool(pool)" (drop)="addHero(selectedHero, pool)">
+                        Pool {{ pool }}
+                        <div [id]="'poolPlusIconCont'+i" class="pool-plus-icon-cont">
+                            <i class="pool-plus-icon fas fa-plus"></i>
+                        </div>
+                    </a>                    
                 </li>
             </ul>
             <div class="card-body">
