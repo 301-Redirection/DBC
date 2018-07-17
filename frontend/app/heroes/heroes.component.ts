@@ -13,7 +13,7 @@ export class HeroesComponent implements OnInit {
     numberOfPools: any;
     selectedPool: number;
     selectedPoolArray: any;
-    selectedHero: any;
+    selectedHero: any;    
 
     // Temporary test data
     allHeroes = [
@@ -39,12 +39,9 @@ export class HeroesComponent implements OnInit {
     ];
 
     // hero category objects
-    strengthHeroes = [];
-    filterStrengthHeroes = [];
-    agilityHeroes = [];
-    filterAgilityHeroes = [];
-    intelligenceHeroes = [];
-    filterIntelHeroes = [];
+    strengthHeroes = [];    
+    agilityHeroes = [];    
+    intelligenceHeroes = [];    
     heroSearch: String;
 
     pool1 = [];
@@ -57,12 +54,14 @@ export class HeroesComponent implements OnInit {
         group: {
             name: 'clone-group',
             pull: 'clone',
-            put: false,
+            put: false,            
         },
+        sort: false,        
     };
 
     optionsTarget: SortablejsOptions = {
         group: 'clone-group',
+        sort: false,        
     };
 
     constructor(private api: ApiConnectService) { }
@@ -87,14 +86,11 @@ export class HeroesComponent implements OnInit {
     sortHeroData(): void {
         this.allHeroes.forEach((hero) => {
             if (hero.class === 'Strength') {
-                this.strengthHeroes.push(hero);
-                this.filterStrengthHeroes.push(hero);
+                this.strengthHeroes.push(hero);                
             } else if (hero.class === 'Agility') {
-                this.agilityHeroes.push(hero);
-                this.filterAgilityHeroes.push(hero);
+                this.agilityHeroes.push(hero);                
             } else if (hero.class === 'Intelligence') {
-                this.intelligenceHeroes.push(hero);
-                this.filterIntelHeroes.push(hero);
+                this.intelligenceHeroes.push(hero);                
             }
         });
     }
@@ -169,10 +165,13 @@ export class HeroesComponent implements OnInit {
     }
 
     addHero(hero: any, pool: number): void {
-        // console.log('Drop: ' + pool);
-        this.setSelectedPool(pool);
-        this.selectedPoolArray.push(hero);
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        this.unhighlightPool(pool);
+        if (hero != null) {            
+            this.setSelectedPool(pool);
+            this.selectedPoolArray.push(hero);            
+            document.getElementById(`poolLink${pool - 1}`).click();
+            this.selectedHero = null;
+        }
     }
 
     setSelectedHero(hero: any): void {
@@ -188,13 +187,15 @@ export class HeroesComponent implements OnInit {
     }
 
     resetPools(): void {
-        this.pool1 = [];
-        this.pool2 = [];
-        this.pool3 = [];
-        this.pool4 = [];
-        this.pool5 = [];
-        this.selectedPool = 1;
-        this.selectedPoolArray = this.pool1;
+        if (confirm('Are you sure you want to reset?')) {
+            this.pool1 = [];
+            this.pool2 = [];
+            this.pool3 = [];
+            this.pool4 = [];
+            this.pool5 = [];
+            this.selectedPool = 1;
+            this.selectedPoolArray = this.pool1;
+        }        
     }
 
 }
