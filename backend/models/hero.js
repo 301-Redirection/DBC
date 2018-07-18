@@ -1,10 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Hero = sequelize.define(
         'Hero', {
-            name: DataTypes.STRING,
-            alignment: DataTypes.STRING,
+            programName: DataTypes.STRING,
+            niceName: DataTypes.STRING,
             roles: DataTypes.STRING,
-            complexity: DataTypes.INTEGER,
         },
         {
             freezeTableName: true,
