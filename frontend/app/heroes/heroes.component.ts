@@ -4,7 +4,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { HeroesService } from '../services/heroes.service';
 import { NgxPopperModule } from 'ngx-popper';
 
-// Import JQuery 
+// Import JQuery
 declare var $: any;
 
 @Component({
@@ -18,14 +18,14 @@ export class HeroesComponent implements OnInit {
     numberOfPools: any;
     selectedPool: number;
     selectedPoolArray: any;
-    selectedHero: any;    
+    selectedHero: any;
     selectedHeroesList: any;
     allHeroes = [];
 
     // hero category objects
-    strengthHeroes = [];    
-    agilityHeroes = [];    
-    intelligenceHeroes = [];    
+    strengthHeroes = [];
+    agilityHeroes = [];
+    intelligenceHeroes = [];
     heroSearch: String;
 
     // attribute urls
@@ -43,49 +43,39 @@ export class HeroesComponent implements OnInit {
         group: {
             name: 'clone-group',
             pull: 'clone',
-            put: false,            
+            put: false,
         },
-        sort: false,        
+        sort: false,
     };
 
     optionsTarget: SortablejsOptions = {
         group: 'clone-group',
-        sort: false,        
+        sort: false,
     };
 
     constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
 
-    ngOnInit() {        
+    ngOnInit() {
         this.numberOfPools = [1, 2, 3, 4, 5];
         this.selectedPool = 1;
-        this.selectedPoolArray = this.pool1;        
+        this.selectedPoolArray = this.pool1;
         this.getHeroes();
         this.heroesService.currentHeroes.subscribe((heroes) => {
-            this.selectedHeroesList = heroes;            
-        });        
-    }
-
-    triggerPopover(target: HTMLElement, hero: any) { 
-        $(target).popover({            
-            animation: true,
-            placement: 'right',
-            html: true,
-            content: `<h5 style="text-shadow:none;"><img src="${hero.attributeImage}" height="25">&nbsp;${hero.niceName}</h5><p><b>${hero.roles}</b></p><img src="${hero.qImage}" alt="" height="50">&nbsp;<img src="${hero.wImage}" alt="" height="50">&nbsp;<img src="${hero.eImage}" alt="" height="50">&nbsp;<img src="${hero.rImage}" alt="" height="50">`,
+            this.selectedHeroesList = heroes;
         });
-    } 
+    }
 
     getHeroes(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe((data) => {
-            this.allHeroes = data['heroes'];              
-            this.getHeroImages();              
+            this.allHeroes = data['heroes'];
+            this.getHeroImages();
             this.sortHeroData();
-            console.log(this.allHeroes);
         });
     }
 
     getHeroImages(): void {
-        this.allHeroes.forEach(hero => {
+        this.allHeroes.forEach((hero) => {
             hero.image = this.api.getImageURL(hero.url);
             hero.qImage = this.api.getImageURL(hero.url_q);
             hero.wImage = this.api.getImageURL(hero.url_w);
@@ -163,15 +153,15 @@ export class HeroesComponent implements OnInit {
                 document.getElementById('poolTabs').style.height = '42px';
                 document.getElementById('poolTabs').style.visibility = 'visible';
                 this.resetPools();
-            }            
+            }
         }
-    }    
+    }
 
     addHero(hero: any, pool: number): void {
         this.unhighlightPool(pool);
-        if (hero != null) {            
+        if (hero != null) {
             this.setSelectedPool(pool);
-            this.selectedPoolArray.push(hero);            
+            this.selectedPoolArray.push(hero);
             document.getElementById(`poolLink${pool - 1}`).click();
             this.selectedHero = null;
             this.setSelectedHeroesList();
@@ -189,7 +179,7 @@ export class HeroesComponent implements OnInit {
 
     setSelectedHeroesList(): void {
         this.selectedHeroesList = [];
-        if (this.numberOfPools.length == 1) {
+        if (this.numberOfPools.length === 1) {
             this.selectedHeroesList = this.pool1;
         } else {
             this.selectedHeroesList.push(this.pool1);
@@ -215,7 +205,7 @@ export class HeroesComponent implements OnInit {
         document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'hidden';
     }
 
-    resetPools(): void {        
+    resetPools(): void {
         this.pool1 = [];
         this.pool2 = [];
         this.pool3 = [];
@@ -230,6 +220,52 @@ export class HeroesComponent implements OnInit {
         if (confirm('Are you sure you want to reset?')) {
             this.resetPools();
         }
+    }
+
+    // Yes I know, its a mess :P
+    triggerPopover(target: HTMLElement, hero: any) {
+        $(target).popover({
+            animation: true,
+            placement: 'right',
+            html: true,
+            content: `
+                <h5 style="text-shadow:none;">
+                    <img src="${hero.attributeImage}" height="25">
+                    ${hero.niceName}
+                </h5>
+                <p class="text-center">
+                    <b>${hero.roles}</b>
+                </p>
+                <div class="text-center">
+                    <figure class="text-center d-inline-block">
+                        <img src="${this.strURL}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>${hero.baseStrength}</b> + ${hero.baseStrengthGain}
+                        </figure-caption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img src="${this.agiURL}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>${hero.baseAgility}</b> + ${hero.baseAgilityGain}
+                        </figure-caption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img src="${this.intURL}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>${hero.baseIntelligence}</b> + ${hero.baseIntelligenceGain}
+                        </figure-caption>
+                    </figure>
+                </div>
+                <b>Armor:</b>&nbsp;${hero.armor}<br>
+                <b>Attack Damage (Max):</b>&nbsp;${hero.attackDamageMax}<br>
+                <b>Attack Damage (Min):</b>&nbsp;${hero.attackDamageMin}<br>
+                <b>Movement Speed:</b>&nbsp;${hero.movespeed}<br><br>
+                <img src="${hero.qImage}" alt="" height="50">&nbsp;
+                <img src="${hero.wImage}" alt="" height="50">&nbsp;
+                <img src="${hero.eImage}" alt="" height="50">&nbsp;
+                <img src="${hero.rImage}" alt="" height="50">
+            `,
+        });
     }
 
 }

@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class HeroesService {
-    
     private selectedHeroes = new BehaviorSubject([]);
     currentHeroes = this.selectedHeroes.asObservable();
 

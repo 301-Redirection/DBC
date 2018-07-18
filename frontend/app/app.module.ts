@@ -51,7 +51,7 @@ import { HeroesService } from './services/heroes.service';
         ApiConnectService,
         Title,
         AuthService,
-        HeroesService
+        HeroesService,
     ],
     bootstrap: [AppComponent],
 })

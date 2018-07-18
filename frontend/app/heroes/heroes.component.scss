@@ -43,7 +43,11 @@
 }
 
 .popover {
-    background-color: #292929;
+    background-color: #292929 !important;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #292929 !important;
 }
 
 .popover-zone {
