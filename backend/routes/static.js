@@ -2,20 +2,26 @@ const express = require('express');
 const models = require('models');
 const path = require('path');
 const config = require('../../config/config.js');
+const fs = require('fs');
 
 const router = express.Router();
 
 function respondToImageRequest(request, response, type) {
-    response
-        .status(200)
-        .sendFile(path.join(
-            __dirname,
-            '..',
-            '..',
-            config.app.imagePath,
-            `${type}`,
-            `${request.params.imageName}`
-        ));
+    const filePath = path.join(
+        __dirname,
+        '..',
+        '..',
+        config.app.imagePath,
+        `${type}`,
+        `${request.params.imageName}`
+    );
+    if (fs.existsSync(filePath)) {
+        response
+            .status(200)
+            .sendFile(filePath);
+    } else {
+        response.status(404).send('File not Found');
+    }
 }
 
 /* will always return a JSON object of at most 5 bots */
@@ -28,6 +34,8 @@ router.get('/items/all', (request, response) => {
                 newItems[i].dataValues.url = `/static/items/images/${items[i].id}.png`;
             }
             response.status(200).json({ items });
+        }).catch(() => {
+            response.status(500).send('Database Error');
         });
 });
 router.get('/items/images/:imageName', (request, response) => {
@@ -58,6 +66,8 @@ router.get('/heroes/all', (request, response) => {
                 hero.dataValues.url_r = `/static/abilities/images/${heroes[i].programName}_r.png`;
             }
             response.status(200).json({ heroes });
+        }).catch(() => {
+            response.status(500).send('Database Error');
         });
 });
 router.get('/heroes/images/:imageName', (request, response) => {

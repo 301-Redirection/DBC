@@ -35,7 +35,8 @@ describe('Static testing', () => {
             request.get(options, (err, response, body) => {
                 if (err) { throw err; }
                 const responseObject = JSON.parse(body);
-                expect(responseObject.length).not.toBeLessThan(200);
+
+                expect(responseObject.items.length).toBeGreaterThan(200);
 
                 const imageOptions = {
                     url: `http://localhost:3000${responseObject.items[0].url}`,
@@ -98,6 +99,24 @@ describe('Static testing', () => {
                         }
                     );
                 });
+            });
+        });
+        it('-- Invalid hero image', (done) => {
+            const options = {
+                url: 'http://localhost:3000/static/items/images/noetuhoentu',
+            };
+            request.get(options, (err, response) => {
+                expect(response.statusCode).toBe(404);
+                done();
+            });
+        });
+        it('-- Blank hero image', (done) => {
+            const options = {
+                url: 'http://localhost:3000/static/items/images/',
+            };
+            request.get(options, (err, response) => {
+                expect(response.statusCode).toBe(404);
+                done();
             });
         });
     });
