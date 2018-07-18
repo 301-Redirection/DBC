@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
+import { NgxPopperModule } from 'ngx-popper';
 
+// Import JQuery
+declare var $: any;
 @Component({
     selector: 'app-items',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.scss'],
 })
+
+
 export class ItemsComponent implements OnInit {
     // Variables
     selectedItemsArray = [];
@@ -67,6 +72,7 @@ export class ItemsComponent implements OnInit {
 
     ngOnInit() {
         this.getItems();
+        this.initPopovers();
     }
 
     getItems(): void {
@@ -79,12 +85,21 @@ export class ItemsComponent implements OnInit {
         this.sortItemData();
     }
 
+    initPopovers () {
+        $( function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    }
     sortItemData(): void {
         // TODO
         // Sort items
     }
 
-    reset() : void {
+    addItemToList (item) {
+        this.selectedItemsArray.push(item);
+    }
+
+    reset () : void {
         this.selectedItemsArray = [];
     }
 }
