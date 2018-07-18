@@ -19,6 +19,7 @@ import { AuthService } from '../auth/auth.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { Observable } from 'rxjs/Rx';
+import { HeroesComponent } from '../heroes/heroes.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -83,6 +84,7 @@ describe('DashboardComponent', () => {
                 DashboardComponent,
                 CallbackComponent,
                 LoadingComponent,
+                HeroesComponent
             ],
             imports: [
                 NavbarModule,
