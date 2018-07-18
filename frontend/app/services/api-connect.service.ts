@@ -91,6 +91,18 @@ export class ApiConnectService {
             })
             .pipe(catchError(this.handleError));
     }
+
+    public getAllItems() {
+        return this.http
+            .get(`${API_URL}/static/items/all`, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            })
+            .pipe(catchError(this.handleError));
+    }
+
+    public getItemImageURL(imageURL: any) {
+        return `${API_URL}${imageURL}`;
+    }
 }
 
 export default 'ApiConnectService';

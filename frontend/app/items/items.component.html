@@ -31,10 +31,8 @@
 
   <!-- List table -->
   <div class="row mb-5">
-    <div class="col-md-1">
-      <!--Spacing-->
-    </div>
-    <div class="col-md-3">
+    
+    <div class="col-md-2">
       <div class="card heroes-card">
         <div class="card-header">
           <h6>SELECTED ITEMS</h6>
@@ -53,32 +51,30 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
       <div class="card heroes-card">
         <div class="card-header">
           <h6>BASICS</h6>
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-            <div id="popOverData" class="hero-item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" >
-              <div data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-                <div class="hero-name" >
-                    
-                  {{ item.name }}
-                </div>
+            <div  class="hero-item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" >
+              <div data-toggle="popover" data-trigger="hover" data-placement="auto" [attr.data-content]="item.cost" [attr.title]="item.niceName">
+                <img [src]="item.url" >
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
       <div class="card heroes-card">
         <div class="card-header">
           <h6>UPGRADES</h6>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+          <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top"
+            data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
             Popover on top
           </button>
         </div>

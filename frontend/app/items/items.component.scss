@@ -43,8 +43,8 @@
     margin-right: 5px;
     border: 2px solid $btn-generate-border-color;
     background-color: $black;
-    height: 85px;
-    width: 120px;
+    height: 64px;
+    width: 85px;
     border-radius: 4px;
     cursor: pointer;
     position: relative;    
@@ -52,6 +52,15 @@
 
 .hero-item:hover {
     border: 2px solid $btn-generate-border-color-hover;
+}
+
+.popover-title {
+    background-color: $black;
+    font-size: 15px;
+}
+.popover-content {
+    background-color: $black;
+    font-size: 10px;
 }
 
 .hero-item .card-header,

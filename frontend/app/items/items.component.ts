@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
-import { NgxPopperModule } from 'ngx-popper';
 
 // Import JQuery
 declare var $: any;
@@ -15,6 +14,9 @@ declare var $: any;
 export class ItemsComponent implements OnInit {
     // Variables
     selectedItemsArray = [];
+    allItems: any;
+    basicItems = [];
+    upgradeItems = [];
 
     // Temporary test data
     selectedHeroes = [
@@ -44,7 +46,7 @@ export class ItemsComponent implements OnInit {
         },
     ];
 
-    basicItems = [
+    basicItem = [
         {
             name: 'Town Portal Scroll',
         },
@@ -72,17 +74,16 @@ export class ItemsComponent implements OnInit {
 
     ngOnInit() {
         this.getItems();
-        this.initPopovers();
+        
     }
 
     getItems(): void {
-        // database call to retrieve all dota heroes
-        // this.api.getAllHeroes().subscribe((data) => {
-        //     this.allHeroes = data;
-        //     this.sortHeroData();
-        // });
-
-        this.sortItemData();
+        // database call to retrieve all dota items
+        this.api.getAllItems().subscribe((data) => {
+            this.allItems = data['items'];
+            this.sortItemData();
+            this.initPopovers();
+        });
     }
 
     initPopovers () {
@@ -90,11 +91,20 @@ export class ItemsComponent implements OnInit {
             $('[data-toggle="popover"]').popover();
         });
     }
-    sortItemData(): void {
-        // TODO
-        // Sort items
+    getItemImageFullURL (url): string {
+        return this.api.getItemImageURL(url);
     }
-
+    sortItemData(): void {
+        for (let item of this.allItems) {
+            if (item['type'] === 0) {
+                console.log(item);
+                item['url'] = this.getItemImageFullURL(item['url']);
+                this.basicItems.push(item);
+            }else {
+                this.upgradeItems.push(item);
+            }
+        }
+    }
     addItemToList (item) {
         this.selectedItemsArray.push(item);
     }
