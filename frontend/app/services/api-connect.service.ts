@@ -92,6 +92,10 @@ export class ApiConnectService {
             .pipe(catchError(this.handleError));
     }
 
+    public getImageURL(imageURL: any) {
+        return `${API_URL}${imageURL}`;
+    }
+
 }
 
 export default 'ApiConnectService';

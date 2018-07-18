@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HeroesService } from '../services/heroes.service';
+import { NgxPopperModule } from 'ngx-popper';
+
+// Import JQuery 
+declare var $: any;
 
 @Component({
     selector: 'app-heroes',
@@ -47,6 +51,7 @@ export class HeroesComponent implements OnInit {
     constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
 
     ngOnInit() {
+        this.initPopovers(); 
         this.numberOfPools = [1, 2, 3, 4, 5];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
@@ -56,11 +61,25 @@ export class HeroesComponent implements OnInit {
         });
     }
 
+    initPopovers () { 
+        $(function () { 
+            $('[data-toggle="popover"]').popover(); 
+        }); 
+    } 
+
     getHeroes(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe((data) => {
-            this.allHeroes = data['heroes'];            
+            this.allHeroes = data['heroes'];  
+            console.log(this.allHeroes[0]);
+            this.getHeroImages();          
             this.sortHeroData();
+        });
+    }
+
+    getHeroImages(): void {
+        this.allHeroes.forEach(hero => {
+            hero.image = this.api.getImageURL(hero.url);            
         });
     }
 
@@ -151,6 +170,7 @@ export class HeroesComponent implements OnInit {
             pool.splice(index, 1);
         }
         document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        this.setSelectedHeroesList();
     }
 
     setSelectedHeroesList(): void {

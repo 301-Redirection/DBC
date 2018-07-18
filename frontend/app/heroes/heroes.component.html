@@ -21,7 +21,7 @@
                 </div>
                 
                 <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
                         <div class="hero-name">
                             {{ hero.niceName }}
                         </div>                        
@@ -34,10 +34,12 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Popover">
+                            <div class="hero-name">
+                                {{ hero.niceName }}
+                            </div>
+                        </div>                        
                     </div>
                 </div>
                 <br>
@@ -47,10 +49,12 @@
                     <h6>Intelligence</h6>
                 </div>                
                 <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>                    
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div class="popover-zone" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Popover">
+                            <div class="hero-name">
+                                {{ hero.niceName }}
+                            </div>                    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +89,7 @@
             </ul>
             <div class="card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
-                    <div class="card hero-item" *ngFor="let hero of selectedPoolArray">
+                    <div class="card hero-item" *ngFor="let hero of selectedPoolArray" [style.backgroundImage]="'url('+hero.image+')'">
                         <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
                             <i id="removeIcon" class="fas fa-times"></i>
                         </div>
