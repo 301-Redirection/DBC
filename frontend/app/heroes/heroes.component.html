@@ -21,7 +21,7 @@
                 </div>
                 
                 <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)">
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes " (dblclick)="moveSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                        
@@ -34,7 +34,7 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)">
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes " (dblclick)="moveSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                    
@@ -47,7 +47,7 @@
                     <h6>Intelligence</h6>
                 </div>                
                 <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
                         <div class="hero-name">
                             {{ hero.name }}
                         </div>                    
