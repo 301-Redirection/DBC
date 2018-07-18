@@ -3,8 +3,8 @@
         <div class="col-12" id="heroesTitle">
             <h3>HERO SELECTION</h3>
             <br>
-            Select your preferred heroes by clicking and dragging from the list below.
-        </div>        
+            Select your preferred heroes by clicking and dragging from the list below,<br>or by double clicking on a hero to add to the selected pool.
+        </div>
     </div>  
 
     <!-- Hero list -->
@@ -23,7 +23,7 @@
                 <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>                        
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>                    
                     </div>
                 </div>
@@ -58,7 +58,7 @@
     </div>
 
     <div id="toggleButtonDiv" class="mb-2">        
-        <button type="button" class="button button-cancel mx-2" (click)="resetPools()">
+        <button type="button" class="button button-cancel mx-2" (click)="triggerResetPools()">
             <i class="fas fa-undo mr-1"></i>
             Reset
         </button>
@@ -87,11 +87,11 @@
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <div class="card hero-item" *ngFor="let hero of selectedPoolArray">
                         <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
-                            <i id="removeIcon" class="fas fa-times" ></i>
+                            <i id="removeIcon" class="fas fa-times"></i>
                         </div>
                         <div class="card-body">
                             <div class="hero-name">
-                                {{ hero.name }}
+                                {{ hero.niceName }}
                             </div>                            
                         </div>
                     </div>

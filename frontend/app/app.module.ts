@@ -24,6 +24,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { FilterPipe } from './filter.pipe';
+import { HeroesService } from './services/heroes.service';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { FilterPipe } from './filter.pipe';
         ApiConnectService,
         Title,
         AuthService,
+        HeroesService
     ],
     bootstrap: [AppComponent],
 })
