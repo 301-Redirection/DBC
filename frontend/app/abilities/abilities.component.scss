@@ -99,14 +99,65 @@
     width: 50px;
     height: 50px;
 }
-
-.selected-ability {
-    display: block;
-    width: 20px;
-    text-align: center;
-    background: url('https://www.dotafire.com/css/img/bg-skill-level.png');
+.ability-table {
+    border: none;
+    width: auto;
 }
 
+.ability-table tr {
+    padding-top: 5px;
+}
+
+.ability-table td{
+    padding: 0 3px;
+    vertical-align: middle;
+    border: none;
+}
+
+.selected-ability, .unselected-open-ability {
+    display: block;
+    color: black;
+    font-size: 10px;
+    width: 18px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+}
+
+
+.selected-ability {
+    background-color: #C09B64;
+}
+
+.unselected-open-ability {
+    background-color: #606F7A;
+}
+
+.unselected-closed-ability {
+    background-color: #465057;
+}
+
+.disabled-ability {
+    background-color: #212121;
+}
+
+
 .ability-image-display {
-    width: 120px;
+    width: 80px;
+    padding-top:20px;
+}
+
+.ability-item {
+    text-align: center;
+}
+
+.selector {
+    text-align: center;
+}
+.buttons {
+    display: inline-block;
+}
+
+.buttons * {
+    display: inline-block;
 }
