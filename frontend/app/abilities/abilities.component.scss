@@ -114,7 +114,7 @@
     border: none;
 }
 
-.selected-ability, .unselected-open-ability {
+.ability-level {
     display: block;
     color: black;
     font-size: 10px;
@@ -134,7 +134,7 @@
 }
 
 .unselected-closed-ability {
-    background-color: #465057;
+    background-color: #3D454D;
 }
 
 .disabled-ability {
