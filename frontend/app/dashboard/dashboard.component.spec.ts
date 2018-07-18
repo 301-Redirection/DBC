@@ -84,7 +84,7 @@ describe('DashboardComponent', () => {
                 DashboardComponent,
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent
+                HeroesComponent,
             ],
             imports: [
                 NavbarModule,

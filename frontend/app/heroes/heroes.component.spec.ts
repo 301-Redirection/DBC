@@ -13,9 +13,9 @@ describe('HeroesComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [],
-            imports: [                
+            imports: [
                 FormsModule,
-                SortablejsModule,                
+                SortablejsModule,
             ],
             providers: [
                 ApiConnectService,
