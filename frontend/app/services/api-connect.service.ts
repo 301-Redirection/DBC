@@ -94,7 +94,7 @@ export class ApiConnectService {
 
     public getImageURL(imageURL: any) {
         return `${API_URL}${imageURL}`;
-    }
+    }    
 
 }
 

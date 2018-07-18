@@ -28,6 +28,11 @@ export class HeroesComponent implements OnInit {
     intelligenceHeroes = [];    
     heroSearch: String;
 
+    // attribute urls
+    strURL = '/assets/images/strength.png';
+    agiURL = '/assets/images/agility.png';
+    intURL = '/assets/images/intelligence.png';
+
     pool1 = [];
     pool2 = [];
     pool3 = [];
@@ -50,47 +55,56 @@ export class HeroesComponent implements OnInit {
 
     constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
 
-    ngOnInit() {
-        this.initPopovers(); 
+    ngOnInit() {        
         this.numberOfPools = [1, 2, 3, 4, 5];
         this.selectedPool = 1;
-        this.selectedPoolArray = this.pool1;
+        this.selectedPoolArray = this.pool1;        
         this.getHeroes();
         this.heroesService.currentHeroes.subscribe((heroes) => {
             this.selectedHeroesList = heroes;            
-        });
+        });        
     }
 
-    initPopovers () { 
-        $(function () { 
-            $('[data-toggle="popover"]').popover(); 
-        }); 
+    triggerPopover(target: HTMLElement, hero: any) { 
+        $(target).popover({            
+            animation: true,
+            placement: 'right',
+            html: true,
+            content: `<h5 style="text-shadow:none;"><img src="${hero.attributeImage}" height="25">&nbsp;${hero.niceName}</h5><p><b>${hero.roles}</b></p><img src="${hero.qImage}" alt="" height="50">&nbsp;<img src="${hero.wImage}" alt="" height="50">&nbsp;<img src="${hero.eImage}" alt="" height="50">&nbsp;<img src="${hero.rImage}" alt="" height="50">`,
+        });
     } 
 
     getHeroes(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe((data) => {
-            this.allHeroes = data['heroes'];  
-            console.log(this.allHeroes[0]);
-            this.getHeroImages();          
+            this.allHeroes = data['heroes'];              
+            this.getHeroImages();              
             this.sortHeroData();
+            console.log(this.allHeroes);
         });
     }
 
     getHeroImages(): void {
         this.allHeroes.forEach(hero => {
-            hero.image = this.api.getImageURL(hero.url);            
+            hero.image = this.api.getImageURL(hero.url);
+            hero.qImage = this.api.getImageURL(hero.url_q);
+            hero.wImage = this.api.getImageURL(hero.url_w);
+            hero.eImage = this.api.getImageURL(hero.url_e);
+            hero.rImage = this.api.getImageURL(hero.url_r);
         });
     }
 
     sortHeroData(): void {
         this.allHeroes.forEach((hero) => {
             if (hero.primaryAttribute === 'str') {
-                this.strengthHeroes.push(hero);                
+                this.strengthHeroes.push(hero);
+                hero.attributeImage = this.strURL;
             } else if (hero.primaryAttribute === 'agi') {
-                this.agilityHeroes.push(hero);                
+                this.agilityHeroes.push(hero);
+                hero.attributeImage = this.agiURL;
             } else if (hero.primaryAttribute === 'int') {
-                this.intelligenceHeroes.push(hero);                
+                this.intelligenceHeroes.push(hero);
+                hero.attributeImage = this.intURL;
             }
         });
     }
