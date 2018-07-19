@@ -1,19 +1,25 @@
 module.exports = {
-    up: (queryInterface, Sequelize) => queryInterface.createTable('Hero', {
+    up: (queryInterface, Sequelize) => queryInterface.createTable('Items', {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER,
         },
-        programName: {
+        name: {
+            type: Sequelize.STRING,
+        },
+        cost: {
+            type: Sequelize.INTEGER,
+        },
+        components: {
             type: Sequelize.STRING,
         },
         niceName: {
             type: Sequelize.STRING,
         },
-        roles: {
-            type: Sequelize.STRING,
+        type: {
+            type: Sequelize.INTEGER,
         },
         createdAt: {
             allowNull: false,
@@ -24,5 +30,5 @@ module.exports = {
             type: Sequelize.DATE,
         },
     }),
-    down: queryInterface => queryInterface.dropTable('Hero'),
+    down: queryInterface => queryInterface.dropTable('Items'),
 };

@@ -45,8 +45,17 @@ module.exports = {
         movespeed: {
             type: Sequelize.INTEGER,
         },
-        abilities: {
-            type: Sequelize.TEXT,
+        ability_q: {
+            type: Sequelize.STRING,
+        },
+        ability_w: {
+            type: Sequelize.STRING,
+        },
+        ability_e: {
+            type: Sequelize.STRING,
+        },
+        ability_r: {
+            type: Sequelize.STRING,
         },
         heroId: {
             type: Sequelize.INTEGER,

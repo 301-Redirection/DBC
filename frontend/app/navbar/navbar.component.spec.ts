@@ -17,6 +17,8 @@ import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -30,6 +32,7 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
+                HeroesComponent,                
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
@@ -37,6 +40,7 @@ describe('NavbarComponent', () => {
                 DashboardModule,
                 BotConfigModule,
                 BotManagementModule,
+                SortablejsModule,
             ],
             providers: [
                 AuthService,

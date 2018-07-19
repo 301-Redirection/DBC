@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { FormsModule } from '@angular/forms';
 import { HeroesComponent } from './heroes.component';
+import { SortablejsModule } from 'angular-sortablejs';
+import { ApiConnectService } from '../services/api-connect.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { FilterPipe } from '../filter.pipe';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -8,7 +13,19 @@ describe('HeroesComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [HeroesComponent],
+            declarations: [
+                HeroesComponent,
+                FilterPipe,
+            ],
+            imports: [
+                FormsModule,
+                SortablejsModule,
+            ],
+            providers: [
+                ApiConnectService,
+                HttpClient,
+                HttpHandler,
+            ],
         })
         .compileComponents();
     }));

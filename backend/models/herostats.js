@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const HeroStats = sequelize.define('HeroStats', {
         primaryAttribute: DataTypes.STRING,
-        abilities: DataTypes.TEXT,
+        ability_q: DataTypes.STRING,
+        ability_w: DataTypes.STRING,
+        ability_e: DataTypes.STRING,
+        ability_r: DataTypes.STRING,
         movespeed: DataTypes.INTEGER,
         armor: DataTypes.FLOAT,
         attackDamageMin: DataTypes.FLOAT,

@@ -14,7 +14,8 @@
     "lint-ts": "ng lint",
     "lint-js": "./node_modules/.bin/eslint ./ --ext js",
     "e2e": "ng e2e",
-    "test-init": "./node_modules/jasmine/bin/jasmine.js init"
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
+    "scrape": "node ./backend/static/converters/updateDotaDefinitions.js"
   },
   "dependencies": {
     "@angular/animations": "^5.2.10",
@@ -31,6 +32,7 @@
     "body-parser": "~1.18.2",
     "bootstrap": "4.1.1",
     "bson": "^3.0.0",
+    "cheerio": "^1.0.0-rc.2",
     "chromedriver": "^2.40.0",
     "connect-ensure-login": "^0.1.1",
     "connect-flash": "^0.1.1",
@@ -55,6 +57,7 @@
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
+    "ngx-popper": "^4.1.0",
     "node-sass-middleware": "0.9.8",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
@@ -73,7 +76,7 @@
     "@angular/compiler-cli": "^5.2.10",
     "@angular/language-service": "^5.2.0",
     "@angular/platform-server": "^5.2.10",
-    "@types/jasmine": "~2.8.3",
+    "@types/jasmine": "^2.8.8",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "babel-eslint": "^8.2.3",
