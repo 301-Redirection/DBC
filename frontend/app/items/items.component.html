@@ -6,14 +6,13 @@
   </div>
 
   <!-- Hero list -->
-  <!--TODO: Make Component to be imported-->
   <div class="row mb-5">
     <div class="card heroes-card">
       <div class="card-header">
         <h5>SELECTED HEROES</h5>
       </div>
       <div class="card-body">
-        <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i)">
+        <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i)" [attr.id]="i">
           <div class="hero-name">
             {{ hero.name }}
           </div>
@@ -23,6 +22,10 @@
   </div>
 
   <div id="toggleButtonDiv" class="mb-2">
+
+  </div>
+  <!-- Tool Bar -->
+  <div class="row mb-5">
     <button type="button" class="button button-cancel mx-2" (click)="reset()">
       <i class="fas fa-undo mr-1"></i>
       Reset
@@ -31,24 +34,47 @@
 
   <!-- List table -->
   <div class="row mb-5">
-    
-    <div class="col-md-2">
+
+    <div class="col-md-4">
       <div class="card heroes-card">
         <div class="card-header">
-          <h6>SELECTED ITEMS</h6>
+          <h4>SELECTED ITEMS
+              <button type="button" class="button button-cancel ml-4" (click)="clearItemsSelectedHero()">
+                  <i class="far fa-trash-alt"></i>            
+                </button>
+          </h4>
+          
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget">
-            <div class="card hero-item" *ngFor="let w of selectedItemsArray">
-              <div class="card-body">
-                <div data-toggle="popover" 
-                   data-trigger="hover"
-                   data-placement="auto" 
-                   data-html="true"
-                   [attr.data-content]="w.cost" 
-                   [attr.title]="w.niceName">
-                <img [src]="w.url" >
+            <div class="card item-selected-card" *ngFor="let item of selectedItemsArray">
+              <div class="card-header ">
+                <h5>{{item.niceName}}</h5>
+                <a  (click)="removeItemFromList(item)">
+                  <i id="removeIcon" class="fas fa-times"></i>
+                </a>
+              </div>
+              <div class="card-body row">
+                <div class="item-selected col-sm-4">
+                  <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
+                    <img [src]="item.url">
+                  </div>
                 </div>
+                <div class="col-sm-4">
+                  <h5>Item Cost</h5>
+                  <h6>
+                    {{item.cost}}
+                    <img [src]="dotaGoldIconURL">
+                  </h6>
+                  
+                </div>
+                <div class="col-sm-4">
+                    <h5>Components</h5>
+                    <h6>
+                      {{item.Components}}
+                    </h6>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -56,21 +82,16 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="card heroes-card">
         <div class="card-header">
-          <h6>BASICS</h6>
+          <h4>BASICS</h4>
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-            <div  class="hero-item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" >
-              <div data-toggle="popover" 
-                   data-trigger="hover"
-                   data-placement="auto" 
-                   data-html="true"
-                   [attr.data-content]="item.cost" 
-                   [attr.title]="item.niceName">
-                <img [src]="item.url" >
+            <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)">
+              <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
+                <img [src]="item.url">
               </div>
             </div>
           </div>
@@ -80,18 +101,13 @@
     <div class="col-md-4">
       <div class="card heroes-card">
         <div class="card-header">
-          <h6>UPGRADES</h6>
+          <h4>UPGRADES</h4>
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
-            <div  class="hero-item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)" >
-              <div data-toggle="popover" 
-                   data-trigger="hover"
-                   data-placement="auto" 
-                   data-html="true"
-                   [attr.data-content]="item.cost" 
-                   [attr.title]="item.niceName">
-                <img [src]="item.url" >
+            <div class="item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)">
+              <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
+                <img [src]="item.url">
               </div>
             </div>
           </div>

@@ -1,44 +1,8 @@
 /* Global Variables */
 @import '../../variables';
+@import '../heroes/heroes.component.scss';
 
-#poolTabs {
-    border-bottom-color: $light-grey;
-}
-
-.nav-item {
-    cursor: pointer;
-    width: 20%;    
-}
-
-.nav-link.active {
-    background-color: $light-grey;    
-    border-color: $light-grey;
-}
-
-.nav-link.active:hover {
-    color: $dark-grey-2;
-}
-
-.heroes-card {
-    height: 100%;
-    background-color: rgba($dark-grey-2, 0.8);
-    text-align: left;
-    color: $light-grey;  
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;  
-}
-
-#itemsTitle {
-    color: $grey;
-    text-align: center;
-}
-
-.drop-zone {
-    min-height: 90px;
-}
-
-.hero-item {
+.item {
     display: inline-block;
     margin-right: 5px;
     border: 2px solid $btn-generate-border-color;
@@ -50,46 +14,33 @@
     position: relative;    
 }
 
-.hero-item:hover {
+.item:hover {
     border: 2px solid $btn-generate-border-color-hover;
 }
 
-.popover-title {
-    background-color: $black;
-    font-size: 15px;
-}
-.popover-content {
-    background-color: $black;
-    font-size: 10px;
+.hero-selected {
+    border: 2px solid $btn-generate-border-color-hover;
 }
 
-.hero-item .card-header,
-.hero-item .card-body {
+.item .card-header,
+.item .card-body {
     padding: 1px;
 }
 
-.hero-name {     
-    position: absolute;
-    bottom: 0;    
-    left: 50%;
-    transform: translate(-50%, 0);
+.item-selected {
+    height: 90px;
+    width: 100px;
 }
 
-.class-title {
-    margin-bottom: 5px;
+.item-selected-card {
+    height: 100%;
+    background-color: rgba($dark-grey-2, 0.8);
+    text-align: left;
+    color: $light-grey;  
+    width: 100%;
 }
-
-.class-title h6 {
-    display: inline-block;
-}
-
-.class-title img {
-    height: 25px;
-}
-
 #removeIcon {
     color: $red;
     float: right;
-    z-index: 2;
+    z-index: 100;
 }
-
