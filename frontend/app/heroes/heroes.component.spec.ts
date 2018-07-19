@@ -5,6 +5,7 @@ import { HeroesComponent } from './heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import { FilterPipe } from '../filter.pipe';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -12,7 +13,10 @@ describe('HeroesComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [],
+            declarations: [
+                HeroesComponent,
+                FilterPipe,
+            ],
             imports: [
                 FormsModule,
                 SortablejsModule,
@@ -22,13 +26,6 @@ describe('HeroesComponent', () => {
                 HttpClient,
                 HttpHandler,
             ],
-        })
-        .compileComponents();
-    }));
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [HeroesComponent],
         })
         .compileComponents();
     }));

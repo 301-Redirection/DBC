@@ -32,7 +32,7 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
+                HeroesComponent,                
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),

@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarModule } from './navbar/navbar.module';
 import { AuthService } from './auth/auth.service';
 import { ApiConnectService } from './services/api-connect.service';
+import { SortablejsModule } from '../../node_modules/angular-sortablejs/dist';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -15,6 +16,7 @@ describe('AppComponent', () => {
             imports: [
                 RouterTestingModule,
                 NavbarModule,
+                SortablejsModule,
             ],
             providers: [
                 AuthService,

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HeroesService } from '../services/heroes.service';
-import { NgxPopperModule } from 'ngx-popper';
 
 // Import JQuery
 declare var $: any;
