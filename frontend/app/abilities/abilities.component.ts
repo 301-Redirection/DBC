@@ -116,7 +116,6 @@ export class AbilitiesComponent implements OnInit {
             }
             hero.abilities = [];
             hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
-            console.log(hero.abilityPriorities);
         }
     }
 

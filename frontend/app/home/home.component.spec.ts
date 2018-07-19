@@ -5,6 +5,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ApiConnectService } from '../services/api-connect.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title, By } from '@angular/platform-browser';
+import { AbilitiesModule } from '../abilities/abilities.module';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -16,6 +17,7 @@ describe('HomeComponent', () => {
             imports: [
                 NavbarModule,
                 RouterTestingModule,
+                AbilitiesModule,
             ],
             providers: [
                 ApiConnectService,
