@@ -44,3 +44,19 @@
     float: right;
     z-index: 100;
 }
+
+.items-position {
+    position: absolute;
+    float: left;
+    margin: 0px
+}
+
+.hero-card {
+    height: 100%;
+    background-color: rgba($dark-grey-2, 0.8);
+    text-align: left;
+    color: $light-grey;  
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 1%;  
+}

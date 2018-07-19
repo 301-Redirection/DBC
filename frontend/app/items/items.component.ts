@@ -22,6 +22,8 @@ export class ItemsComponent implements OnInit {
     heroItemSelection = [];
     selectedHeroIndex: number;
     prevSelectedHeroIndex: number;
+    selectedItemComponentsArray = [];
+    totalCostPerHero = [];
 
     // Temporary test data
     selectedHeroes = [
@@ -69,10 +71,12 @@ export class ItemsComponent implements OnInit {
             pull: 'clone',
             put: false,
         },
+        sort: false,
     };
 
     optionsTarget: SortablejsOptions = {
         group: 'clone-group',
+        sort: false,
     };
 
     constructor(private api: ApiConnectService) {}
@@ -88,6 +92,7 @@ export class ItemsComponent implements OnInit {
         this.prevSelectedHeroIndex = 0;
         for (let hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
+            this.totalCostPerHero.push(0);
         }
     }
 
@@ -114,7 +119,8 @@ export class ItemsComponent implements OnInit {
             if (item['type'] === 0) {
                 this.basicItems.push(item);
             }else if (item['name'].indexOf('recipe') === -1) {
-                console.log(item);
+                //console.log(item);
+                this.handleItemComponents(item);
                 this.upgradeItems.push(item);
             }else {
                 item['url'] = this.recipeIconURL;
@@ -124,12 +130,14 @@ export class ItemsComponent implements OnInit {
     }
     addItemToList (item) {
         this.heroItemSelection[this.selectedHeroIndex].push(item);
+        this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
         this.setSelectedItemsArray();
     }
 
     removeItemFromList (item) {
         const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
         if (index !== -1) {
+            this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
             this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
             this.setSelectedItemsArray();
         }
@@ -156,5 +164,23 @@ export class ItemsComponent implements OnInit {
     clearItemsSelectedHero () {
         this.heroItemSelection[this.selectedHeroIndex] = [];
         this.setSelectedItemsArray();
+    }
+
+    handleItemComponents (item) {
+        item['components'] = JSON.parse(item['components']);
+        console.log(item.components);
+        let component: any;
+        if (item.components === null) {
+            item.components = null;
+        } else {
+            for (let componentID of item.components) {
+                component = this.allItems.find(x => x.id === componentID);
+                this.selectedItemComponentsArray.push(component);
+                item.components = this.selectedItemComponentsArray;
+                
+            }
+            console.log(item.components);
+        }
+        this.selectedItemComponentsArray = [];
     }
 }

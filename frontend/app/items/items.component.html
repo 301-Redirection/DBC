@@ -1,7 +1,7 @@
 <div class="container-fluid container-fluid-custom background main-background">
   <div class="row mt-5 mb-5">
     <div class="col-12" id="itemsTitle">
-      <h3>ITEM CONFIGURATION</h3>
+      <h2>ITEM CONFIGURATION</h2>
     </div>
   </div>
 
@@ -33,20 +33,23 @@
   </div>
 
   <!-- List table -->
-  <div class="row mb-5">
+  <div class="row">
 
     <div class="col-md-4">
-      <div class="card heroes-card">
+      <div class="card hero-card">
         <div class="card-header">
           <h4>SELECTED ITEMS
-              <button type="button" class="button button-cancel ml-4" (click)="clearItemsSelectedHero()">
-                  <i class="far fa-trash-alt"></i>            
-                </button>
+              <button type="button" class="button button-cancel ml-4 float-right" (click)="clearItemsSelectedHero()">
+                  <i class="far fa-trash-alt"></i>           
+              </button>
+              <span class="text-muted float-right mx-2">{{totalCostPerHero[selectedHeroIndex] }}</span>
+              <img class="float-right mr-2" [src]="dotaGoldIconURL">
+              
           </h4>
           
         </div>
         <div class="card-body">
-          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget">
+          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" >
             <div class="card item-selected-card" *ngFor="let item of selectedItemsArray">
               <div class="card-header ">
                 <h5>{{item.niceName}}</h5>
@@ -70,9 +73,11 @@
                 </div>
                 <div class="col-sm-4">
                     <h5>Components</h5>
-                    <h6>
-                      {{item.Components}}
-                    </h6>
+                    <div class="item" *ngFor="let component of item.components">
+                        <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="component.cost" [attr.title]="component.niceName">
+                          <img [src]="component.url">
+                        </div>
+                    </div>
                 </div>
                 
               </div>
@@ -83,7 +88,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card heroes-card">
+      <div class="card hero-card">
         <div class="card-header">
           <h4>BASICS</h4>
         </div>
@@ -99,7 +104,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card heroes-card">
+      <div class="card hero-card">
         <div class="card-header">
           <h4>UPGRADES</h4>
         </div>
