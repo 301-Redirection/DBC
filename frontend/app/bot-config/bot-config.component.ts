@@ -88,7 +88,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 faction: this.faction,
             };
             const response = this.api.updateBot(requestBot).subscribe((data) => {
-                console.log(globalConfig);
                 this.generateURL =
                     `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
             });
