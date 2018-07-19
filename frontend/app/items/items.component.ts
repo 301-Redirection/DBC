@@ -29,28 +29,20 @@ export class ItemsComponent implements OnInit {
     // Temporary test data
     selectedHeroes = [
         {
+            name: 'Anti-Mage',
+            image: 'http://localhost:3000/static/heroes/images/antimage.png',
+        },
+        {
             name: 'Axe',
-            class: 'Strength',
+            image: 'http://localhost:3000/static/heroes/images/axe.png',
         },
         {
-            name: 'Sven',
-            class: 'Strength',
+            name: 'Bane',
+            image: 'http://localhost:3000/static/heroes/images/bane.png',
         },
         {
-            name: 'Viper',
-            class: 'Agility',
-        },
-        {
-            name: 'Sniper',
-            class: 'Agility',
-        },
-        {
-            name: 'Lina',
-            class: 'Intelligence',
-        },
-        {
-            name: 'Chen',
-            class: 'Intelligence',
+            name: 'Bloodseeker',
+            image: 'http://localhost:3000/static/heroes/images/bloodseeker.png',
         },
     ];
 
@@ -91,7 +83,7 @@ export class ItemsComponent implements OnInit {
         // TODO use hero service
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
-        for (let hero of this.selectedHeroes) {
+        for (const hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
             this.totalCostPerHero.push(0);
         }
@@ -102,21 +94,14 @@ export class ItemsComponent implements OnInit {
         this.api.getAllItems().subscribe((data) => {
             this.allItems = data['items'];
             this.sortItemData();
-            //this.initPopovers();
             this.setSelectedHero(0);
-        });
-    }
-
-    initPopovers () {
-        $( function () {
-            $('[data-toggle="popover"]').popover();
         });
     }
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);
     }
     sortItemData(): void {
-        for (let item of this.allItems) {
+        for (const item of this.allItems) {
             item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
                 this.basicItems.push(item);
@@ -155,7 +140,7 @@ export class ItemsComponent implements OnInit {
         this.heroItemSelection = [];
         let index: number;
         index = 0;
-        for (let hero of this.selectedHeroes) {
+        for (const hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
             this.totalCostPerHero[index] = 0;
             index += 1;
@@ -185,7 +170,7 @@ export class ItemsComponent implements OnInit {
         item['components'] = JSON.parse(item['components']);
         let component: any;
         if (item.components !== 'null') {
-            for (let componentID of item.components) {
+            for (const componentID of item.components) {
                 component = this.allItems.find(x => x.id === componentID);
                 this.selectedItemComponentsArray.push(component);
                 item.components = this.selectedItemComponentsArray;
@@ -195,7 +180,6 @@ export class ItemsComponent implements OnInit {
     }
 
     triggerPopover(target: HTMLElement, item: any) {
-        console.log(item);
         $(target).popover({
             animation: true,
             placement: 'right',

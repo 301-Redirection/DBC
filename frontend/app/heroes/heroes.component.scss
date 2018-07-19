@@ -43,8 +43,9 @@
     margin-right: 10px;
     border: 2px solid $btn-generate-border-color;
     background-color: $black;
-    height: 85px;
-    width: 120px;
+    background-size: cover;
+    height: 145px;
+    width: 128px;
     border-radius: 4px;
     cursor: pointer;
     position: relative;    
@@ -52,6 +53,8 @@
 
 .hero-item:hover {
     border: 2px solid $btn-generate-border-color-hover;
+    transform: scale(1.05);
+    transition: 0.4s;
 }
 
 .hero-item .card-header,
