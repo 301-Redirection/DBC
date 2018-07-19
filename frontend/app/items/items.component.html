@@ -13,7 +13,7 @@
         <h5>SELECTED HEROES</h5>
       </div>
       <div class="card-body">
-        <div class="hero-item" *ngFor="let hero of selectedHeroes">
+        <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i)">
           <div class="hero-name">
             {{ hero.name }}
           </div>
@@ -41,8 +41,13 @@
           <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget">
             <div class="card hero-item" *ngFor="let w of selectedItemsArray">
               <div class="card-body">
-                <div class="hero-name">
-                  {{ w.name }}
+                <div data-toggle="popover" 
+                   data-trigger="hover"
+                   data-placement="auto" 
+                   data-html="true"
+                   [attr.data-content]="w.cost" 
+                   [attr.title]="w.niceName">
+                <img [src]="w.url" >
                 </div>
               </div>
             </div>
@@ -59,7 +64,12 @@
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
             <div  class="hero-item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" >
-              <div data-toggle="popover" data-trigger="hover" data-placement="auto" [attr.data-content]="item.cost" [attr.title]="item.niceName">
+              <div data-toggle="popover" 
+                   data-trigger="hover"
+                   data-placement="auto" 
+                   data-html="true"
+                   [attr.data-content]="item.cost" 
+                   [attr.title]="item.niceName">
                 <img [src]="item.url" >
               </div>
             </div>
@@ -67,16 +77,24 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="card heroes-card">
         <div class="card-header">
           <h6>UPGRADES</h6>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top"
-            data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-            Popover on top
-          </button>
+          <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
+            <div  class="hero-item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)" >
+              <div data-toggle="popover" 
+                   data-trigger="hover"
+                   data-placement="auto" 
+                   data-html="true"
+                   [attr.data-content]="item.cost" 
+                   [attr.title]="item.niceName">
+                <img [src]="item.url" >
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
