@@ -10,13 +10,16 @@ declare var $: any;
     styleUrls: ['./items.component.scss'],
 })
 
-
 export class ItemsComponent implements OnInit {
     // Variables
     selectedItemsArray = [];
     allItems: any;
     basicItems = [];
     upgradeItems = [];
+    recipes = [];
+    recipeIconURL = '../../assets/images/recipe-icon.png';
+    heroItemSelection = [];
+    selectedHeroIndex: number;
 
     // Temporary test data
     selectedHeroes = [
@@ -73,8 +76,16 @@ export class ItemsComponent implements OnInit {
     constructor(private api: ApiConnectService) {}
 
     ngOnInit() {
+        this.getHeroes();
         this.getItems();
-        
+    }
+
+    getHeroes() {
+        // TODO use hero service
+        this.selectedHeroIndex = 0;
+        for (let hero of this.selectedHeroes) {
+            this.heroItemSelection = [];
+        }
     }
 
     getItems(): void {
@@ -96,19 +107,26 @@ export class ItemsComponent implements OnInit {
     }
     sortItemData(): void {
         for (let item of this.allItems) {
+            item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
-                console.log(item);
-                item['url'] = this.getItemImageFullURL(item['url']);
                 this.basicItems.push(item);
-            }else {
+            }else if (item['name'].indexOf('recipe') === -1) {
+                console.log(item);
                 this.upgradeItems.push(item);
+            }else {
+                item['url'] = this.recipeIconURL;
+                this.recipes.push(item);
             }
         }
     }
     addItemToList (item) {
         this.selectedItemsArray.push(item);
+        this.heroItemSelection[this.selectedHeroIndex].push(item);
     }
-
+    setSelectedHero (index) {
+        this.selectedHeroIndex = index;
+        this.selectedItemsArray = this.heroItemSelection[index];
+    }
     reset () : void {
         this.selectedItemsArray = [];
     }
