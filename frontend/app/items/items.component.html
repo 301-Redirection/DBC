@@ -1,10 +1,9 @@
 <div class="container-fluid container-fluid-custom background main-background">
   <div class="row mt-5 mb-5">
-      <div class="col-12" id="heroesTitle">
-          <h3>ITEM SELECTION</h3>
-          <br>
-          Select your item guide for each heroes by clicking and dragging items from the list below.
-      </div>     
+    <div class="col-12" id="heroesTitle">
+      <h3>ITEM SELECTION</h3>
+      <br> Select your item guide for each heroes by clicking and dragging items from the list below.
+    </div>
   </div>
 
   <!-- Hero list -->
@@ -23,53 +22,52 @@
     </div>
   </div>
 
-  
+
   <!-- Tool Bar -->
   <div class="row mb-5 ">
     <div class="col-md-4"></div>
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <button type="button" class="button button-new-configuration mx-2 float-right" >
-            <i class="fas fa-arrow-right"></i>
-            Abilities
-        </button>
-        <button type="button" class="button button-cancel mx-2 float-right" (click)="reset()">
-            <i class="fas fa-undo mr-1"></i>
-            Reset
-          </button>
-      
-      </div>
-      
+      <button type="button" class="button button-new-configuration mx-2 float-right">
+        <i class="fas fa-arrow-right"></i>
+        Abilities
+      </button>
+      <button type="button" class="button button-cancel mx-2 float-right" (click)="reset()">
+        <i class="fas fa-undo mr-1"></i>
+        Reset
+      </button>
+    </div>
   </div>
 
   <!-- List table -->
   <div class="row mt-2">
-
     <div class="col-md-4">
       <div class="card hero-card">
         <div class="card-header">
           <h4>SELECTED ITEMS
-              <button type="button" class="button button-cancel ml-4 float-right" (click)="clearItemsSelectedHero()">
-                  <i class="far fa-trash-alt"></i>           
-              </button>
-              <span class="text-muted float-right mx-2">{{totalCostPerHero[selectedHeroIndex] }}</span>
-              <img class="float-right mr-2" [src]="dotaGoldIconURL">
-              
+            <button type="button" class="button button-cancel ml-4 float-right" (click)="clearItemsSelectedHero()">
+              <i class="far fa-trash-alt"></i>
+            </button>
+            <span class="text-muted float-right mx-2">{{totalCostPerHero[selectedHeroIndex] }}</span>
+            <img class="float-right mr-2" [src]="dotaGoldIconURL">
           </h4>
-          
         </div>
         <div class="card-body">
-          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" (drop)="addItemCostToTotal()" >
-            <div class="card item-selected-card" *ngFor="let item of selectedItemsArray" >
-              <div class="card-header ">
-                <h5>{{item.niceName}}</h5>
-                <a  (click)="removeItemFromList(item)">
-                  <i id="removeIcon" class="fas fa-times"></i>
-                </a>
+          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" (drop)="addItemCostToTotal()">
+            <div class="card item-selected-card" *ngFor="let item of selectedItemsArray">
+              <div class="card-header row">
+                <div class="col-sm-7">
+                  <h5>{{item.niceName}}</h5>
+                </div>
+                <div class="col-sm-5">
+                  <button class="btn button-cancel float-right" (click)="removeItemFromList(item)">
+                    <i id="removeIcon" class="fas fa-times"></i>
+                  </button>
+                </div>
               </div>
               <div class="card-body row">
                 <div class="item-selected col-sm-4">
-                  <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover" >
+                  <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover">
                     <img [src]="item.url">
                   </div>
                 </div>
@@ -79,13 +77,12 @@
                     {{item.cost}}
                     <img [src]="dotaGoldIconURL">
                   </h6>
-                  
                 </div>
                 <div class="col-sm-4">
                   <h5>Components</h5>
                   <div *ngIf="item.components !== 'null'">
                     <div class="item" *ngFor="let component of item.components">
-                      <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, component)" data-trigger="hover" >
+                      <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, component)" data-trigger="hover">
                         <img [src]="component.url">
                       </div>
                     </div>
@@ -94,7 +91,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -105,13 +101,11 @@
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-          <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)" >
-          
-            <div class="popover-zone" data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover" >
-              <img [src]="item.url">
+            <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)">
+              <div class="popover-zone" data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover">
+                <img [src]="item.url">
+              </div>
             </div>
-          
-          </div>
           </div>
         </div>
       </div>
@@ -124,7 +118,7 @@
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
             <div class="item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)">
-              <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover" >
+              <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover">
                 <img [src]="item.url">
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
+//import { HereosService } from '../services/heroes.service.ts
 
 // Import JQuery
 declare var $: any;
@@ -72,6 +73,7 @@ export class ItemsComponent implements OnInit {
         sort: false,
     };
 
+    // constructor(private api: ApiConnectService, private heroService: HeroesService) {}
     constructor(private api: ApiConnectService) {}
 
     ngOnInit() {
@@ -81,6 +83,7 @@ export class ItemsComponent implements OnInit {
 
     getHeroes() {
         // TODO use hero service
+        // this.heroesService.currentHeroes.subscribe((heroes) => this.selectedHeroes = heroes);
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
         for (const hero of this.selectedHeroes) {
