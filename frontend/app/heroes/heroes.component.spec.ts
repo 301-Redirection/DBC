@@ -17,6 +17,8 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
+import { ItemsModule } from '../items/items.module';
+import { AbilitiesModule } from '../abilities/abilities.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
 
@@ -108,11 +110,12 @@ describe('HeroesComponent', () => {
                 BotConfigModule,
                 BotManagementModule,
                 FormsModule,
+                ItemsModule,
                 SortablejsModule,
                 DashboardModule,
+                AbilitiesModule,
             ],
             providers: [
-                ApiConnectService,
                 AuthService,
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 HttpClient,

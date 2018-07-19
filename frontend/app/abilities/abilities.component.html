@@ -1,0 +1,109 @@
+<div class="container-fluid container-fluid-custom background main-background">
+    <div class="row mt-5 mb-5">
+        <div class="col-12" id="heroesTitle">
+            <h3>ABILITY CONFIGURATION</h3>
+            <br> Select a hero to customize which abilities are being leveled up by the bots
+        </div>
+    </div>
+
+    <!-- Hero list -->
+    <div class="row mb-5">
+        <div class="card heroes-card">
+            <div class="card-header">
+                <h5>HEROES</h5>
+            </div>
+            <div class="card-body">
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/7/7a/Strength_attribute_symbol.png/30px-Strength_attribute_symbol.png?version=6306b398d1e0dddfd5f3d1719c6e3c71"
+                    alt="Strength symbol">&nbsp;
+                    <h6>Strength</h6>
+                </div>
+
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of strengthHeroes" [style.backgroundImage]="'url('+hero.url+')'">
+                        <div class="hero-name">
+                            {{ hero.niceName }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/2/2d/Agility_attribute_symbol.png/30px-Agility_attribute_symbol.png?version=2bb35660c66454fc3b024fdb19b9ee29"
+                    alt="Agility symbol">&nbsp;
+                    <h6>Agility</h6>
+                </div>
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of agilityHeroes" [style.backgroundImage]="'url('+hero.url+')'">
+                        <div class="hero-name">
+                            {{ hero.niceName }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/5/56/Intelligence_attribute_symbol.png/30px-Intelligence_attribute_symbol.png?version=aea75b8d40acffb8f90549a9ff6cdecb"
+                    alt="Intelligence symbol">&nbsp;
+                    <h6>Intelligence</h6>
+                </div>
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of intelligenceHeroes" [style.backgroundImage]="'url('+hero.url+')'">
+                        <div class="hero-name">
+                            {{ hero.niceName }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- List table -->
+    <div *ngIf="currentHero !== undefined" class="row mb-5">
+        <div class="card heroes-card">
+            <div class="card-header">
+                <h5>Abilites</h5>
+            </div>
+            <div class="card-body row">
+                <div class="col-2 ability-item" *ngFor="let ability of currentHero.abilities">
+                    <div class = "selector">
+                        <div class="buttons">
+                            <button class = "btn btn-info" (click)="prioritize(ability.type, 1)">&lt;</button>
+                            <div class = "">{{ ability.type }}</div>
+                            <button class = "btn btn-info" (click)="prioritize(ability.type, -1)">&gt;</button>
+                        </div>
+                    </div>
+                    <img class = "img d-inline ability-image-display" src = "{{ ability.src }}">                       
+                </div>
+            </div>
+            <div>
+                <button class = "btn btn-info generate-button mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
+            </div>
+            <div class="card-body">
+                <br>
+                <br>
+                <table class = "table ability-table">
+                    <!--<thead> 
+                        <th>Ability</th>
+                        <th *ngFor="let level of abilityToLevelArray; let i = index" [attr.data-index]="i">
+                            {{ i + 1 }}
+                        </th>
+                    </thead> -->
+                    <tbody>
+                        <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
+                            <td><img class = "img ability-roster-image" src = "{{ ability.src }}"></td>
+                            <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
+                                <span class = "ability-level selected-ability" *ngIf="status=='selected'; else wrong">{{ i+1 }}</span>
+                                <span class = "ability-level unselected-open-ability" *ngIf="status=='open'; else wrong"></span>
+                                <span class = "ability-level unselected-closed-ability" *ngIf="status=='closed'; else wrong"></span>
+                                <span class = "ability-level disabled-ability" *ngIf="status=='disabled'; else wrong"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br>
+        </div>
+    </div>
+</div>
