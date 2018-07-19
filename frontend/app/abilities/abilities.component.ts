@@ -12,9 +12,10 @@ export class AbilitiesComponent implements OnInit {
     selectedPool: number;
     selectedPoolArray: any;
     abilityPriorities: any;
+    // 2D array that is displayed
     abilityLevels: any;
+    // 0th element highest prio, gets swapped when prio changess
     abilities: any;
-    // abilityToLevelArray: any;
 
     // Temporary test data
     tempTestData = [
@@ -166,18 +167,7 @@ export class AbilitiesComponent implements OnInit {
         console.log(this.abilityPriorities);
     }
 
-    getLevelOfAbility(type): number {
-        let count = 0;
-        const levels = this.abilityLevels[this.getNumFromType(type)];
-        for (let i = 0; i < levels.length; i += 1) {
-            if (levels[i] === 'selected') {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    getLevelOfAbilityLimited(type, limitIndex): number {
+    getLevelOfAbility(type, limitIndex: number = 25): number {
         let count = 0;
         const levels = this.abilityLevels[this.getNumFromType(type)];
         for (let i = 0; i < limitIndex; i += 1) {
@@ -191,7 +181,7 @@ export class AbilitiesComponent implements OnInit {
     // assuming normal hero i.e. not invoker
     canLevelAbility(type, level): boolean {
         const gameLevel = level + 1;
-        const abilityLevel = this.getLevelOfAbilityLimited(type, level);
+        const abilityLevel = this.getLevelOfAbility(type, level);
         if (type === 'R') {
             // only allowed to max ult if
             // 6 * ability level + 6 < level
@@ -201,7 +191,6 @@ export class AbilitiesComponent implements OnInit {
             // lvl 8 and r level 0 => 0*6 + 6 <= 8 which is true hence can upgrade
             // lvl 8 and r level 1 => 1*6 + 6 <= 8 which is false hence cannot upgrade
             // lvl 18 and r level 2 => 2*6 + 6 <= 18 which is false hence cannot upgrade
-            // console.log()
             return abilityLevel < 3 && (6 * abilityLevel + 6) <= gameLevel;
         }
         if (type === 'T') {
@@ -252,10 +241,6 @@ export class AbilitiesComponent implements OnInit {
         this.createArrayFromSelected();
     }
 
-    generatePriorities(): void {
-
-    }
-
     createArrayFromSelected(): void {
         const levelSelected = [];
         for (let i = 0; i < 25; i += 1) {
@@ -298,16 +283,13 @@ export class AbilitiesComponent implements OnInit {
             for (let i = 0; i < 5; i += 1) {
                 this.abilityLevels[i][level] = 'open';
             }
-            if (abilityLevels[level] === 'selected') {
-                abilityLevels[level] = 'open';
-            } else {
-                abilityLevels[level] = 'selected';
-                for (let i = 0; i < 25; i += 1) {
-                    if (abilityLevels[i] === 'selected') {
-                        // This ability is selected
-                        if (!this.canLevelAbility(abilityType, i)) {
-                            abilityLevels[i] = 'open';
-                        }
+            
+            abilityLevels[level] = 'selected';
+            for (let i = 0; i < 25; i += 1) {
+                if (abilityLevels[i] === 'selected') {
+                    // This ability is selected
+                    if (!this.canLevelAbility(abilityType, i)) {
+                        abilityLevels[i] = 'open';
                     }
                 }
             }
