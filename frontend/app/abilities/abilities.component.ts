@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.js';
 
-
 class AbilitySet {
     abilityPriorities: any;
     // 2D array that is displayed
