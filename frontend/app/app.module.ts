@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
-import { FilterPipe } from './filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
     declarations: [
@@ -45,7 +45,9 @@ import { FilterPipe } from './filter.pipe';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule,
+        SortablejsModule.forRoot({
+            animation: 200,
+        }),
     ],
     providers: [
         ApiConnectService,

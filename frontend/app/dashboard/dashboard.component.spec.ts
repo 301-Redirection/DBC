@@ -21,6 +21,8 @@ import { ROUTE_NAMES } from '../routes/routes.config';
 import { Observable } from 'rxjs/Rx';
 import { HeroesComponent } from '../heroes/heroes.component';
 import { FormsModule } from '../../../node_modules/@angular/forms';
+import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
+import { FilterPipe } from '../pipes/filter.pipe';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -86,6 +88,7 @@ describe('DashboardComponent', () => {
                 CallbackComponent,
                 LoadingComponent,
                 HeroesComponent,
+                FilterPipe,
             ],
             imports: [
                 NavbarModule,
@@ -94,6 +97,7 @@ describe('DashboardComponent', () => {
                 BotConfigModule,
                 BotManagementModule,
                 FormsModule,
+                SortablejsModule,
             ],
             providers: [
                 AuthService,
