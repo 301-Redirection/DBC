@@ -61,3 +61,5 @@ describe('ConfiguratorComponent', () => {
         });
     });
 });
+
+// TODO add more spec tests
