@@ -1,150 +1,134 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiConnectService } from '../services/api-connect.service';
+import * as globalConfig from '../../../config/config.js';
+
+
+class AbilitySet {
+    abilityPriorities: any;
+    // 2D array that is displayed
+    abilityLevels: any;
+    // 0th element highest priority, gets swapped when prio changess
+    abilities: any;
+}
 
 @Component({
     selector: 'app-abilities',
     templateUrl: './abilities.component.html',
     styleUrls: ['./abilities.component.scss'],
 })
-
 export class AbilitiesComponent implements OnInit {
 
     numberOfPools: any;
     selectedPool: number;
     selectedPoolArray: any;
-    abilityPriorities: any;
-    // 2D array that is displayed
-    abilityLevels: any;
-    // 0th element highest prio, gets swapped when prio changess
-    abilities: any;
-
     // Temporary test data
-    tempTestData = [
-        {
-            name: 'Axe',
-            class: 'Strength',
-        }, {
-            name: 'Sven',
-            class: 'Strength',
-        }, {
-            name: 'Viper',
-            class: 'Agility',
-        }, {
-            name: 'Sniper',
-            class: 'Agility',
-        }, {
-            name: 'Lina',
-            class: 'Intelligence',
-        }, {
-            name: 'Chen',
-            class: 'Intelligence',
-        },
-    ];
+    allHeroes: any;
 
-    constructor() { }
+    constructor(private api: ApiConnectService) { }
 
     // hero category objects
     strengthHeroes = [];
     agilityHeroes = [];
     intelligenceHeroes = [];
-
-    pool1 = [];
-    pool2 = [];
-    pool3 = [];
-    pool4 = [];
-    pool5 = [];
-
+    heroes = [];
+    currentHero: any;
     ngOnInit() {
-        this.numberOfPools = [1, 2, 3, 4, 5];
-        this.selectedPool = 1;
-        this.selectedPoolArray = this.pool1;
         this.getHeroes();
-        this.initabilityPriorities();
     }
 
     getHeroes(): void {
-    // database call to retrieve all dota heroes
-    // this.api.getAllHeroes().subscribe((data) => {
-    //     this.allHeroes = data;
-    //     this.sortHeroData();
-    // });
-
-        this.sortHeroData();
+        // database call to retrieve all dota heroes
+        this.allHeroes = [];
+        this.api.getAllHeroes().subscribe((data) => {
+            this.allHeroes = data.heroes;
+            for (let i = 0; i < this.allHeroes.length; i += 1) {
+                this.allHeroes.abilitySet = new AbilitySet();
+            }
+            this.sortHeroData();
+            this.initAbilityPriorities();
+            this.currentHero = this.heroes[0];
+        });
     }
 
     sortHeroData(): void {
-        this.tempTestData.forEach((hero) => {
-            if (hero.class === 'Strength') {
+        this.allHeroes.forEach((hero) => {
+            hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
+            if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);
-            } else if (hero.class === 'Agility') {
+            } else if (hero.primaryAttribute === 'agi') {
                 this.agilityHeroes.push(hero);
-            } else if (hero.class === 'Intelligence') {
+            } else if (hero.primaryAttribute === 'int') {
                 this.intelligenceHeroes.push(hero);
             }
+            this.heroes.push(hero);
         });
     }
 
     // To Do: get API to gather data
-    initabilityPriorities() {
+    initAbilityPriorities() {
         const link = 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia';
-        this.abilityPriorities = [
-            {
-                name: 'Mist Coil',
-                type: 'Q',
-                src: `${link}/c/ce/Mist_Coil_icon.png`,
-                priority: 2,
-                index: 0,
-            },
-            {
-                name: 'Aphotic Shield',
-                type: 'W',
-                src: `${link}/b/b1/Aphotic_Shield_icon.png`,
-                priority: 3,
-                index: 1,
-            },
-            {
-                name: 'Curse of Avernus',
-                type: 'E',
-                src: `${link}/d/d2/Curse_of_Avernus_icon.png`,
-                priority: 4,
-                index: 2,
-            },
-            {
-                name: 'Borrowed Time',
-                type: 'R',
-                src: `${link}/7/78/Borrowed_Time_icon.png`,
-                priority: 0,
-                index: 3,
-            },
-            {
-                name: 'Talent',
-                type: 'T',
-                src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGVudHRy' +
-                'ZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
-                priority: 1,
-                index: 4,
-            },
-        ];
 
-        this.abilityLevels = [];
-        for (let i = 0; i < 5; i += 1) {
-            this.abilityLevels[i] = [];
-            for (let j = 0; j < 25; j += 1) {
-                this.abilityLevels[i].push('open');
+        for (let h = 0; h < this.heroes.length; h += 1) {
+            const hero = this.heroes[h];
+            hero.abilityPriorities = [
+                {
+                    name: hero.ability_q,
+                    type: 'Q',
+                    src: `${globalConfig['app']['API_URL']}${hero.url_q}`,
+                    priority: 2,
+                    index: 0,
+                },
+                {
+                    name: hero.ability_w,
+                    type: 'W',
+                    src: `${globalConfig['app']['API_URL']}${hero.url_w}`,
+                    priority: 3,
+                    index: 1,
+                },
+                {
+                    name: hero.ability_e,
+                    type: 'E',
+                    src: `${globalConfig['app']['API_URL']}${hero.url_e}`,
+                    priority: 4,
+                    index: 2,
+                },
+                {
+                    name: hero.ability_r,
+                    type: 'R',
+                    src: `${globalConfig['app']['API_URL']}${hero.url_r}`,
+                    priority: 0,
+                    index: 3,
+                },
+                {
+                    name: 'Talent',
+                    type: 'T',
+                    src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGV' +
+                    'udHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
+                    priority: 1,
+                    index: 4,
+                },
+            ];
+            hero.abilityLevels = [];
+            for (let i = 0; i < 5; i += 1) {
+                hero.abilityLevels[i] = [];
+                for (let j = 0; j < 25; j += 1) {
+                    hero.abilityLevels[i].push('open');
+                }
             }
+            hero.abilities = [];
+            hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
+            console.log(hero.abilityPriorities);
         }
-
-        this.abilities = [];
-        this.abilityPriorities.map(ability => this.abilities[ability.priority] = ability);
     }
 
     prioritize(type, direction): void {
-        for (let i = 0; i < this.abilityPriorities.length; i += 1) {
-            const ability = this.abilityPriorities[i];
+        for (let i = 0; i < this.currentHero.abilityPriorities.length; i += 1) {
+            const ability = this.currentHero.abilityPriorities[i];
             if (ability.type === type) {
                 const oldPriority = ability.priority;
                 const newPriority = ability.priority - direction;
                 if (0 <= newPriority && newPriority <= 4) {
-                    const swapAbility = this.abilityPriorities.find(
+                    const swapAbility = this.currentHero.abilityPriorities.find(
                        testAbility => testAbility.priority === newPriority,
                     );
                     ability.priority = newPriority;
@@ -154,13 +138,13 @@ export class AbilitiesComponent implements OnInit {
             }
         }
         const newAbilities = [];
-        this.abilityPriorities.map(ability => newAbilities[ability.priority] = ability);
-        this.abilities = newAbilities;
+        this.currentHero.abilityPriorities.map(ability => newAbilities[ability.priority] = ability);
+        this.currentHero.abilities = newAbilities;
     }
 
     getLevelOfAbility(type, limitIndex: number = 25): number {
         let count = 0;
-        const levels = this.abilityLevels[this.getNumFromType(type)];
+        const levels = this.currentHero.abilityLevels[this.getNumFromType(type)];
         for (let i = 0; i < limitIndex; i += 1) {
             if (levels[i] === 'selected') {
                 count += 1;
@@ -213,12 +197,12 @@ export class AbilitiesComponent implements OnInit {
         for (let i = 0; i < 25; i += 1) {
             let leveled = false;
             for (let j = 0; j < 5; j += 1) {
-                const ability = this.abilities[j];
+                const ability = this.currentHero.abilities[j];
                 if (this.canLevelAbility(ability.type, i) && !leveled) {
-                    this.abilityLevels[ability.index][i] = 'selected';
+                    this.currentHero.abilityLevels[ability.index][i] = 'selected';
                     leveled = true;
                 } else {
-                    this.abilityLevels[ability.index][i] = 'open';
+                    this.currentHero.abilityLevels[ability.index][i] = 'open';
                 }
             }
         }
@@ -230,7 +214,7 @@ export class AbilitiesComponent implements OnInit {
         for (let i = 0; i < 25; i += 1) {
             let isSelected = false;
             for (let j = 0; j < 5; j += 1) {
-                if (this.abilityLevels[j][i] === 'selected') {
+                if (this.currentHero.abilityLevels[j][i] === 'selected') {
                     isSelected = true;
                     break;
                 }
@@ -240,29 +224,29 @@ export class AbilitiesComponent implements OnInit {
         for (let i = 0; i < 25; i += 1) {
             const leveled = false;
             for (let j = 0; j < 5; j += 1) {
-                const ability = this.abilities[j];
-                if (this.abilityLevels[ability.index][i] !== 'selected') {
+                const ability = this.currentHero.abilities[j];
+                if (this.currentHero.abilityLevels[ability.index][i] !== 'selected') {
                     if (this.canLevelAbility(ability.type, i)) {
                         if (levelSelected[i]) {
-                            this.abilityLevels[ability.index][i] = 'closed';
+                            this.currentHero.abilityLevels[ability.index][i] = 'closed';
                         } else {
-                            this.abilityLevels[ability.index][i] = 'open';
+                            this.currentHero.abilityLevels[ability.index][i] = 'open';
                         }
                     } else {
-                        this.abilityLevels[ability.index][i] = 'disabled';
+                        this.currentHero.abilityLevels[ability.index][i] = 'disabled';
                     }
                 }
             }
         }
     }
     overwritePriorities(level, abilityType): void {
-        const abilityLevels = this.abilityLevels[this.getNumFromType(abilityType)];
+        const abilityLevels = this.currentHero.abilityLevels[this.getNumFromType(abilityType)];
         if (abilityLevels[level] === 'selected') {
             abilityLevels[level] = 'open';
             this.createArrayFromSelected();
         } else if (this.canLevelAbility(abilityType, level)) {
             for (let i = 0; i < 5; i += 1) {
-                this.abilityLevels[i][level] = 'open';
+                this.currentHero.abilityLevels[i][level] = 'open';
             }
 
             abilityLevels[level] = 'selected';
@@ -278,6 +262,10 @@ export class AbilitiesComponent implements OnInit {
         } else {
             alert(`cannot get ${abilityType} at this level`);
         }
+    }
+
+    onSelect(hero): void {
+        this.currentHero = hero;
     }
 
 }

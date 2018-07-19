@@ -19,10 +19,10 @@
                     <h6>Strength</h6>
                 </div>
 
-                <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes">
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of strengthHeroes" [style.backgroundImage]="'url('+hero.url+')'">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>
                     </div>
                 </div>
@@ -33,10 +33,10 @@
                     alt="Agility symbol">&nbsp;
                     <h6>Agility</h6>
                 </div>
-                <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes">
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of agilityHeroes" [style.backgroundImage]="'url('+hero.url+')'">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                     alt="Intelligence symbol">&nbsp;
                     <h6>Intelligence</h6>
                 </div>
-                <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes">
+                <div>
+                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of intelligenceHeroes" [style.backgroundImage]="'url('+hero.url+')'">
                         <div class="hero-name">
-                            {{ hero.name }}
+                            {{ hero.niceName }}
                         </div>
                     </div>
                 </div>
@@ -59,13 +59,13 @@
     </div>
 
     <!-- List table -->
-    <div class="row mb-5">
+    <div *ngIf="currentHero !== undefined" class="row mb-5">
         <div class="card heroes-card">
             <div class="card-header">
                 <h5>Abilites</h5>
             </div>
             <div class="card-body row">
-                <div class="col-2 ability-item" *ngFor="let ability of abilities">
+                <div class="col-2 ability-item" *ngFor="let ability of currentHero.abilities">
                     <div class = "selector">
                         <div class="buttons">
                             <button class = "btn btn-info" (click)="prioritize(ability.type, 1)">&lt;</button>
@@ -90,9 +90,9 @@
                         </th>
                     </thead> -->
                     <tbody>
-                        <tr *ngFor="let ability of abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
+                        <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
                             <td><img class = "img ability-roster-image" src = "{{ ability.src }}"></td>
-                            <td *ngFor="let status of abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
+                            <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
                                 <span class = "ability-level selected-ability" *ngIf="status=='selected'; else wrong">{{ i+1 }}</span>
                                 <span class = "ability-level unselected-open-ability" *ngIf="status=='open'; else wrong"></span>
                                 <span class = "ability-level unselected-closed-ability" *ngIf="status=='closed'; else wrong"></span>

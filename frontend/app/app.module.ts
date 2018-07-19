@@ -14,6 +14,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
 import { BotManagementModule } from './bot-management/bot-management.module';
 import { ItemsModule } from './items/items.module';
+import { AbilitiesModule } from './abilities/abilities.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
@@ -26,7 +27,6 @@ import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { ItemsComponent } from './items/items.component';
-import { AbilitiesComponent } from './abilities/abilities.component';
 import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
@@ -35,7 +35,6 @@ import { FilterPipe } from './pipes/filter.pipe';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
-        AbilitiesComponent,
         FilterPipe,
     ],
     imports: [
@@ -50,6 +49,7 @@ import { FilterPipe } from './pipes/filter.pipe';
         BotConfigModule,
         RouterModule,
         ItemsModule,
+        AbilitiesModule,
         SortablejsModule.forRoot({
             animation: 200,
         }),
