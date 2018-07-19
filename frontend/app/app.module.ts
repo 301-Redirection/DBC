@@ -24,6 +24,7 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { ItemsComponent } from './items/items.component';
 import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
@@ -32,6 +33,8 @@ import { FilterPipe } from './pipes/filter.pipe';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
+        FilterPipe,
+        ItemsComponent,
         FilterPipe,
     ],
     imports: [

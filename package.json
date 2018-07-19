@@ -68,6 +68,7 @@
     "sinon": "^5.0.7",
     "sortablejs": "^1.7.0",
     "webdriver": "^5.0.0-alpha.7",
+    "sortablejs": "^1.7.0",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
