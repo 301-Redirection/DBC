@@ -58,9 +58,7 @@ export class AbilitiesComponent implements OnInit {
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
-        console.log(this.abilityPriorities);
         this.initabilityPriorities();
-        // console.log(this.abilityToLevelArray);
     }
 
     getHeroes(): void {
@@ -140,11 +138,6 @@ export class AbilitiesComponent implements OnInit {
     }
 
     prioritize(type, direction): void {
-        console.log('yay');
-        console.log(type);
-
-        console.log('before');
-        console.log(this.abilityPriorities);
         for (let i = 0; i < this.abilityPriorities.length; i += 1) {
             const ability = this.abilityPriorities[i];
             if (ability.type === type) {
@@ -163,9 +156,6 @@ export class AbilitiesComponent implements OnInit {
         const newAbilities = [];
         this.abilityPriorities.map(ability => newAbilities[ability.priority] = ability);
         this.abilities = newAbilities;
-
-        console.log('After');
-        console.log(this.abilityPriorities);
     }
 
     getLevelOfAbility(type, limitIndex: number = 25): number {
@@ -220,25 +210,18 @@ export class AbilitiesComponent implements OnInit {
     }
 
     createArrayFromPrios(): void {
-        console.log('this.abilityToLevelArray');
-        console.log(this.abilityLevels[0]);
         for (let i = 0; i < 25; i += 1) {
             let leveled = false;
             for (let j = 0; j < 5; j += 1) {
                 const ability = this.abilities[j];
                 if (this.canLevelAbility(ability.type, i) && !leveled) {
                     this.abilityLevels[ability.index][i] = 'selected';
-                    console.log(`Set ${ability.type} to selected at level ${i}`);
-                    // this.abilityToLevelArray[i] = ability.type;
                     leveled = true;
                 } else {
-                    console.log(`Not leveling ${ability.type} at level ${i} because`);
                     this.abilityLevels[ability.index][i] = 'open';
                 }
             }
         }
-        console.log('this.abilityToLevelArray after');
-        console.log(this.abilityLevels[0]);
         this.createArrayFromSelected();
     }
 
@@ -273,14 +256,11 @@ export class AbilitiesComponent implements OnInit {
         }
     }
     overwritePriorities(level, abilityType): void {
-        console.log(level);
-        console.log(abilityType);
         const abilityLevels = this.abilityLevels[this.getNumFromType(abilityType)];
         if (abilityLevels[level] === 'selected') {
             abilityLevels[level] = 'open';
             this.createArrayFromSelected();
         } else if (this.canLevelAbility(abilityType, level)) {
-            console.log('overwriting..');
             for (let i = 0; i < 5; i += 1) {
                 this.abilityLevels[i][level] = 'open';
             }
@@ -297,9 +277,7 @@ export class AbilitiesComponent implements OnInit {
             this.createArrayFromSelected();
         } else {
             alert(`cannot get ${abilityType} at this level`);
-            console.log('BITCH');
         }
-        console.log('Please');
     }
 
 }
