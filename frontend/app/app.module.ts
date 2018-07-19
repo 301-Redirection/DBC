@@ -35,7 +35,6 @@ import { FilterPipe } from './pipes/filter.pipe';
         CallbackComponent,
         LoadingComponent,
         HeroesComponent,
-        ItemsComponent,
         AbilitiesComponent,
         FilterPipe,
     ],
