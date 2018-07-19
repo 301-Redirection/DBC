@@ -6,17 +6,14 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.INTEGER,
         },
-        name: {
+        programName: {
             type: Sequelize.STRING,
         },
-        alignment: {
+        niceName: {
             type: Sequelize.STRING,
         },
         roles: {
             type: Sequelize.STRING,
-        },
-        complexity: {
-            type: Sequelize.INTEGER,
         },
         createdAt: {
             allowNull: false,

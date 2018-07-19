@@ -21,6 +21,51 @@
         "dialect": "mysql"
     },
     "app": {
-        "API_URL": "http://localhost:3000"
+        "API_URL": "http://localhost:3000",
+        "staticURLS": {
+            "items": "http://www.dota2.com/jsfeed/itemdata",
+            "itemsRecipes": "http://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001?key=C35B5F501B9CF8FCEBF7E3109355E004&language=english",
+            "abilities": "http://www.dota2.com/jsfeed/abilitydata",
+            "heroPicker": "http://www.dota2.com/jsfeed/heropickerdata?v=0",
+            "heroes": "http://www.dota2.com/jsfeed/heropediadata?feeds=herodata",
+            "heroesOfficial": "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=C35B5F501B9CF8FCEBF7E3109355E004&language=en_us",
+            "image": "http://media.steampowered.com/apps/dota2/images/items/",
+            "heroAbilities": "http://www.dota2.com/hero/",
+            "heroAbilityReference": "http://www.dota2.com/heroes/"
+        },
+        "imagePath": "/backend/static/images/"
+    },
+    "LUA": {
+        "essentialFilesToInclude":   [
+            "BotNameUtility.lua",
+            "mode_attack_spirit_breaker.lua",
+            "mode_laning_generic.lua",
+            "mode_push_tower_mid_generic.lua",
+            "mode_push_tower_top_generic.lua",
+            "mode_push_tower_bot_generic.lua",
+            "mode_roam_spirit_breaker.lua",
+            "mode_rune_generic.lua",
+            "mode_secret_shop_generic.lua",
+            "mode_side_shop_generic.lua",
+            "mode_side_shop_enigma.lua",
+            "mode_side_shop_keeper_of_the_light.lua",
+            "mode_side_shop_shadow_shaman.lua",
+            "mode_side_shop_windrunner.lua",
+            "mode_team_roam_generic.lua",
+            "mode_ward_generic.lua",
+            "MinionUtility.lua",
+            "NewMinionUtil.lua",
+            "PushUtility.lua",
+            "RoleUtility.lua",
+            "utility.lua",
+            "WardUtility.lua"
+        ],
+        "poolNames" : [
+            "hero_pool_position_1",
+            "hero_pool_position_2",
+            "hero_pool_position_3",
+            "hero_pool_position_4",
+            "hero_pool_position_5"
+        ]
     }
 }
