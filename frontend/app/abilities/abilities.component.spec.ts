@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { AbilitiesComponent } from './abilities.component';
 
@@ -9,6 +10,9 @@ describe('AbilitiesComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AbilitiesComponent],
+            imports: [
+                SortablejsModule,
+            ],
         })
         .compileComponents();
     }));

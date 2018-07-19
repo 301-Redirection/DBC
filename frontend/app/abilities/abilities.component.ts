@@ -87,39 +87,41 @@ export class AbilitiesComponent implements OnInit {
 
     // To Do: get API to gather data
     initabilityPriorities() {
+        const link = 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia';
         this.abilityPriorities = [
             {
                 name: 'Mist Coil',
                 type: 'Q',
-                src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/c/ce/Mist_Coil_icon.png?version=32a1cebecf57f997259c1f5e12439d72',
+                src: `${link}/c/ce/Mist_Coil_icon.png`,
                 priority: 2,
                 index: 0,
             },
             {
                 name: 'Aphotic Shield',
                 type: 'W',
-                src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/b/b1/Aphotic_Shield_icon.png?version=336e58ce29e348dcc15084c630562a9e',
+                src: `${link}/b/b1/Aphotic_Shield_icon.png`,
                 priority: 3,
                 index: 1,
             },
             {
                 name: 'Curse of Avernus',
                 type: 'E',
-                src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/d/d2/Curse_of_Avernus_icon.png?version=8db283662c09832ae9c22806cce00436',
+                src: `${link}/d/d2/Curse_of_Avernus_icon.png`,
                 priority: 4,
                 index: 2,
             },
             {
                 name: 'Borrowed Time',
                 type: 'R',
-                src: 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/7/78/Borrowed_Time_icon.png?version=849b71406c8c433ebb4f077b1516cd2b',
+                src: `${link}/7/78/Borrowed_Time_icon.png`,
                 priority: 0,
                 index: 3,
             },
             {
                 name: 'Talent',
                 type: 'T',
-                src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGVudHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
+                src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGVudHRy' +
+                'ZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
                 priority: 1,
                 index: 4,
             },
@@ -283,7 +285,7 @@ export class AbilitiesComponent implements OnInit {
             for (let i = 0; i < 5; i += 1) {
                 this.abilityLevels[i][level] = 'open';
             }
-            
+
             abilityLevels[level] = 'selected';
             for (let i = 0; i < 25; i += 1) {
                 if (abilityLevels[i] === 'selected') {
