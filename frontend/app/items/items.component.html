@@ -106,11 +106,13 @@
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-            <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)">
-              <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
-                <img [src]="item.url">
-              </div>
+          <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)" >
+          
+            <div class="popover-zone" data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover" >
+              <img [src]="item.url">
             </div>
+          
+          </div>
           </div>
         </div>
       </div>
