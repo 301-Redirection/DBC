@@ -153,7 +153,6 @@ export class ItemsComponent implements OnInit {
 
     setSelectedItem (item) {
         this.selectedItem = item;
-        console.log(item);
     }
 
     setSelectedItemsArray () {
@@ -166,7 +165,6 @@ export class ItemsComponent implements OnInit {
     }
     addItemCostToTotal () {
         this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
-        console.log(this.selectedItem.cost);
     }
 
     handleItemComponents (item) {
