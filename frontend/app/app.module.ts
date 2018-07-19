@@ -17,14 +17,15 @@ import { BotManagementModule } from './bot-management/bot-management.module';
 // Services
 import { ApiConnectService } from './services/api-connect.service';
 import { AuthService } from './auth/auth.service';
+import { HeroesService } from './services/heroes.service';
 
 // Components
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
 import { HeroesComponent } from './heroes/heroes.component';
-import { FilterPipe } from './filter.pipe';
 import { ItemsComponent } from './items/items.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
     declarations: [
@@ -47,12 +48,15 @@ import { ItemsComponent } from './items/items.component';
         NavbarModule,
         BotConfigModule,
         RouterModule,
-        SortablejsModule,
+        SortablejsModule.forRoot({
+            animation: 200,
+        }),
     ],
     providers: [
         ApiConnectService,
         Title,
         AuthService,
+        HeroesService,
     ],
     bootstrap: [AppComponent],
 })

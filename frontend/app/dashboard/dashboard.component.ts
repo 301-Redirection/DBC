@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BOTS } from '../bot-testing-data';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ROUTE_NAMES } from '../routes/routes.config';
+// import { ROUTE_NAMES } from '../routes/routes.config';
 import { ApiConnectService } from '../services/api-connect.service';
 
 // Import JQuery

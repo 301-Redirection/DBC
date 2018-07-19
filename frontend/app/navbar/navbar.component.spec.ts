@@ -17,6 +17,10 @@ import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { SortablejsModule } from 'angular-sortablejs';
+import { FormsModule } from '../../../node_modules/@angular/forms';
+import { FilterPipe } from '../pipes/filter.pipe';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -30,6 +34,8 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
+                HeroesComponent,
+                FilterPipe,
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
@@ -37,6 +43,8 @@ describe('NavbarComponent', () => {
                 DashboardModule,
                 BotConfigModule,
                 BotManagementModule,
+                SortablejsModule,
+                FormsModule,
             ],
             providers: [
                 AuthService,

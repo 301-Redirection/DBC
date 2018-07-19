@@ -86,7 +86,7 @@ export class ApiConnectService {
 
     public getAllHeroes() {
         return this.http
-            .get(`${API_URL}/heroes/get`, {
+            .get(`${API_URL}/static/heroes/all`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
@@ -103,6 +103,11 @@ export class ApiConnectService {
     public getItemImageURL(imageURL: any) {
         return `${API_URL}${imageURL}`;
     }
+
+    public getImageURL(imageURL: any) {
+        return `${API_URL}${imageURL}`;
+    }
+
 }
 
 export default 'ApiConnectService';
