@@ -16,7 +16,7 @@
             <a class="dropdown-item" *ngFor="let t of operators | enumToArray" (click)="condition.operator = operators[t]; changeCondition()">{{t}}</a>
             </div>
         </div>
-        <input class="form-control px-2 col-md-1" type="text" [(ngModel)]="condition.conditional" name="conditional" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
+        <input id="conditionalInput" class="form-control px-2 col-md-1" type="text" [(ngModel)]="condition.conditional" name="conditional" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
         <div class="dropdown px-2 col-md-3">
             <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     then {{condition.action == null ? "(Select Action)" : actions[condition.action]}} desire {{condition.action == 1 ? 'by' : ''}}
@@ -25,6 +25,6 @@
             <a class="dropdown-item" *ngFor="let t of actions | enumToArray" (click)="condition.action = actions[t]; changeCondition()">{{t}}</a>
             </div>
         </div>
-        <input class="form-control pl-2 col-md-1" type="text" [(ngModel)]="condition.value" name="value" [(value)]="condition.value" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
+        <input id="valueInput" class="form-control pl-2 col-md-1" type="text" [(ngModel)]="condition.value" name="value" [(value)]="condition.value" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
     </div>
 </form>
