@@ -102,7 +102,7 @@ export class ItemsComponent implements OnInit {
         this.api.getAllItems().subscribe((data) => {
             this.allItems = data['items'];
             this.sortItemData();
-            this.initPopovers();
+            //this.initPopovers();
             this.setSelectedHero(0);
         });
     }
@@ -192,5 +192,27 @@ export class ItemsComponent implements OnInit {
             }
         }
         this.selectedItemComponentsArray = [];
+    }
+
+    triggerPopover(target: HTMLElement, item: any) {
+        console.log(item);
+        $(target).popover({
+            animation: true,
+            placement: 'right',
+            html: true,
+            content: `
+                <h5 style="text-shadow:none;">
+                    <img src="${item.url}" height="25">
+                    ${item.niceName}
+                </h5>
+                <hr>
+                <h6><b>Cost:</b></h6>
+                <h6>
+                    <img src="${this.dotaGoldIconURL}">
+                    ${item.cost}
+                </h6>
+            `,
+            trigger: 'hover',
+        });
     }
 }
