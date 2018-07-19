@@ -13,8 +13,6 @@ import { HeroesService } from '../services/heroes.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
-
-
 import { HomeModule } from '../home/home.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
@@ -23,7 +21,6 @@ import { ItemsModule } from '../items/items.module';
 import { AbilitiesComponent } from '../abilities/abilities.component';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
-
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;

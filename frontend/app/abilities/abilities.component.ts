@@ -139,7 +139,6 @@ export class AbilitiesComponent implements OnInit {
         this.abilityPriorities.map(ability => this.abilities[ability.priority] = ability);
     }
 
-
     prioritize(type, direction): void {
         console.log('yay');
         console.log(type);
