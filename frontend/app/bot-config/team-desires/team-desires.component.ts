@@ -9,6 +9,14 @@ import { ConfigurationFormat } from '../../ConfigurationFormat';
 })
 export class TeamDesiresComponent implements OnInit {
 
+    /*
+    TODO:
+    - Add a Function to change enums' keys into something easier to understand
+    - Add a Delete condition group button
+    - Fix first element delete with logical operator not deleting
+    - Add create condition on last element logical operator selection
+    */
+
     teamDesires: ConfigurationFormat;
 
     lanes = [
@@ -70,25 +78,55 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     private addCondition(prop: string, condGroup: number, lane?: string): void {
-        const index = this.getCondGroupIndex(condGroup, prop, lane);
+        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
+        const newCond = this.tdService.newCondition();
         if (lane === undefined) {
-            this.teamDesires[prop].compoundConditions[index].
-            conditions.push(this.tdService.newCondition());
+            const len = this.teamDesires[prop].compoundConditions[groupIndex].conditions.length;
+            this.teamDesires[prop].compoundConditions[groupIndex].
+            conditions.push(newCond);
+            if (len > 0) {
+                this.teamDesires[prop].compoundConditions[groupIndex].
+                logicalOperators[len - 1] = 1;
+            }
         } else {
-            this.teamDesires[prop][lane].compoundConditions[index].
-            conditions.push(this.tdService.newCondition());
+            const len = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            conditions.length;
+            this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            conditions.push(newCond);
+            if (len > 0) {
+                this.teamDesires[prop][lane].compoundConditions[groupIndex].
+                logicalOperators[len - 1] = 1;
+            }
         }
     }
 
-    private delCondition(prop: string, condGroup: number, index: number, lane?: string) {
+    private delCondition(prop: string, condGroup: number, index: number = -1, lane?: string) {
         const ans = window.confirm('Are you sure you wish to delete this Condition?');
         if (ans) {
-            const condIndex = this.getCondGroupIndex(condGroup, prop, lane);
+            const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
             if (lane === undefined) {
-                this.teamDesires[prop].compoundConditions[condIndex].conditions.splice(index, 1);
+                this.teamDesires[prop].compoundConditions[groupIndex].conditions.splice(index, 1);
+                const len = this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
+                length;
+                if (index === len) {
+                    this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
+                    splice(index, 1);
+                } else {
+                    this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
+                    splice(index - 2, 1);
+                }
             } else {
-                this.teamDesires[prop][lane].compoundConditions[condIndex].
+                this.teamDesires[prop][lane].compoundConditions[groupIndex].
                 conditions.splice(index, 1);
+                const len = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+                logicalOperators.length;
+                if (index === len) {
+                    this.teamDesires[prop][lane].compoundConditions[groupIndex].logicalOperators.
+                    splice(index, 1);
+                } else {
+                    this.teamDesires[prop][lane].compoundConditions[groupIndex].logicalOperators.
+                    splice(index - 1, 1);
+                }
             }
         }
     }
@@ -105,6 +143,34 @@ export class TeamDesiresComponent implements OnInit {
     private delCondGroup(prop: string, lane?: string) {
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         window.alert('OK');
+    }
+
+    private setOperator(prop: string, condGroup: number, lane?: string, index: number = 0,
+                        val: number = 1) {
+        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
+        if (lane === undefined) {
+            this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators[index] = val;
+        } else {
+            this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            logicalOperators[index] = val;
+        }
+    }
+
+    private getOperator(prop: string, condGroup: number, index: number = 0, lane?: string): string {
+        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
+        let op = -1;
+        if (lane === undefined) {
+            op = this.teamDesires[prop].compoundConditions[groupIndex].
+            logicalOperators[index];
+        } else {
+            op = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            logicalOperators[index];
+        }
+        return op === 1 ? 'AND' : 'OR';
+    }
+
+    private log(val: any) {
+        console.log(val);
     }
 }
 

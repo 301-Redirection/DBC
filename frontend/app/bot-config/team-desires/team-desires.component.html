@@ -49,10 +49,18 @@
                                                         <span class="pointer icon" (click)="delCondition(s.prop, j, i, lane.prop)">
                                                             <i class="fas fa-trash m-1"></i>
                                                         </span>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(s.prop, j, lane.prop):''">
+                                                                <span *ngIf="comp.logicalOperators[i] === undefined"><i class="fas fa-plus"></i></span>
+                                                                <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(s.prop, j, i, lane.prop)}}</span>
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" (click)="comp.logicalOperators[i] = 1">AND</a>
+                                                                <a class="dropdown-item" (click)="comp.logicalOperators[i] = 2">OR</a>
+                                                            </div>
+                                                        </div>
                                                     </span>
-                                                    <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j, lane.prop)">
-                                                        <i class="fas fa-link"></i>
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,10 +95,18 @@
                                                 <span class="pointer icon" (click)="delCondition(s.prop, j, i)">
                                                     <i class="fas fa-trash m-1"></i>
                                                 </span>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(s.prop, j):''">
+                                                        <span *ngIf="comp.logicalOperators[i] === undefined"><i class="fas fa-plus"></i></span>
+                                                        <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(s.prop, j, i)}}</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" (click)="comp.logicalOperators[i] = 1">AND</a>
+                                                        <a class="dropdown-item" (click)="comp.logicalOperators[i] = 2">OR</a>
+                                                    </div>
+                                                </div>
                                             </span>
-                                            <button type="button" class="btn btn-secondary" (click)="addCondition(s.prop, j)">
-                                                <i class="fas fa-link"></i>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
