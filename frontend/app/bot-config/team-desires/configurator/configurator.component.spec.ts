@@ -44,7 +44,7 @@ describe('ConfiguratorComponent', () => {
             condInput.value = '0.25';
             condInput.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            expect(component.condition.conditional).toEqual('0.25');
+            expect(component.condition.conditional).toEqual(0.25);
         });
     });
 
@@ -57,7 +57,7 @@ describe('ConfiguratorComponent', () => {
             valueInput.value = '0.5';
             valueInput.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            expect(component.condition.value).toEqual('0.5');
+            expect(component.condition.value).toEqual(0.5);
         });
     });
 });
