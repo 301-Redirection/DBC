@@ -1,15 +1,17 @@
 <div class="container-fluid container-fluid-custom background main-background">
   <div class="row mt-5 mb-5">
-    <div class="col-12" id="itemsTitle">
-      <h2>ITEM CONFIGURATION</h2>
-    </div>
+      <div class="col-12" id="heroesTitle">
+          <h3>ITEM SELECTION</h3>
+          <br>
+          Select your item guide for each heroes by clicking and dragging items from the list below.
+      </div>     
   </div>
 
   <!-- Hero list -->
   <div class="row mb-5">
     <div class="card heroes-card">
       <div class="card-header">
-        <h5>SELECTED HEROES</h5>
+        <h5>CHOOSE A HERO</h5>
       </div>
       <div class="card-body">
         <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i)" [attr.id]="i">
@@ -21,19 +23,27 @@
     </div>
   </div>
 
-  <div id="toggleButtonDiv" class="mb-2">
-
-  </div>
+  
   <!-- Tool Bar -->
-  <div class="row mb-5">
-    <button type="button" class="button button-cancel mx-2" (click)="reset()">
-      <i class="fas fa-undo mr-1"></i>
-      Reset
-    </button>
+  <div class="row mb-5 ">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <button type="button" class="button button-new-configuration mx-2 float-right" >
+            <i class="fas fa-arrow-right"></i>
+            Abilities
+        </button>
+        <button type="button" class="button button-cancel mx-2 float-right" (click)="reset()">
+            <i class="fas fa-undo mr-1"></i>
+            Reset
+          </button>
+      
+      </div>
+      
   </div>
 
   <!-- List table -->
-  <div class="row">
+  <div class="row mt-2">
 
     <div class="col-md-4">
       <div class="card hero-card">
@@ -49,8 +59,8 @@
           
         </div>
         <div class="card-body">
-          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" >
-            <div class="card item-selected-card" *ngFor="let item of selectedItemsArray">
+          <div class="drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" (drop)="addItemCostToTotal()" >
+            <div class="card item-selected-card" *ngFor="let item of selectedItemsArray" >
               <div class="card-header ">
                 <h5>{{item.niceName}}</h5>
                 <a  (click)="removeItemFromList(item)">
@@ -72,14 +82,16 @@
                   
                 </div>
                 <div class="col-sm-4">
-                    <h5>Components</h5>
+                  <h5>Components</h5>
+                  <div *ngIf="item.components !== 'null'">
                     <div class="item" *ngFor="let component of item.components">
-                        <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="component.cost" [attr.title]="component.niceName">
-                          <img [src]="component.url">
-                        </div>
+                      <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="component.cost"
+                        [attr.title]="component.niceName">
+                        <img [src]="component.url">
+                      </div>
                     </div>
+                  </div>
                 </div>
-                
               </div>
             </div>
           </div>
@@ -94,7 +106,7 @@
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-            <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)">
+            <div class="item" *ngFor="let item of basicItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)">
               <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
                 <img [src]="item.url">
               </div>
@@ -110,7 +122,7 @@
         </div>
         <div class="card-body">
           <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
-            <div class="item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)">
+            <div class="item" *ngFor="let item of upgradeItems" (dblclick)="addItemToList(item)" (drag)="setSelectedItem(item)">
               <div data-toggle="popover" data-trigger="hover" data-placement="auto" data-html="true" [attr.data-content]="item.cost" [attr.title]="item.niceName">
                 <img [src]="item.url">
               </div>

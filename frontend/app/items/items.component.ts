@@ -24,6 +24,7 @@ export class ItemsComponent implements OnInit {
     prevSelectedHeroIndex: number;
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
+    selectedItem: any;
 
     // Temporary test data
     selectedHeroes = [
@@ -102,6 +103,7 @@ export class ItemsComponent implements OnInit {
             this.allItems = data['items'];
             this.sortItemData();
             this.initPopovers();
+            this.setSelectedHero(0);
         });
     }
 
@@ -119,7 +121,6 @@ export class ItemsComponent implements OnInit {
             if (item['type'] === 0) {
                 this.basicItems.push(item);
             }else if (item['name'].indexOf('recipe') === -1) {
-                //console.log(item);
                 this.handleItemComponents(item);
                 this.upgradeItems.push(item);
             }else {
@@ -152,10 +153,19 @@ export class ItemsComponent implements OnInit {
     reset () : void {
         this.setSelectedHero(0);
         this.heroItemSelection = [];
+        let index: number;
+        index = 0;
         for (let hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
+            this.totalCostPerHero[index] = 0;
+            index += 1;
         }
         this.setSelectedItemsArray();
+    }
+
+    setSelectedItem (item) {
+        this.selectedItem = item;
+        console.log(item);
     }
 
     setSelectedItemsArray () {
@@ -163,23 +173,23 @@ export class ItemsComponent implements OnInit {
     }
     clearItemsSelectedHero () {
         this.heroItemSelection[this.selectedHeroIndex] = [];
+        this.totalCostPerHero[this.selectedHeroIndex] = 0;
         this.setSelectedItemsArray();
+    }
+    addItemCostToTotal () {
+        this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
+        console.log(this.selectedItem.cost);
     }
 
     handleItemComponents (item) {
         item['components'] = JSON.parse(item['components']);
-        console.log(item.components);
         let component: any;
-        if (item.components === null) {
-            item.components = null;
-        } else {
+        if (item.components !== 'null') {
             for (let componentID of item.components) {
                 component = this.allItems.find(x => x.id === componentID);
                 this.selectedItemComponentsArray.push(component);
                 item.components = this.selectedItemComponentsArray;
-                
             }
-            console.log(item.components);
         }
         this.selectedItemComponentsArray = [];
     }
