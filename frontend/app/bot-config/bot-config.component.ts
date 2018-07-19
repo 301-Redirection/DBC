@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    AfterViewInit,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {
     ConfigurationFormat,
@@ -13,6 +17,7 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
+import { ConfiguratorComponent } from './team-desires/configurator/configurator.component';
 
 declare var $: any;
 
@@ -21,7 +26,7 @@ declare var $: any;
     templateUrl: './bot-config.component.html',
     styleUrls: ['./bot-config.component.scss'],
 })
-export class BotConfigComponent implements OnInit {
+export class BotConfigComponent implements OnInit, AfterViewInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
     factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
     bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';
@@ -56,14 +61,6 @@ export class BotConfigComponent implements OnInit {
         roshan: new ConfigurationClass(),
     };
 
-    // bot = {
-    //     id: this.id,
-    //     name: this.name,
-    //     description: this.description,
-    //     configuration: this.configuration,
-    //     faction: this.factionSelected,
-    // };
-
     generateURL = '';
 
     constructor
@@ -78,6 +75,8 @@ export class BotConfigComponent implements OnInit {
 
     ngOnInit() { }
 
+    ngAfterViewInit() {}
+
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
@@ -89,7 +88,6 @@ export class BotConfigComponent implements OnInit {
                 faction: this.faction,
             };
             const response = this.api.updateBot(requestBot).subscribe((data) => {
-                console.log(globalConfig);
                 this.generateURL =
                     `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
             });

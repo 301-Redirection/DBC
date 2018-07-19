@@ -24,5 +24,10 @@
         "only-arrow-functions": [
             true
         ]
-    }
+    },
+    "globals": [
+        "it",
+        "expect",
+        "describe"
+    ]
 }
