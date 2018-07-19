@@ -28,9 +28,13 @@
     <div class="col-md-4"></div>
     <div class="col-md-4"></div>
     <div class="col-md-4">
-      <button type="button" class="button button-new-configuration mx-2 float-right">
+      <button type="button" class="button button-new-configuration mx-2 float-right" routerLink="/abilities">
         <i class="fas fa-arrow-right"></i>
         Abilities
+      </button>
+      <button type="button" class="button button-edit mx-2 float-right" routerLink="/heroes">
+        <i class="fas fa-arrow-left mr-1"></i>
+        Hero Selection
       </button>
       <button type="button" class="button button-cancel mx-2 float-right" (click)="reset()">
         <i class="fas fa-undo mr-1"></i>
