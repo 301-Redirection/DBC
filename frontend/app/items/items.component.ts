@@ -18,8 +18,10 @@ export class ItemsComponent implements OnInit {
     upgradeItems = [];
     recipes = [];
     recipeIconURL = '../../assets/images/recipe-icon.png';
+    dotaGoldIconURL = '../../assets/images/dota-gold-icon.png';
     heroItemSelection = [];
     selectedHeroIndex: number;
+    prevSelectedHeroIndex: number;
 
     // Temporary test data
     selectedHeroes = [
@@ -83,6 +85,7 @@ export class ItemsComponent implements OnInit {
     getHeroes() {
         // TODO use hero service
         this.selectedHeroIndex = 0;
+        this.prevSelectedHeroIndex = 0;
         for (let hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
         }
@@ -120,14 +123,38 @@ export class ItemsComponent implements OnInit {
         }
     }
     addItemToList (item) {
-        this.selectedItemsArray.push(item);
         this.heroItemSelection[this.selectedHeroIndex].push(item);
+        this.setSelectedItemsArray();
+    }
+
+    removeItemFromList (item) {
+        const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
+        if (index !== -1) {
+            this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
+            this.setSelectedItemsArray();
+        }
     }
     setSelectedHero (index) {
+        this.prevSelectedHeroIndex = this.selectedHeroIndex;
         this.selectedHeroIndex = index;
         this.selectedItemsArray = this.heroItemSelection[index];
+        $(`#${this.prevSelectedHeroIndex}`).removeClass('hero-selected');
+        $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
     }
     reset () : void {
-        this.selectedItemsArray = [];
+        this.setSelectedHero(0);
+        this.heroItemSelection = [];
+        for (let hero of this.selectedHeroes) {
+            this.heroItemSelection.push([]);
+        }
+        this.setSelectedItemsArray();
+    }
+
+    setSelectedItemsArray () {
+        this.selectedItemsArray = this.heroItemSelection[this.selectedHeroIndex];
+    }
+    clearItemsSelectedHero () {
+        this.heroItemSelection[this.selectedHeroIndex] = [];
+        this.setSelectedItemsArray();
     }
 }
