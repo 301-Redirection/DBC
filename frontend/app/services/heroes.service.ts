@@ -3,12 +3,20 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class HeroesService {
-    private selectedHeroes = new BehaviorSubject([]);
+    private selectedHeroes = new BehaviorSubject(['hero']);
     currentHeroes = this.selectedHeroes.asObservable();
 
     constructor() { }
 
     public setSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
+    }
+
+    public getSelectedHeroes(): any {
+        let tempHeroes = [];
+        this.currentHeroes.subscribe((heroes) => {
+            tempHeroes = heroes;
+        });
+        return tempHeroes;
     }
 }
