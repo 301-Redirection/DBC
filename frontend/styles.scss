@@ -16,7 +16,7 @@ body {
 /* General heading font styles */
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 2px 2px 5px black;
+    text-shadow: $text-shadow;
     font-family: $font-family;
 }
 
@@ -93,6 +93,9 @@ p {
 
 /* -- Buttons -- */
 
+button:focus {
+    outline: none;
+}
 
 /* -- Custom Button Styles to mimic Dota 2 -- */ 
 

@@ -1,0 +1,111 @@
+<div class="container-fluid container-fluid-custom background main-background">
+    <div class="row mt-5 mb-5">
+        <div class="col-12" id="heroesTitle">
+            <h3>HERO SELECTION</h3>
+            <br>
+            Select your preferred heroes by clicking and dragging a hero,<br>or by double clicking on a hero to add to the selected pool.
+        </div>
+    </div>  
+
+    <!-- Hero list -->
+    <div class="row mb-5">        
+        <div class="card heroes-card">
+            <div class="card-header">
+                <h5 id="heroesHeader">HEROES</h5>
+                <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002;">
+            </div>
+            <div class="card-body">
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/7/7a/Strength_attribute_symbol.png/30px-Strength_attribute_symbol.png?version=6306b398d1e0dddfd5f3d1719c6e3c71" alt="Strength symbol">&nbsp;
+                    <h6>Strength</h6>
+                </div>
+                
+                <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                            <div class="hero-name">
+                                {{ hero.niceName }}
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/2/2d/Agility_attribute_symbol.png/30px-Agility_attribute_symbol.png?version=2bb35660c66454fc3b024fdb19b9ee29" alt="Agility symbol">&nbsp;
+                    <h6>Agility</h6>
+                </div>
+                <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                            <div class="hero-name">
+                                {{ hero.niceName }}
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <br>
+
+                <div class="class-title">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/5/56/Intelligence_attribute_symbol.png/30px-Intelligence_attribute_symbol.png?version=aea75b8d40acffb8f90549a9ff6cdecb" alt="Intelligence symbol">&nbsp;
+                    <h6>Intelligence</h6>
+                </div>                
+                <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
+                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                            <div class="hero-name">
+                                {{ hero.niceName }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div id="toggleButtonDiv" class="mb-2">        
+        <button type="button" class="button button-cancel mx-2" (click)="triggerResetPools()">
+            <i class="fas fa-undo mr-1"></i>
+            Reset
+        </button>
+        <button id="togglePoolsBtn" class="button button-generate mx-2" (click)="togglePools()">
+            <i class="fas fa-exchange-alt mr-1"></i>
+            Toggle Pools
+        </button>        
+    </div>
+
+    <!-- Pool table -->
+    <div class="row mb-5">
+        <div class="card heroes-card">
+            <div class="card-header">
+                <h6>SELECTED</h6>
+            </div>
+            <ul id="poolTabs" class="nav nav-tabs">
+                <li class="nav-item" *ngFor="let pool of numberOfPools; let i = index;">                    
+                    <a [sortablejs] [id]="'poolLink'+i" class="nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragenter)="highlightPool(pool)" (dragleave)="unhighlightPool(pool)" (drop)="addHero(selectedHero, pool)">
+                        Pool {{ pool }}
+                        <div [id]="'poolPlusIconCont'+i" class="pool-plus-icon-cont">
+                            <i class="pool-plus-icon fas fa-plus"></i>
+                        </div>
+                    </a>                    
+                </li>
+            </ul>
+            <div class="card-body">
+                <div class="drop-zone" [sortablejs] [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
+                    <div class="card hero-item" *ngFor="let hero of selectedPoolArray" [style.backgroundImage]="'url('+hero.image+')'">
+                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                            <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
+                                <i id="removeIcon" class="fas fa-times"></i>
+                            </div>
+                            <div class="card-body">
+                                <div class="hero-name">
+                                    {{ hero.niceName }}
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
