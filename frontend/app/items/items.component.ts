@@ -84,7 +84,7 @@ export class ItemsComponent implements OnInit {
         // TODO use hero service
         this.selectedHeroIndex = 0;
         for (let hero of this.selectedHeroes) {
-            this.heroItemSelection = [];
+            this.heroItemSelection.push([]);
         }
     }
 
