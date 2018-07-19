@@ -11,15 +11,20 @@
     width: 85px;
     border-radius: 4px;
     cursor: pointer;
-    position: relative;    
+    position: relative;
+    filter: saturate(50%);    
 }
 
 .item:hover {
     border: 2px solid $btn-generate-border-color-hover;
+    filter: saturate(100%);
+    filter: brightness(120%);
+    transition: all 200ms ease; 
 }
 
 .hero-selected {
     border: 2px solid $btn-generate-border-color-hover;
+    transform: scale(1.05);
 }
 
 .item .card-header,
