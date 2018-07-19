@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
-//import { HereosService } from '../services/heroes.service.ts
+// import { HereosService } from '../services/heroes.service.ts
 
 // Import JQuery
 declare var $: any;
