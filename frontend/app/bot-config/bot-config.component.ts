@@ -193,7 +193,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             res = data['botConfig'];
             res = res[0];
             if (res != null) {
-                console.log(res);
                 this.id = res.id;
                 this.name = res.name;
                 this.configuration = JSON.parse(res.configuration);

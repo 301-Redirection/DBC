@@ -11,6 +11,7 @@ import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.co
 import { AuthGuard } from '../auth/auth.guard';
 import { HeroesComponent } from '../heroes/heroes.component';
 import { ItemsComponent } from '../items/items.component';
+import { AbilitiesComponent } from '../abilities/abilities.component';
 
 export const ROUTES: Routes = [
     {
@@ -65,6 +66,12 @@ export const ROUTES: Routes = [
     {
         path: 'items',
         component: ItemsComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'abilities',
+        component: AbilitiesComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },

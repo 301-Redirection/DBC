@@ -12,6 +12,7 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
+import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
@@ -21,6 +22,7 @@ import { HeroesComponent } from '../heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { AbilitiesModule } from '../abilities/abilities.module';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -45,6 +47,8 @@ describe('NavbarComponent', () => {
                 BotManagementModule,
                 SortablejsModule,
                 FormsModule,
+                ItemsModule,
+                AbilitiesModule,
             ],
             providers: [
                 AuthService,
