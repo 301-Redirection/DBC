@@ -59,7 +59,9 @@ export class HeroesComponent implements OnInit {
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
-        this.selectedHeroesList = this.heroesService.getSelectedHeroes();
+        this.heroesService.currentHeroes.subscribe((heroes) => {
+            this.selectedHeroesList = heroes;
+        });
     }
 
     getHeroes(): void {
@@ -174,6 +176,7 @@ export class HeroesComponent implements OnInit {
         }
     }
 
+    // Yes I know, its a mess :P
     triggerPopover(target: HTMLElement, hero: any) {
         $(target).popover({
             animation: true,

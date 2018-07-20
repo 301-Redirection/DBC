@@ -4,12 +4,13 @@
       <h3>ITEM SELECTION</h3>
       <br> Select your item guide for each heroes by clicking and dragging items from the list below.
     </div>
+  </div>
 
   <!-- Hero list -->
   <div class="row mb-5">
     <div class="card heroes-card">
       <div class="card-header">
-        <h5>CHOOSE A HERO</h5>
+        <h5>CHOOSE A HERO </h5>
       </div>
       <div class="card-body">
         <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i)" [attr.id]="i" [style.backgroundImage]="'url('+hero.image+')'">

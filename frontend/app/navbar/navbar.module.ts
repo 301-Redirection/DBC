@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SortablejsModule } from 'angular-sortablejs';
+import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
 
 import { NavbarComponent } from './navbar.component';
 
