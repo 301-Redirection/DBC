@@ -68,6 +68,12 @@ export const ROUTES: Routes = [
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },
+    {
+        path: 'abilities',
+        component: Ab,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({
