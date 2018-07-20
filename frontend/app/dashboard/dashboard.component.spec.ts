@@ -23,6 +23,7 @@ import { HeroesComponent } from '../heroes/heroes.component';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { ItemsComponent } from '../items/items.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -89,6 +90,7 @@ describe('DashboardComponent', () => {
                 LoadingComponent,
                 HeroesComponent,
                 FilterPipe,
+                ItemsComponent,
             ],
             imports: [
                 NavbarModule,

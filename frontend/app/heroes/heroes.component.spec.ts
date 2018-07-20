@@ -19,6 +19,7 @@ import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
+import { ItemsComponent } from '../items/items.component';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -99,6 +100,7 @@ describe('HeroesComponent', () => {
                 CallbackComponent,
                 LoadingComponent,
                 HeroesComponent,
+                ItemsComponent,
             ],
             imports: [
                 FormsModule,

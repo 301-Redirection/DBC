@@ -21,6 +21,7 @@ import { HeroesComponent } from '../heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { ItemsComponent } from '../items/items.component';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -35,6 +36,7 @@ describe('NavbarComponent', () => {
                 CallbackComponent,
                 LoadingComponent,
                 HeroesComponent,
+                ItemsComponent,
                 FilterPipe,
             ],
             imports: [
