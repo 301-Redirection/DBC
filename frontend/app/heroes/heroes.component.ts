@@ -55,7 +55,9 @@ export class HeroesComponent implements OnInit {
     constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
 
     ngOnInit() {
-        this.numberOfPools = [1, 2, 3, 4, 5];
+        document.getElementById('poolTabs').style.height = '0';
+        document.getElementById('poolTabs').style.visibility = 'hidden';
+        this.numberOfPools = [1];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
@@ -78,6 +80,9 @@ export class HeroesComponent implements OnInit {
             hero.wImage = this.api.getImageURL(hero.url_w);
             hero.eImage = this.api.getImageURL(hero.url_e);
             hero.rImage = this.api.getImageURL(hero.url_r);
+            hero.strURL = this.strURL;
+            hero.agiURL = this.agiURL;
+            hero.intURL = this.intURL;
         });
     }
 
@@ -224,43 +229,8 @@ export class HeroesComponent implements OnInit {
             animation: true,
             placement: 'right',
             html: true,
-            content: `
-                <h5 style="text-shadow:none;">
-                    <img src="${hero.attributeImage}" height="25">
-                    ${hero.niceName}
-                </h5>
-                <p class="text-center">
-                    <b>${hero.roles}</b>
-                </p>
-                <div class="text-center">
-                    <figure class="text-center d-inline-block">
-                        <img src="${this.strURL}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b>${hero.baseStrength}</b> + ${hero.baseStrengthGain}
-                        </figure-caption>
-                    </figure>&nbsp;&nbsp;&nbsp;
-                    <figure class="text-center d-inline-block">
-                        <img src="${this.agiURL}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b>${hero.baseAgility}</b> + ${hero.baseAgilityGain}
-                        </figure-caption>
-                    </figure>&nbsp;&nbsp;&nbsp;
-                    <figure class="text-center d-inline-block">
-                        <img src="${this.intURL}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b>${hero.baseIntelligence}</b> + ${hero.baseIntelligenceGain}
-                        </figure-caption>
-                    </figure>
-                </div>
-                <b>Armor:</b>&nbsp;${hero.armor}<br>
-                <b>Attack Damage (Max):</b>&nbsp;${hero.attackDamageMax}<br>
-                <b>Attack Damage (Min):</b>&nbsp;${hero.attackDamageMin}<br>
-                <b>Movement Speed:</b>&nbsp;${hero.movespeed}<br><br>
-                <img src="${hero.qImage}" alt="" height="50">&nbsp;
-                <img src="${hero.wImage}" alt="" height="50">&nbsp;
-                <img src="${hero.eImage}" alt="" height="50">&nbsp;
-                <img src="${hero.rImage}" alt="" height="50">
-            `,
+            content: $(`#${hero.programName}`).html(),
+            template: $('#heroesPopoverTemplate').html(),
         });
     }
 

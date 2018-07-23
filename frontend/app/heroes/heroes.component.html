@@ -20,7 +20,7 @@
                     <h6>Strength</h6>
                 </div>
                 
-                <div class="drop-zone" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
+                <div class="drop-zone text-center" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
                         <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
                             <div class="hero-name">
@@ -29,30 +29,30 @@
                         </div>
                     </div>
                 </div>
-                <br>
+                <br><br>
 
                 <div class="class-title">
                     <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/2/2d/Agility_attribute_symbol.png/30px-Agility_attribute_symbol.png?version=2bb35660c66454fc3b024fdb19b9ee29" alt="Agility symbol">&nbsp;
                     <h6>Agility</h6>
                 </div>
-                <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
+                <div class="drop-zone text-center" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div tabindex="0" class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
                             <div class="hero-name">
                                 {{ hero.niceName }}
                             </div>
                         </div>                        
                     </div>
                 </div>
-                <br>
+                <br><br>
 
                 <div class="class-title">
                     <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/5/56/Intelligence_attribute_symbol.png/30px-Intelligence_attribute_symbol.png?version=aea75b8d40acffb8f90549a9ff6cdecb" alt="Intelligence symbol">&nbsp;
                     <h6>Intelligence</h6>
-                </div>                
-                <div class="drop-zone" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
+                </div>
+                <div class="drop-zone text-center" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                        <div class="popover-zone" role="button" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
                             <div class="hero-name">
                                 {{ hero.niceName }}
                             </div>
@@ -104,6 +104,71 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero popover -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngFor="let hero of allHeroes">
+            <div [id]="hero.programName">
+                <h5 style="text-shadow:none;">
+                    <img src="{{ hero.attributeImage }}" height="25">
+                    {{ hero.niceName }}
+                </h5>
+                <p class="text-center">
+                    <b>{{ hero.roles }}</b>
+                </p>
+                <div class="text-center">
+                    <figure class="text-center d-inline-block">
+                        <img src="{{ hero.strURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>{{ hero.baseStrength }}</b> + {{ hero.baseStrengthGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img src="{{ hero.agiURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>{{ hero.baseAgility }}</b> + {{ hero.baseAgilityGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img src="{{ intURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b>{{ hero.baseIntelligence }}</b> + {{ hero.baseIntelligenceGain }}
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="hero-attributes">
+                    <b>Armor:</b>&nbsp;{{ hero.armor }}<br>
+                    <b>Attack Damage (Max):</b>&nbsp;{{ hero.attackDamageMax }}<br>
+                    <b>Attack Damage (Min):</b>&nbsp;{{ hero.attackDamageMin }}<br>
+                    <b>Movement Speed:</b>&nbsp;{{ hero.movespeed }}
+                </div>
+                <br>
+                <div class="text-center">
+                    <img src="{{ hero.qImage }}" alt="" height="50">&nbsp;
+                    <img src="{{ hero.wImage }}" alt="" height="50">&nbsp;
+                    <img src="{{ hero.eImage }}" alt="" height="50">&nbsp;
+                    <img src="{{ hero.rImage }}" alt="" height="50">
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heroes popover template -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="heroesPopoverTemplate">
+                <div _ngcontent-c2 class="popover popover-dark" role="tooltip">
+                    <div _ngcontent-c2 class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div _ngcontent-c2 class="popover-body"></div>
                 </div>
             </div>
         </div>
