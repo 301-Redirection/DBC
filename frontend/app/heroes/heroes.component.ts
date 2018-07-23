@@ -62,6 +62,7 @@ export class HeroesComponent implements OnInit {
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
         this.selectedHeroesList = this.heroesService.getSelectedHeroes();
+        this.popoverDismiss();
     }
 
     getHeroes(): void {
@@ -231,6 +232,20 @@ export class HeroesComponent implements OnInit {
             html: true,
             content: $(`#${hero.programName}`).html(),
             template: $('#heroesPopoverTemplate').html(),
+        });
+    }
+
+    popoverDismiss(): void {
+        $(document).ready(() => {
+            $('body').click((event) => {
+                $('[data-toggle="popover"]').popover('hide');
+
+                if (event.target.className === 'popover-zone') {
+                    $(`#${event.target.id}`).popover('show');
+                } else if (event.target.parentElement.className === 'popover-zone') {
+                    $(`#${event.target.parentElement.id}`).popover('show');
+                }
+            });
         });
     }
 
