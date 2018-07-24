@@ -81,9 +81,6 @@ export class HeroesComponent implements OnInit {
             hero.wImage = this.api.getImageURL(hero.url_w);
             hero.eImage = this.api.getImageURL(hero.url_e);
             hero.rImage = this.api.getImageURL(hero.url_r);
-            hero.strURL = this.strURL;
-            hero.agiURL = this.agiURL;
-            hero.intURL = this.intURL;
         });
     }
 
