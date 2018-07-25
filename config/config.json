@@ -38,6 +38,7 @@
     "LUA": {
         "essentialFilesToInclude":   [
             "BotNameUtility.lua",
+            "ability_item_usage_generic.lua",
             "mode_attack_spirit_breaker.lua",
             "mode_laning_generic.lua",
             "mode_push_tower_mid_generic.lua",

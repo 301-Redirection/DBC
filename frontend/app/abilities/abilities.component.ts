@@ -2,12 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../services/api-connect.service';
 import * as globalConfig from '../../../config/config.js';
 
+const NUMBER_TALENTS: number = 4;
+
 class AbilitySet {
     abilityPriorities: any;
     // 2D array that is displayed
     abilityLevels: any;
     // 0th element highest priority, gets swapped when prio changess
     abilities: any;
+}
+
+class TalentSet {
+    talents: [string, string, string, string];
 }
 
 @Component({
@@ -42,6 +48,7 @@ export class AbilitiesComponent implements OnInit {
             this.allHeroes = data.heroes;
             for (let i = 0; i < this.allHeroes.length; i += 1) {
                 this.allHeroes.abilitySet = new AbilitySet();
+                this.allHeroes[i].talents = ['none', 'none', 'none', 'none'];
             }
             this.sortHeroData();
             this.initAbilityPriorities();
@@ -63,7 +70,6 @@ export class AbilitiesComponent implements OnInit {
         });
     }
 
-    // To Do: get API to gather data
     initAbilityPriorities() {
         const link = 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia';
 
@@ -264,6 +270,12 @@ export class AbilitiesComponent implements OnInit {
 
     onSelect(hero): void {
         this.currentHero = hero;
+    }
+
+    onTalentSelect(level, value) {
+        // note that talents[0] referes to the last talent (i.e at lvl 25)
+        this.currentHero.talents[level] = value;
+        console.log(this.currentHero.talents);
     }
 
 }
