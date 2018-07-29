@@ -9,9 +9,9 @@ import { BotManagementComponent } from '../bot-management/bot-management.compone
 import { CallbackComponent } from '../callback/callback.component';
 import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.component';
 import { AuthGuard } from '../auth/auth.guard';
-import { HeroesComponent } from '../heroes/heroes.component';
+import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { ItemsComponent } from '../items/items.component';
-import { AbilitiesComponent } from '../abilities/abilities.component';
+import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
 
 export const ROUTES: Routes = [
     {

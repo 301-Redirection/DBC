@@ -68,9 +68,13 @@
                 <div class="col-2 ability-item" *ngFor="let ability of currentHero.abilities">
                     <div class = "selector">
                         <div class="buttons">
-                            <button class = "btn btn-info" (click)="prioritize(ability.type, 1)">&lt;</button>
+                            <button (click)="prioritize(ability.type, 1)">
+                                <div class = "fa fa-fa fa-angle-left"></div>
+                            </button>
                             <div class = "">{{ ability.type }}</div>
-                            <button class = "btn btn-info" (click)="prioritize(ability.type, -1)">&gt;</button>
+                            <button (click)="prioritize(ability.type, -1)">
+                                <div class = "fa fa-fa fa-angle-right"></div>
+                            </button>
                         </div>
                     </div>
                     <img class = "img d-inline ability-image-display" src = "{{ ability.src }}">                       

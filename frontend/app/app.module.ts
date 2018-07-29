@@ -14,7 +14,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
 import { BotManagementModule } from './bot-management/bot-management.module';
 import { ItemsModule } from './items/items.module';
-import { AbilitiesModule } from './abilities/abilities.module';
+// import { AbilitiesModule } from './abilities/abilities.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
@@ -25,7 +25,7 @@ import { HeroesService } from './services/heroes.service';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
-import { HeroesComponent } from './heroes/heroes.component';
+// import { HeroesComponent } from './heroes/heroes.component';
 
 import { FilterPipe } from './pipes/filter.pipe';
 
@@ -34,8 +34,8 @@ import { FilterPipe } from './pipes/filter.pipe';
         AppComponent,
         CallbackComponent,
         LoadingComponent,
-        HeroesComponent,
-        FilterPipe,
+        // HeroesComponent,
+        // FilterPipe,
     ],
     imports: [
         BrowserModule,
@@ -49,7 +49,7 @@ import { FilterPipe } from './pipes/filter.pipe';
         BotConfigModule,
         RouterModule,
         ItemsModule,
-        AbilitiesModule,
+        // AbilitiesModule,
         SortablejsModule.forRoot({
             animation: 200,
         }),

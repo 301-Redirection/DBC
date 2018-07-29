@@ -8,6 +8,10 @@ import { ConfiguratorComponent, EnumToArrayPipe } from
 './team-desires/configurator/configurator.component';
 import { TeamDesiresComponent, ReversePipe } from './team-desires/team-desires.component';
 import { TeamDesiresService } from '../services/team-desires.service';
+import { HeroesComponent } from './heroes/heroes.component';
+import { AbilitiesComponent } from './abilities/abilities.component';
+import { SortablejsModule } from 'angular-sortablejs';
+import { FilterPipe } from '../pipes/filter.pipe';
 
 @NgModule({
     imports: [
@@ -15,13 +19,19 @@ import { TeamDesiresService } from '../services/team-desires.service';
         NavbarModule,
         RouterModule,
         FormsModule,
+        SortablejsModule.forRoot({
+            animation: 200,
+        }),
     ],
     declarations: [
         BotConfigComponent,
         EnumToArrayPipe,
         ConfiguratorComponent,
         TeamDesiresComponent,
+        HeroesComponent,
+        AbilitiesComponent,
         ReversePipe,
+        FilterPipe,
     ],
     exports: [BotConfigComponent],
     providers: [TeamDesiresService],
