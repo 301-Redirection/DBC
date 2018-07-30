@@ -22,7 +22,6 @@ import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
-import { AbilitiesModule } from '../bot-config/abilities/abilities.module';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -48,7 +47,6 @@ describe('NavbarComponent', () => {
                 SortablejsModule,
                 FormsModule,
                 ItemsModule,
-                AbilitiesModule,
             ],
             providers: [
                 AuthService,
