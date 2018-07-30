@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarModule } from '../navbar/navbar.module';
 import { DashboardComponent } from './dashboard.component';
-import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
+import { SortablejsModule } from 'angular-sortablejs';
 
 @NgModule({
     imports: [

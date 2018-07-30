@@ -108,3 +108,6 @@ package-lock.json
 /lua/*.lua
 /lua
 /public
+
+# Scraped data      
+/backend/static/images/

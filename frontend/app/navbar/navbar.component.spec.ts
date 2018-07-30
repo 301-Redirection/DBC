@@ -19,7 +19,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { HeroesComponent } from '../heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
-import { FormsModule } from '../../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ItemsComponent } from '../items/items.component';
 
@@ -29,6 +29,7 @@ describe('NavbarComponent', () => {
     let router: Router;
     let location: Location;
     let auth: AuthService;
+    const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({

@@ -20,8 +20,8 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { Observable } from 'rxjs/Rx';
 import { HeroesComponent } from '../heroes/heroes.component';
-import { FormsModule } from '../../../node_modules/@angular/forms';
-import { SortablejsModule } from '../../../node_modules/angular-sortablejs/dist';
+import { FormsModule } from '@angular/forms';
+import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ItemsComponent } from '../items/items.component';
 
