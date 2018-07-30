@@ -21,8 +21,6 @@ export class TeamDesiresService {
             trigger: null,
             operator: null,
             conditional: null,
-            action: null,
-            value: null,
         };
     }
 
@@ -30,6 +28,8 @@ export class TeamDesiresService {
         return {
             conditions: [],
             logicalOperators: [],
+            action: null,
+            value: null,
         };
     }
 
