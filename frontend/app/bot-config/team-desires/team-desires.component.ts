@@ -1,6 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { TeamDesiresService } from '../../services/team-desires.service';
-import { ConfigurationFormat } from '../../ConfigurationFormat';
+import { ConfigurationFormat, Action } from '../../ConfigurationFormat';
 
 @Component({
     selector: 'app-team-desires',
@@ -18,6 +18,8 @@ export class TeamDesiresComponent implements OnInit {
     */
 
     teamDesires: ConfigurationFormat;
+
+    actions = Action;
 
     lanes = [
         {
