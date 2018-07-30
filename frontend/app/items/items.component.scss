@@ -1,95 +1,78 @@
 /* Global Variables */
 @import '../../variables';
+@import '../heroes/heroes.component.scss';
 
-#poolTabs {
-    border-bottom-color: $light-grey;
-}
-
-.nav-item {
+.item {
+    display: inline-block;
+    margin-right: 5px;
+    border: 2px solid $btn-generate-border-color;
+    background-color: $black;
+    height: 64px;
+    width: 85px;
+    border-radius: 4px;
     cursor: pointer;
-    width: 20%;    
+    position: relative;
+    filter: saturate(50%);    
 }
 
-.nav-link.active {
-    background-color: $light-grey;    
-    border-color: $light-grey;
+.item:hover {
+    border: 2px solid $btn-generate-border-color-hover;
+    filter: saturate(100%);
+    filter: brightness(120%);
+    transition: all 200ms ease; 
 }
 
-.nav-link.active:hover {
-    color: $dark-grey-2;
+.hero-selected {
+    border: 2px solid $btn-generate-border-color-hover;
+    transform: scale(1.05);
 }
 
-.heroes-card {
+.item .card-header,
+.item .card-body {
+    padding: 1px;
+}
+
+.item-selected {
+    height: 90px;
+    width: 100px;
+}
+
+.item-selected-card {
     height: 100%;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
     color: $light-grey;  
     width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;  
 }
-
-#heroesTitle {
-    color: $grey;
-    text-align: center;
-}
-
-.drop-zone {
-    min-height: 90px;
-}
-
-.hero-item {
-    display: inline-block;
-    margin-right: 5px;
-    border: 2px solid $btn-generate-border-color;
-    background-color: $black;
-    height: 85px;
-    width: 120px;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;    
-}
-
-.hero-item:hover {
-    border: 2px solid $btn-generate-border-color-hover;
-}
-
-.hero-item .card-header,
-.hero-item .card-body {
-    padding: 1px;
-}
-
-.hero-name {     
-    position: absolute;
-    bottom: 0;    
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.class-title {
-    margin-bottom: 5px;
-}
-
-.class-title h6 {
-    display: inline-block;
-}
-
-.class-title img {
-    height: 25px;
-}
-
 #removeIcon {
     color: $red;
     float: right;
-    z-index: 2;
+    z-index: 100;
 }
 
-#toggleButtonDiv {        
-    margin-left: 9%;
-    margin-right: 9%;    
-    text-align: right;    
+.items-position {
+    position: absolute;
+    float: left;
+    margin: 0px
 }
 
-#togglePoolsBtn {
-    margin-right: 1px !important;
+.hero-card {
+    height: 100%;
+    background-color: rgba($dark-grey-2, 0.8);
+    text-align: left;
+    color: $light-grey;  
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 1%;  
 }
+
+.popover { 
+    background-color: #292929; 
+} 
+ 
+.popover-zone { 
+    // width: 100%; 
+    // height: 100%; 
+    width: 100%; 
+    height: 100%;     
+} 
