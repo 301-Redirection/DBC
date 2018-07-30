@@ -18,11 +18,11 @@ import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
-import { HeroesComponent } from '../heroes/heroes.component';
+import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
-import { AbilitiesModule } from '../abilities/abilities.module';
+import { AbilitiesModule } from '../bot-config/abilities/abilities.module';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
