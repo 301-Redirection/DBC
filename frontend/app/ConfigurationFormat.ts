@@ -25,144 +25,62 @@ export class ConfigurationFormat {
 
     constructor() {
         this.push = {
-            top: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            bot: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
+            top: new Configuration(),
+            mid: new Configuration(),
+            bot: new Configuration(),
         };
         this.farm = {
-            top: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            bot: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
+            top: new Configuration(),
+            mid: new Configuration(),
+            bot: new Configuration(),
         };
         this.defend = {
-            top: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            mid: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
-            bot: {
-                compoundConditions: [
-                    {
-                        conditions: [],
-                        logicalOperators: [],
-                    },
-                ],
-                initialValue: 0,
-            },
+            top: new Configuration(),
+            mid: new Configuration(),
+            bot: new Configuration(),
         };
 
-        this.roshan = {
-            compoundConditions: [
-                {
-                    conditions: [],
-                    logicalOperators: [],
-                },
-            ],
-            initialValue: 0,
-        };
+        this.roshan = new Configuration();
 
-        this.roam = {
-            compoundConditions: [
-                {
-                    conditions: [],
-                    logicalOperators: [],
-                },
-            ],
-            initialValue: 0,
-        };
+        this.roam = new Configuration();
     }
 }
 
-export interface Configuration {
+export class Configuration {
     compoundConditions: CompoundCondition[];
     initialValue: any;
+
+    constructor() {
+        this.compoundConditions = [];
+        this.compoundConditions.push(new CompoundCondition());
+        this.initialValue = 0;
+    }
 }
 
-/*
- * A CompoundCondition will look as follows:
- * if (${conditions[0]} ${logicalOperators[0]} ${conditions[1]}
- *      ... ${logicalOperators[n-1]} ${conditions[n]}) {
- *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
- * }
- */
-export interface CompoundCondition {
+export class CompoundCondition {
     conditions: Condition[];
     logicalOperators: LogicalOperator[];
+    action: Action;
+    value: number;
+
+    constructor() {
+        this.conditions = [];
+        this.logicalOperators = [];
+        this.action = null;
+        this.value = null;
+    }
 }
 
-/*
- * A Condition will look as follows:
- * if (${trigger} ${operator} ${conditional}) {
- *    ${action} ${value}
- * }
- */
-export interface Condition {
+export class Condition {
     trigger: Trigger;
     operator: Operator;
-    conditional: any;
-    action: Action; // TODO: Come up with action types
-    value: any;
+    conditional: number;
+
+    constructor() {
+        this.trigger = null;
+        this.operator = null;
+        this.conditional = null;
+    }
 }
 
 export enum Action {
