@@ -12,7 +12,6 @@ import {
     Action,
     LogicalOperator,
 } from '../ConfigurationFormat';
-import { ConfigurationClass } from './configuration-class';
 import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
@@ -40,27 +39,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     id: number = -1;
     faction: string = 'both';
 
-    // configuration object
-    configuration: ConfigurationFormat = {
-        push: {
-            top: new ConfigurationClass(),
-            mid: new ConfigurationClass(),
-            bot: new ConfigurationClass(),
-        },
-        farm: {
-            top: new ConfigurationClass(),
-            mid: new ConfigurationClass(),
-            bot: new ConfigurationClass(),
-        },
-        defend: {
-            top: new ConfigurationClass(),
-            mid: new ConfigurationClass(),
-            bot: new ConfigurationClass(),
-        },
-        roam: new ConfigurationClass(),
-        roshan: new ConfigurationClass(),
-    };
-
     generateURL = '';
 
     constructor
@@ -84,7 +62,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-                configuration: this.configuration,
+                // configuration: this.configuration,
                 faction: this.faction,
             };
             const response = this.api.updateBot(requestBot).subscribe((data) => {
@@ -195,7 +173,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             if (res != null) {
                 this.id = res.id;
                 this.name = res.name;
-                this.configuration = JSON.parse(res.configuration);
+                // this.configuration = JSON.parse(res.configuration);
                 this.description = res.description;
                 this.faction = res.faction;
 
