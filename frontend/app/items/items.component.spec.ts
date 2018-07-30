@@ -27,9 +27,9 @@ describe('ItemsComponent', () => {
                 ItemsComponent,
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
-                AbilitiesComponent,
-                FilterPipe,
+                // HeroesComponent,
+                // AbilitiesComponent,
+                // FilterPipe,
             ],
             imports: [
                 SortablejsModule,

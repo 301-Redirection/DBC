@@ -88,8 +88,8 @@ describe('DashboardComponent', () => {
                 DashboardComponent,
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
-                FilterPipe,
+                // HeroesComponent,
+                // FilterPipe,
             ],
             imports: [
                 NavbarModule,

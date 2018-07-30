@@ -95,11 +95,10 @@ describe('HeroesComponent', () => {
         apiConnectServiceStub.getImageURL.and.callThrough();
         TestBed.configureTestingModule({
             declarations: [
-                HeroesComponent,
-                FilterPipe,
+                // FilterPipe,
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
+                // HeroesComponent,
             ],
             imports: [
                 FormsModule,
@@ -112,7 +111,6 @@ describe('HeroesComponent', () => {
                 ItemsModule,
                 SortablejsModule,
                 DashboardModule,
-                AbilitiesModule,
             ],
             providers: [
                 AuthService,

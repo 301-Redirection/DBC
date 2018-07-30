@@ -35,8 +35,8 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
-                FilterPipe,
+                // HeroesComponent,
+                // FilterPipe,
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
