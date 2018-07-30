@@ -10,8 +10,8 @@ import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
-import { HeroesComponent } from '../heroes/heroes.component';
-import { AbilitiesComponent } from '../abilities/abilities.component';
+import { HeroesComponent } from '../bot-config/heroes/heroes.component';
+import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
 import { FormsModule } from '../../../node_modules/@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 
