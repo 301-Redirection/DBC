@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SortablejsModule } from 'angular-sortablejs';
-import { ApiConnectService } from '../services/api-connect.service';
+import { ApiConnectService } from '../../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 

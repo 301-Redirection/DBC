@@ -160,7 +160,6 @@
     background-color: #212121;
 }
 
-
 .ability-image-display {
     width: 80px;
     padding-top:20px;
@@ -179,4 +178,45 @@
 
 .buttons * {
     display: inline-block;
+}
+
+/* Talents stuff */ 
+.level {
+    color: #f2c58c;
+    border-radius: 30px;
+    border: 2px solid #353A38;
+    padding: 2px;
+    background-color: #101314;
+    margin: 2px;
+    text-align: center;
+    width: 35px;
+}
+.level:hover {
+    border: 1px solid #f2c58c;
+}
+
+.talent-desc:hover {
+    // border: 2px solid #353A38;
+    border: 1px solid #f2c58c;
+}
+
+.talent-desc {
+    border-radius: 10px;
+    background-color: #303333;
+    width: 200px;
+    text-align: center;
+}
+
+.talent {
+    margin: 5px 0;
+}
+
+.talent-table {
+    border-spacing: 5px;
+}
+
+.talent-selected {
+    // background-color: #906C46;
+    background: linear-gradient(rgb(147, 114, 69) 0%, rgb(67, 34, 23) 100%);
+    color: #fff;
 }
