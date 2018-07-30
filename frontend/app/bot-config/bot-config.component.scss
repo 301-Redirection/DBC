@@ -165,3 +165,27 @@ $slider-cursor: pointer;
 .img-pointer {
     cursor: pointer;
 }
+
+.tab-text {
+    background-color: $dark-grey-2;
+    color: $light-grey;    
+    border-color: $light-grey;
+}
+
+.nav-item {
+    cursor: pointer;
+    width: 20%;    
+}
+
+.nav-link.active {
+    background-color: $light-grey;    
+    border-color: $light-grey;
+}
+
+.nav-link:hover {
+    border-color: $light-grey !important;    
+}
+
+.nav-link.active:hover {
+    color: $dark-grey-2;
+}
