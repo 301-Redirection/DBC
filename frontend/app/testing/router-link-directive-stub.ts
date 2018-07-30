@@ -17,7 +17,6 @@ export class RouterLinkDirectiveStub {
     }
 }
 
-
 @NgModule({
     declarations: [
         RouterLinkDirectiveStub,
