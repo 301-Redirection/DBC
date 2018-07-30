@@ -95,7 +95,9 @@
                     <div class="card hero-item" *ngFor="let hero of selectedPoolArray" [style.backgroundImage]="'url('+hero.image+')'">
                         <div [id]="'s'+hero.id" class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
                             <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
-                                <i id="removeIcon" class="fas fa-times"></i>
+                                <button id="removeIcon" class="button button-cancel btn-sm mx-2">
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
                             <div class="card-body">
                                 <div class="hero-name">
