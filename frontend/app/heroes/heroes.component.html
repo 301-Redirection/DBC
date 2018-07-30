@@ -37,7 +37,7 @@
                 </div>
                 <div class="drop-zone" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
                     <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div tabindex="0"  class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
+                        <div tabindex="0" class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
                             <div class="hero-name">
                                 {{ hero.niceName }}
                             </div>
