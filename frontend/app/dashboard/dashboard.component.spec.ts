@@ -14,7 +14,6 @@ import { DashboardModule } from './dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
 import { ItemsModule } from '../items/items.module';
-import { AbilitiesModule } from '../bot-config/abilities/abilities.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
@@ -101,7 +100,6 @@ describe('DashboardComponent', () => {
                 FormsModule,
                 ItemsModule,
                 SortablejsModule,
-                AbilitiesModule,
             ],
             providers: [
                 AuthService,
