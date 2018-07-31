@@ -63,6 +63,9 @@ export class HeroesComponent implements OnInit {
         this.getHeroes();
         this.selectedHeroesList = this.heroesService.getSelectedHeroes();
         this.popoverDismiss();
+        this.heroesService.currentHeroes.subscribe((heroes) => {
+            this.selectedHeroesList = heroes;
+        });
     }
 
     getHeroes(): void {
@@ -157,26 +160,6 @@ export class HeroesComponent implements OnInit {
         }
     }
 
-    addHero(hero: any, pool: number): void {
-        this.unhighlightPool(pool);
-        if (hero != null) {
-            this.setSelectedPool(pool);
-            this.selectedPoolArray.push(hero);
-            document.getElementById(`poolLink${pool - 1}`).click();
-            this.selectedHero = null;
-            this.setSelectedHeroesList();
-        }
-    }
-
-    removeHero(hero: any, pool: any): void {
-        const index = pool.indexOf(hero);
-        if (index !== -1) {
-            pool.splice(index, 1);
-        }
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
-        this.setSelectedHeroesList();
-    }
-
     setSelectedHeroesList(): void {
         this.selectedHeroesList = [];
         if (this.numberOfPools.length === 1) {
@@ -191,37 +174,13 @@ export class HeroesComponent implements OnInit {
         this.heroesService.setSelectedHeroes(this.selectedHeroesList);
     }
 
-    setSelectedHero(hero: any): void {
-        this.selectedHero = hero;
-    }
-
-    highlightPool(pool: number): void {
-        document.getElementById(`poolLink${pool - 1}`).style.borderColor = '#a3a3a3';
-        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'visible';
-    }
-
-    unhighlightPool(pool: number): void {
-        document.getElementById(`poolLink${pool - 1}`).style.borderColor = 'transparent';
-        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'hidden';
-    }
-
-    resetPools(): void {
-        this.pool1 = [];
-        this.pool2 = [];
-        this.pool3 = [];
-        this.pool4 = [];
-        this.pool5 = [];
-        this.selectedPool = 1;
-        this.selectedPoolArray = this.pool1;
-        this.setSelectedHeroesList();
-    }
-
     triggerResetPools(): void {
         if (confirm('Are you sure you want to reset?')) {
             this.resetPools();
         }
     }
 
+    // Yes I know, its a mess :P
     triggerPopover(target: HTMLElement, hero: any) {
         $(target).popover({
             animation: true,
@@ -244,6 +203,43 @@ export class HeroesComponent implements OnInit {
                 }
             });
         });
+    }
+
+    removeHero(hero: any, pool: any): void {
+        const index = pool.indexOf(hero);
+        if (index !== -1) {
+            pool.splice(index, 1);
+        }
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+    }
+
+    addHero(hero: any, pool: number): void {
+        // console.log('Drop: ' + pool);
+        this.setSelectedPool(pool);
+        this.selectedPoolArray.push(hero);
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+    }
+
+    setSelectedHero(hero: any): void {
+        this.selectedHero = hero;
+    }
+
+    highlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool - 1}`).style.borderColor = '#a3a3a3';
+    }
+
+    unhighlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool - 1}`).style.borderColor = 'transparent';
+    }
+
+    resetPools(): void {
+        this.pool1 = [];
+        this.pool2 = [];
+        this.pool3 = [];
+        this.pool4 = [];
+        this.pool5 = [];
+        this.selectedPool = 1;
+        this.selectedPoolArray = this.pool1;
     }
 
 }

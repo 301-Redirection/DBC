@@ -10,8 +10,9 @@ import { CallbackComponent } from '../callback/callback.component';
 import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { HeroesComponent } from '../bot-config/heroes/heroes.component';
-import { ItemsComponent } from '../items/items.component';
+import { ItemsComponent } from '../bot-config/items/items.component';
 import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
+
 
 export const ROUTES: Routes = [
     {
@@ -66,12 +67,6 @@ export const ROUTES: Routes = [
     {
         path: 'items',
         component: ItemsComponent,
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-    },
-    {
-        path: 'abilities',
-        component: AbilitiesComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },

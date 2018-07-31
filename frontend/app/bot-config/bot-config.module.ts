@@ -10,6 +10,7 @@ import { TeamDesiresComponent, ReversePipe } from './team-desires/team-desires.c
 import { TeamDesiresService } from '../services/team-desires.service';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
+import { ItemsModule } from './items/items.module';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
 
@@ -19,6 +20,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
         NavbarModule,
         RouterModule,
         FormsModule,
+        ItemsModule,
         SortablejsModule.forRoot({
             animation: 200,
         }),
@@ -30,6 +32,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
         TeamDesiresComponent,
         HeroesComponent,
         AbilitiesComponent,
+        // ItemsComponent,
         ReversePipe,
         FilterPipe,
     ],
