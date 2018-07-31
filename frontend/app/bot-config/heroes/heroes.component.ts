@@ -66,6 +66,7 @@ export class HeroesComponent implements OnInit {
         this.heroesService.currentHeroes.subscribe((heroes) => {
             this.selectedHeroesList = heroes;
         });
+        this.selectedTab();
     }
 
     getHeroes(): void {
@@ -106,6 +107,7 @@ export class HeroesComponent implements OnInit {
         if (!this.checkHeroExists(hero)) {
             this.selectedPoolArray.push(hero);
             document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+            this.openSelectedTab();
         }
     }
 
@@ -128,9 +130,11 @@ export class HeroesComponent implements OnInit {
             this.selectedPoolArray = this.pool5;
             break;
         }
+        this.hidePopovers();
     }
 
     togglePools(): void {
+        this.hidePopovers();
         if (confirm('Are you sure you want to toggle pools? All changes will be lost.')) {
             if (this.numberOfPools.length > 1) {
                 this.numberOfPools = [1];
@@ -153,6 +157,7 @@ export class HeroesComponent implements OnInit {
                 const tempPool = this.pool1;
                 this.resetPools();
                 this.pool1 = tempPool;
+                this.selectedPoolArray = this.pool1;
             } else {
                 this.numberOfPools = [1, 2, 3, 4, 5];
                 document.getElementById('poolTabs').style.height = '42px';
@@ -177,12 +182,12 @@ export class HeroesComponent implements OnInit {
     }
 
     triggerResetPools(): void {
+        this.hidePopovers();
         if (confirm('Are you sure you want to reset?')) {
             this.resetPools();
         }
     }
 
-    // Yes I know, its a mess :P
     triggerPopover(target: HTMLElement, hero: any) {
         $(target).popover({
             animation: true,
@@ -190,20 +195,6 @@ export class HeroesComponent implements OnInit {
             html: true,
             content: $(`#${hero.programName}`).html(),
             template: $('#heroesPopoverTemplate').html(),
-        });
-    }
-
-    popoverDismiss(): void {
-        $(document).ready(() => {
-            $('body').click((event) => {
-                $('[data-toggle="popover"]').popover('hide');
-
-                if (event.target.className === 'popover-zone') {
-                    $(`#${event.target.id}`).popover('show');
-                } else if (event.target.parentElement.className === 'popover-zone') {
-                    $(`#${event.target.parentElement.id}`).popover('show');
-                }
-            });
         });
     }
 
@@ -219,7 +210,9 @@ export class HeroesComponent implements OnInit {
         this.setSelectedPool(pool);
         if (!this.checkHeroExists(hero)) {
             this.selectedPoolArray.push(hero);
+            this.unhighlightPool(pool);
             document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+            this.openSelectedTab();
         }
     }
 
@@ -237,10 +230,12 @@ export class HeroesComponent implements OnInit {
 
     highlightPool(pool: number): void {
         document.getElementById(`poolLink${pool - 1}`).style.borderColor = '#a3a3a3';
+        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'visible';
     }
 
     unhighlightPool(pool: number): void {
         document.getElementById(`poolLink${pool - 1}`).style.borderColor = 'transparent';
+        document.getElementById(`poolPlusIconCont${pool - 1}`).style.visibility = 'hidden';
     }
 
     resetPools(): void {
@@ -251,6 +246,95 @@ export class HeroesComponent implements OnInit {
         this.pool5 = [];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
+    }
+
+    hidePopovers() {
+        $('[data-toggle="popover"]').popover('hide');
+    }
+
+    popoverDismiss(): void {
+        $(document).ready(() => {
+            $('body').click((event) => {
+                this.hidePopovers();
+
+                if (event.target.className === 'popover-zone' ||
+                    event.target.className === 'popover-zone selected-popover-zone') {
+                    $(`#${event.target.id}`).popover('show');
+                } else if (event.target.parentElement.className === 'popover-zone' ||
+                    event.target.parentElement.className === 'popover-zone selected-popover-zone') {
+                    $(`#${event.target.parentElement.id}`).popover('show');
+                }
+            });
+        });
+    }
+
+    selectedTab(): void {
+        $(document).ready(() => {
+            $('#selectedFrame').css('bottom', '-200px');
+
+            $(window).scroll(() => {
+                const scrollTop = $(document).scrollTop();
+                if (scrollTop < 2390) {
+                    $('#selectedFrameChevron').css('visibility', 'visible');
+                } else {
+                    $('#selectedFrameChevron').css('visibility', 'hidden');
+                }
+            });
+
+            $('#selectedFrame').on('dragenter', () => {
+                this.openSelectedTab();
+            });
+
+            $('#selectedFrameHeader').on('click', () => {
+                if ($('#selectedFrame').css('bottom') === '-10px') {
+                    this.closeSelectedTab();
+                } else {
+                    this.openSelectedTab();
+                }
+            });
+
+            $('body').click((event) => {
+                const idInstances = ['selectedFrameHeader', 'cardHeaderText', 'selectedButtons'];
+                const classExceptions = [
+                    'popover-body',
+                    'popover-zone selected-popover-zone',
+                    'popover-item',
+                    'hero-name',
+                    'drop-zone',
+                    'nav-link pool-nav-link active',
+                    'nav-link pool-nav-link',
+                    'card-body selected-card-body',
+                    'text-center',
+                    'hero-attributes',
+                    'figure-caption text-center',
+                    'SVGAnimatedString',
+                    'pool-plus-icon-cont',
+                ];
+                const idExceptions = ['removeIcon', 'timesIcon'];
+                const target = event.target;
+
+                if ((idInstances.includes(target.id)) &&
+                    $('#selectedFrame').css('bottom') !== '-10px') {
+                    this.openSelectedTab();
+                } else if (target.id === 'resetPoolsBtn' || target.id === 'togglePoolsBtn') {
+                    this.openSelectedTab();
+                } else if (!classExceptions.includes(target.className) &&
+                    !idExceptions.includes(target.id) &&
+                    !idExceptions.includes(target.parentElement.id)) {
+                    this.closeSelectedTab();
+                }
+            });
+        });
+    }
+
+    openSelectedTab() {
+        $('#selectedFrame').css('bottom', '-10px');
+        $('#selectedFrameChevron').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+    }
+
+    closeSelectedTab() {
+        $('#selectedFrame').css('bottom', '-200px');
+        $('#selectedFrameChevron').addClass('fa-chevron-up').removeClass('fa-chevron-down');
     }
 
 }

@@ -25,14 +25,23 @@
 
 .heroes-card {
     height: 100%;
-    background-color: rgba($dark-grey-2, 0.8);
+    background-color: rgba($dark-grey-3, 1);
+    border: none;
     text-align: left;
     color: $light-grey;  
     width: 100%; 
 }
 
+.heroes-card-header {
+    background-color: rgba($dark-grey-2, 1);
+}
+
 .card-header {
     border: none;
+}
+
+#cardHeaderText {
+    display: inline-block;
 }
 
 #heroesTitle {
@@ -42,6 +51,15 @@
 
 .drop-zone {
     min-height: 160px;
+}
+
+#selectedFrame {
+    margin-top: 0;
+    z-index: 4;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    transition: 0.3s;
 }
 
 .popover-zone {
@@ -112,12 +130,6 @@
 #removeIcon:hover {
     background-color: transparent;
     border-color: $btn-cancel-border-color;
-}
-
-#toggleButtonDiv {        
-    margin-left: 9%;
-    margin-right: 9%;    
-    text-align: right;    
 }
 
 #togglePoolsBtn {
