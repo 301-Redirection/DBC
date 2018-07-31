@@ -1,5 +1,6 @@
 // General Modules
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -14,6 +15,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
 import { BotManagementModule } from './bot-management/bot-management.module';
 import { ItemsModule } from './items/items.module';
+import { MaterialModule } from './material/material.module';
 // import { AbilitiesModule } from './abilities/abilities.module';
 
 // Services
@@ -49,6 +51,8 @@ import { FilterPipe } from './pipes/filter.pipe';
         BotConfigModule,
         RouterModule,
         ItemsModule,
+        MaterialModule,
+        BrowserAnimationsModule,
         // AbilitiesModule,
         SortablejsModule.forRoot({
             animation: 200,
