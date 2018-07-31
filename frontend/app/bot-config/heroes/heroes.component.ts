@@ -103,8 +103,10 @@ export class HeroesComponent implements OnInit {
     }
 
     moveSelectedHero(hero: any): void {
-        this.selectedPoolArray.push(hero);
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        if (!this.checkHeroExists(hero)) {
+            this.selectedPoolArray.push(hero);
+            document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        }
     }
 
     setSelectedPool(pool: number): void {
@@ -214,10 +216,19 @@ export class HeroesComponent implements OnInit {
     }
 
     addHero(hero: any, pool: number): void {
-        // console.log('Drop: ' + pool);
         this.setSelectedPool(pool);
-        this.selectedPoolArray.push(hero);
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        if (!this.checkHeroExists(hero)) {
+            this.selectedPoolArray.push(hero);
+            document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        }
+    }
+
+    checkHeroExists(hero: any): boolean {
+        if (this.selectedPoolArray.find(x => x.id === hero.id)) {
+            alert('This hero already exists in the selected pool.');
+            return true;
+        }
+        return false;
     }
 
     setSelectedHero(hero: any): void {
