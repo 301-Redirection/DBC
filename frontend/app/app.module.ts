@@ -1,5 +1,6 @@
 // General Modules
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -13,7 +14,9 @@ import { BotConfigModule } from './bot-config/bot-config.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
 import { BotManagementModule } from './bot-management/bot-management.module';
-import { ItemsModule } from './bot-config/items/items.module';
+// import { ItemsModule } from './items/items.module';
+import { MaterialModule } from './material/material.module';
+// import { AbilitiesModule } from './abilities/abilities.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
@@ -45,10 +48,12 @@ import { FilterPipe } from './pipes/filter.pipe';
         HomeModule,
         DashboardModule,
         NavbarModule,
-        ItemsModule,
+        // ItemsModule,
         BotConfigModule,
         RouterModule,
-        ItemsModule,
+        // ItemsModule,
+        MaterialModule,
+        BrowserAnimationsModule,
         // AbilitiesModule,
     ],
     providers: [

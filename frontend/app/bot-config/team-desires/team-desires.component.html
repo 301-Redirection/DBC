@@ -2,11 +2,6 @@
     <div class="container-fluid container-fluid-custom">
         <div class="frame">
             <h1>TEAM DESIRES</h1>
-            <div class="d-inline-block">
-                <a class="active" href="#">Team Desires</a>
-                <span>&nbsp;|&nbsp;</span>
-                <a href="#">Hero Configuration</a>
-            </div>
         </div>
 
         <div class="frame">
@@ -33,7 +28,7 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <input type="text" id="{{section.prop + lane.title}}Default" [(value)]="teamDesires[section.prop][lane.prop].initialValue">
+                                        <mat-slider min="0" max="100" step="1" [(value)]="teamDesires[section.prop][lane.prop].initialValue" thumbLabel tickInterval="1"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(section.prop, lane.prop)">Add Condition Group</button>
@@ -102,7 +97,7 @@
                         <div class="card-body bot-manage-card-body">
                             <div class="form-group container">
                                 <label for="{{section.prop}}Default">Default Value</label>
-                                <input type="text" id="{{section.prop}}Default" [(value)]="teamDesires[section.prop].initialValue">
+                                <mat-slider min="0" max="100" step="1" [(value)]="teamDesires[section.prop].initialValue" thumbLabel tickInterval="1"></mat-slider>
                             </div>
                             <div class="container">
                                 <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(section.prop)">Add Condition Group</button>

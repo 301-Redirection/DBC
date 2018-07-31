@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarModule } from '../navbar/navbar.module';
+import { MaterialModule } from '../material/material.module';
 import { BotConfigComponent } from './bot-config.component';
 import { ConfiguratorComponent, EnumToArrayPipe } from
 './team-desires/configurator/configurator.component';
@@ -24,6 +25,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
         SortablejsModule.forRoot({
             animation: 200,
         }),
+        MaterialModule,
     ],
     declarations: [
         BotConfigComponent,
