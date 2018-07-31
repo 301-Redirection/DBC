@@ -14,7 +14,7 @@ import { BotConfigModule } from './bot-config/bot-config.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { RoutesModule } from './routes/routes.module';
 import { BotManagementModule } from './bot-management/bot-management.module';
-import { ItemsModule } from './items/items.module';
+// import { ItemsModule } from './items/items.module';
 import { MaterialModule } from './material/material.module';
 // import { AbilitiesModule } from './abilities/abilities.module';
 
@@ -48,10 +48,10 @@ import { FilterPipe } from './pipes/filter.pipe';
         HomeModule,
         DashboardModule,
         NavbarModule,
-        ItemsModule,
+        // ItemsModule,
         BotConfigModule,
         RouterModule,
-        ItemsModule,
+        // ItemsModule,
         MaterialModule,
         BrowserAnimationsModule,
         // AbilitiesModule,
