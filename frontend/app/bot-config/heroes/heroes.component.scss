@@ -28,9 +28,7 @@
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
     color: $light-grey;  
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;  
+    width: 100%; 
 }
 
 .card-header {
@@ -60,8 +58,8 @@
     border-radius: 4px;
     background-color: $black;
     background-size: cover;    
-    height: 145px;
-    width: 128px;    
+    height: 125px;
+    width: 110px;    
     cursor: pointer;           
 }
 
@@ -82,14 +80,13 @@
     bottom: 0;    
     left: 50%;
     transform: translate(-50%, 0);
-    font-size: 100%;
     width: 100%;
     text-shadow: $text-shadow;
     color: $white;
     font-family: $font-family;
 }
 
-.class-title {
+.class-title {    
     margin-bottom: 5px;
 }
 

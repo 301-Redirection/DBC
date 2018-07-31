@@ -17,9 +17,10 @@ import { HomeModule } from '../../home/home.module';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { BotConfigModule } from '../../bot-config/bot-config.module';
 import { BotManagementModule } from '../../bot-management/bot-management.module';
-import { ItemsModule } from '../../items/items.module';
+import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../../callback/callback.component';
 import { LoadingComponent } from '../../core/loading.component';
+import { ItemsComponent } from '../items/items.component';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -98,7 +99,6 @@ describe('HeroesComponent', () => {
                 // FilterPipe,
                 CallbackComponent,
                 LoadingComponent,
-                // HeroesComponent,
             ],
             imports: [
                 FormsModule,
@@ -108,11 +108,11 @@ describe('HeroesComponent', () => {
                 BotConfigModule,
                 BotManagementModule,
                 FormsModule,
-                ItemsModule,
                 SortablejsModule,
                 DashboardModule,
             ],
             providers: [
+                ApiConnectService,
                 AuthService,
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 HttpClient,

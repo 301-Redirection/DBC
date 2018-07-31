@@ -184,7 +184,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 }else {
                     this.selectBothFactions();
                 }
-
             }
         });
     }

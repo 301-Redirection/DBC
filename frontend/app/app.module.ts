@@ -48,15 +48,13 @@ import { FilterPipe } from './pipes/filter.pipe';
         HomeModule,
         DashboardModule,
         NavbarModule,
+        ItemsModule,
         BotConfigModule,
         RouterModule,
         ItemsModule,
         MaterialModule,
         BrowserAnimationsModule,
         // AbilitiesModule,
-        SortablejsModule.forRoot({
-            animation: 200,
-        }),
     ],
     providers: [
         ApiConnectService,

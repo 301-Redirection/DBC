@@ -13,7 +13,7 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from './dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
-import { ItemsModule } from '../items/items.module';
+import { ItemsModule } from '../bot-config/items/items.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
@@ -21,9 +21,10 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { Observable } from 'rxjs/Rx';
 import { HeroesComponent } from '../bot-config/heroes/heroes.component';
-import { FormsModule } from '../../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { ItemsComponent } from '../bot-config/items/items.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -88,8 +89,9 @@ describe('DashboardComponent', () => {
                 DashboardComponent,
                 CallbackComponent,
                 LoadingComponent,
-                // HeroesComponent,
-                // FilterPipe,
+                HeroesComponent,
+                FilterPipe,
+                ItemsComponent,
             ],
             imports: [
                 NavbarModule,
@@ -98,7 +100,6 @@ describe('DashboardComponent', () => {
                 BotConfigModule,
                 BotManagementModule,
                 FormsModule,
-                ItemsModule,
                 SortablejsModule,
             ],
             providers: [

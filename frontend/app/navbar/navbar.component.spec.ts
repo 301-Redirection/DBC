@@ -12,7 +12,6 @@ import { HomeModule } from '../home/home.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { BotManagementModule } from '../bot-management/bot-management.module';
-import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
@@ -20,8 +19,9 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
-import { FormsModule } from '../../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { ItemsComponent } from '../bot-config/items/items.component';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -29,14 +29,16 @@ describe('NavbarComponent', () => {
     let router: Router;
     let location: Location;
     let auth: AuthService;
+    const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
-                // HeroesComponent,
-                // FilterPipe,
+                HeroesComponent,
+                ItemsComponent,
+                FilterPipe,
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
@@ -46,7 +48,6 @@ describe('NavbarComponent', () => {
                 BotManagementModule,
                 SortablejsModule,
                 FormsModule,
-                ItemsModule,
             ],
             providers: [
                 AuthService,

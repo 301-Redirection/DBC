@@ -1,34 +1,42 @@
+import { Component } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NavbarModule } from './navbar/navbar.module';
 import { AuthService } from './auth/auth.service';
-import { ApiConnectService } from './services/api-connect.service';
-import { SortablejsModule } from '../../node_modules/angular-sortablejs/dist';
+
+@Component({ selector: 'app-navbar', template: '' })
+class NavbarModule {}
+
+let authServiceStub : Partial<AuthService>;
+
+authServiceStub = {
+    handleAuth: () => { },
+};
 
 describe('AppComponent', () => {
+    let component;
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 AppComponent,
+                NavbarModule,
             ],
             imports: [
                 RouterTestingModule,
-                NavbarModule,
-                SortablejsModule,
             ],
             providers: [
-                AuthService,
-                ApiConnectService,
-                HttpClient,
-                HttpHandler,
+                { provide: AuthService, useValue: authServiceStub },
             ],
         }).compileComponents();
     }));
-    it('should create the app', async(() => {
+
+    beforeEach(() => {
         const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app).toBeTruthy();
+        // authService = fixture.debugElement.injector.get(AuthService);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+    it('should create the app', async(() => {
+        expect(component).toBeTruthy();
     }));
 });
