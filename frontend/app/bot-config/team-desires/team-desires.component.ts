@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform, EventEmitter, Output } from '@angular/core';
 import { TeamDesiresService } from '../../services/team-desires.service';
 import { ConfigurationFormat, Action } from '../../ConfigurationFormat';
 
@@ -61,6 +61,8 @@ export class TeamDesiresComponent implements OnInit {
             prop: 'roam',
         },
     ];
+
+    @Output() desires = new EventEmitter<ConfigurationFormat>();
 
     constructor(private tdService: TeamDesiresService) {}
 

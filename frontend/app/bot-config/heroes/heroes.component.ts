@@ -327,7 +327,7 @@ export class HeroesComponent implements OnInit {
                     'SVGAnimatedString',
                     'pool-plus-icon-cont',
                 ];
-                const idExceptions = ['removeIcon', 'timesIcon'];
+                const idExceptions = ['removeIcon', 'timesIcon', 'selectedFrameChevron'];
                 const target = event.target;
 
                 if ((idInstances.includes(target.id)) &&

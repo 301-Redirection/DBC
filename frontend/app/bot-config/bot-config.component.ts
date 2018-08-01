@@ -55,6 +55,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {}
 
+    test() {
+        console.log('Test');
+    }
+
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
