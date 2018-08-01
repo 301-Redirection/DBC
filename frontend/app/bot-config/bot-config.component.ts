@@ -17,6 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';
 import * as globalConfig from '../../../config/config.js';
 import { ConfiguratorComponent } from './team-desires/configurator/configurator.component';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 declare var $: any;
 
@@ -39,10 +40,21 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     id: number = -1;
     faction: string = 'both';
 
+    // Configuration data
+    teamDesires: any;
+    heroes: any;
+    abilities: any;
+    items: any;
+
     generateURL = '';
 
     constructor
-    (private title: Title, private api: ApiConnectService, private route: ActivatedRoute) {
+    (
+        private title: Title,
+        private api: ApiConnectService,
+        private route: ActivatedRoute,
+        private botConfigData: BotConfigDataService,
+    ) {
         this.title.setTitle(this.pageTitle);
         this.route.params.subscribe((params) => {
             if (params['botScriptID']) {
@@ -56,7 +68,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {}
 
     test() {
-        console.log('Test');
+        this.botConfigData.getTeamDesires().subscribe((teamDesires) => {
+            this.teamDesires = teamDesires;
+            console.log(this.teamDesires);
+        });
+
+        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+            this.heroes = heroes;
+            console.log(this.heroes);
+        });
     }
 
     save() {

@@ -14,6 +14,7 @@ import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsModule } from './items/items.module';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 @NgModule({
     imports: [
@@ -39,6 +40,9 @@ import { FilterPipe } from '../pipes/filter.pipe';
         FilterPipe,
     ],
     exports: [BotConfigComponent],
-    providers: [TeamDesiresService],
+    providers: [
+        TeamDesiresService,
+        BotConfigDataService,
+    ],
 })
 export class BotConfigModule { }

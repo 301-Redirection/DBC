@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
-import { HeroesService } from '../../services/heroes.service';
-// import { HereosService } from '../services/heroes.service.ts
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 // Import JQuery
 declare var $: any;
+
 @Component({
     selector: 'app-items',
     templateUrl: './items.component.html',
@@ -28,9 +28,9 @@ export class ItemsComponent implements OnInit {
     totalCostPerHero = [];
     selectedItem: any;
     currentHero: any;
+    selectedHeroes: any;
 
     // Temporary test data
-    selectedHeroes: any;
     // selectedHeroes = [
     //     {
     //         name: 'Anti-Mage',
@@ -76,7 +76,7 @@ export class ItemsComponent implements OnInit {
         sort: false,
     };
 
-    constructor(private api: ApiConnectService, private heroesService: HeroesService) {}
+    constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
         this.getHeroes();
@@ -84,8 +84,11 @@ export class ItemsComponent implements OnInit {
     }
 
     getHeroes() {
-        this.heroesService.currentHeroes.subscribe((heroes) => {
-            this.selectedHeroes = heroes;
+        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+            this.selectedHeroes = [];
+            heroes.forEach((hero) => {
+                this.selectedHeroes.push(hero);
+            });
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;

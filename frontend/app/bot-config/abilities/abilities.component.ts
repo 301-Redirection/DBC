@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../services/api-connect.service';
 import * as globalConfig from '../../../../config/config.js';
-import { HeroesService } from '../../services/heroes.service';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 const NUMBER_TALENTS: number = 4;
 
@@ -24,75 +24,41 @@ class TalentSet {
 })
 export class AbilitiesComponent implements OnInit {
 
-    numberOfPools: any;
-    selectedPool: number;
-    selectedPoolArray: any;
-    // Temporary test data
-    allHeroes: any;
+    // hero objects
     selectedHeroes: any;
-
-    constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
-
-    // hero category objects
-    strengthHeroes = [];
-    agilityHeroes = [];
-    intelligenceHeroes = [];
-    heroes = [];
     currentHero: any;
+
+    constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) { }
 
     ngOnInit() {
         this.getHeroes();
     }
 
     getHeroes(): void {
-        // Retrieving selected heroes from HeroesService
-        this.selectedHeroes = [];
-        this.heroesService.getSelectedHeroes().subscribe((heroes) => {
-            this.selectedHeroes = heroes;
+        // Retrieving selected heroes from service
+        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+            this.selectedHeroes = [];
+            heroes.forEach((hero) => {
+                this.selectedHeroes.push(hero);
+            });
 
             for (let i = 0; i < this.selectedHeroes.length; i += 1) {
-                this.selectedHeroes.abilitySet = new AbilitySet();
-                this.selectedHeroes[i].talents = ['none', 'none', 'none', 'none'];
+                const hero = this.selectedHeroes[i];
+                hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
+                hero.abilitySet = new AbilitySet();
+                hero.talents = ['none', 'none', 'none', 'none'];
             }
 
-            this.sortHeroData();
             this.initAbilityPriorities();
-            this.currentHero = this.heroes[0];
-        });
-
-        // database call to retrieve all dota heroes
-        // this.allHeroes = [];
-        // this.api.getAllHeroes().subscribe((data) => {
-        //     this.allHeroes = data.heroes;
-        //     for (let i = 0; i < this.allHeroes.length; i += 1) {
-        //         this.allHeroes.abilitySet = new AbilitySet();
-        //         this.allHeroes[i].talents = ['none', 'none', 'none', 'none'];
-        //     }
-        //     this.sortHeroData();
-        //     this.initAbilityPriorities();
-        //     this.currentHero = this.heroes[0];
-        // });
-    }
-
-    sortHeroData(): void {
-        this.selectedHeroes.forEach((hero) => {
-            hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
-            if (hero.primaryAttribute === 'str') {
-                this.strengthHeroes.push(hero);
-            } else if (hero.primaryAttribute === 'agi') {
-                this.agilityHeroes.push(hero);
-            } else if (hero.primaryAttribute === 'int') {
-                this.intelligenceHeroes.push(hero);
-            }
-            this.heroes.push(hero);
+            this.currentHero = this.selectedHeroes[0];
         });
     }
 
     initAbilityPriorities() {
         const link = 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia';
 
-        for (let h = 0; h < this.heroes.length; h += 1) {
-            const hero = this.heroes[h];
+        for (let h = 0; h < this.selectedHeroes.length; h += 1) {
+            const hero = this.selectedHeroes[h];
             hero.abilityPriorities = [
                 {
                     name: hero.ability_q,

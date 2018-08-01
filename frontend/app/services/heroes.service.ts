@@ -8,6 +8,8 @@ export class HeroesService {
 
     constructor() { }
 
+    allHeroes = [];
+
     public setSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
-import { HeroesService } from '../../services/heroes.service';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 // Import JQuery
 declare var $: any;
@@ -37,6 +37,7 @@ export class HeroesComponent implements OnInit {
     pool3 = [];
     pool4 = [];
     pool5 = [];
+    allPools = [];
 
     optionsSource: SortablejsOptions = {
         group: {
@@ -52,7 +53,10 @@ export class HeroesComponent implements OnInit {
         sort: false,
     };
 
-    constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
+    constructor(
+        private api: ApiConnectService,
+        private botConfigData: BotConfigDataService,
+    ) { }
 
     ngOnInit() {
         document.getElementById('poolTabs').style.height = '0';
@@ -61,15 +65,14 @@ export class HeroesComponent implements OnInit {
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
-        this.selectedHeroesList = this.heroesService.getSelectedHeroes();
-
-        this.heroesService.currentHeroes.subscribe((heroes) => {
-            this.selectedHeroesList = heroes;
-        });
 
         // jquery functions
         this.popoverDismiss();
         this.selectedTab();
+    }
+
+    saveHeroes(): void {
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
     getHeroes(): void {
@@ -103,6 +106,7 @@ export class HeroesComponent implements OnInit {
                 this.intelligenceHeroes.push(hero);
                 hero.attributeImage = this.intURL;
             }
+            hero.poolIndexes = [];
         });
     }
 
@@ -183,11 +187,12 @@ export class HeroesComponent implements OnInit {
                 this.selectedHeroesList.push(hero);
             });
         }
-        this.heroesService.setSelectedHeroes(this.selectedHeroesList);
+        this.saveHeroes();
     }
 
     moveSelectedHero(hero: any): void {
         if (!this.checkHeroExists(hero)) {
+            hero.poolIndexes.push(this.selectedPool);
             this.selectedPoolArray.push(hero);
             document.getElementById(`poolLink${this.selectedPool - 1}`).click();
             this.openSelectedTab();
@@ -198,6 +203,7 @@ export class HeroesComponent implements OnInit {
     addHero(hero: any, pool: number): void {
         this.setSelectedPool(pool);
         if (!this.checkHeroExists(hero)) {
+            hero.poolIndexes.push(pool);
             this.selectedPoolArray.push(hero);
             this.unhighlightPool(pool);
             document.getElementById(`poolLink${this.selectedPool - 1}`).click();
@@ -207,10 +213,15 @@ export class HeroesComponent implements OnInit {
     }
 
     removeHero(hero: any, pool: any): void {
-        const index = pool.indexOf(hero);
+        let index = pool.indexOf(hero);
         if (index !== -1) {
             pool.splice(index, 1);
         }
+        index = hero.poolIndexes.indexOf(pool);
+        if (index !== -1) {
+            hero.poolIndexes.splice(index, 1);
+        }
+
         document.getElementById(`poolLink${this.selectedPool - 1}`).click();
         this.setSelectedHeroesList();
     }
@@ -238,6 +249,9 @@ export class HeroesComponent implements OnInit {
     }
 
     resetPools(): void {
+        this.selectedHeroesList.forEach((hero) => {
+            hero.poolIndexes = [];
+        });
         this.pool1 = [];
         this.pool2 = [];
         this.pool3 = [];

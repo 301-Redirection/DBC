@@ -1,6 +1,7 @@
-import { Component, OnInit, Pipe, PipeTransform, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { TeamDesiresService } from '../../services/team-desires.service';
 import { ConfigurationFormat, Action } from '../../ConfigurationFormat';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 @Component({
     selector: 'app-team-desires',
@@ -62,16 +63,22 @@ export class TeamDesiresComponent implements OnInit {
         },
     ];
 
-    @Output() desires = new EventEmitter<ConfigurationFormat>();
-
-    constructor(private tdService: TeamDesiresService) {}
+    constructor(
+        private tdService: TeamDesiresService,
+        private botConfigData: BotConfigDataService,
+    ) {}
 
     ngOnInit() {
         this.teamDesires = this.tdService.getDefaultConfiguration();
+        this.saveTeamDesires();
     }
 
     private trackByFn(index, item) {
         return index;
+    }
+
+    private saveTeamDesires(): void {
+        this.botConfigData.setTeamDesires(this.teamDesires);
     }
 
     private getCondGroupIndex(index: number, prop: string, lane: string): number {
@@ -102,6 +109,7 @@ export class TeamDesiresComponent implements OnInit {
                 logicalOperators[len - 1] = 1;
             }
         }
+        this.saveTeamDesires();
     }
 
     private delCondition(prop: string, condGroup: number, index: number = -1, lane?: string) {
@@ -133,6 +141,7 @@ export class TeamDesiresComponent implements OnInit {
                 }
             }
         }
+        this.saveTeamDesires();
     }
 
     private addConditionGroup(prop: string, lane?: string): void {
@@ -142,11 +151,13 @@ export class TeamDesiresComponent implements OnInit {
             this.teamDesires[prop][lane].
             compoundConditions.push(this.tdService.newCondGroup());
         }
+        this.saveTeamDesires();
     }
 
     private delCondGroup(prop: string, lane?: string) {
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         window.alert('OK');
+        this.saveTeamDesires();
     }
 
     private setOperator(prop: string, condGroup: number, lane?: string, index: number = 0,
@@ -158,6 +169,7 @@ export class TeamDesiresComponent implements OnInit {
             this.teamDesires[prop][lane].compoundConditions[groupIndex].
             logicalOperators[index] = val;
         }
+        this.saveTeamDesires();
     }
 
     private getOperator(prop: string, condGroup: number, index: number = 0, lane?: string): string {
@@ -170,6 +182,7 @@ export class TeamDesiresComponent implements OnInit {
             op = this.teamDesires[prop][lane].compoundConditions[groupIndex].
             logicalOperators[index];
         }
+        this.saveTeamDesires();
         return op === 1 ? 'AND' : 'OR';
     }
 

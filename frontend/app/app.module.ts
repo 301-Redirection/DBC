@@ -30,6 +30,7 @@ import { LoadingComponent } from './core/loading.component';
 // import { HeroesComponent } from './heroes/heroes.component';
 
 import { FilterPipe } from './pipes/filter.pipe';
+import { BotConfigDataService } from './services/bot-config-data.service';
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import { FilterPipe } from './pipes/filter.pipe';
         Title,
         AuthService,
         HeroesService,
+        BotConfigDataService,
     ],
     bootstrap: [AppComponent],
 })
