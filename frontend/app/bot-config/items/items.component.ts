@@ -190,8 +190,10 @@ export class ItemsComponent implements OnInit {
     triggerPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
+            trigger: 'hover',
             placement: 'right',
             html: true,
+            template: $('#itemsPopoverTemplate').html(),
             content: `
                 <h5 style="text-shadow:none;">
                     <img src="${item.url}" height="25">
@@ -204,7 +206,6 @@ export class ItemsComponent implements OnInit {
                     ${item.cost}
                 </h6>
             `,
-            trigger: 'hover',
         });
     }
 }

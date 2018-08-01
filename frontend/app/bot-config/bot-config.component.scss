@@ -166,10 +166,9 @@ $slider-cursor: pointer;
     cursor: pointer;
 }
 
-.tab-text {
-    background-color: $dark-grey-2;
-    color: $light-grey;    
-    border-color: $light-grey;
+#configNav {
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .nav-item {
@@ -177,15 +176,28 @@ $slider-cursor: pointer;
     width: 20%;    
 }
 
+.nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: $light-grey;
+    font-size: 20px;
+    font-family: $font-family;    
+}
+
 .nav-link.active {
-    background-color: $light-grey;    
-    border-color: $light-grey;
+    color: $light-grey;    
+    background-color: transparent;    
+    border-color: transparent transparent $light-grey;    
+    border-bottom: 4px solid $light-grey;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.nav-link:hover {
-    border-color: $light-grey !important;    
-}
-
-.nav-link.active:hover {
-    color: $dark-grey-2;
+.nav-link:hover {    
+    color: $light-grey;
+    font-weight: bold;
+    border: 1px solid transparent;    
+    border-bottom: 4px solid $light-grey;
+    transition: 0.4s;
 }
