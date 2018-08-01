@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
+import { HeroesService } from '../../services/heroes.service';
 // import { HereosService } from '../services/heroes.service.ts
 
 // Import JQuery
@@ -26,26 +27,28 @@ export class ItemsComponent implements OnInit {
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
     selectedItem: any;
+    currentHero: any;
 
     // Temporary test data
-    selectedHeroes = [
-        {
-            name: 'Anti-Mage',
-            image: 'http://localhost:3000/static/heroes/images/antimage.png',
-        },
-        {
-            name: 'Axe',
-            image: 'http://localhost:3000/static/heroes/images/axe.png',
-        },
-        {
-            name: 'Bane',
-            image: 'http://localhost:3000/static/heroes/images/bane.png',
-        },
-        {
-            name: 'Bloodseeker',
-            image: 'http://localhost:3000/static/heroes/images/bloodseeker.png',
-        },
-    ];
+    selectedHeroes: any;
+    // selectedHeroes = [
+    //     {
+    //         name: 'Anti-Mage',
+    //         image: 'http://localhost:3000/static/heroes/images/antimage.png',
+    //     },
+    //     {
+    //         name: 'Axe',
+    //         image: 'http://localhost:3000/static/heroes/images/axe.png',
+    //     },
+    //     {
+    //         name: 'Bane',
+    //         image: 'http://localhost:3000/static/heroes/images/bane.png',
+    //     },
+    //     {
+    //         name: 'Bloodseeker',
+    //         image: 'http://localhost:3000/static/heroes/images/bloodseeker.png',
+    //     },
+    // ];
 
     basicItem = [
         {
@@ -73,8 +76,7 @@ export class ItemsComponent implements OnInit {
         sort: false,
     };
 
-    // constructor(private api: ApiConnectService, private heroService: HeroesService) {}
-    constructor(private api: ApiConnectService) {}
+    constructor(private api: ApiConnectService, private heroesService: HeroesService) {}
 
     ngOnInit() {
         this.getHeroes();
@@ -82,8 +84,9 @@ export class ItemsComponent implements OnInit {
     }
 
     getHeroes() {
-        // TODO use hero service
-        // this.heroesService.currentHeroes.subscribe((heroes) => this.selectedHeroes = heroes);
+        this.heroesService.currentHeroes.subscribe((heroes) => {
+            this.selectedHeroes = heroes;
+        });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
         for (const hero of this.selectedHeroes) {
@@ -178,6 +181,10 @@ export class ItemsComponent implements OnInit {
             }
         }
         this.selectedItemComponentsArray = [];
+    }
+
+    onSelect(hero): void {
+        this.currentHero = hero;
     }
 
     triggerPopover(target: HTMLElement, item: any) {

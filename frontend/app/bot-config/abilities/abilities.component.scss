@@ -1,123 +1,53 @@
 /* Global Variables */
 @import '../../../variables';
 
-#poolTabs {
-    border-bottom-color: $light-grey;
-}
+// #poolTabs {
+//     border-bottom-color: $light-grey;
+// }
 
-.nav-item {
-    cursor: pointer;
-    width: 20%;    
-}
+// .nav-item {
+//     cursor: pointer;
+//     width: 20%;    
+// }
 
-.nav-link.active {
-    background-color: $light-grey;    
-    border-color: $light-grey;
-}
+// .nav-link.active {
+//     background-color: $light-grey;    
+//     border-color: $light-grey;
+// }
 
-.nav-link.active:hover {
-    color: $dark-grey-2;
-}
+// .nav-link.active:hover {
+//     color: $dark-grey-2;
+// }
 
-.heroes-card {
-    height: 100%;
-    background-color: rgba($dark-grey-2, 0.8);
-    text-align: left;
-    color: $light-grey;  
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;  
-}
+// .drop-zone {
+//     min-height: 90px;
+// }
 
-#heroesTitle {
-    color: $grey;
-    text-align: center;
-}
+// .class-title {
+//     margin-bottom: 5px;
+// }
 
-.drop-zone {
-    min-height: 90px;
-}
+// .class-title h6 {
+//     display: inline-block;
+// }
 
-.hero-item {
-    display: inline-block;
-    margin-right: 5px;
-    border: 2px solid $btn-generate-border-color;
-    background-color: $black;
-    height: 85px;
-    width: 120px;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;    
-}
-
-.hero-item:hover {
-    border: 2px solid $btn-generate-border-color-hover;
-}
-
-.hero-item .card-header,
-.hero-item .card-body {
-    padding: 1px;
-}
-
-.hero-name {     
-    position: absolute;
-    bottom: 0;    
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.class-title {
-    margin-bottom: 5px;
-}
-
-.class-title h6 {
-    display: inline-block;
-}
-
-.class-title img {
-    height: 25px;
-}
-
-#removeIcon {
-    color: $red;
-    float: right;
-    z-index: 2;
-}
-
-#toggleButtonDiv {        
-    margin-left: 9%;
-    margin-right: 9%;    
-    text-align: right;    
-}
-
-#togglePoolsBtn {
-    margin-right: 1px !important;
-}
+// .class-title img {
+//     height: 25px;
+// }
 
 /// NEW CSS
-.hero-item.selected {
-    border: 2px solid white;
-}
-
-.hero-item {
-    width: 70px;
-    height: 81px;
-    background-size: cover;
-    color: transparent;
-    font-size: 8px;
-    text-align: center;
-}
-
-.hero-item:hover {
-    color: white;
-    background-image: none!important;
-    background-color: black;
-}
-
 .ability-roster-image {
     width: 50px;
     height: 50px;
 }
+
+.ability-row {
+    margin-top: 1%;
+    margin-bottom: 5%;
+    display: inline-block;
+    width: 100%;
+}
+
 .ability-table {
     border: none;
     width: auto;
@@ -143,7 +73,6 @@
     text-align: center;
 }
 
-
 .selected-ability {
     background-color: #C09B64;
 }
@@ -166,7 +95,10 @@
 }
 
 .ability-item {
-    text-align: center;
+    text-align: center !important;
+    margin-left: 4%;
+    margin-right: 4%;
+    display: inline-block;    
 }
 
 .selector {
@@ -178,6 +110,10 @@
 
 .buttons * {
     display: inline-block;
+}
+
+.button-priority {
+    padding: 4px 10px !important;
 }
 
 /* Talents stuff */ 

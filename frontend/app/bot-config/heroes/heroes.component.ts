@@ -62,10 +62,13 @@ export class HeroesComponent implements OnInit {
         this.selectedPoolArray = this.pool1;
         this.getHeroes();
         this.selectedHeroesList = this.heroesService.getSelectedHeroes();
-        this.popoverDismiss();
+
         this.heroesService.currentHeroes.subscribe((heroes) => {
             this.selectedHeroesList = heroes;
         });
+
+        // jquery functions
+        this.popoverDismiss();
         this.selectedTab();
     }
 
@@ -101,14 +104,6 @@ export class HeroesComponent implements OnInit {
                 hero.attributeImage = this.intURL;
             }
         });
-    }
-
-    moveSelectedHero(hero: any): void {
-        if (!this.checkHeroExists(hero)) {
-            this.selectedPoolArray.push(hero);
-            document.getElementById(`poolLink${this.selectedPool - 1}`).click();
-            this.openSelectedTab();
-        }
     }
 
     setSelectedPool(pool: number): void {
@@ -172,38 +167,32 @@ export class HeroesComponent implements OnInit {
         if (this.numberOfPools.length === 1) {
             this.selectedHeroesList = this.pool1;
         } else {
-            this.selectedHeroesList.push(this.pool1);
-            this.selectedHeroesList.push(this.pool2);
-            this.selectedHeroesList.push(this.pool3);
-            this.selectedHeroesList.push(this.pool4);
-            this.selectedHeroesList.push(this.pool5);
+            this.pool1.forEach((hero) => {
+                this.selectedHeroesList.push(hero);
+            });
+            this.pool2.forEach((hero) => {
+                this.selectedHeroesList.push(hero);
+            });
+            this.pool3.forEach((hero) => {
+                this.selectedHeroesList.push(hero);
+            });
+            this.pool4.forEach((hero) => {
+                this.selectedHeroesList.push(hero);
+            });
+            this.pool5.forEach((hero) => {
+                this.selectedHeroesList.push(hero);
+            });
         }
         this.heroesService.setSelectedHeroes(this.selectedHeroesList);
     }
 
-    triggerResetPools(): void {
-        this.hidePopovers();
-        if (confirm('Are you sure you want to reset?')) {
-            this.resetPools();
+    moveSelectedHero(hero: any): void {
+        if (!this.checkHeroExists(hero)) {
+            this.selectedPoolArray.push(hero);
+            document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+            this.openSelectedTab();
+            this.setSelectedHeroesList();
         }
-    }
-
-    triggerPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
-
-    removeHero(hero: any, pool: any): void {
-        const index = pool.indexOf(hero);
-        if (index !== -1) {
-            pool.splice(index, 1);
-        }
-        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
     }
 
     addHero(hero: any, pool: number): void {
@@ -213,7 +202,17 @@ export class HeroesComponent implements OnInit {
             this.unhighlightPool(pool);
             document.getElementById(`poolLink${this.selectedPool - 1}`).click();
             this.openSelectedTab();
+            this.setSelectedHeroesList();
         }
+    }
+
+    removeHero(hero: any, pool: any): void {
+        const index = pool.indexOf(hero);
+        if (index !== -1) {
+            pool.splice(index, 1);
+        }
+        document.getElementById(`poolLink${this.selectedPool - 1}`).click();
+        this.setSelectedHeroesList();
     }
 
     checkHeroExists(hero: any): boolean {
@@ -246,6 +245,24 @@ export class HeroesComponent implements OnInit {
         this.pool5 = [];
         this.selectedPool = 1;
         this.selectedPoolArray = this.pool1;
+        this.setSelectedHeroesList();
+    }
+
+    triggerResetPools(): void {
+        this.hidePopovers();
+        if (confirm('Are you sure you want to reset?')) {
+            this.resetPools();
+        }
+    }
+
+    triggerPopover(target: HTMLElement, hero: any) {
+        $(target).popover({
+            animation: true,
+            placement: 'right',
+            html: true,
+            content: $(`#${hero.programName}`).html(),
+            template: $('#heroesPopoverTemplate').html(),
+        });
     }
 
     hidePopovers() {

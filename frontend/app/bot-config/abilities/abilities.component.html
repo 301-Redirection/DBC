@@ -7,126 +7,97 @@
     </div>
 
     <!-- Hero list -->
-    <div class="row mb-5">
-        <div class="card heroes-card">
-            <div class="card-header">
-                <h5>HEROES</h5>
+    <div class="frame row mb-5">
+        <div class="card bot-manage-card">
+            <div class="card-header bot-manage-card-header">
+                <h5>CHOOSE A HERO</h5>
             </div>
-            <div class="card-body">
-                <div class="class-title">
-                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/7/7a/Strength_attribute_symbol.png/30px-Strength_attribute_symbol.png?version=6306b398d1e0dddfd5f3d1719c6e3c71"
-                    alt="Strength symbol">&nbsp;
-                    <h6>Strength</h6>
-                </div>
-
-                <div>
-                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of strengthHeroes" [style.backgroundImage]="'url('+hero.url+')'">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>
+            <div class="card-body bot-manage-card-body">
+                <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [attr.id]="i"  [style.backgroundImage]="'url('+hero.image+')'">
+                    <div class="hero-name">
+                        {{ hero.name }}
                     </div>
                 </div>
-                <br>
-
-                <div class="class-title">
-                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/2/2d/Agility_attribute_symbol.png/30px-Agility_attribute_symbol.png?version=2bb35660c66454fc3b024fdb19b9ee29"
-                    alt="Agility symbol">&nbsp;
-                    <h6>Agility</h6>
-                </div>
-                <div>
-                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of agilityHeroes" [style.backgroundImage]="'url('+hero.url+')'">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>
-                    </div>
-                </div>
-                <br>
-
-                <div class="class-title">
-                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/5/56/Intelligence_attribute_symbol.png/30px-Intelligence_attribute_symbol.png?version=aea75b8d40acffb8f90549a9ff6cdecb"
-                    alt="Intelligence symbol">&nbsp;
-                    <h6>Intelligence</h6>
-                </div>
-                <div>
-                    <div class="hero-item" (click)="onSelect(hero)" [class.selected]="hero === currentHero" *ngFor="let hero of intelligenceHeroes" [style.backgroundImage]="'url('+hero.url+')'">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>
-                    </div>
+                <div *ngIf="selectedHeroes.length == 0">
+                    <h6 class="text-center">No Selected Heroes</h6>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- List table -->
-    <div *ngIf="currentHero !== undefined" class="row mb-5">
-        <div class="card heroes-card">
-            <div class="card-header">
+    <div class="row frame mb-5">
+        <div class="card bot-manage-card">
+            <div class="card-header bot-manage-card-header">
                 <h5>Ability Level Up Guide</h5>
             </div>
-            <div class="card-body row">
-                <div class="col-2 ability-item" *ngFor="let ability of currentHero.abilities">
-                    <div class = "selector">
-                        <div class="buttons">
-                            <button (click)="prioritize(ability.type, 1)">
-                                <div class = "fa fa-fa fa-angle-left"></div>
-                            </button>
-                            <div class = "">{{ ability.type }}</div>
-                            <button (click)="prioritize(ability.type, -1)">
-                                <div class = "fa fa-fa fa-angle-right"></div>
-                            </button>
+            <div *ngIf="currentHero === undefined" class="card-body bot-manage-card-body">
+                <h6 class="text-center">No Selected Heroes</h6>
+            </div>
+            <div *ngIf="currentHero !== undefined" class="card-body bot-manage-card-body">
+                <div class="ability-row text-center">
+                    <div class="ability-item" *ngFor="let ability of currentHero.abilities">
+                        <div class="selector">
+                            <div class="buttons">
+                                <button class="button button-generate button-priority" (click)="prioritize(ability.type, 1)">
+                                    <div class="fa fa-fa fa-angle-left"></div>
+                                </button>
+                                <div class="">&nbsp;{{ ability.type }}&nbsp;</div>
+                                <button class="button button-generate button-priority" (click)="prioritize(ability.type, -1)">
+                                    <div class="fa fa-fa fa-angle-right"></div>
+                                </button>
+                            </div>
                         </div>
+                        <img class="img d-inline ability-image-display" src="{{ ability.src }}">
                     </div>
-                    <img class = "img d-inline ability-image-display" src = "{{ ability.src }}">                       
+                </div>
+                <div class="ability-row">
+                    <button class="button button-generate mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
+                </div>
+                <div class="ability-row">
+                    <h6>Ability Level Up Order</h6>
+                    <br>
+                    <table class="table ability-table">
+                        <tbody>
+                            <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
+                                <td><img class="img ability-roster-image" src="{{ ability.src }}"></td>
+                                <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
+                                    <span class="ability-level selected-ability" *ngIf="status=='selected'; else wrong">{{ i+1 }}</span>
+                                    <span class="ability-level unselected-open-ability" *ngIf="status=='open'; else wrong"></span>
+                                    <span class="ability-level unselected-closed-ability" *ngIf="status=='closed'; else wrong"></span>
+                                    <span class="ability-level disabled-ability" *ngIf="status=='disabled'; else wrong"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ability-row">
+                    <h6>Talents to get</h6>
+                    <br>
+                    <table class="talent-table">
+                        <tbody>
+                            <tr *ngFor="let talent of currentHero.talents; let talentNum = index" [attr.data-index]="talentNum">
+                                <td>
+                                    <tr class="talent-row">
+                                        <td class="talent talent-left">
+                                            <div *ngIf="talent!='left'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'left')">Left</div>
+                                            <div *ngIf="talent=='left'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Left</div>
+                                        </td>
+                                        <td>
+                                            <div class="talent level"> {{ 25 - 5 * (talentNum) }} </div>
+                                        </td>
+                                        <td class="talent talent-right">
+                                            <div *ngIf="talent!='right'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'right')">Right</div>
+                                            <div *ngIf="talent=='right'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Right</div>
+                                        </td>
+                                    </tr>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div>
-                <button class = "btn btn-info generate-button mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
-            </div>
-            <div class="card-body">
-                <div>Ability Level Up Order</div>
-                <br>
-                <table class = "table ability-table">
-                    <tbody>
-                        <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
-                            <td><img class = "img ability-roster-image" src = "{{ ability.src }}"></td>
-                            <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
-                                <span class = "ability-level selected-ability" *ngIf="status=='selected'; else wrong">{{ i+1 }}</span>
-                                <span class = "ability-level unselected-open-ability" *ngIf="status=='open'; else wrong"></span>
-                                <span class = "ability-level unselected-closed-ability" *ngIf="status=='closed'; else wrong"></span>
-                                <span class = "ability-level disabled-ability" *ngIf="status=='disabled'; else wrong"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-body">
-                <div>Talents to get</div>
-                <br>
-                <table class = "talent-table">
-                    <tbody>
-                        <tr *ngFor="let talent of currentHero.talents; let talentNum = index" [attr.data-index]="talentNum">
-                            <td>
-                                <tr class = "talent-row">
-                                    <td class = "talent talent-left">
-                                        <div *ngIf="talent!='left'; else wrong" class = "talent-desc" (click)="onTalentSelect(talentNum, 'left')">Left</div>
-                                        <div *ngIf="talent=='left'; else wrong" class = "talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Left</div>
-                                    </td>
-                                    <td>
-                                        <div class = "talent level"> {{ 25 - 5 * (talentNum) }} </div>
-                                    </td>
-                                    <td class = "talent talent-right">
-                                        <div *ngIf="talent!='right'; else wrong" class = "talent-desc" (click)="onTalentSelect(talentNum, 'right')">Right</div>
-                                        <div *ngIf="talent=='right'; else wrong" class = "talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Right</div>
-                                    </td>
-                                </tr>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <br>
+            <!-- End card body -->
         </div>
     </div>
 </div>

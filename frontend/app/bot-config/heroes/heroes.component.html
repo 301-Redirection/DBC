@@ -9,12 +9,12 @@
 
     <!-- Hero list -->
     <div class="frame row mb-5">        
-        <div class="card heroes-card">
-            <div class="card-header heroes-card-header">
+        <div class="card bot-manage-card">
+            <div class="card-header bot-manage-card-header">
                 <h5 id="heroesHeader">HEROES</h5>
                 <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002;">
             </div>
-            <div class="card-body">
+            <div class="bot-manage-card-body card-body">
                 <div class="class-title">
                     <img src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/7/7a/Strength_attribute_symbol.png/30px-Strength_attribute_symbol.png?version=6306b398d1e0dddfd5f3d1719c6e3c71" alt="Strength symbol">&nbsp;
                     <h6>Strength</h6>
@@ -64,9 +64,9 @@
     </div>    
 
     <!-- Pool table -->
-    <div id="selectedFrame" class="frame row mb-5">
-        <div class="card heroes-card">
-            <div id="selectedFrameHeader" class="heroes-card-header card-header">
+    <div sortablejs id="selectedFrame" class="frame row mb-5">
+        <div class="card bot-manage-card-body">
+            <div id="selectedFrameHeader" class="bot-manage-card-header card-header">
                 <h5 id="cardHeaderText">SELECTED</h5>&nbsp;&nbsp;
                 <i id="selectedFrameChevron" class="fas fa-chevron-up"></i>
                 <div id="selectedButtons" class="float-right">
@@ -77,7 +77,7 @@
                     <button id="togglePoolsBtn" class="button button-generate mx-2" (click)="togglePools()">
                         <i class="fas fa-exchange-alt mr-1"></i>
                         Toggle Pools
-                    </button>    
+                    </button>
                 </div>
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
@@ -90,7 +90,7 @@
                     </a>                    
                 </li>
             </ul>
-            <div class="card-body selected-card-body">
+            <div class="card-body selected-card-body bot-manage-card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <div class="card hero-item" *ngFor="let hero of selectedPoolArray" [style.backgroundImage]="'url('+hero.image+')'">
                         <div [id]="'s'+hero.id" class="popover-zone selected-popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">

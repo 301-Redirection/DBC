@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../services/api-connect.service';
 import * as globalConfig from '../../../../config/config.js';
+import { HeroesService } from '../../services/heroes.service';
 
 const NUMBER_TALENTS: number = 4;
 
@@ -28,8 +29,9 @@ export class AbilitiesComponent implements OnInit {
     selectedPoolArray: any;
     // Temporary test data
     allHeroes: any;
+    selectedHeroes: any;
 
-    constructor(private api: ApiConnectService) { }
+    constructor(private api: ApiConnectService, private heroesService: HeroesService) { }
 
     // hero category objects
     strengthHeroes = [];
@@ -37,27 +39,43 @@ export class AbilitiesComponent implements OnInit {
     intelligenceHeroes = [];
     heroes = [];
     currentHero: any;
+
     ngOnInit() {
         this.getHeroes();
     }
 
     getHeroes(): void {
-        // database call to retrieve all dota heroes
-        this.allHeroes = [];
-        this.api.getAllHeroes().subscribe((data) => {
-            this.allHeroes = data.heroes;
-            for (let i = 0; i < this.allHeroes.length; i += 1) {
-                this.allHeroes.abilitySet = new AbilitySet();
-                this.allHeroes[i].talents = ['none', 'none', 'none', 'none'];
+        // Retrieving selected heroes from HeroesService
+        this.selectedHeroes = [];
+        this.heroesService.getSelectedHeroes().subscribe((heroes) => {
+            this.selectedHeroes = heroes;
+
+            for (let i = 0; i < this.selectedHeroes.length; i += 1) {
+                this.selectedHeroes.abilitySet = new AbilitySet();
+                this.selectedHeroes[i].talents = ['none', 'none', 'none', 'none'];
             }
+
             this.sortHeroData();
             this.initAbilityPriorities();
             this.currentHero = this.heroes[0];
         });
+
+        // database call to retrieve all dota heroes
+        // this.allHeroes = [];
+        // this.api.getAllHeroes().subscribe((data) => {
+        //     this.allHeroes = data.heroes;
+        //     for (let i = 0; i < this.allHeroes.length; i += 1) {
+        //         this.allHeroes.abilitySet = new AbilitySet();
+        //         this.allHeroes[i].talents = ['none', 'none', 'none', 'none'];
+        //     }
+        //     this.sortHeroData();
+        //     this.initAbilityPriorities();
+        //     this.currentHero = this.heroes[0];
+        // });
     }
 
     sortHeroData(): void {
-        this.allHeroes.forEach((hero) => {
+        this.selectedHeroes.forEach((hero) => {
             hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
             if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);
