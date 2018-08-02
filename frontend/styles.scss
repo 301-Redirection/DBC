@@ -341,3 +341,14 @@ button:focus {
 .hero-attributes {
     font-family: $font-family;
 }
+
+
+/* -- Importing bootstrap for customizability -- */
+
+// Required
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+// Optional
+@import "node_modules/bootstrap/scss/popover";

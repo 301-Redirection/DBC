@@ -21,7 +21,6 @@ import { MaterialModule } from './material/material.module';
 // Services
 import { ApiConnectService } from './services/api-connect.service';
 import { AuthService } from './auth/auth.service';
-import { HeroesService } from './services/heroes.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -61,7 +60,6 @@ import { BotConfigDataService } from './services/bot-config-data.service';
         ApiConnectService,
         Title,
         AuthService,
-        HeroesService,
         BotConfigDataService,
     ],
     bootstrap: [AppComponent],
