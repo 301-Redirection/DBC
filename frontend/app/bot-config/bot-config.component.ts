@@ -89,10 +89,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 // configuration: this.configuration,
                 faction: this.faction,
             };
-            const response = this.api.updateBot(requestBot).subscribe((data) => {
-                this.generateURL =
-                    `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
-            });
+            const response = this.api.updateBot(requestBot).subscribe(
+                (data) => {
+                    this.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
         }
     }
 
@@ -191,24 +196,29 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     loadBotScript(id) {
         let res: any;
-        const response = this.api.getSpecificBot(id).subscribe((data) => {
-            res = data['botConfig'];
-            res = res[0];
-            if (res != null) {
-                this.id = res.id;
-                this.name = res.name;
-                // this.configuration = JSON.parse(res.configuration);
-                this.description = res.description;
-                this.faction = res.faction;
+        const response = this.api.getSpecificBot(id).subscribe(
+            (data) => {
+                res = data['botConfig'];
+                res = res[0];
+                if (res != null) {
+                    this.id = res.id;
+                    this.name = res.name;
+                    // this.configuration = JSON.parse(res.configuration);
+                    this.description = res.description;
+                    this.faction = res.faction;
 
-                if (this.faction === 'radiant') {
-                    this.selectFaction('radiant', 'dire');
-                }else if (this.faction === 'dire') {
-                    this.selectFaction('dire', 'radiant');
-                }else {
-                    this.selectBothFactions();
+                    if (this.faction === 'radiant') {
+                        this.selectFaction('radiant', 'dire');
+                    }else if (this.faction === 'dire') {
+                        this.selectFaction('dire', 'radiant');
+                    }else {
+                        this.selectBothFactions();
+                    }
                 }
-            }
-        });
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
 }

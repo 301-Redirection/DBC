@@ -100,11 +100,16 @@ export class ItemsComponent implements OnInit {
 
     getItems(): void {
         // database call to retrieve all dota items
-        this.api.getAllItems().subscribe((data) => {
-            this.allItems = data['items'];
-            this.sortItemData();
-            this.setSelectedHero(0);
-        });
+        this.api.getAllItems().subscribe(
+            (data) => {
+                this.allItems = data['items'];
+                this.sortItemData();
+                this.setSelectedHero(0);
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);

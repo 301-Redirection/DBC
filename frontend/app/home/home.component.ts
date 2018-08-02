@@ -23,6 +23,9 @@ export class HomeComponent implements OnInit {
             (res) => {
                 console.log(res);
             },
+            (error) => {
+                console.log(error);
+            },
         );
     }
 }

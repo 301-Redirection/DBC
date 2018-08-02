@@ -77,11 +77,16 @@ export class HeroesComponent implements OnInit {
 
     getHeroes(): void {
         // database call to retrieve all dota heroes
-        this.api.getAllHeroes().subscribe((data) => {
-            this.allHeroes = data['heroes'];
-            this.getHeroImages();
-            this.sortHeroData();
-        });
+        this.api.getAllHeroes().subscribe(
+            (data) => {
+                this.allHeroes = data['heroes'];
+                this.getHeroImages();
+                this.sortHeroData();
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
 
     getHeroImages(): void {

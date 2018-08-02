@@ -1,11 +1,20 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { TeamDesiresService } from './team-desires.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { RoutesModule } from '../routes/routes.module';
 
 describe('TeamDesiresService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [TeamDesiresService],
+            providers: [
+                TeamDesiresService,
+                HttpClient,
+                HttpHandler,
+                { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } },
+                RoutesModule,
+            ],
         });
     });
 

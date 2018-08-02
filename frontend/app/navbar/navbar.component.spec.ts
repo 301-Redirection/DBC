@@ -22,6 +22,10 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ItemsComponent } from '../bot-config/items/items.component';
+import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
+import { BotConfigComponent } from '../bot-config/bot-config.component';
+import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.component';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -36,9 +40,6 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
-                HeroesComponent,
-                ItemsComponent,
-                FilterPipe,
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
@@ -50,12 +51,14 @@ describe('NavbarComponent', () => {
                 FormsModule,
             ],
             providers: [
+                FilterPipe,
                 AuthService,
                 AuthGuard,
                 ApiConnectService,
                 HttpHandler,
                 HttpClient,
                 Location,
+                BotConfigDataService,
             ],
         })
         .compileComponents();

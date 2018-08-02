@@ -9,7 +9,6 @@ import { ApiConnectService } from '../../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { Observable } from 'rxjs/Rx';
-import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
@@ -21,6 +20,16 @@ import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../../callback/callback.component';
 import { LoadingComponent } from '../../core/loading.component';
 import { ItemsComponent } from '../items/items.component';
+import { TeamDesiresComponent, ReversePipe } from '../team-desires/team-desires.component';
+import { AbilitiesComponent } from '../abilities/abilities.component';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BotConfigComponent } from '../bot-config.component';
+import { NavbarModule } from '../../navbar/navbar.module';
+import {
+    EnumToArrayPipe,
+    ConfiguratorComponent,
+ } from '../team-desires/configurator/configurator.component';
+import { MaterialModule } from '../../material/material.module';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -96,20 +105,27 @@ describe('HeroesComponent', () => {
         apiConnectServiceStub.getImageURL.and.callThrough();
         TestBed.configureTestingModule({
             declarations: [
-                // FilterPipe,
+                HeroesComponent,
                 CallbackComponent,
                 LoadingComponent,
+                ItemsComponent,
+                TeamDesiresComponent,
+                AbilitiesComponent,
+                BotConfigComponent,
+                ConfiguratorComponent,
+                FilterPipe,
+                ReversePipe,
+                EnumToArrayPipe,
             ],
             imports: [
                 FormsModule,
                 SortablejsModule,
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
-                BotConfigModule,
                 BotManagementModule,
-                FormsModule,
-                SortablejsModule,
                 DashboardModule,
+                NavbarModule,
+                MaterialModule,
             ],
             providers: [
                 ApiConnectService,
@@ -117,7 +133,7 @@ describe('HeroesComponent', () => {
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 HttpClient,
                 HttpHandler,
-                HeroesService,
+                BotConfigDataService,
             ],
         })
         .compileComponents();
