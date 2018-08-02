@@ -13,7 +13,6 @@ import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { ItemsComponent } from '../bot-config/items/items.component';
 import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
 
-
 export const ROUTES: Routes = [
     {
         path: '',
