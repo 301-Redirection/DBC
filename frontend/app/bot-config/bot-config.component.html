@@ -33,7 +33,25 @@
         </div>
     </div>
 
-    <div class="frame">
-        <button class="button button-generate" (click)="test()">Generate</button>
+    <!-- Start Button Row -->
+    <div class="row mb-4">
+        <div class="button-container ml-auto">
+            <button type="button" class="button button-cancel mx-2" (click)="reset()" >
+                <i class="fas fa-undo mr-1"></i>
+                RESET CONFIG
+            </button>
+            <button type="button" class="button button-edit mx-2" (click)="save()">
+                <i class="fas fa-save mr-1"></i>
+                SAVE CONFIG
+            </button>
+            <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+                <i class="fas fa-download mr-1"></i>
+                GENERATE
+            </a>
+        </div>
     </div>
+
+    <!-- <div class="frame">
+        <button class="button button-generate" (click)="test()">Generate</button>
+    </div> -->
 </div>

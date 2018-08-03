@@ -1,41 +1,6 @@
 /* Global Variables */
 @import '../../../variables';
 
-// #poolTabs {
-//     border-bottom-color: $light-grey;
-// }
-
-// .nav-item {
-//     cursor: pointer;
-//     width: 20%;    
-// }
-
-// .nav-link.active {
-//     background-color: $light-grey;    
-//     border-color: $light-grey;
-// }
-
-// .nav-link.active:hover {
-//     color: $dark-grey-2;
-// }
-
-// .drop-zone {
-//     min-height: 90px;
-// }
-
-// .class-title {
-//     margin-bottom: 5px;
-// }
-
-// .class-title h6 {
-//     display: inline-block;
-// }
-
-// .class-title img {
-//     height: 25px;
-// }
-
-/// NEW CSS
 .ability-roster-image {
     width: 50px;
     height: 50px;
@@ -43,7 +8,6 @@
 
 .ability-row {
     margin-top: 1%;
-    margin-bottom: 5%;
     display: inline-block;
     width: 100%;
 }
@@ -96,8 +60,8 @@
 
 .ability-item {
     text-align: center !important;
-    margin-left: 4%;
-    margin-right: 4%;
+    margin-left: 2%;
+    margin-right: 2%;
     display: inline-block;    
 }
 
