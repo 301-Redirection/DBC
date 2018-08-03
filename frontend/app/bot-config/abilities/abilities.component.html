@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <span *ngIf="ability.type=='T'; else wrong">
-                            <button type="button" class="btn-talent" data-toggle="modal" data-target="#myModal">
+                            <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
                                 <img class="img d-inline ability-image-display" src="{{ ability.src }}">
                             </button>
                         </span>
@@ -70,7 +70,7 @@
                         <tbody>
                             <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
                                 <td *ngIf="ability.type=='T'; else wrong">
-                                    <button type="button" class="btn-talent" data-toggle="modal" data-target="#myModal">
+                                    <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
                                         <img  class="img ability-roster-image" src="{{ ability.src }}">
                                     </button>
                                 </td>
@@ -89,7 +89,7 @@
                 </div>
 
                 <!-- The Modal -->
-                <div class="modal fade" id="myModal">
+                <div class="modal fade" id="talentModal">
                     <div class="modal-dialog modal-md">
                         <div class="modal-content">
                         <!-- Modal Header -->
