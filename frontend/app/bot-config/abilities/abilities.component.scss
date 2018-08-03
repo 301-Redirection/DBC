@@ -55,7 +55,7 @@
 
 .ability-image-display {
     width: 80px;
-    padding-top:20px;
+    // margin-top: 20px;
 }
 
 .ability-item {
@@ -119,4 +119,25 @@
     // background-color: #906C46;
     background: linear-gradient(rgb(147, 114, 69) 0%, rgb(67, 34, 23) 100%);
     color: #fff;
+}
+
+/* Modal CSS */
+.modal-content {
+    background: $dark-grey-3;
+    color: $light-grey;
+}
+
+.modal-header {
+    border-bottom: 3px solid $light-grey;
+}
+
+.modal-footer {
+    border-top: 3px solid $light-grey;
+}
+
+.btn-talent {
+    background: $dark-grey-2;
+    padding: 0;
+    cursor: pointer;
+    border: 1px solid $dark-grey-1;
 }
