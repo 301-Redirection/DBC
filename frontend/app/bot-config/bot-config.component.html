@@ -11,18 +11,73 @@
 
     <nav id="configNav">
         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active tab-text" id="nav-home-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true">TEAM DESIRES</a>
-            <a class="nav-item nav-link tab-text" id="nav-profile-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false">HEROES</a>
+            <a class="nav-item nav-link active tab-text" id="nav-home-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true">INFO</a>
+            <a class="nav-item nav-link tab-text" id="nav-desires-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true">TEAM DESIRES</a>
+            <a class="nav-item nav-link tab-text" id="nav-heroes-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false">HEROES</a>
             <a class="nav-item nav-link tab-text" id="nav-abilities-tab" data-toggle="tab" href="#nav-abilities" role="tab" aria-controls="nav-abilities" aria-selected="false">ABILITIES</a>
             <a class="nav-item nav-link tab-text" id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false">ITEMS</a>
         </div>
     </nav>
 
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-team-desires" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="m-5 w-50 mx-auto">
+                <div class="card config-card">
+                    <div class="card-body">
+                        <div class="card-title config-card-title">
+                            <h4>Script Details</h4>
+                        </div>
+                        <!-- <div class="alert alert-red show text-center" id="alertFactionSelect" role="alert">
+                            Please complete the following details and choose a faction to continue.
+                        </div> -->
+                        <div class="form-group row mb-4">
+                            <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label for="inputDescription" class="col-sm-3 col-form-label">Faction</label>
+                            <div class="col-sm-9 row">
+                                <div class="col-sm-6">
+                                    <div class="mb-2" >
+                                        <h5 class="text-center">Edit a particular faction</h5>
+                                    </div>
+                                    <img [src]="factionSelectionImageURL" class="img-fluid rounded" id="dotaMiniMap" usemap="#imageMap">
+                                    <map name="imageMap">
+                                        <area class="area img-pointer" id="direSide" alt="Dire Side" title="Dire Faction" (mouseover)="showHighlightSelectedFaction('dire')" (mouseleave)="unHighlightSelectedFaction()" (click)="selectFaction('dire' , 'radiant')"
+                                            coords="4,79,105,95,140,133,190,171,244,183,287,184,288,4,1,0" shape="poly">
+                                        <area class="img-pointer" id="radiantSide" alt="Radiant Side" title="Radiant Faction" (mouseover)="showHighlightSelectedFaction('radiant')" (mouseleave)="unHighlightSelectedFaction()" (click)="selectFaction('radiant' , 'dire')"
+                                            coords="1,81,98,99,133,140,183,172,223,188,290,191,290,265,3,262" shape="poly">
+                                    </map>
+                                </div>
+                                <div class="col-sm-6 vert-align-center">   
+                                    <div class="mb-2" >
+                                            <h5 class="text-center">Edit for both factions</h5>
+                                    </div>  
+                                    <div class="btn-over-img">
+                                        <img [src]="bothFactionsImageURL" class="img-fluid rounded" id="dotaMiniMap2"> 
+                                        <button type="button" class="button button-edit mx-2 button-cover" (mouseover)="showHighlightBothFactions()" (mouseleave)="unHighlightBothFactions()" (click)="selectBothFactions()">
+                                            EDIT BOTH
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-team-desires" role="tabpanel" aria-labelledby="nav-desires-tab">
             <app-team-desires></app-team-desires>
         </div>
-        <div class="tab-pane fade" id="nav-heroes" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="tab-pane fade" id="nav-heroes" role="tabpanel" aria-labelledby="nav-heroes-tab">
             <app-heroes></app-heroes>
         </div>
         <div class="tab-pane fade" id="nav-abilities" role="tabpanel" aria-labelledby="nav-abilities-tab">
