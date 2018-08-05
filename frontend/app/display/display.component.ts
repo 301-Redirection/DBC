@@ -82,4 +82,34 @@ export class DisplayComponent implements OnInit {
         $('#deleteConfirmation').modal('show');
         this.botID = id;
     }
+
+    swap(array, firstIndex, secondIndex) {
+        const temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
+    }
+
+    compareDate(date, otherDate, int) {
+        let bool;
+        if (int >= 0) {
+            bool = date > otherDate;
+        } else {
+            bool = date < otherDate;
+        }
+        return bool;
+    }
+
+    sortBotScripts(value) {
+        console.log('called');
+        const array = this.bots;
+        for (let i = 0; i < array.length; i += 1) {
+            for (let j = 1; j < array.length; j += 1) {
+                if (this.compareDate(array[j - 1].updatedAt, array[j].updatedAt, value) {
+                    this.swap(array, j - 1, j);
+                }
+            }
+        }
+        return array;
+    }
+
 }

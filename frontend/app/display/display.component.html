@@ -25,14 +25,14 @@
                                 Filter Bots
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">
+                                <div class="dropdown-item" (click)="sortBotScripts(-1)">
                                     <i class="fas fa-sort-amount-up mr-2"></i>
                                     Newest First
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                </div>
+                                <div class="dropdown-item" (click)="sortBotScripts(1)">
                                     <i class="fas fa-sort-amount-down mr-2"></i>
                                     Oldest First
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
