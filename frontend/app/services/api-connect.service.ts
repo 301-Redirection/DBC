@@ -53,6 +53,15 @@ export class ApiConnectService {
         .pipe(catchError(this.handleError));
     }
 
+    public getAllBots() {
+        return this.http
+            .get(`${API_URL}/bots/all`, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            },
+        )
+        .pipe(catchError(this.handleError));
+    }
+
     public getSpecificBot(botScriptID: number) {
         return this.http
             .get(`${API_URL}/bots/get/${botScriptID}`, {

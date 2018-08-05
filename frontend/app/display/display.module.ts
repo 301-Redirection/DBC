@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarModule } from '../navbar/navbar.module';
-import { DashboardComponent } from './dashboard.component';
+import { FormsModule, ReactiveFormsModule , FormGroup } from '@angular/forms';
+import { DisplayComponent } from './display.component';
 import { SortablejsModule } from 'angular-sortablejs';
 
 @NgModule({
@@ -11,14 +12,15 @@ import { SortablejsModule } from 'angular-sortablejs';
         NavbarModule,
         RouterModule,
         SortablejsModule,
+        FormsModule,
     ],
     declarations: [
-        DashboardComponent,
+        DisplayComponent,
     ],
     exports: [
-        DashboardComponent,
+        DisplayComponent,
     ],
 })
-export class DashboardModule { }
+export class DisplayModule { }
 
-export default 'DashboardModule';
+export default 'DisplayModule';

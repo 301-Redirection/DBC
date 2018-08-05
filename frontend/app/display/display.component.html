@@ -1,9 +1,10 @@
-<!-- Start Container Fluid -->
+<!-- Start Container Fluid --> 
 <div class="container-fluid container-fluid-custom background main-background ">
     <div class="frame" id="dashboardTitle">
-        <h1>DASHBOARD</h1>
+        <div *ngIf="dashboard===true"> <h1>DASHBOARD</h1> </div>
+        <div *ngIf="dashboard!==true"> <h1>MANAGE</h1> </div>
         <br>
-        <button class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
+        <button *ngIf="dashboard==true" class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
             <i class="fas fa-plus mr-2"></i>NEW BOT CONFIGURATION
         </button>
     </div>
@@ -62,7 +63,7 @@
                     </li>
                 </div>
                 <div *ngFor="let bot of bots; let i=index">
-                    <li *ngIf="i<5" class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
+                    <li class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
                         [attr.href]="'#bot'+bot.id+'Collapse'">
                         <!--Bot Item Heading-->
                         <div class="row">
@@ -78,7 +79,7 @@
                         </div>
                         <!--End of Heading-->
                         <!--Bot Item details-->
-                        <div class="card-body bot-manage-card-body" #elem [attr.id]="'bot'+bot.id+'Collapse'" class="collapse in">
+                        <div class="card-body bot-manage-card-body collapse in" #elem [attr.id]="'bot'+bot.id+'Collapse'">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <p>{{bot.description}}</p>
@@ -100,12 +101,14 @@
                         <!--End of Details-->
                     </li>
                     <!--End of bot item-->
-                    <a routerLink="/bot-management" id="viewMore" *ngIf="i==4" style="text-decoration: none">
-                        <li class="list-group-item manage-list-group-item">
-                            <h5>View More Bots</h5>
-                            <!--End of Details-->
-                        </li>
-                    </a>
+                    <div *ngIf="dashboard===true&&i==4">
+                        <a routerLink="/bot-management" id="viewMore" style="text-decoration: none">
+                            <li class="list-group-item manage-list-group-item">
+                                <h5>View More Bots</h5>
+                                <!--End of Details-->
+                            </li>
+                        </a>
+                    </div>
                 </div>
             </ul>
         </div>
@@ -133,7 +136,7 @@
         </div>
     </div>
 
-    <div class="modal modal-confirmation fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
+    <div class="modal modal-confirmation fade delete-modal" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -146,11 +149,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Do you really want to delete this bot script?<br/>This process cannot be undone.</p>
+                    <p>Do you really want to delete this bot script?<br/>This action cannot be undone.</p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="deleteBotScript(this.botID)" data-dismiss="modal">Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" (click)="deleteBotScript(this.botID)">Delete</button>
                 </div>
             </div>
         </div>

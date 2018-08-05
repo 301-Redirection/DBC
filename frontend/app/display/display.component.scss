@@ -38,3 +38,13 @@
 .modal-confirmation .modal-dialog-centered {
     background-color: $btn-general-background-color;
 }
+
+/* Modal styles */
+.modal-content {
+    background: $dark-grey-3;
+    color: $light-grey;
+}
+
+.modal-header {
+    border-bottom: 3px solid $light-grey;
+}

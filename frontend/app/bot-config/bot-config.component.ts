@@ -93,7 +93,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-                // configuration: this.configuration,
+                configuration: { test: 'true' },
                 faction: this.faction,
             };
             const response = this.api.updateBot(requestBot).subscribe(
