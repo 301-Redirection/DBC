@@ -44,7 +44,11 @@
                 <i class="fas fa-save mr-1"></i>
                 SAVE CONFIG
             </button>
-            <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+            <!-- <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+                <i class="fas fa-download mr-1"></i>
+                GENERATE
+            </a> -->
+            <a class="button button-generate mx-2" id="generateButton" (click)="test()">
                 <i class="fas fa-download mr-1"></i>
                 GENERATE
             </a>

@@ -55,8 +55,6 @@ export class AbilitiesComponent implements OnInit {
     }
 
     initAbilityPriorities() {
-        const link = 'https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia';
-
         for (let h = 0; h < this.selectedHeroes.length; h += 1) {
             const hero = this.selectedHeroes[h];
             hero.abilityPriorities = [
@@ -254,12 +252,18 @@ export class AbilitiesComponent implements OnInit {
 
     onSelect(hero): void {
         this.currentHero = hero;
+        this.saveAbilities();
     }
 
     onTalentSelect(level, value) {
         // note that talents[0] referes to the last talent (i.e at lvl 25)
         this.currentHero.talents[level] = value;
         console.log(this.currentHero.talents);
+    }
+
+    saveAbilities(): void {
+        console.log('saving abilities');
+        this.botConfigData.setAbilities(this.currentHero);
     }
 
 }

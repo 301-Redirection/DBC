@@ -213,7 +213,7 @@ const generateRoamDesires = function (req) {
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roam.initialValue}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
-    scriptBuilder += 'return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}';
+    scriptBuilder += 'return common';
     return scriptBuilder;
 };
 

@@ -236,6 +236,4 @@ const officialRequest = {
         configuration: configObject,
     },
 };
-
-writeScripts(officialRequest, mocks.createResponse(), 'LOL', 69);
-shouldRegenerateBotScripts('LOL', 69);
+writeScripts(officialRequest, mocks.createResponse(), 'BMAX', 69);

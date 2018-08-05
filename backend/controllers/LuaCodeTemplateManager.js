@@ -130,6 +130,7 @@ const LuaCodeTemplateManager = function () {
     this.generateTalentCode = function (talents) {
         let level = 0;
         let code = 'local TalentTree={';
+        console.log(talents);
         for (let i = 0; i < talents.length; i += 1) {
             let talentIndex;
             if (talents[i] === 'l') {
@@ -172,7 +173,8 @@ const LuaCodeTemplateManager = function () {
             if (err) throw err;
         });
         const abilities = this.generateLevelingAbilityCode(abilityObject.abilities);
-        const talents = this.generateTalentCode(abilityObject.talents);
+        console.log(abilityObject);
+        const talents = this.generateTalentCode(abilityObject.abilities.talents);
         fileContents = fileContents.replace('{{- abilities-to-level -}}', `${abilities}${NEW_LINE}${NEW_LINE}${talents}${NEW_LINE}`);
         return fileContents;
     };
