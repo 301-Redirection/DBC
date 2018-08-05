@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BOTS } from '../bot-testing-data';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 // import { ROUTE_NAMES } from '../routes/routes.config';

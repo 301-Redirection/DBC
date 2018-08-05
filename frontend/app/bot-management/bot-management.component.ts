@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { BOTS } from '../bot-testing-data';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
