@@ -104,7 +104,7 @@ export class DisplayComponent implements OnInit {
         const array = this.bots;
         for (let i = 0; i < array.length; i += 1) {
             for (let j = 1; j < array.length; j += 1) {
-                if (this.compareDate(array[j - 1].updatedAt, array[j].updatedAt, value) {
+                if (this.compareDate(array[j - 1].updatedAt, array[j].updatedAt, value)) {
                     this.swap(array, j - 1, j);
                 }
             }

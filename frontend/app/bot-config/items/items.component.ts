@@ -88,14 +88,16 @@ export class ItemsComponent implements OnInit {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
                 this.selectedHeroes.push(hero);
+                this.heroItemSelection.push([]);
+                this.totalCostPerHero.push(0);
             });
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
-        for (const hero of this.selectedHeroes) {
+        /* for (const hero of this.selectedHeroes) {
             this.heroItemSelection.push([]);
             this.totalCostPerHero.push(0);
-        }
+        } */
     }
 
     getItems(): void {
