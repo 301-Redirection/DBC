@@ -48,7 +48,6 @@ describe('NavbarComponent', () => {
             done();
         });
 
-
         it('should create', (done) => {
             expect(component).toBeTruthy();
             done();
@@ -76,7 +75,6 @@ describe('NavbarComponent', () => {
             routerLinks = linkDes.map(de => de.injector.get(RouterLinkDirectiveStub));
             done();
         });
-
 
         it('Links should go to logged in places', (done) => {
             expect(routerLinks.length).toBe(7, 'should have 7 routerLinks');
