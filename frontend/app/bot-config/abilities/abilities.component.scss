@@ -138,3 +138,13 @@
     cursor: pointer;
     border: 1px solid $dark-grey-1;
 }
+
+.button-chevron { 
+    color: $btn-edit-border-color;
+    background-color: $btn-general-background-color;
+    background-image: none;
+    border: 2px solid $btn-edit-border-color;
+}
+.button-chevron:hover { 
+    background-color: $btn-edit-color;
+}

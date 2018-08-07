@@ -40,11 +40,11 @@
                     <div class="ability-item" *ngFor="let ability of currentHero.abilities">
                         <div class="selector">
                             <div class="buttons">
-                                <button class="button button-generate button-priority" (click)="prioritize(ability.type, 1)">
+                                <button class="button button-chevron button-priority" (click)="prioritize(ability.type, 1)">
                                     <div class="fa fa-fa fa-angle-left"></div>
                                 </button>
                                 <div class="">&nbsp;{{ ability.type }}&nbsp;</div>
-                                <button class="button button-generate button-priority" (click)="prioritize(ability.type, -1)">
+                                <button class="button button-chevron button-priority" (click)="prioritize(ability.type, -1)">
                                     <div class="fa fa-fa fa-angle-right"></div>
                                 </button>
                             </div>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="ability-row">
-                    <button class="button button-generate mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
+                    <button class="button button-chevron mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
                 </div>
                 <div class="ability-row">
                     <h6>Ability Level Up Order</h6>

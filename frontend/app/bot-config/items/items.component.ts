@@ -164,8 +164,27 @@ export class ItemsComponent implements OnInit {
         this.selectedItemComponentsArray = [];
     }
 
+    getItemNames(items): any {
+        const itemNames = [];
+        items.forEach((item) => {
+            itemNames.push(item.name);
+        });
+        return itemNames;
+    }
+
+    saveItems(): void {
+        for (let i = 0; i < this.selectedHeroes.length; i += 1) {
+            const hero = this.selectedHeroes[i];
+            const items = this.heroItemSelection[i];
+            const itemNames = this.getItemNames(items);
+            this.botConfigData.updateHeroItems(hero.programName, itemNames);
+        }
+        console.log(this.botConfigData.getConfig());
+    }
+
     onSelect(hero): void {
         this.currentHero = hero;
+        this.saveItems();
     }
 
     triggerPopover(target: HTMLElement, item: any) {

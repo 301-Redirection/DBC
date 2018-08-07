@@ -16,6 +16,7 @@ $blue: #007bff;
 $green: #41a041;
 $white: #dddddd;
 $grey: #808080;
+$orange: #FFA500;
 $light-grey: #a3a3a3;
 $dark-grey: #5a5a5a;
 $dark-grey-1: #3d3d3d;
@@ -26,6 +27,11 @@ $light-gold: #5c482a;
 
 $dropdown-color-hover:#202020 ;
 
+/* Hero config variables */
+$hero-item-color: #4585c3;
+$hero-item-border-color: #263f56;
+$hero-item-border-color-hover:#3a73a3;
+
 /*Button Variables*/
 $btn-general-border: 2px solid ;
 $btn-general-background-color: transparent;
@@ -34,9 +40,9 @@ $btn-cancel-color: #b64f44;
 $btn-cancel-border-color: #5e2d27;
 $btn-cancel-border-color-hover:#b15b52;
 
-$btn-generate-color: #4585C3;
-$btn-generate-border-color: #263f56;
-$btn-generate-border-color-hover:#3A73A3;
+$btn-generate-color: #5bb45b; // lightish
+$btn-generate-border-color: #0e6d0e; //darker
+$btn-generate-border-color-hover:#41a041; //mediumish
 
 $btn-edit-color: #b1884f;
 $btn-edit-border-color: #5b4629;

@@ -111,7 +111,7 @@ p {
     text-align: center;    
     position: relative; 
     margin-right: 10px;
-    border: 2px solid $btn-generate-border-color;
+    border: 2px solid $hero-item-border-color;
     border-radius: 4px;
     background-color: $black;
     background-size: cover;    
@@ -121,7 +121,7 @@ p {
 }
 
 .hero-item:hover {
-    border: 2px solid $btn-generate-border-color-hover;
+    border: 2px solid $hero-item-border-color-hover;
     transform: scale(1.05);
     transition: 0.4s;
     z-index: 2;
@@ -152,7 +152,6 @@ p {
     text-align: center;
     font-family: $font-family;
 }
-
 
 /* -- Buttons -- */
 

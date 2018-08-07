@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../services/api-connect.service';
 import * as globalConfig from '../../../../config/config.js';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { HeroSpecification } from '../../services/configuration-class';
 
 const NUMBER_TALENTS: number = 4;
+const NUMBER_LEVELS: number = 25;
+const NUMBER_ABILITIES: number = 5;
 
 class AbilitySet {
     abilityPriorities: any;
@@ -39,6 +42,7 @@ export class AbilitiesComponent implements OnInit {
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
+                console.log(hero);
                 this.selectedHeroes.push(hero);
             });
 
@@ -96,9 +100,9 @@ export class AbilitiesComponent implements OnInit {
                 },
             ];
             hero.abilityLevels = [];
-            for (let i = 0; i < 5; i += 1) {
+            for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
                 hero.abilityLevels[i] = [];
-                for (let j = 0; j < 25; j += 1) {
+                for (let j = 0; j < NUMBER_LEVELS; j += 1) {
                     hero.abilityLevels[i].push('open');
                 }
             }
@@ -128,7 +132,7 @@ export class AbilitiesComponent implements OnInit {
         this.currentHero.abilities = newAbilities;
     }
 
-    getLevelOfAbility(type, limitIndex: number = 25): number {
+    getLevelOfAbility(type, limitIndex: number = NUMBER_LEVELS): number {
         let count = 0;
         const levels = this.currentHero.abilityLevels[this.getNumFromType(type)];
         for (let i = 0; i < limitIndex; i += 1) {
@@ -180,9 +184,9 @@ export class AbilitiesComponent implements OnInit {
     }
 
     createArrayFromPrios(): void {
-        for (let i = 0; i < 25; i += 1) {
+        for (let i = 0; i < NUMBER_LEVELS; i += 1) {
             let leveled = false;
-            for (let j = 0; j < 5; j += 1) {
+            for (let j = 0; j < NUMBER_ABILITIES; j += 1) {
                 const ability = this.currentHero.abilities[j];
                 if (this.canLevelAbility(ability.type, i) && !leveled) {
                     this.currentHero.abilityLevels[ability.index][i] = 'selected';
@@ -197,9 +201,9 @@ export class AbilitiesComponent implements OnInit {
 
     createArrayFromSelected(): void {
         const levelSelected = [];
-        for (let i = 0; i < 25; i += 1) {
+        for (let i = 0; i < NUMBER_LEVELS; i += 1) {
             let isSelected = false;
-            for (let j = 0; j < 5; j += 1) {
+            for (let j = 0; j < NUMBER_ABILITIES; j += 1) {
                 if (this.currentHero.abilityLevels[j][i] === 'selected') {
                     isSelected = true;
                     break;
@@ -207,9 +211,9 @@ export class AbilitiesComponent implements OnInit {
             }
             levelSelected.push(isSelected);
         }
-        for (let i = 0; i < 25; i += 1) {
+        for (let i = 0; i < NUMBER_LEVELS; i += 1) {
             const leveled = false;
-            for (let j = 0; j < 5; j += 1) {
+            for (let j = 0; j < NUMBER_ABILITIES; j += 1) {
                 const ability = this.currentHero.abilities[j];
                 if (this.currentHero.abilityLevels[ability.index][i] !== 'selected') {
                     if (this.canLevelAbility(ability.type, i)) {
@@ -231,12 +235,12 @@ export class AbilitiesComponent implements OnInit {
             abilityLevels[level] = 'open';
             this.createArrayFromSelected();
         } else if (this.canLevelAbility(abilityType, level)) {
-            for (let i = 0; i < 5; i += 1) {
+            for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
                 this.currentHero.abilityLevels[i][level] = 'open';
             }
 
             abilityLevels[level] = 'selected';
-            for (let i = 0; i < 25; i += 1) {
+            for (let i = 0; i < NUMBER_LEVELS; i += 1) {
                 if (abilityLevels[i] === 'selected') {
                     // This ability is selected
                     if (!this.canLevelAbility(abilityType, i)) {
@@ -261,9 +265,100 @@ export class AbilitiesComponent implements OnInit {
         console.log(this.currentHero.talents);
     }
 
+    createHeroSpecification(): void {
+        const i = 5;
+    }
+
+    getAbilityType(hero, i): string {
+        if (hero.abilityPriorities[i].type) {
+            return hero.abilityPriorities[i].type.toLowerCase();
+        }
+        return 'n';
+    }
+
+    /** returns string of order of abilities for the current hero
+    *    in the form 'qweeqnnnrnnntqwr'
+    **/
+    generateAbilitiesString(hero): any {
+        const selectedAbilities = [];
+        for (let i = 0; i < NUMBER_LEVELS; i += 1) {
+            selectedAbilities.push('n');
+        }
+        for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
+            for (let j = 0; j < NUMBER_LEVELS; j += 1) {
+                if (hero.abilityLevels[i][j] === 'selected') {
+                    selectedAbilities[j] = this.getAbilityType(hero, i);
+                }
+            }
+        }
+        let str = '';
+        selectedAbilities.forEach((abilityType) => {
+            str += abilityType;
+        });
+        return this.correctAbilitiesString(str);
+    }
+
+    // ensures string is length 25 by cropping or padding 'n'
+    correctAbilitiesString(str: string): any {
+        let newStr = str;
+        if (str.length > NUMBER_LEVELS) {
+            newStr = str.substring(0, NUMBER_LEVELS);
+        } else if (str.length < NUMBER_LEVELS) {
+            newStr = str.padEnd(NUMBER_LEVELS, 'n');
+        }
+        return newStr;
+    }
+
+    generateTalentArray(hero): any {
+        const talentsArray = [];
+        for (let i = 0; i < NUMBER_TALENTS; i += 1) {
+            talentsArray.push('n');
+        }
+        if (hero) {
+            for (let i = 0; i < NUMBER_TALENTS; i += 1) {
+                if (hero.talents[i].toLowerCase() === 'left') {
+                    talentsArray[NUMBER_TALENTS - (i + 1)] = 'l';
+                } else if (hero.talents[i].toLowerCase() === 'right') {
+                    talentsArray[NUMBER_TALENTS - (i + 1)] = 'r';
+                } else {
+                    talentsArray[NUMBER_TALENTS - (i + 1)] = 'n';
+                }
+            }
+        }
+        return talentsArray;
+    }
+
+    constructHeroSpecification(hero): HeroSpecification {
+        if (hero) {
+            const name = hero.programName;
+            const selectedAbilities = this.generateAbilitiesString(hero);
+            console.log(selectedAbilities);
+            const talentsArray = this.generateTalentArray(hero);
+            console.log(talentsArray);
+            return {
+                name,
+                abilities: {
+                    abilities: selectedAbilities,
+                    talents: talentsArray,
+                },
+                items: [],
+            };
+        }
+        return null;
+    }
+
     saveAbilities(): void {
-        console.log('saving abilities');
-        this.botConfigData.setAbilities(this.currentHero);
+        const heroSpecs: HeroSpecification[] = [];
+        this.selectedHeroes.forEach((hero) => {
+            if (hero) {
+                const current = this.constructHeroSpecification(hero);
+                heroSpecs.push(current);
+                this.botConfigData.updateHeroAbilities(current.name, current.abilities.abilities);
+                this.botConfigData.updateHeroTalents(current.name, current.abilities.talents);
+            }
+            console.log(heroSpecs);
+        });
+        console.log(this.botConfigData.getConfig());
     }
 
 }

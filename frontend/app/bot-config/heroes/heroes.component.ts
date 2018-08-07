@@ -38,6 +38,7 @@ export class HeroesComponent implements OnInit {
     pool4 = [];
     pool5 = [];
     allPools = [];
+    partitioned = false;
 
     optionsSource: SortablejsOptions = {
         group: {
@@ -71,8 +72,34 @@ export class HeroesComponent implements OnInit {
         this.selectedTab();
     }
 
+    createHeroPool(): any {
+        const heroPool = {
+            partitioned: this.partitioned,
+            pool: [],
+        };
+        if (this.partitioned !== true) {
+            if (this.pool1) {
+                this.pool1.forEach((hero) => {
+                    heroPool.pool.push({ hero: hero.programName, position: -1 });
+                });
+            }
+        } else {
+            for (let i = 0; i < 5; i += 1) {
+                if (this[`pool${i}`]) {
+                    this[`pool${i}`].forEach((hero) => {
+                        heroPool.pool.push({ hero: hero.programName, position: i });
+                    });
+                }
+            }
+        }
+        return heroPool;
+    }
+
     saveHeroes(): void {
+        const heroPool = this.createHeroPool();
+        console.log(heroPool);
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setHeroPool(heroPool);
     }
 
     getHeroes(): void {
@@ -138,6 +165,7 @@ export class HeroesComponent implements OnInit {
     }
 
     togglePools(): void {
+        this.partitioned = !this.partitioned;
         this.hidePopovers();
         if (confirm('Are you sure you want to toggle pools? All changes will be lost.')) {
             if (this.numberOfPools.length > 1) {
