@@ -1,9 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SortablejsModule } from 'angular-sortablejs';
 import { ApiConnectService } from '../services/api-connect.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-
 import { AbilitiesComponent } from './abilities.component';
 
 describe('AbilitiesComponent', () => {
@@ -70,13 +67,8 @@ describe('AbilitiesComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [AbilitiesComponent],
-            imports: [
-                SortablejsModule,
-            ],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
-                HttpClient,
-                HttpHandler,
             ],
         })
         .compileComponents();
@@ -91,4 +83,6 @@ describe('AbilitiesComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    // TODO: we need more tests here
 });

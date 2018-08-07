@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CallbackComponent } from './callback.component';
 import { LoadingComponent } from '../core/loading.component';
 
