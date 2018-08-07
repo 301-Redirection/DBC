@@ -14,53 +14,27 @@ declare var $: any;
 
 export class ItemsComponent implements OnInit {
     // Variables
-    selectedItemsArray = [];
     allItems: any;
     basicItems = [];
     upgradeItems = [];
     recipes = [];
+
+    // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
     dotaGoldIconURL = '../../assets/images/dota-gold-icon.png';
-    heroItemSelection = [];
+
+    // Hero specific variables
+    selectedHeroes: any;
     selectedHeroIndex: number;
     prevSelectedHeroIndex: number;
+    currentHero: any;
+
+    // Items specific variables
+    heroItemSelection = [];
+    selectedItem: any;
+    selectedItemsArray = [];
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
-    selectedItem: any;
-    currentHero: any;
-    selectedHeroes: any;
-
-    // Temporary test data
-    // selectedHeroes = [
-    //     {
-    //         name: 'Anti-Mage',
-    //         image: 'http://localhost:3000/static/heroes/images/antimage.png',
-    //     },
-    //     {
-    //         name: 'Axe',
-    //         image: 'http://localhost:3000/static/heroes/images/axe.png',
-    //     },
-    //     {
-    //         name: 'Bane',
-    //         image: 'http://localhost:3000/static/heroes/images/bane.png',
-    //     },
-    //     {
-    //         name: 'Bloodseeker',
-    //         image: 'http://localhost:3000/static/heroes/images/bloodseeker.png',
-    //     },
-    // ];
-
-    basicItem = [
-        {
-            name: 'Town Portal Scroll',
-        },
-        {
-            name: 'Ring of Protection',
-        },
-        {
-            name: 'Iron Branch',
-        },
-    ];
 
     optionsSource: SortablejsOptions = {
         group: {
@@ -94,10 +68,6 @@ export class ItemsComponent implements OnInit {
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
-        /* for (const hero of this.selectedHeroes) {
-            this.heroItemSelection.push([]);
-            this.totalCostPerHero.push(0);
-        } */
     }
 
     getItems(): void {
@@ -131,6 +101,7 @@ export class ItemsComponent implements OnInit {
         }
     }
     addItemToList (item) {
+        console.log(item);
         this.heroItemSelection[this.selectedHeroIndex].push(item);
         this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
         this.setSelectedItemsArray();
