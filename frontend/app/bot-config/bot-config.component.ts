@@ -13,10 +13,8 @@ import {
     LogicalOperator,
 } from '../services/ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ROUTE_NAMES } from '../routes/routes.config';
+import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
-import { ConfiguratorComponent } from './team-desires/configurator/configurator.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
 declare var $: any;
