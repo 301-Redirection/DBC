@@ -4,7 +4,7 @@ import { TeamDesiresComponent, ReversePipe } from './team-desires.component';
 import { TeamDesiresService } from '../../services/team-desires.service';
 
 @Component({ selector: 'configurator', template: '' })
-class ConfiguratorComponent {
+class ConfiguratorStubComponent {
     @Input() condition;
 }
 
@@ -16,7 +16,7 @@ describe('TeamDesiresComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 TeamDesiresComponent,
-                ConfiguratorComponent,
+                ConfiguratorStubComponent,
                 ReversePipe,
             ],
             providers: [TeamDesiresService],

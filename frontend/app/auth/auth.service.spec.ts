@@ -1,24 +1,26 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { RoutesModule } from '../routes/routes.module';
 
 describe('AuthService', () => {
+    let service: AuthService;
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 AuthService,
-                HttpClient,
-                HttpHandler,
-                { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } },
-                RoutesModule,
+                {
+                    provide: Router,
+                    useClass: class { navigate = jasmine.createSpy('navigate'); },
+                },
             ],
         });
+        service = TestBed.get(AuthService);
     });
 
-    it('should be created', inject([AuthService], (service: AuthService) => {
+    it('should be created', (done: DoneFn) => {
         expect(service).toBeTruthy();
-    }));
+        done();
+    });
+
+    // TODO: add more tests
 });
