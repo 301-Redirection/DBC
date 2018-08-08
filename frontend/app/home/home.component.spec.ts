@@ -38,4 +38,5 @@ describe('HomeComponent', () => {
 
         expect(compiled).toEqual('Create Your Own Bots!');
     }));
+
 });

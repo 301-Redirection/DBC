@@ -3,7 +3,7 @@ import { NavbarComponent } from './navbar.component';
 import { By } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { authServiceStub } from '../testing/authServiceStub';
-import { SortablejsModule } from 'angular-sortablejs';
+// import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '@angular/forms';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
@@ -14,7 +14,7 @@ const compileComponents = () => {
             RouterLinkDirectiveStub,
         ],
         imports: [
-            SortablejsModule,
+            // SortablejsModule,
             FormsModule,
         ],
         providers: [
@@ -29,7 +29,7 @@ describe('NavbarComponent', () => {
     let fixture: ComponentFixture<NavbarComponent>;
     let auth;
     let routerLinks: any;
-    let linkDes: any;
+    let linkDebugElements: any;
     beforeAll(() => {
         auth = authServiceStub;
     });
@@ -41,10 +41,10 @@ describe('NavbarComponent', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            linkDes = fixture.debugElement
+            linkDebugElements = fixture.debugElement
                 .queryAll(By.directive(RouterLinkDirectiveStub));
 
-            routerLinks = linkDes.map(de => de.injector.get(RouterLinkDirectiveStub));
+            routerLinks = linkDebugElements.map(de => de.injector.get(RouterLinkDirectiveStub));
             done();
         });
 
@@ -69,10 +69,10 @@ describe('NavbarComponent', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            linkDes = fixture.debugElement
+            linkDebugElements = fixture.debugElement
                 .queryAll(By.directive(RouterLinkDirectiveStub));
 
-            routerLinks = linkDes.map(de => de.injector.get(RouterLinkDirectiveStub));
+            routerLinks = linkDebugElements.map(de => de.injector.get(RouterLinkDirectiveStub));
             done();
         });
 

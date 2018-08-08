@@ -15,7 +15,7 @@ describe('DashboardComponent', () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
     let routerLinks: any;
-    let linkDes: any;
+    let linkDebugElements: any;
     beforeEach(async(() => {
         const testBots = {
             botConfigs: [
@@ -92,10 +92,10 @@ describe('DashboardComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
 
-        linkDes = fixture.debugElement
+        linkDebugElements = fixture.debugElement
             .queryAll(By.directive(RouterLinkDirectiveStub));
 
-        routerLinks = linkDes.map(de => de.injector.get(RouterLinkDirectiveStub));
+        routerLinks = linkDebugElements.map(de => de.injector.get(RouterLinkDirectiveStub));
     });
 
     it('should create', () => {
@@ -116,24 +116,24 @@ describe('DashboardComponent', () => {
     });
 
     it('should redirect to Configuration page on \'New Bot Configuration\' click', fakeAsync(() => {
-        const botConfigLinkDe = linkDes[0];   // heroes link DebugElement
+        const botConfigLinkDebugElement = linkDebugElements[0];   // heroes link DebugElement
         const botConfigLink = routerLinks[0]; // heroes link directive
 
         expect(botConfigLink.navigatedTo).toBeNull('should not have navigated yet');
 
-        botConfigLinkDe.triggerEventHandler('click', null);
+        botConfigLinkDebugElement.triggerEventHandler('click', null);
         fixture.detectChanges();
 
         expect(botConfigLink.navigatedTo).toBe('/bot-config');
     }));
 
     it('should redirect to Manage page on \'View more bots\' click', fakeAsync(() => {
-        const botManagementLinkDe = linkDes[6];   // heroes link DebugElement
+        const botManagementLinkDebug = linkDebugElements[6];   // heroes link DebugElement
         const botManagementLink = routerLinks[6]; // heroes link directive
 
         expect(botManagementLink.navigatedTo).toBeNull('should not have navigated yet');
 
-        botManagementLinkDe.triggerEventHandler('click', null);
+        botManagementLinkDebug.triggerEventHandler('click', null);
         fixture.detectChanges();
 
         expect(botManagementLink.navigatedTo).toBe('/bot-management');
