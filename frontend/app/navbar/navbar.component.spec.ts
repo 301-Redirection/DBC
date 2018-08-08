@@ -3,7 +3,6 @@ import { NavbarComponent } from './navbar.component';
 import { By } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { authServiceStub } from '../testing/authServiceStub';
-// import { SortablejsModule } from 'angular-sortablejs';
 import { FormsModule } from '@angular/forms';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
@@ -14,7 +13,6 @@ const compileComponents = () => {
             RouterLinkDirectiveStub,
         ],
         imports: [
-            // SortablejsModule,
             FormsModule,
         ],
         providers: [
