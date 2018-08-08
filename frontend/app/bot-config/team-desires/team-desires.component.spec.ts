@@ -21,8 +21,6 @@ import { AuthService } from '../../auth/auth.service';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { MaterialModule } from '../../material/material.module';
 import { HomeModule } from '../../home/home.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
-import { BotManagementModule } from '../../bot-management/bot-management.module';
 
 @Component({ selector: 'configurator', template: '' })
 class ConfiguratorComponent {
@@ -55,8 +53,6 @@ describe('TeamDesiresComponent', () => {
                 RouterTestingModule.withRoutes(ROUTES),
                 MaterialModule,
                 HomeModule,
-                DashboardModule,
-                BotManagementModule,
             ],
             providers: [
                 ApiConnectService,

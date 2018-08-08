@@ -35,7 +35,7 @@ export class DisplayComponent implements OnInit {
     }
 
     getUserBotScripts () {
-        if (this.dashboard === true) {
+        if (this.dashboard) {
             const response = this.api.recentBots().subscribe(
                 (data) => {
                     this.bots = data.botConfigs;

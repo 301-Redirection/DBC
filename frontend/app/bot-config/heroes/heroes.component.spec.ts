@@ -13,9 +13,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { HomeModule } from '../../home/home.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
 import { BotConfigModule } from '../../bot-config/bot-config.module';
-import { BotManagementModule } from '../../bot-management/bot-management.module';
 import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../../callback/callback.component';
 import { LoadingComponent } from '../../core/loading.component';
@@ -122,8 +120,6 @@ describe('HeroesComponent', () => {
                 SortablejsModule,
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
-                BotManagementModule,
-                DashboardModule,
                 NavbarModule,
                 MaterialModule,
             ],

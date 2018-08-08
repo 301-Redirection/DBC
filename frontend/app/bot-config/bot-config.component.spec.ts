@@ -21,8 +21,6 @@ import { AuthService } from '../auth/auth.service';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { BotConfigModule } from './bot-config.module';
 import { HomeModule } from '../home/home.module';
-import { DashboardModule } from '../dashboard/dashboard.module';
-import { BotManagementModule } from '../bot-management/bot-management.module';
 import { AuthGuard } from '../auth/auth.guard';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
@@ -58,8 +56,6 @@ describe('BotConfigComponent', () => {
                 RouterTestingModule.withRoutes(ROUTES),
                 HttpClientModule,
                 HomeModule,
-                DashboardModule,
-                BotManagementModule,
                 FormsModule,
                 NavbarModule,
                 SortablejsModule,

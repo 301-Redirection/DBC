@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { DisplayComponent } from './display.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -11,7 +11,6 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { HomeModule } from '../home/home.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
-import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
@@ -24,8 +23,8 @@ import { FilterPipe } from '../pipes/filter.pipe';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
 describe('DashboardComponent', () => {
-    let component: DashboardComponent;
-    let fixture: ComponentFixture<DashboardComponent>;
+    let component: DisplayComponent;
+    let fixture: ComponentFixture<DisplayComponent>;
     let router: Router;
     let location: Location;
     let auth: AuthService;
@@ -83,7 +82,7 @@ describe('DashboardComponent', () => {
             .returnValue(Observable.of(testBots));
         TestBed.configureTestingModule({
             declarations: [
-                DashboardComponent,
+                DisplayComponent,
                 CallbackComponent,
                 LoadingComponent,
             ],
@@ -92,7 +91,6 @@ describe('DashboardComponent', () => {
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
                 BotConfigModule,
-                BotManagementModule,
                 FormsModule,
                 SortablejsModule,
             ],
@@ -117,7 +115,7 @@ describe('DashboardComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DashboardComponent);
+        fixture = TestBed.createComponent(DisplayComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

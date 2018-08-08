@@ -130,7 +130,6 @@ const LuaCodeTemplateManager = function () {
     this.generateTalentCode = function (talents) {
         let level = 0;
         let code = 'local TalentTree={';
-        console.log(talents);
         for (let i = 0; i < talents.length; i += 1) {
             let talentIndex;
             if (talents[i] === 'l') {
@@ -158,11 +157,11 @@ const LuaCodeTemplateManager = function () {
     };
 
     /**
-     *  This this.creates the file content (ability_item_usage) which specifies
+     *  This creates the file content (ability_item_usage) which specifies
      *  which abilities a bot should get using the original bot script file as a
      *  template only replacing the relevant code
      *
-     *  This this.expects the hero name and an object
+     *  This expects the hero name and an object
      *  const input = {
      *    abilities: 'qweqqrewqetnqrnt', talents: ['l','r','l','l']
      *  };
@@ -173,8 +172,7 @@ const LuaCodeTemplateManager = function () {
             if (err) throw err;
         });
         const abilities = this.generateLevelingAbilityCode(abilityObject.abilities);
-        console.log(abilityObject);
-        const talents = this.generateTalentCode(abilityObject.abilities.talents);
+        const talents = this.generateTalentCode(abilityObject.talents);
         fileContents = fileContents.replace('{{- abilities-to-level -}}', `${abilities}${NEW_LINE}${NEW_LINE}${talents}${NEW_LINE}`);
         return fileContents;
     };

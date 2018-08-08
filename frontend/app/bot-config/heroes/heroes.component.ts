@@ -77,7 +77,7 @@ export class HeroesComponent implements OnInit {
             partitioned: this.partitioned,
             pool: [],
         };
-        if (this.partitioned !== true) {
+        if (!this.partitioned) {
             if (this.pool1) {
                 this.pool1.forEach((hero) => {
                     heroPool.pool.push({ hero: hero.programName, position: -1 });

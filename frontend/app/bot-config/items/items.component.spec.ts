@@ -17,8 +17,6 @@ import { FilterPipe } from '../../pipes/filter.pipe';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { AuthService } from '../../auth/auth.service';
 import { HomeModule } from '../../home/home.module';
-import { BotManagementModule } from '../../bot-management/bot-management.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
 import {
     EnumToArrayPipe,
     ConfiguratorComponent,
@@ -50,8 +48,6 @@ describe('ItemsComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
-                BotManagementModule,
-                DashboardModule,
                 MaterialModule,
             ],
             providers: [

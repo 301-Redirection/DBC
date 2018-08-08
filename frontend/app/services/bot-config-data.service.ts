@@ -73,7 +73,7 @@ export class BotConfigDataService {
                 exists = true;
             }
         }
-        if (exists === false) {
+        if (!exists) {
             const heroSpec = new HeroSpecification();
             heroSpec.name = heroName;
             heroes.push(heroSpec);

@@ -9,9 +9,7 @@ import { RoutesModule, ROUTES } from '../routes/routes.module';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 import { HomeModule } from '../home/home.module';
-import { DashboardModule } from '../dashboard/dashboard.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
-import { BotManagementModule } from '../bot-management/bot-management.module';
 import { CallbackComponent } from '../callback/callback.component';
 import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
@@ -44,9 +42,7 @@ describe('NavbarComponent', () => {
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
-                DashboardModule,
                 BotConfigModule,
-                BotManagementModule,
                 SortablejsModule,
                 FormsModule,
             ],

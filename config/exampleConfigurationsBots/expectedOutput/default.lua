@@ -14,7 +14,7 @@ function UpdateRoamDesires()
     if (DotaTime() < 5) then
         common += 0.25
     end
-    return {common, GetTeamMember(((GetTeam() == TEAM_RADIANT) ? TEAM_RADIANT : TEAM_DIRE), RandomInt(1, 5))}
+    return common
 end
 
 function UpdatePushLaneDesires()

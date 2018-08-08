@@ -14,8 +14,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { HomeModule } from '../../home/home.module';
 import { BotConfigModule } from '../bot-config.module';
-import { BotManagementModule } from '../../bot-management/bot-management.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
 import { NavbarModule } from '../../navbar/navbar.module';
 import { AuthService } from '../../auth/auth.service';
 import { FilterPipe } from '../../pipes/filter.pipe';
@@ -109,8 +107,6 @@ describe('AbilitiesComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes(ROUTES),
                 HomeModule,
-                BotManagementModule,
-                DashboardModule,
                 NavbarModule,
                 MaterialModule,
             ],
