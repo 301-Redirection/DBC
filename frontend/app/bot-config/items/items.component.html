@@ -50,14 +50,23 @@
     <div class="frame row mt-2" *ngIf="selectedHeroes.length != 0">
         <div class="col-md-4">
             <div class="card bot-manage-card">
-                <div class="card-header bot-manage-card-header ">
-                    <h5 class="align-middle">SELECTED ITEMS
-                    <button type="button" class="button button-cancel ml-4 float-right" (click)="clearItemsSelectedHero()">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                    <span class="text-muted float-right mx-2">{{totalCostPerHero[selectedHeroIndex] }}</span>
-                    <img class="float-right mr-2" [src]="dotaGoldIconURL">
-                    </h5>
+                <div class="card-header container-fluid bot-manage-card-header ">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5 class="align-middle">SELECTED ITEMS</h5>
+                        </div>
+                        <div class="col-sm-3 align-content-center cost-item">                                
+                            <img class="float-left" [src]="dotaGoldIconURL" height="30px">
+                            <div class="ml-4 pl-3">
+                                <b>{{totalCostPerHero[selectedHeroIndex]}}</b>                                            
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button" class="button button-cancel ml-4 float-right" (click)="clearItemsSelectedHero()">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body bot-manage-card-body drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget" (drop)="addItemCostToTotal()">
                     <div *ngIf="selectedItemsArray.length == 0">
@@ -90,12 +99,12 @@
                         <div *ngIf="item.components !== 'null'">
                             <div class="card-body container-fluid ">                                                               
                                 <div class="row  mb-3">
-                                    <h6>Items purchased to create the {{item.niceName}}:</h6>
+                                    <h6>Items purchased to create {{item.niceName}}:</h6>
                                 </div>
                                 <div class="row justify-content-md-center mt-1">
                                     <div  class="mx-1" *ngFor="let component of item.components" [id]="component.name + 'comp'">
                                         <div data-toggle="popover" (mouseover)="triggerPopover($event.currentTarget, component)" data-trigger="hover">
-                                            <img [src]="component.url" height="80%">
+                                            <img [src]="component.url" class = "item-component-image">
                                         </div>
                                     </div>
                                 </div>                                                                                                              
