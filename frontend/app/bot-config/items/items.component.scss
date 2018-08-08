@@ -5,7 +5,7 @@
 .item {
     display: inline-block;
     margin-right: 5px;
-    border: 2px solid $btn-generate-border-color;
+    border: 2px solid $item-border-color;
     background-color: $black;
     height: 64px;
     width: 85px;
@@ -16,14 +16,14 @@
 }
 
 .item:hover {
-    border: 2px solid $btn-generate-border-color-hover;
+    border: 2px solid $item-border-color-hover;
     filter: saturate(100%);
     filter: brightness(120%);
     transition: all 200ms ease; 
 }
 
 .hero-selected {
-    border: 2px solid $btn-generate-border-color-hover;
+    border: 2px solid $item-border-color-hover;
     transform: scale(1.05);
 }
 
@@ -37,17 +37,21 @@
     width: 100px;
 }
 
-.item-selected-card {
-    height: 100%;
+.selected-item-card {
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
     color: $light-grey;  
+    border: 1px solid rgba($dark-grey-1, 0.8);
     width: 100%;
 }
-#removeIcon {
-    color: $red;
+
+.selected-item-card .card-header:hover {
+    cursor: pointer;
+}
+
+#removeItemIcon {
     float: right;
-    z-index: 100;
+    z-index: 100;    
 }
 
 .items-position {
@@ -64,4 +68,23 @@
     width: 100%;
     margin-left: 1%;
     margin-right: 1%;  
+}
+
+.selected-item-card-body {
+    background-color: $dark-grey-3 !important;  
+    text-align: left;
+    width: 100%;
+}
+
+.cost-item {
+    color: $coin-gold;
+    font-weight: bold;
+    scale: 70%;
+}
+
+.card-list{
+    height: 100%;
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
 }

@@ -12,7 +12,7 @@ declare var $: any;
     styleUrls: ['./items.component.scss'],
 })
 
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit{
     // Variables
     allItems: any;
     basicItems = [];
@@ -32,7 +32,7 @@ export class ItemsComponent implements OnInit {
     // Items specific variables
     heroItemSelection = [];
     selectedItem: any;
-    selectedItemsArray = [];
+    selectedItemsArray: any;
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
 
@@ -47,7 +47,7 @@ export class ItemsComponent implements OnInit {
 
     optionsTarget: SortablejsOptions = {
         group: 'clone-group',
-        sort: false,
+        sort: true,
     };
 
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
@@ -65,6 +65,7 @@ export class ItemsComponent implements OnInit {
                 this.heroItemSelection.push([]);
                 this.totalCostPerHero.push(0);
             });
+            this.currentHero = this.selectedHeroes[0];
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
@@ -76,7 +77,7 @@ export class ItemsComponent implements OnInit {
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
-                this.setSelectedHero(0);
+                this.selectedItemsArray = [];
             },
             (error) => {
                 console.log(error);
@@ -101,7 +102,6 @@ export class ItemsComponent implements OnInit {
         }
     }
     addItemToList (item) {
-        console.log(item);
         this.heroItemSelection[this.selectedHeroIndex].push(item);
         this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
         this.setSelectedItemsArray();
@@ -136,6 +136,7 @@ export class ItemsComponent implements OnInit {
     }
 
     setSelectedItem (item) {
+        console.log(this.selectedHeroIndex);
         this.selectedItem = item;
     }
 
@@ -148,6 +149,7 @@ export class ItemsComponent implements OnInit {
         this.setSelectedItemsArray();
     }
     addItemCostToTotal () {
+        this.setSelectedItemsArray();
         this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
     }
 
