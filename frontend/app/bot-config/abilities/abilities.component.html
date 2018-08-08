@@ -6,7 +6,6 @@
         </div>
     </div>
     
-
     <!-- Hero list -->
     <div class="frame row mb-5">
         <div class="card bot-manage-card">
@@ -49,12 +48,12 @@
                                 </button>
                             </div>
                         </div>
-                        <span *ngIf="ability.type=='T'; else wrong">
+                        <span *ngIf="ability.type == 'T'; else wrong">
                             <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
                                 <img class="img d-inline ability-image-display" src="{{ ability.src }}">
                             </button>
                         </span>
-                        <span *ngIf="ability.type!='T'; else wrong">
+                        <span *ngIf="ability.type != 'T'; else wrong">
                             <img class="img d-inline ability-image-display" src="{{ ability.src }}">
                         </span>
                         
@@ -69,19 +68,19 @@
                     <table class="table ability-table">
                         <tbody>
                             <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
-                                <td *ngIf="ability.type=='T'; else wrong">
+                                <td *ngIf="ability.type == 'T'; else wrong">
                                     <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
                                         <img  class="img ability-roster-image" src="{{ ability.src }}">
                                     </button>
                                 </td>
-                                <td *ngIf="ability.type!='T'; else wrong">
+                                <td *ngIf="ability.type != 'T'; else wrong">
                                     <img class="img ability-roster-image" src="{{ ability.src }}">
                                 </td>
                                 <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
-                                    <span class="ability-level selected-ability" *ngIf="status=='selected'; else wrong">{{ i+1 }}</span>
-                                    <span class="ability-level unselected-open-ability" *ngIf="status=='open'; else wrong"></span>
-                                    <span class="ability-level unselected-closed-ability" *ngIf="status=='closed'; else wrong"></span>
-                                    <span class="ability-level disabled-ability" *ngIf="status=='disabled'; else wrong"></span>
+                                    <span class="ability-level selected-ability" *ngIf="status == 'selected'; else wrong">{{ i+1 }}</span>
+                                    <span class="ability-level unselected-open-ability" *ngIf="status == 'open'; else wrong"></span>
+                                    <span class="ability-level unselected-closed-ability" *ngIf="status == 'closed'; else wrong"></span>
+                                    <span class="ability-level disabled-ability" *ngIf="status == 'disabled'; else wrong"></span>
                                 </td>
                             </tr>
                         </tbody>
@@ -106,15 +105,15 @@
                                                 <td>
                                                     <tr class="talent-row">
                                                         <td class="talent talent-left">
-                                                            <div *ngIf="talent!='left'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'left')">Left</div>
-                                                            <div *ngIf="talent=='left'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Left</div>
+                                                            <div *ngIf="talent != 'left'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'left')">Left</div>
+                                                            <div *ngIf="talent == 'left'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Left</div>
                                                         </td>
                                                         <td>
                                                             <div class="talent level"> {{ 25 - 5 * (talentNum) }} </div>
                                                         </td>
                                                         <td class="talent talent-right">
-                                                            <div *ngIf="talent!='right'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'right')">Right</div>
-                                                            <div *ngIf="talent=='right'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Right</div>
+                                                            <div *ngIf="talent != 'right'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'right')">Right</div>
+                                                            <div *ngIf="talent == 'right'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Right</div>
                                                         </td>
                                                     </tr>
                                                 </td>
