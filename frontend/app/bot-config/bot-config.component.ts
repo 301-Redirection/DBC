@@ -11,7 +11,7 @@ import {
     Operator,
     Action,
     LogicalOperator,
-} from '../ConfigurationFormat';
+} from '../services/ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTE_NAMES } from '../routes/routes.config';

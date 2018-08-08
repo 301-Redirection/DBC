@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
 import { API_URL } from './api-url-config';
-import { ConfigurationFormat } from '../ConfigurationFormat';
+import { ConfigurationFormat } from '../services/ConfigurationFormat';
 
 @Injectable()
 export class ApiConnectService {

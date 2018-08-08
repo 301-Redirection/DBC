@@ -4,40 +4,73 @@
  * of the configuration options specified grows.
  */
 
-export interface ConfigurationFormat {
-    configuration: {
-        heroPool: HeroPoolConfiguration;
-        heroes: HeroSpecification[];
-        desires: {
-            push: {
-                top: Configuration;
-                mid: Configuration;
-                bot: Configuration;
-            };
-            farm: {
-                top: Configuration;
-                mid: Configuration;
-                bot: Configuration;
-            };
-            defend: {
-                top: Configuration;
-                mid: Configuration;
-                bot: Configuration;
-            };
-            roam: Configuration;
-            roshan: Configuration;
+export class ConfigurationFormat {
+    heroPool: HeroPoolConfiguration;
+    heroes: HeroSpecification[];
+    desires: {
+        push: {
+            top: Configuration;
+            mid: Configuration;
+            bot: Configuration;
         };
+        farm: {
+            top: Configuration;
+            mid: Configuration;
+            bot: Configuration;
+        };
+        defend: {
+            top: Configuration;
+            mid: Configuration;
+            bot: Configuration;
+        };
+        roam: Configuration;
+        roshan: Configuration;
     };
+    constructor() {
+        this.desires = {
+            push: {
+                top: new Configuration(),
+                mid: new Configuration(),
+                bot: new Configuration(),
+            },
+            farm: {
+                top: new Configuration(),
+                mid: new Configuration(),
+                bot: new Configuration(),
+            },
+            defend: {
+                top: new Configuration(),
+                mid: new Configuration(),
+                bot: new Configuration(),
+            },
+            roshan: new Configuration(),
+            roam: new Configuration(),
+        };
+    }
 }
-export interface Configuration {
+export class Configuration {
     compoundConditions: CompoundCondition[];
     initialValue: any;
+
+    constructor() {
+        this.compoundConditions = [new CompoundCondition()];
+        this.initialValue = 0;
+    }
 }
 
-export interface HeroSpecification {
+export class HeroSpecification {
     name: string;
     abilities: AbilityConfiguration;
     items: string[];
+
+    constructor() {
+        this.name = '';
+        this.abilities = {
+            abilities: '',
+            talents: [],
+        };
+        this.items = [];
+    }
 }
 
 export interface AbilityConfiguration {
@@ -63,9 +96,18 @@ export interface HeroConfiguration {
  *      ${conditions[0].action} MEAN(${conditions[0].value}, ..., ${conditions[n].value})
  * }
  */
-export interface CompoundCondition {
+export class CompoundCondition {
     conditions: Condition[];
-    logicalOperator: LogicalOperator[];
+    logicalOperators: LogicalOperator[];
+    action: Action; // TODO: Come up with action types
+    value: any;
+
+    constructor() {
+        this.conditions = [];
+        this.logicalOperators = [];
+        this.action = null;
+        this.value = null;
+    }
 }
 
 /*
@@ -74,12 +116,16 @@ export interface CompoundCondition {
  *    ${action} ${value}
  * }
  */
-export interface Condition {
+export class Condition {
     trigger: Trigger;
     operator: Operator;
     conditional: any;
-    action: Action; // TODO: Come up with action types
-    value: any;
+
+    constructor() {
+        this.trigger = null;
+        this.operator = null;
+        this.conditional = null;
+    }
 }
 
 export enum Action {

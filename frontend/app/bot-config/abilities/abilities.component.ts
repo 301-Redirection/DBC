@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../services/api-connect.service';
 import * as globalConfig from '../../../../config/config.js';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
-import { HeroSpecification } from '../../services/configuration-class';
+import { HeroSpecification } from '../../services/ConfigurationFormat';
 
 const NUMBER_TALENTS: number = 4;
 const NUMBER_LEVELS: number = 25;

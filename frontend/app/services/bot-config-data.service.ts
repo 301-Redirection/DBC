@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ConfigurationClass, HeroSpecification } from './configuration-class';
 import {
     ConfigurationFormat,
     Configuration,
     HeroPoolConfiguration,
+    HeroSpecification,
 } from './ConfigurationFormat';
 
 @Injectable()
@@ -33,39 +33,12 @@ export class BotConfigDataService {
 
     // creates config object according to format
     reset(): void {
-        this.config = {
-            configuration: {
-                heroPool: {
-                    partitioned: false,
-                    pool: [],
-                },
-                heroes: [],
-                desires: {
-                    push: {
-                        top: new ConfigurationClass(),
-                        mid: new ConfigurationClass(),
-                        bot: new ConfigurationClass(),
-                    },
-                    farm: {
-                        top: new ConfigurationClass(),
-                        mid: new ConfigurationClass(),
-                        bot: new ConfigurationClass(),
-                    },
-                    defend: {
-                        top: new ConfigurationClass(),
-                        mid: new ConfigurationClass(),
-                        bot: new ConfigurationClass(),
-                    },
-                    roam: new ConfigurationClass(),
-                    roshan: new ConfigurationClass(),
-                },
-            },
-        };
+        this.config = new ConfigurationFormat();
     }
 
     // creates a hero specification for the hero if non-existent
     private ensureHeroSpecification(heroName): void {
-        const heroes = this.config.configuration.heroes;
+        const heroes = this.config.heroes;
         let exists = false;
         for (let i = 0; i < heroes.length; i += 1) {
             const hero = heroes[i];
@@ -82,7 +55,7 @@ export class BotConfigDataService {
 
     public updateHeroItems(heroName: string, items: any) {
         this.ensureHeroSpecification(heroName);
-        this.config.configuration.heroes.forEach((hero) => {
+        this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
                 hero.items = items;
             }
@@ -91,7 +64,7 @@ export class BotConfigDataService {
 
     public updateHeroTalents(heroName: string, talents: any) {
         this.ensureHeroSpecification(heroName);
-        this.config.configuration.heroes.forEach((hero) => {
+        this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
                 hero.abilities.talents = talents;
             }
@@ -100,7 +73,7 @@ export class BotConfigDataService {
 
     public updateHeroAbilities(heroName: string, abilities: any) {
         this.ensureHeroSpecification(heroName);
-        this.config.configuration.heroes.forEach((hero) => {
+        this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
                 hero.abilities.abilities = abilities;
             }
@@ -108,11 +81,11 @@ export class BotConfigDataService {
     }
 
     public setHeroSpecification(heroSpecification: any): void {
-        this.config.configuration.heroes = heroSpecification;
+        this.config.heroes = heroSpecification;
     }
 
     public setHeroPool(heroPool: any): void {
-        this.config.configuration.heroPool = heroPool;
+        this.config.heroPool = heroPool;
     }
 
     public getConfig(): any {

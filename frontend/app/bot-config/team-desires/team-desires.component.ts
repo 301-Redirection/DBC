@@ -1,6 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { TeamDesiresService } from '../../services/team-desires.service';
-import { ConfigurationFormat, Action } from '../../ConfigurationFormat';
+import { ConfigurationFormat, Action } from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class TeamDesiresComponent implements OnInit {
     - Add create condition on last element logical operator selection
     */
 
-    teamDesires: ConfigurationFormat;
+    config: ConfigurationFormat;
 
     actions = Action;
 
@@ -69,7 +69,7 @@ export class TeamDesiresComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.teamDesires = this.tdService.getDefaultConfiguration();
+        this.config = this.tdService.getDefaultConfiguration();
         this.saveTeamDesires();
     }
 
@@ -78,34 +78,34 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     private saveTeamDesires(): void {
-        this.botConfigData.setTeamDesires(this.teamDesires);
+        this.botConfigData.setTeamDesires(this.config.desires);
     }
 
     private getCondGroupIndex(index: number, prop: string, lane: string): number {
         if (lane === undefined) {
-            return this.teamDesires[prop].compoundConditions.length - index - 1;
+            return this.config.desires[prop].compoundConditions.length - index - 1;
         }
-        return this.teamDesires[prop][lane].compoundConditions.length - index - 1;
+        return this.config.desires[prop][lane].compoundConditions.length - index - 1;
     }
 
     private addCondition(prop: string, condGroup: number, lane?: string): void {
         const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
         const newCond = this.tdService.newCondition();
         if (lane === undefined) {
-            const len = this.teamDesires[prop].compoundConditions[groupIndex].conditions.length;
-            this.teamDesires[prop].compoundConditions[groupIndex].
+            const len = this.config.desires[prop].compoundConditions[groupIndex].conditions.length;
+            this.config.desires[prop].compoundConditions[groupIndex].
             conditions.push(newCond);
             if (len > 0) {
-                this.teamDesires[prop].compoundConditions[groupIndex].
+                this.config.desires[prop].compoundConditions[groupIndex].
                 logicalOperators[len - 1] = 1;
             }
         } else {
-            const len = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            const len = this.config.desires[prop][lane].compoundConditions[groupIndex].
             conditions.length;
-            this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            this.config.desires[prop][lane].compoundConditions[groupIndex].
             conditions.push(newCond);
             if (len > 0) {
-                this.teamDesires[prop][lane].compoundConditions[groupIndex].
+                this.config.desires[prop][lane].compoundConditions[groupIndex].
                 logicalOperators[len - 1] = 1;
             }
         }
@@ -117,26 +117,27 @@ export class TeamDesiresComponent implements OnInit {
         if (ans) {
             const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
             if (lane === undefined) {
-                this.teamDesires[prop].compoundConditions[groupIndex].conditions.splice(index, 1);
-                const len = this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
-                length;
+                this.config.desires[prop].compoundConditions[groupIndex].conditions
+                    .splice(index, 1);
+                const len = this.config.desires[prop].compoundConditions[groupIndex]
+                    .logicalOperators.length;
                 if (index === len) {
-                    this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
+                    this.config.desires[prop].compoundConditions[groupIndex].logicalOperators.
                     splice(index, 1);
                 } else {
-                    this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators.
+                    this.config.desires[prop].compoundConditions[groupIndex].logicalOperators.
                     splice(index - 2, 1);
                 }
             } else {
-                this.teamDesires[prop][lane].compoundConditions[groupIndex].
+                this.config.desires[prop][lane].compoundConditions[groupIndex].
                 conditions.splice(index, 1);
-                const len = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+                const len = this.config.desires[prop][lane].compoundConditions[groupIndex].
                 logicalOperators.length;
                 if (index === len) {
-                    this.teamDesires[prop][lane].compoundConditions[groupIndex].logicalOperators.
+                    this.config.desires[prop][lane].compoundConditions[groupIndex].logicalOperators.
                     splice(index, 1);
                 } else {
-                    this.teamDesires[prop][lane].compoundConditions[groupIndex].logicalOperators.
+                    this.config.desires[prop][lane].compoundConditions[groupIndex].logicalOperators.
                     splice(index - 1, 1);
                 }
             }
@@ -146,9 +147,9 @@ export class TeamDesiresComponent implements OnInit {
 
     private addConditionGroup(prop: string, lane?: string): void {
         if (lane === undefined) {
-            this.teamDesires[prop].compoundConditions.push(this.tdService.newCondGroup());
+            this.config.desires[prop].compoundConditions.push(this.tdService.newCondGroup());
         } else {
-            this.teamDesires[prop][lane].
+            this.config.desires[prop][lane].
             compoundConditions.push(this.tdService.newCondGroup());
         }
         this.saveTeamDesires();
@@ -164,9 +165,9 @@ export class TeamDesiresComponent implements OnInit {
                         val: number = 1) {
         const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
         if (lane === undefined) {
-            this.teamDesires[prop].compoundConditions[groupIndex].logicalOperators[index] = val;
+            this.config.desires[prop].compoundConditions[groupIndex].logicalOperators[index] = val;
         } else {
-            this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            this.config.desires[prop][lane].compoundConditions[groupIndex].
             logicalOperators[index] = val;
         }
         this.saveTeamDesires();
@@ -176,10 +177,10 @@ export class TeamDesiresComponent implements OnInit {
         const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
         let op = -1;
         if (lane === undefined) {
-            op = this.teamDesires[prop].compoundConditions[groupIndex].
+            op = this.config.desires[prop].compoundConditions[groupIndex].
             logicalOperators[index];
         } else {
-            op = this.teamDesires[prop][lane].compoundConditions[groupIndex].
+            op = this.config.desires[prop][lane].compoundConditions[groupIndex].
             logicalOperators[index];
         }
         this.saveTeamDesires();

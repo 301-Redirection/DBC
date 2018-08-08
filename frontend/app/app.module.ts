@@ -13,9 +13,7 @@ import { BotConfigModule } from './bot-config/bot-config.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { DisplayModule } from './display/display.module';
 import { RoutesModule } from './routes/routes.module';
-// import { ItemsModule } from './items/items.module';
 import { MaterialModule } from './material/material.module';
-// import { AbilitiesModule } from './abilities/abilities.module';
 
 // Services
 import { ApiConnectService } from './services/api-connect.service';
@@ -25,7 +23,6 @@ import { AuthService } from './auth/auth.service';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
-// import { HeroesComponent } from './heroes/heroes.component';
 
 import { FilterPipe } from './pipes/filter.pipe';
 import { BotConfigDataService } from './services/bot-config-data.service';
@@ -36,8 +33,6 @@ import { DisplayComponent } from './display/display.component';
         AppComponent,
         CallbackComponent,
         LoadingComponent,
-        // HeroesComponent,
-        // FilterPipe,
     ],
     imports: [
         BrowserModule,
@@ -47,13 +42,10 @@ import { DisplayComponent } from './display/display.component';
         HomeModule,
         DisplayModule,
         NavbarModule,
-        // ItemsModule,
         BotConfigModule,
         RouterModule,
-        // ItemsModule,
         MaterialModule,
         BrowserAnimationsModule,
-        // AbilitiesModule,
     ],
     providers: [
         ApiConnectService,

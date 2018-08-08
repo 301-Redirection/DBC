@@ -10,7 +10,7 @@ import {
     Condition,
     Operator,
     Trigger,
-} from '../../../ConfigurationFormat';
+} from '../../../services/ConfigurationFormat';
 
 @Component({
     selector: 'configurator',
