@@ -41,20 +41,11 @@ export class BotConfigDataService {
     }
 
     public newCondition(): Condition {
-        return {
-            trigger: null,
-            operator: null,
-            conditional: null,
-        };
+        return new Condition();
     }
 
     public newCondGroup(): CompoundCondition {
-        return {
-            conditions: [],
-            logicalOperators: [],
-            action: null,
-            value: null,
-        };
+        return new CompoundCondition();
     }
 
     // creates a hero specification for the hero if non-existent

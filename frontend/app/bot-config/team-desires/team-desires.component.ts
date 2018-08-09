@@ -84,13 +84,6 @@ export class TeamDesiresComponent implements OnInit {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
-    private getCondGroupIndex(index: number, prop: string, lane: string): number {
-        if (lane === undefined) {
-            return this.config.desires[prop].compoundConditions.length - index - 1;
-        }
-        return this.config.desires[prop][lane].compoundConditions.length - index - 1;
-    }
-
     private addCondition(compoundCondition: CompoundCondition): void {
         const newCond = this.botConfigData.newCondition();
         const len = compoundCondition.conditions.length;
@@ -136,11 +129,9 @@ export class TeamDesiresComponent implements OnInit {
     private addOperator(compoundCondition: CompoundCondition, index: number, op: number) {
         const len = compoundCondition.logicalOperators.length;
         if (len === index) {
-            compoundCondition.logicalOperators.push(op);
             this.addCondition(compoundCondition);
-        } else {
-            compoundCondition.logicalOperators[index] = op;
         }
+        compoundCondition.logicalOperators[index] = op;
     }
 }
 
