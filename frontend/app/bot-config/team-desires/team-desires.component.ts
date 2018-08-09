@@ -1,5 +1,5 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { TeamDesiresService } from '../../services/team-desires.service';
+// import { TeamDesiresService } from '../../services/team-desires.service';
 import {
     ConfigurationFormat,
     Action,
@@ -67,12 +67,12 @@ export class TeamDesiresComponent implements OnInit {
     ];
 
     constructor(
-        private tdService: TeamDesiresService,
+        // private tdService: TeamDesiresService,
         private botConfigData: BotConfigDataService,
     ) {}
 
     ngOnInit() {
-        this.config = this.tdService.getDefaultConfiguration();
+        this.config = this.botConfigData.getDefaultConfiguration();
         this.saveTeamDesires();
     }
 
@@ -92,7 +92,7 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     private addCondition(compoundCondition: CompoundCondition): void {
-        const newCond = this.tdService.newCondition();
+        const newCond = this.botConfigData.newCondition();
         const len = compoundCondition.conditions.length;
         compoundCondition.conditions.push(newCond);
         if (len > 0) {
@@ -117,7 +117,7 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     private addConditionGroup(configuration: Configuration): void {
-        configuration.compoundConditions.push(this.tdService.newCondGroup());
+        configuration.compoundConditions.push(this.botConfigData.newCondGroup());
         this.saveTeamDesires();
     }
 

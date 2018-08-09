@@ -27,13 +27,13 @@ export const ROUTES: Routes = [
         path: 'bot-config',
         component: BotConfigComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
     },
     {
         path: 'bot-config/:botScriptID',
         component: BotConfigComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
     },
     {
         path: 'desires',
