@@ -27,6 +27,11 @@ export class ConfigurationFormat {
         roshan: Configuration;
     };
     constructor() {
+        this.heroPool = {
+            partitioned: false,
+            pool: [],
+        },
+        this.heroes = [];
         this.desires = {
             push: {
                 top: new Configuration(),

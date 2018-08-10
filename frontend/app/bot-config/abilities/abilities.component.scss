@@ -55,7 +55,8 @@
 
 .ability-image-display {
     width: 80px;
-    // margin-top: 20px;
+    max-height: 80px;
+    max-width: 80px;
 }
 
 .ability-item {
@@ -147,4 +148,31 @@
 }
 .button-chevron:hover { 
     background-color: $btn-edit-color;
+}
+
+.tooltip-inner{
+    padding: 2px;
+    text-align: center;
+    margin: 0;
+    background-color: $dark-grey-2;
+    color: $light-grey;
+}
+
+/* -- Popover styles -- */
+.popover-zone {
+    width: 100%;
+    height: 100%;    
+}
+
+.popover-dark {
+    background-color: $dark-grey;
+}
+
+.popover-body {    
+    color: $white;
+}
+
+.popover-dark .arrow:after {
+    border-right-color: $dark-grey;
+    border-left-color: $dark-grey;
 }

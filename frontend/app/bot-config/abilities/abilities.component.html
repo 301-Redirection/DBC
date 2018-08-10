@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12" id="heroesTitle">
             <!-- <h3>ABILITY CONFIGURATION</h3><br>  -->
-            Select a hero to customize which abilities are being leveled up by the bots
+            Select a hero to customize their ability level order.
         </div>
     </div>
     
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <!-- List table -->
+    <!-- Ability Selector -->
     <div class="row frame mb-5">
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
@@ -50,11 +50,11 @@
                         </div>
                         <span *ngIf="ability.type == 'T'; else wrong">
                             <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
-                                <img class="img d-inline ability-image-display" src="{{ ability.src }}">
+                                <img class="img d-inline ability-image-display" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
                             </button>
                         </span>
                         <span *ngIf="ability.type != 'T'; else wrong">
-                            <img class="img d-inline ability-image-display" src="{{ ability.src }}">
+                            <img class="img d-inline ability-image-display" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
                         </span>
                         
                     </div>
@@ -62,6 +62,7 @@
                 <div class="ability-row">
                     <button class="button button-chevron mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
                 </div>
+                <!-- The ability order display -->
                 <div class="ability-row">
                     <h6>Ability Level Up Order</h6>
                     <br>
@@ -70,11 +71,11 @@
                             <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
                                 <td *ngIf="ability.type == 'T'; else wrong">
                                     <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
-                                        <img  class="img ability-roster-image" src="{{ ability.src }}">
+                                        <img  class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
                                     </button>
                                 </td>
                                 <td *ngIf="ability.type != 'T'; else wrong">
-                                    <img class="img ability-roster-image" src="{{ ability.src }}">
+                                    <img class="img ability-roster-image" src="{{ ability.src }}" data-toggle="tooltip" (mouseover)="triggerPopover($event.currentTarget, ability)">
                                 </td>
                                 <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
                                     <span class="ability-level selected-ability" *ngIf="status == 'selected'; else wrong">{{ i+1 }}</span>
@@ -87,7 +88,7 @@
                     </table>
                 </div>
 
-                <!-- The Modal -->
+                <!-- The Talent Modal -->
                 <div class="modal fade" id="talentModal">
                     <div class="modal-dialog modal-md">
                         <div class="modal-content">
@@ -99,6 +100,11 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="ability-row">
+                                    <div>
+                                        Since talents change so frequently; we decided not to show the specific talents of each hero but if you wish to confirm which talents are available for {{ currentHero.niceName }}:
+                                        <a href="https://dota2.gamepedia.com/{{ currentHero.niceName }}#Talents" target = "_blank">Follow this link</a>
+                                    </div>
+                                    <br>
                                     <table class="talent-table">
                                         <tbody>
                                             <tr *ngFor="let talent of currentHero.talents; let talentNum = index" [attr.data-index]="talentNum">
@@ -133,6 +139,21 @@
                 
             </div>
             <!-- End card body -->
+        </div>
+    </div>
+</div>
+
+<!-- Abilities popover template -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="abilitiesPopoverTemplate">
+                <div class="popover popover-dark" role="tooltip">
+                    <div class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div class="popover-body"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

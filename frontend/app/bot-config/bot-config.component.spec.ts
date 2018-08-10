@@ -25,7 +25,6 @@ import { AuthGuard } from '../auth/auth.guard';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { EnumToArrayPipe } from './team-desires/configurator/configurator.component';
-import { TeamDesiresService } from '../services/team-desires.service';
 
 @Component({ selector: 'configurator', template: '' })
 class ConfiguratorComponent {
@@ -70,7 +69,6 @@ describe('BotConfigComponent', () => {
                 HttpHandler,
                 { provide: Title, useClass: Title },
                 BotConfigDataService,
-                TeamDesiresService,
             ],
         })
         .compileComponents();

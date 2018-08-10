@@ -7,6 +7,10 @@ import { HeroSpecification } from '../../services/ConfigurationFormat';
 const NUMBER_TALENTS: number = 4;
 const NUMBER_LEVELS: number = 25;
 const NUMBER_ABILITIES: number = 5;
+const GAMEPEDIA_LINK = 'https://dota2.gamepedia.com/';
+
+// Import JQuery
+declare var $: any;
 
 class AbilitySet {
     abilityPriorities: any;
@@ -42,7 +46,6 @@ export class AbilitiesComponent implements OnInit {
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
-                console.log(hero);
                 this.selectedHeroes.push(hero);
             });
 
@@ -91,7 +94,7 @@ export class AbilitiesComponent implements OnInit {
                     index: 3,
                 },
                 {
-                    name: 'Talent',
+                    name: 'Talents',
                     type: 'T',
                     src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGV' +
                     'udHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
@@ -262,7 +265,6 @@ export class AbilitiesComponent implements OnInit {
     onTalentSelect(level, value) {
         // note that talents[0] referes to the last talent (i.e at lvl 25)
         this.currentHero.talents[level] = value;
-        console.log(this.currentHero.talents);
     }
 
     createHeroSpecification(): void {
@@ -332,9 +334,7 @@ export class AbilitiesComponent implements OnInit {
         if (hero) {
             const name = hero.programName;
             const selectedAbilities = this.generateAbilitiesString(hero);
-            console.log(selectedAbilities);
             const talentsArray = this.generateTalentArray(hero);
-            console.log(talentsArray);
             return {
                 name,
                 abilities: {
@@ -347,6 +347,7 @@ export class AbilitiesComponent implements OnInit {
         return null;
     }
 
+    // saves the heroes' builds to the service/config object
     saveAbilities(): void {
         const heroSpecs: HeroSpecification[] = [];
         this.selectedHeroes.forEach((hero) => {
@@ -356,9 +357,18 @@ export class AbilitiesComponent implements OnInit {
                 this.botConfigData.updateHeroAbilities(current.name, current.abilities.abilities);
                 this.botConfigData.updateHeroTalents(current.name, current.abilities.talents);
             }
-            console.log(heroSpecs);
         });
         console.log(this.botConfigData.getConfig());
     }
 
+    triggerPopover(target: HTMLElement, ability: any) {
+        $(target).popover({
+            animation: true,
+            trigger: 'hover',
+            placement: 'right',
+            html: true,
+            template: $('#abilitiesPopoverTemplate').html(),
+            content: `<div class = "h5">${ability.name}</div>`,
+        });
+    }
 }
