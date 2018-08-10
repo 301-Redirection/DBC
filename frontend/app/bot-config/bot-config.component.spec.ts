@@ -25,7 +25,8 @@ import { HomeModule } from '../home/home.module';
 import { AuthGuard } from '../auth/auth.guard';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
-import { EnumToArrayPipe } from './team-desires/configurator/configurator.component';
+import { EnumToArrayPipe }
+    from './team-desires/configurator/configurator.component';
 
 @Component({ selector: 'configurator', template: '' })
 class ConfiguratorComponent {

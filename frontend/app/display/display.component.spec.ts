@@ -77,7 +77,8 @@ describe('DisplayComponent', () => {
             ],
         };
 
-        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['recentBots', 'getAllBots']);
+        const apiConnectServiceStub = jasmine
+            .createSpyObj('ApiConnectService', ['recentBots', 'getAllBots']);
         const getQuoteSpy = apiConnectServiceStub.recentBots.and
             .returnValue(Observable.of(testBots));
         const getQuoteSp2 = apiConnectServiceStub.getAllBots.and

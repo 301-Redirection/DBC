@@ -22,7 +22,7 @@ describe('BotConfigDataService', () => {
         expect(service).toBeTruthy();
     }));
 
-    it('should set and get the same value', inject([BotConfigDataService], (service: BotConfigDataService) => {
+    it('should set & get', inject([BotConfigDataService], (service: BotConfigDataService) => {
         expect(service).toBeTruthy();
         const heroes = ['luna', 'blood_seeker'];
         service.setSelectedHeroes(heroes);
@@ -31,7 +31,7 @@ describe('BotConfigDataService', () => {
         });
     }));
 
-    it('should ensure on update', inject([BotConfigDataService], (service: BotConfigDataService) => {
+    it('should ensure - update', inject([BotConfigDataService], (service: BotConfigDataService) => {
         expect(service).toBeTruthy();
         let config = service.getConfig();
         expect(config.heroes.length).toBe(0);
