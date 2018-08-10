@@ -7,6 +7,7 @@ import { AbilitiesComponent } from './abilities.component';
 import { TeamDesiresComponent, ReversePipe } from '../team-desires/team-desires.component';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { BotConfigComponent } from '../bot-config.component';
+import { DisplayComponent } from '../../display/display.component';
 import { HeroesComponent } from '../heroes/heroes.component';
 import { ItemsComponent } from '../items/items.component';
 import { FormsModule } from '@angular/forms';
@@ -97,6 +98,7 @@ describe('AbilitiesComponent', () => {
                 ItemsComponent,
                 ConfiguratorComponent,
                 CallbackComponent,
+                DisplayComponent,
                 LoadingComponent,
                 FilterPipe,
                 ReversePipe,

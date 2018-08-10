@@ -1,10 +1,10 @@
 <!-- Start Container Fluid --> 
 <div class="container-fluid container-fluid-custom background main-background ">
     <div class="frame" id="dashboardTitle">
-        <div *ngIf="dashboard===true"> <h1>DASHBOARD</h1> </div>
-        <div *ngIf="dashboard!==true"> <h1>MANAGE</h1> </div>
+        <div *ngIf="manage!==true"> <h1>DASHBOARD</h1> </div>
+        <div *ngIf="manage==true"> <h1>MANAGE</h1> </div>
         <br>
-        <button *ngIf="dashboard==true" class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
+        <button *ngIf="manage!==true" class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
             <i class="fas fa-plus mr-2"></i>NEW BOT CONFIGURATION
         </button>
     </div>
@@ -101,7 +101,7 @@
                         <!--End of Details-->
                     </li>
                     <!--End of bot item-->
-                    <div *ngIf="dashboard===true&&i==4">
+                    <div *ngIf="manage===false&&i==4">
                         <a routerLink="/bot-management" id="viewMore" style="text-decoration: none">
                             <li class="list-group-item manage-list-group-item">
                                 <h5>View More Bots</h5>

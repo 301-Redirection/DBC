@@ -1,5 +1,4 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-// import { TeamDesiresService } from '../../services/team-desires.service';
 import {
     ConfigurationFormat,
     Action,

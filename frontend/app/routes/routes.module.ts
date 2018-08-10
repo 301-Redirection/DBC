@@ -68,14 +68,14 @@ export const ROUTES: Routes = [
         component: DisplayComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
-        data: { dashboard: true },
+        data: { manage: false },
     },
     {
         path: 'bot-management',
         component: DisplayComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
-        data: { dashboard: false },
+        data: { manage: true },
     },
 ];
 

@@ -4,11 +4,11 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { TeamDesiresComponent, ReversePipe } from './team-desires.component';
-import { TeamDesiresService } from '../../services/team-desires.service';
 import { EnumToArrayPipe } from './configurator/configurator.component';
 import { CallbackComponent } from '../../callback/callback.component';
 import { LoadingComponent } from '../../core/loading.component';
 import { FormsModule } from '@angular/forms';
+import { DisplayComponent } from '../../display/display.component';
 import { SortablejsModule } from '../../../../node_modules/angular-sortablejs/dist';
 import { AbilitiesComponent } from '../abilities/abilities.component';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -37,6 +37,7 @@ describe('TeamDesiresComponent', () => {
                 TeamDesiresComponent,
                 ConfiguratorComponent,
                 CallbackComponent,
+                DisplayComponent,
                 LoadingComponent,
                 AbilitiesComponent,
                 BotConfigComponent,
@@ -59,7 +60,6 @@ describe('TeamDesiresComponent', () => {
                 AuthService,
                 HttpClient,
                 HttpHandler,
-                TeamDesiresService,
                 BotConfigDataService,
             ],
         }).compileComponents();

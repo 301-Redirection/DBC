@@ -11,6 +11,7 @@ import { By } from '@angular/platform-browser';
 import { HomeModule } from '../home/home.module';
 import { BotConfigModule } from '../bot-config/bot-config.module';
 import { CallbackComponent } from '../callback/callback.component';
+import { DisplayComponent } from '../display/display.component';
 import { AuthService } from '../auth/auth.service';
 import { LoadingComponent } from '../core/loading.component';
 import { AuthGuard } from '../auth/auth.guard';
@@ -38,6 +39,7 @@ describe('NavbarComponent', () => {
             declarations: [
                 CallbackComponent,
                 LoadingComponent,
+                DisplayComponent,
             ],
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),

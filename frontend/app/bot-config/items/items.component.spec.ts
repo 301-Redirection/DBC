@@ -6,6 +6,7 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { ItemsComponent } from './items.component';
 import { TeamDesiresComponent, ReversePipe } from '../team-desires/team-desires.component';
 import { AbilitiesComponent } from '../abilities/abilities.component';
+import { DisplayComponent } from '../../display/display.component';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { BotConfigComponent } from '../bot-config.component';
 import { HeroesComponent } from '../heroes/heroes.component';
@@ -36,6 +37,7 @@ describe('ItemsComponent', () => {
                 BotConfigComponent,
                 HeroesComponent,
                 CallbackComponent,
+                DisplayComponent,
                 LoadingComponent,
                 ConfiguratorComponent,
                 FilterPipe,

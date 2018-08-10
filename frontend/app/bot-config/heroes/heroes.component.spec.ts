@@ -16,6 +16,7 @@ import { HomeModule } from '../../home/home.module';
 import { BotConfigModule } from '../../bot-config/bot-config.module';
 import { ItemsModule } from '../items/items.module';
 import { CallbackComponent } from '../../callback/callback.component';
+import { DisplayComponent } from '../../display/display.component';
 import { LoadingComponent } from '../../core/loading.component';
 import { ItemsComponent } from '../items/items.component';
 import { TeamDesiresComponent, ReversePipe } from '../team-desires/team-desires.component';
@@ -108,6 +109,7 @@ describe('HeroesComponent', () => {
                 LoadingComponent,
                 ItemsComponent,
                 TeamDesiresComponent,
+                DisplayComponent,
                 AbilitiesComponent,
                 BotConfigComponent,
                 ConfiguratorComponent,

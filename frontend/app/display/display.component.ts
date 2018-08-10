@@ -18,7 +18,7 @@ export class DisplayComponent implements OnInit {
     bots: any;
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
-    dashboard = false;
+    manage = false;
 
     constructor(private t: Title, private api: ApiConnectService, private route: ActivatedRoute) {
         this.t.setTitle(this.pageTitle);
@@ -26,8 +26,9 @@ export class DisplayComponent implements OnInit {
 
     ngOnInit() {
         this.route.data.subscribe((argument) => {
-            if (argument.dashboard && argument.dashboard === true) {
-                this.dashboard = argument.dashboard;
+            console.log(argument.manage);
+            if (argument.manage && argument.manage === true) {
+                this.manage = argument.manage;
             }
         });
         $('#deleteConfirmation').modal('hide');
@@ -35,7 +36,7 @@ export class DisplayComponent implements OnInit {
     }
 
     getUserBotScripts () {
-        if (this.dashboard) {
+        if (!this.manage) {
             const response = this.api.recentBots().subscribe(
                 (data) => {
                     this.bots = data.botConfigs;

@@ -22,7 +22,7 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
-describe('DashboardComponent', () => {
+describe('DisplayComponent', () => {
     let component: DisplayComponent;
     let fixture: ComponentFixture<DisplayComponent>;
     let router: Router;
@@ -77,8 +77,10 @@ describe('DashboardComponent', () => {
             ],
         };
 
-        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['recentBots']);
+        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['recentBots', 'getAllBots']);
         const getQuoteSpy = apiConnectServiceStub.recentBots.and
+            .returnValue(Observable.of(testBots));
+        const getQuoteSp2 = apiConnectServiceStub.getAllBots.and
             .returnValue(Observable.of(testBots));
         TestBed.configureTestingModule({
             declarations: [
@@ -129,6 +131,7 @@ describe('DashboardComponent', () => {
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     }));
 
+    // TODO: figure out how to send router data as in route.module.ts for dashboard
     it('should redirect to Configuration page on \'New Bot Configuration\' click', fakeAsync(() => {
         auth.setLoggedIn(true);
         fixture.detectChanges();
