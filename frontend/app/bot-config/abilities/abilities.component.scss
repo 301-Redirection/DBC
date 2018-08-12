@@ -176,3 +176,7 @@
     border-right-color: $dark-grey;
     border-left-color: $dark-grey;
 }
+
+.ability-item:nth-child(4n).btn-left {
+    size: 500px;
+}

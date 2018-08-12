@@ -45,6 +45,7 @@ export class AbilitiesComponent implements OnInit {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];
+            console.log(heroes);
             heroes.forEach((hero) => {
                 this.selectedHeroes.push(hero);
             });
