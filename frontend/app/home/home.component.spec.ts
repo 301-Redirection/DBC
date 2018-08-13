@@ -48,6 +48,6 @@ describe('HomeComponent', () => {
         const compiled = fixture.debugElement
             .query(By.css('#createBotsTitle')).nativeElement.innerHTML;
 
-        expect(compiled).toEqual('Create Your Own Bots!');
+        expect(compiled).toEqual('DOTA 2 Bots - Your way');
     }));
 });
