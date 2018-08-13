@@ -46,7 +46,7 @@ describe('HomeComponent', () => {
         fixture = TestBed.createComponent(HomeComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement
-            .query(By.css('#createBotsTitle')).nativeElement.innerHTML;
+            .query(By.css('#createBotsTitle')).nativeElement.textContent;
 
         expect(compiled).toEqual('DOTA 2 Bots - Your way');
     }));
