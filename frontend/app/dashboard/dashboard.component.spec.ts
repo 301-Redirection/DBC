@@ -122,7 +122,6 @@ describe('DashboardComponent', () => {
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     });
 
-
     // TODO: add more tests to do with how many bots are shown,
     // and if they're the right tests
 });
