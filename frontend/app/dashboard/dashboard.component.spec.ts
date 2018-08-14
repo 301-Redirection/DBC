@@ -1,35 +1,26 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-
-import { DisplayComponent } from './display.component';
-import { NavbarModule } from '../navbar/navbar.module';
+import { ActivatedRoute } from '@angular/router';
+import { DashboardComponent } from './dashboard.component';
 import { ApiConnectService } from '../services/api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RoutesModule, ROUTES } from '../routes/routes.module';
 import { Title, By } from '@angular/platform-browser';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { HomeModule } from '../home/home.module';
-import { BotConfigModule } from '../bot-config/bot-config.module';
-import { CallbackComponent } from '../callback/callback.component';
-import { LoadingComponent } from '../core/loading.component';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../auth/auth.guard';
-import { ROUTE_NAMES } from '../routes/routes.config';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from '@angular/forms';
-import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
-import { BotConfigDataService } from '../services/bot-config-data.service';
+import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
+import { authServiceStub } from '../testing/auth-service-stub';
+import { ActivatedRouteStub } from '../testing/activated-route-stub';
 
 describe('DashboardComponent', () => {
-    let component: DisplayComponent;
-    let fixture: ComponentFixture<DisplayComponent>;
-    let router: Router;
-    let location: Location;
-    let auth: AuthService;
-
+    let component: DashboardComponent;
+    let fixture: ComponentFixture<DashboardComponent>;
+    let routerLinks: any;
+    let linkDebugElements: any;
+    let activatedRoute: ActivatedRouteStub;
     beforeEach(async(() => {
+        activatedRoute = new ActivatedRouteStub({});
         const testBots = {
             botConfigs: [
                 {
@@ -76,74 +67,68 @@ describe('DashboardComponent', () => {
                 },
             ],
         };
+        const recentBots = {
+            botConfigs: testBots.botConfigs.slice(0, 5),
+        };
 
-        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['recentBots']);
-        const getQuoteSpy = apiConnectServiceStub.recentBots.and
+        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
+            'recentBots',
+            'removeBot',
+            'getAllBots',
+        ]);
+        apiConnectServiceStub.recentBots.and
+            .returnValue(Observable.of(recentBots));
+
+        apiConnectServiceStub.getAllBots.and
             .returnValue(Observable.of(testBots));
+
+        apiConnectServiceStub.removeBot.and
+            .returnValue(Observable.of('Hey, it got deleted'));
+
         TestBed.configureTestingModule({
             declarations: [
-                DisplayComponent,
-                CallbackComponent,
-                LoadingComponent,
-            ],
-            imports: [
-                NavbarModule,
-                RouterTestingModule.withRoutes(ROUTES),
-                HomeModule,
-                BotConfigModule,
-                FormsModule,
-                SortablejsModule,
+                DashboardComponent,
+                RouterLinkDirectiveStub,
             ],
             providers: [
-                FilterPipe,
-                AuthService,
-                AuthGuard,
+                { provide: AuthService, useValue: authServiceStub },
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
-                HttpClient,
-                HttpHandler,
-                Location,
-                { provide: Title, useClass: Title },
-                BotConfigDataService,
+                { provide: ActivatedRoute, useValue: activatedRoute },
             ],
         })
         .compileComponents();
-
-        router = TestBed.get(Router);
-        location = TestBed.get(Location);
-        auth = TestBed.get(AuthService);
-        router.initialNavigation();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DisplayComponent);
+        activatedRoute.setParamMap({ dashboard: true });
+        fixture = TestBed.createComponent(DashboardComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+
+        linkDebugElements = fixture.debugElement
+            .queryAll(By.directive(RouterLinkDirectiveStub));
+
+        routerLinks = linkDebugElements.map(de => de.injector.get(RouterLinkDirectiveStub));
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+        console.log(routerLinks);
+        expect(routerLinks.length).toBe(7, 'should have 7 routerLinks');
+        expect(routerLinks[0].linkParams).toBe('/bot-config');
+        expect(routerLinks[1].linkParams).toBe('/bot-config/1');
+        expect(routerLinks[2].linkParams).toBe('/bot-config/2');
+        expect(routerLinks[3].linkParams).toBe('/bot-config/3');
+        expect(routerLinks[4].linkParams).toBe('/bot-config/4');
+        expect(routerLinks[5].linkParams).toBe('/bot-config/5');
+        expect(routerLinks[6].linkParams).toBe('/bot-management');
     });
 
-    it('should have the title \'Dota 2 Bot Scripting - Dashboard\'', async(() => {
+    it('should have the title \'Dota 2 Bot Scripting - Dashboard\'', () => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
-    }));
+    });
 
-    it('should redirect to Configuration page on \'New Bot Configuration\' click', fakeAsync(() => {
-        auth.setLoggedIn(true);
-        fixture.detectChanges();
-        fixture.debugElement.query(By.css('#newConfigButton')).nativeElement.click();
-        fixture.whenStable().then(() => {
-            expect(location.path()).toEqual(ROUTE_NAMES.BOT_CONFIGURATION);
-        });
-    }));
-
-    it('should redirect to Manage page on \'View more bots\' click', fakeAsync(() => {
-        auth.setLoggedIn(true);
-        fixture.detectChanges();
-        fixture.debugElement.query(By.css('#viewMore')).nativeElement.click();
-        fixture.whenStable().then(() => {
-            expect(location.path()).toEqual(ROUTE_NAMES.BOT_MANAGEMENT);
-        });
-    }));
+    // TODO: add more tests to do with how many bots are shown,
+    // and if they're the right tests
 });

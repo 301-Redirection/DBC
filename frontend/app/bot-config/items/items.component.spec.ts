@@ -1,60 +1,51 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { SortablejsModule } from 'angular-sortablejs';
-import { ItemsComponent } from './items.component';
-import { TeamDesiresComponent, ReversePipe } from '../team-desires/team-desires.component';
-import { AbilitiesComponent } from '../abilities/abilities.component';
-import { BotConfigDataService } from '../../services/bot-config-data.service';
-import { BotConfigComponent } from '../bot-config.component';
-import { HeroesComponent } from '../heroes/heroes.component';
-import { CallbackComponent } from '../../callback/callback.component';
-import { LoadingComponent } from '../../core/loading.component';
-import { NavbarModule } from '../../navbar/navbar.module';
-import { FormsModule } from '@angular/forms';
-import { FilterPipe } from '../../pipes/filter.pipe';
 import { ApiConnectService } from '../../services/api-connect.service';
-import { AuthService } from '../../auth/auth.service';
-import { HomeModule } from '../../home/home.module';
-import {
-    EnumToArrayPipe,
-    ConfiguratorComponent,
-} from '../team-desires/configurator/configurator.component';
-import { MaterialModule } from '../../material/material.module';
+import { ItemsComponent } from './items.component';
+import { Observable } from 'rxjs/Rx';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 describe('ItemsComponent', () => {
     let component: ItemsComponent;
     let fixture: ComponentFixture<ItemsComponent>;
 
     beforeEach(async(() => {
+        const testItems = {
+            items: [{
+                id: 1,
+                name: 'blink',
+                cost: 2250,
+                components: 'null',
+                niceName: 'Blink Dagger',
+                type: 0,
+                createdAt: '2018-07-30T22:00:01.000Z',
+                updatedAt: '2018-07-30T22:00:01.000Z',
+                url: '/static/items/images/1.png',
+            }, {
+                id: 2,
+                name: 'blades_of_attack',
+                cost: 430,
+                components: 'null',
+                niceName: 'Blades of Attack',
+                type: 0,
+                createdAt: '2018-07-30T22:00:01.000Z',
+                updatedAt: '2018-07-30T22:00:01.000Z',
+                url: '/static/items/images/2.png',
+            }],
+        };
+        const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
+            'getAllItems',
+            'getItemImageURL',
+        ]);
+        apiConnectServiceStub.getAllItems.and
+            .returnValue(Observable.of(testItems));
+        apiConnectServiceStub.getItemImageURL.and.callThrough();
+
         TestBed.configureTestingModule({
-            declarations: [
-                ItemsComponent,
-                TeamDesiresComponent,
-                AbilitiesComponent,
-                BotConfigComponent,
-                HeroesComponent,
-                CallbackComponent,
-                LoadingComponent,
-                ConfiguratorComponent,
-                FilterPipe,
-                ReversePipe,
-                EnumToArrayPipe,
-            ],
-            imports: [
-                SortablejsModule,
-                NavbarModule,
-                FormsModule,
-                RouterTestingModule.withRoutes(ROUTES),
-                HomeModule,
-                MaterialModule,
-            ],
+            declarations: [ItemsComponent],
+            imports: [SortablejsModule],
             providers: [
-                ApiConnectService,
-                AuthService,
-                HttpClient,
-                HttpHandler,
+                { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 BotConfigDataService,
             ],
         }).compileComponents();

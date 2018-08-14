@@ -56,9 +56,9 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
-        this.route.params.subscribe((params) => {
-            if (params['botScriptID']) {
-                this.loadBotScript(params['botScriptID']);
+        this.route.paramMap.subscribe((paramMap) => {
+            if (paramMap['params']['botScriptID']) {
+                this.loadBotScript(paramMap['params']['botScriptID']);
             }
         });
     }

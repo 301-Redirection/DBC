@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ApiConnectService } from '../services/api-connect.service';
 
 @Component(
     {
@@ -12,22 +11,11 @@ import { ApiConnectService } from '../services/api-connect.service';
 export class HomeComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Home';
 
-    constructor(private title: Title, private api: ApiConnectService) {
+    constructor(private title: Title) {
         this.title.setTitle(this.pageTitle);
     }
 
     ngOnInit() { }
-
-    test() {
-        this.api.test().subscribe(
-            (res) => {
-                console.log(res);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-    }
 }
 
 export default 'HomeComponent';

@@ -10,7 +10,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { ItemsComponent } from '../bot-config/items/items.component';
 import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
-import { DisplayComponent } from '../display/display.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 export const ROUTES: Routes = [
     {
@@ -57,25 +57,11 @@ export const ROUTES: Routes = [
         canActivate: [AuthGuard],
     },
     {
-        path: 'display',
-        component: DisplayComponent,
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-        data: { dashboard: true },
-    },
-    {
         path: 'dashboard',
-        component: DisplayComponent,
+        component: DashboardComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
         data: { dashboard: true },
-    },
-    {
-        path: 'bot-management',
-        component: DisplayComponent,
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-        data: { dashboard: false },
     },
 ];
 

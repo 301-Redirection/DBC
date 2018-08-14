@@ -32,7 +32,6 @@ describe('AppComponent', () => {
 
     beforeEach(() => {
         const fixture = TestBed.createComponent(AppComponent);
-        // authService = fixture.debugElement.injector.get(AuthService);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

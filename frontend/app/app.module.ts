@@ -11,7 +11,7 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { HomeModule } from './home/home.module';
 import { BotConfigModule } from './bot-config/bot-config.module';
 import { NavbarModule } from './navbar/navbar.module';
-import { DisplayModule } from './display/display.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { RoutesModule } from './routes/routes.module';
 import { MaterialModule } from './material/material.module';
 
@@ -26,7 +26,6 @@ import { LoadingComponent } from './core/loading.component';
 
 import { FilterPipe } from './pipes/filter.pipe';
 import { BotConfigDataService } from './services/bot-config-data.service';
-import { DisplayComponent } from './display/display.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +39,7 @@ import { DisplayComponent } from './display/display.component';
         FormsModule,
         RoutesModule,
         HomeModule,
-        DisplayModule,
+        DashboardModule,
         NavbarModule,
         BotConfigModule,
         RouterModule,

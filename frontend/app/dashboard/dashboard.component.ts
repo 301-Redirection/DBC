@@ -10,11 +10,11 @@ import * as moment from 'moment';
 declare var $: any;
 const DATE_FORMAT = 'DD/MM/YYYY [at] HH:mm';
 @Component({
-    selector: 'app-display',
-    templateUrl: './display.component.html',
-    styleUrls: ['./display.component.scss'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
 })
-export class DisplayComponent implements OnInit {
+export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
@@ -25,9 +25,9 @@ export class DisplayComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.data.subscribe((argument) => {
-            if (argument.dashboard && argument.dashboard === true) {
-                this.dashboard = argument.dashboard;
+        this.route.paramMap.subscribe((argument) => {
+            if (argument['params'].dashboard) {
+                this.dashboard = argument['params'].dashboard;
             }
         });
         $('#deleteConfirmation').modal('hide');
@@ -35,33 +35,18 @@ export class DisplayComponent implements OnInit {
     }
 
     getUserBotScripts () {
+        const respondFunction = (data) => {
+            this.bots = data.botConfigs;
+            for (const i in this.bots) {
+                const bot = this.bots[i];
+                const date = moment(bot.updatedAt).format(DATE_FORMAT);
+                bot.updatedAt = date;
+            }
+        };
         if (this.dashboard) {
-            const response = this.api.recentBots().subscribe(
-                (data) => {
-                    this.bots = data.botConfigs;
-                    for (const i in this.bots) {
-                        const bot = this.bots[i];
-                        const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                        bot.updatedAt = date;
-                    }
-                },
-                (error) => {
-                },
-            );
+            const response = this.api.recentBots().subscribe(respondFunction, () => { });
         } else {
-            const response = this.api.getAllBots().subscribe(
-                (data) => {
-                    this.bots = data.botConfigs;
-                    for (const i in this.bots) {
-                        const bot = this.bots[i];
-                        const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                        bot.updatedAt = date;
-                    }
-                },
-                (error) => {
-                    console.log(error);
-                },
-            );
+            const response = this.api.getAllBots().subscribe(respondFunction, () => { });
         }
     }
 
