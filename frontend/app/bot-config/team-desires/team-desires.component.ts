@@ -1,6 +1,10 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { TeamDesiresService } from '../../services/team-desires.service';
-import { ConfigurationFormat, Action } from '../../services/ConfigurationFormat';
+import {
+    ConfigurationFormat,
+    Action,
+    CompoundCondition,
+    Configuration,
+} from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 @Component({
@@ -14,8 +18,6 @@ export class TeamDesiresComponent implements OnInit {
     TODO:
     - Add a Function to change enums' keys into something easier to understand
     - Add a Delete condition group button
-    - Fix first element delete with logical operator not deleting
-    - Add create condition on last element logical operator selection
     */
 
     config: ConfigurationFormat;
@@ -64,12 +66,12 @@ export class TeamDesiresComponent implements OnInit {
     ];
 
     constructor(
-        private tdService: TeamDesiresService,
+        // private tdService: TeamDesiresService,
         private botConfigData: BotConfigDataService,
     ) {}
 
     ngOnInit() {
-        this.config = this.tdService.getDefaultConfiguration();
+        this.config = this.botConfigData.getDefaultConfiguration();
         this.saveTeamDesires();
     }
 
@@ -81,114 +83,54 @@ export class TeamDesiresComponent implements OnInit {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
-    private getCondGroupIndex(index: number, prop: string, lane: string): number {
-        if (lane === undefined) {
-            return this.config.desires[prop].compoundConditions.length - index - 1;
-        }
-        return this.config.desires[prop][lane].compoundConditions.length - index - 1;
-    }
-
-    private addCondition(prop: string, condGroup: number, lane?: string): void {
-        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
-        const newCond = this.tdService.newCondition();
-        if (lane === undefined) {
-            const len = this.config.desires[prop].compoundConditions[groupIndex].conditions.length;
-            this.config.desires[prop].compoundConditions[groupIndex].
-            conditions.push(newCond);
-            if (len > 0) {
-                this.config.desires[prop].compoundConditions[groupIndex].
-                logicalOperators[len - 1] = 1;
-            }
-        } else {
-            const len = this.config.desires[prop][lane].compoundConditions[groupIndex].
-            conditions.length;
-            this.config.desires[prop][lane].compoundConditions[groupIndex].
-            conditions.push(newCond);
-            if (len > 0) {
-                this.config.desires[prop][lane].compoundConditions[groupIndex].
-                logicalOperators[len - 1] = 1;
-            }
+    private addCondition(compoundCondition: CompoundCondition): void {
+        const newCond = this.botConfigData.newCondition();
+        const len = compoundCondition.conditions.length;
+        compoundCondition.conditions.push(newCond);
+        if (len > 0) {
+            compoundCondition.logicalOperators[len - 1] = 1;
         }
         this.saveTeamDesires();
     }
 
-    private delCondition(prop: string, condGroup: number, index: number = -1, lane?: string) {
+    private delCondition(compoundCondition: CompoundCondition, index: number = -1) {
         const ans = window.confirm('Are you sure you wish to delete this Condition?');
         if (ans) {
-            const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
-            if (lane === undefined) {
-                this.config.desires[prop].compoundConditions[groupIndex].conditions
-                    .splice(index, 1);
-                const len = this.config.desires[prop].compoundConditions[groupIndex]
-                    .logicalOperators.length;
-                if (index === len) {
-                    this.config.desires[prop].compoundConditions[groupIndex].logicalOperators.
-                    splice(index, 1);
-                } else {
-                    this.config.desires[prop].compoundConditions[groupIndex].logicalOperators.
-                    splice(index - 2, 1);
-                }
+            const len = compoundCondition.logicalOperators.length;
+            compoundCondition.conditions.splice(index, 1);
+
+            if (index === len - 1) {
+                compoundCondition.logicalOperators.splice(index, 1);
             } else {
-                this.config.desires[prop][lane].compoundConditions[groupIndex].
-                conditions.splice(index, 1);
-                const len = this.config.desires[prop][lane].compoundConditions[groupIndex].
-                logicalOperators.length;
-                if (index === len) {
-                    this.config.desires[prop][lane].compoundConditions[groupIndex].logicalOperators.
-                    splice(index, 1);
-                } else {
-                    this.config.desires[prop][lane].compoundConditions[groupIndex].logicalOperators.
-                    splice(index - 1, 1);
-                }
+                compoundCondition.logicalOperators.splice(index - 1, 1);
             }
+            this.saveTeamDesires();
         }
+    }
+
+    private addConditionGroup(configuration: Configuration): void {
+        configuration.compoundConditions.push(this.botConfigData.newCondGroup());
         this.saveTeamDesires();
     }
 
-    private addConditionGroup(prop: string, lane?: string): void {
-        if (lane === undefined) {
-            this.config.desires[prop].compoundConditions.push(this.tdService.newCondGroup());
-        } else {
-            this.config.desires[prop][lane].
-            compoundConditions.push(this.tdService.newCondGroup());
-        }
-        this.saveTeamDesires();
-    }
-
-    private delCondGroup(prop: string, lane?: string) {
+    private delCondGroup(configuration: Configuration, index: number = -1) {
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
-        window.alert('OK');
-        this.saveTeamDesires();
-    }
-
-    private setOperator(prop: string, condGroup: number, lane?: string, index: number = 0,
-                        val: number = 1) {
-        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
-        if (lane === undefined) {
-            this.config.desires[prop].compoundConditions[groupIndex].logicalOperators[index] = val;
-        } else {
-            this.config.desires[prop][lane].compoundConditions[groupIndex].
-            logicalOperators[index] = val;
+        if (ans) {
+            configuration.compoundConditions.splice(index, 1);
+            this.saveTeamDesires();
         }
-        this.saveTeamDesires();
     }
 
-    private getOperator(prop: string, condGroup: number, index: number = 0, lane?: string): string {
-        const groupIndex = this.getCondGroupIndex(condGroup, prop, lane);
-        let op = -1;
-        if (lane === undefined) {
-            op = this.config.desires[prop].compoundConditions[groupIndex].
-            logicalOperators[index];
-        } else {
-            op = this.config.desires[prop][lane].compoundConditions[groupIndex].
-            logicalOperators[index];
+    private getOperator(compoundCondition: CompoundCondition, index: number = 0): string {
+        return compoundCondition.logicalOperators[index] === 1 ? 'AND' : 'OR';
+    }
+
+    private addOperator(compoundCondition: CompoundCondition, index: number, op: number) {
+        const len = compoundCondition.logicalOperators.length;
+        if (len === index) {
+            this.addCondition(compoundCondition);
         }
-        this.saveTeamDesires();
-        return op === 1 ? 'AND' : 'OR';
-    }
-
-    private log(val: any) {
-        console.log(val);
+        compoundCondition.logicalOperators[index] = op;
     }
 }
 

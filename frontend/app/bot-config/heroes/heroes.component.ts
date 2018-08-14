@@ -97,7 +97,6 @@ export class HeroesComponent implements OnInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        console.log(heroPool);
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }

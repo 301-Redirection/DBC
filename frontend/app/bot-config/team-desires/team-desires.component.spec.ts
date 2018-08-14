@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { TeamDesiresComponent, ReversePipe } from './team-desires.component';
 import { EnumToArrayPipe } from './configurator/configurator.component';
-import { TeamDesiresService } from '../../services/team-desires.service';
 import { FormsModule } from '@angular/forms';
 import { SortablejsModule } from '../../../../node_modules/angular-sortablejs/dist';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -34,7 +33,6 @@ describe('TeamDesiresComponent', () => {
                 MaterialModule,
             ],
             providers: [
-                TeamDesiresService,
                 BotConfigDataService,
             ],
         }).compileComponents();

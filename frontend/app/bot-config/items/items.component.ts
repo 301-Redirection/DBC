@@ -189,7 +189,7 @@ export class ItemsComponent implements OnInit{
         this.saveItems();
     }
 
-    triggerPopover(target: HTMLElement, item: any) {
+/*     triggerPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
             trigger: 'hover',
@@ -208,6 +208,38 @@ export class ItemsComponent implements OnInit{
                     ${item.cost}
                 </h6>
             `,
+        });
+    }
+
+ */
+    triggerPopover(target: HTMLElement, item: any) {
+        $(target).popover({
+            animation: true,
+            trigger: 'hover',
+            placement: 'right',
+            html: true,
+            content: $(`#${item.name}`).html(),
+            template: $('#itemsPopoverTemplate').html(),
+        });
+    }
+
+    hidePopovers() {
+        $('[data-toggle="popover"]').popover('hide');
+    }
+
+    popoverDismiss(): void {
+        $(document).ready(() => {
+            $('body').click((event) => {
+                this.hidePopovers();
+
+                if (event.target.className === 'popover-zone' ||
+                    event.target.className === 'popover-zone selected-popover-zone') {
+                    $(`#${event.target.id}`).popover('show');
+                } else if (event.target.parentElement.className === 'popover-zone' ||
+                    event.target.parentElement.className === 'popover-zone selected-popover-zone') {
+                    $(`#${event.target.parentElement.id}`).popover('show');
+                }
+            });
         });
     }
 }

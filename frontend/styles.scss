@@ -206,7 +206,7 @@ button:focus {
 }
 
 .button-generate { 
-    color: $btn-generate-color;
+    color: $btn-generate-color !important;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-generate-border-color;

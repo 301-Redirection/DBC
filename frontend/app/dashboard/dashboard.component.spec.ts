@@ -11,16 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 import { authServiceStub } from '../testing/auth-service-stub';
-import { ActivatedRouteStub } from '../testing/activated-route-stub';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
     let routerLinks: any;
     let linkDebugElements: any;
-    let activatedRoute: ActivatedRouteStub;
     beforeEach(async(() => {
-        activatedRoute = new ActivatedRouteStub({});
         const testBots = {
             botConfigs: [
                 {
@@ -93,14 +90,12 @@ describe('DashboardComponent', () => {
             providers: [
                 { provide: AuthService, useValue: authServiceStub },
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
-                { provide: ActivatedRoute, useValue: activatedRoute },
             ],
         })
         .compileComponents();
     }));
 
     beforeEach(() => {
-        activatedRoute.setParamMap({ dashboard: true });
         fixture = TestBed.createComponent(DashboardComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -113,21 +108,20 @@ describe('DashboardComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-        console.log(routerLinks);
-        expect(routerLinks.length).toBe(7, 'should have 7 routerLinks');
+        expect(routerLinks.length).toBe(6, 'should have 6 routerLinks');
         expect(routerLinks[0].linkParams).toBe('/bot-config');
         expect(routerLinks[1].linkParams).toBe('/bot-config/1');
         expect(routerLinks[2].linkParams).toBe('/bot-config/2');
         expect(routerLinks[3].linkParams).toBe('/bot-config/3');
         expect(routerLinks[4].linkParams).toBe('/bot-config/4');
         expect(routerLinks[5].linkParams).toBe('/bot-config/5');
-        expect(routerLinks[6].linkParams).toBe('/bot-management');
     });
 
     it('should have the title \'Dota 2 Bot Scripting - Dashboard\'', () => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
     });
+
 
     // TODO: add more tests to do with how many bots are shown,
     // and if they're the right tests

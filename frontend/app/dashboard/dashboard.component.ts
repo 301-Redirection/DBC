@@ -18,36 +18,42 @@ export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
-    dashboard = false;
 
-    constructor(private t: Title, private api: ApiConnectService, private route: ActivatedRoute) {
+    constructor(private t: Title, private api: ApiConnectService) {
         this.t.setTitle(this.pageTitle);
     }
 
     ngOnInit() {
-        this.route.paramMap.subscribe((argument) => {
-            if (argument['params'].dashboard) {
-                this.dashboard = argument['params'].dashboard;
-            }
-        });
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
     }
 
     getUserBotScripts () {
-        const respondFunction = (data) => {
-            this.bots = data.botConfigs;
-            for (const i in this.bots) {
-                const bot = this.bots[i];
-                const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                bot.updatedAt = date;
-            }
-        };
-        if (this.dashboard) {
-            const response = this.api.recentBots().subscribe(respondFunction, () => { });
-        } else {
-            const response = this.api.getAllBots().subscribe(respondFunction, () => { });
-        }
+        this.api.recentBots().subscribe(
+            (data) => {
+                this.bots = data.botConfigs;
+                for (const i in this.bots) {
+                    const bot = this.bots[i];
+                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
+                    bot.updatedAt = date;
+                }
+            },
+            () => { },
+        );
+    }
+
+    viewMore () {
+        this.api.getAllBots().subscribe(
+            (data) => {
+                this.bots = data.botConfigs;
+                for (const i in this.bots) {
+                    const bot = this.bots[i];
+                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
+                    bot.updatedAt = date;
+                }
+            },
+            () => { },
+        );
     }
 
     deleteBotScript (botScriptID: number) {

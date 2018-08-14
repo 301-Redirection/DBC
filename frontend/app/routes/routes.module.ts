@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
 import { HomeComponent } from '../home/home.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
 import { CallbackComponent } from '../callback/callback.component';
@@ -27,13 +26,13 @@ export const ROUTES: Routes = [
         path: 'bot-config',
         component: BotConfigComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
     },
     {
         path: 'bot-config/:botScriptID',
         component: BotConfigComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
     },
     {
         path: 'desires',
@@ -61,7 +60,6 @@ export const ROUTES: Routes = [
         component: DashboardComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
-        data: { dashboard: true },
     },
 ];
 

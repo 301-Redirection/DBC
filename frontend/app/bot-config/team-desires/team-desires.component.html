@@ -33,33 +33,33 @@
                                         <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
                                     </div>
                                     <div class="container">
-                                        <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(section.prop, lane.prop)">Add Condition Group</button>
+                                        <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
                                     </div>
                                     <div class="container">
                                         <div *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length != 0">
                                             <div class="compound-cond list-group" *ngFor="let comp of config.desires[section.prop][lane.prop].compoundConditions | reverse; let j = index">
                                                 <h5>Condition Group</h5>
-                                                <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(section.prop, j, lane.prop)">New Condition</button>
-                                                <div *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                                <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                                <div *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
                                                             <div class="col-md-10">
-                                                                <configurator [condition]="c"></configurator>
+                                                                <configurator [condition]="condition"></configurator>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <div class="d-flex align-items-center">
-                                                                    <span class="pointer icon" (click)="delCondition(section.prop, j, i, lane.prop)">
+                                                                    <span class="pointer icon" (click)="delCondition(comp, i)">
                                                                         <i class="fas fa-trash m-1"></i>
                                                                     </span>
                                                                     <div class="btn-group">
-                                                                        <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(section.prop, j, lane.prop):''">
+                                                                        <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(comp):''">
                                                                             <span *ngIf="comp.logicalOperators[i] === undefined"><i class="fas fa-plus"></i></span>
-                                                                            <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(section.prop, j, i, lane.prop)}}</span>
+                                                                            <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(comp, i)}}</span>
                                                                         </button>
                                                                         <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                                                         <div class="dropdown-menu">
-                                                                            <a class="dropdown-item" (click)="comp.logicalOperators[i] = 1">AND</a>
-                                                                            <a class="dropdown-item" (click)="comp.logicalOperators[i] = 2">OR</a>
+                                                                            <a class="dropdown-item" (click)="addOperator(comp, i, 1)">AND</a>
+                                                                            <a class="dropdown-item" (click)="addOperator(comp, i, 2)">OR</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -102,32 +102,32 @@
                                 <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
                             </div>
                             <div class="container">
-                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(section.prop)">Add Condition Group</button>
+                                <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop])">Add Condition Group</button>
                             </div>
                             <div class="container">
                                 <div *ngIf="config.desires[section.prop].compoundConditions != []">
                                     <div class="compound-cond container list-group" *ngFor="let comp of config.desires[section.prop].compoundConditions | reverse; let j = index">
                                         <h5>Condition Group</h5>
-                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(section.prop, j)">New Condition</button>
-                                        <div  *ngFor="let c of comp.conditions; let i=index;" class="button-group" role="group">
+                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                        <div  *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                             <span class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div class="col-md-10">
-                                                    <configurator [condition]="c"></configurator>
+                                                    <configurator [condition]="condition"></configurator>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="d-flex align-items-center">
-                                                        <span class="pointer icon" (click)="delCondition(section.prop, j, i)">
+                                                        <span class="pointer icon" (click)="delCondition(comp, i)">
                                                             <i class="fas fa-trash m-1"></i>
                                                         </span>
                                                         <div class="btn-group">
-                                                            <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(section.prop, j):''">
+                                                            <button type="button" class="btn btn-secondary ml-4" (click)="comp.logicalOperators[i] === undefined ? addCondition(comp):''">
                                                                 <span *ngIf="comp.logicalOperators[i] === undefined"><i class="fas fa-plus"></i></span>
-                                                                <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(section.prop, j, i)}}</span>
+                                                                <span class="ml-1" *ngIf="comp.logicalOperators[i] !== undefined">{{getOperator(comp, i)}}</span>
                                                             </button>
                                                             <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                                             <div class="dropdown-menu">
-                                                                <a class="dropdown-item" (click)="comp.logicalOperators[i] = 1">AND</a>
-                                                                <a class="dropdown-item" (click)="comp.logicalOperators[i] = 2">OR</a>
+                                                                <a class="dropdown-item" (click)="addOperator(comp, i, 1)">AND</a>
+                                                                <a class="dropdown-item" (click)="addOperator(comp, i, 2)">OR</a>
                                                             </div>
                                                         </div>
                                                     </div>

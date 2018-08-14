@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
     ConfigurationFormat,
-    Configuration,
-    HeroPoolConfiguration,
     HeroSpecification,
+    Condition,
+    CompoundCondition,
 } from './ConfigurationFormat';
 
 @Injectable()
@@ -33,7 +33,19 @@ export class BotConfigDataService {
 
     // creates config object according to format
     reset(): void {
-        this.config = new ConfigurationFormat();
+        this.config = this.getDefaultConfiguration();
+    }
+
+    public getDefaultConfiguration(): ConfigurationFormat {
+        return new ConfigurationFormat();
+    }
+
+    public newCondition(): Condition {
+        return new Condition();
+    }
+
+    public newCondGroup(): CompoundCondition {
+        return new CompoundCondition();
     }
 
     // creates a hero specification for the hero if non-existent
