@@ -261,7 +261,7 @@ export class HeroesComponent implements OnInit {
 
     popoverDismiss(): void {
         $(document).ready(() => {
-            $('body').click((event) => {
+            $('heroComponent').click((event) => {
                 this.hidePopovers();
 
                 if (event.target.className === 'popover-zone' ||
