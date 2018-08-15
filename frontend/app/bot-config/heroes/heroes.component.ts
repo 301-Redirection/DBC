@@ -63,7 +63,6 @@ export class HeroesComponent implements OnInit {
         this.getHeroes();
 
         // jquery functions
-        this.popoverDismiss();
         this.selectedTab();
     }
 
@@ -245,39 +244,24 @@ export class HeroesComponent implements OnInit {
         }
     }
 
-    triggerPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
-
     hidePopovers() {
-        $('[data-toggle="popover"]').popover('hide');
-    }
-
-    popoverDismiss(): void {
-        $(document).ready(() => {
-            $('heroComponent').click((event) => {
-                this.hidePopovers();
-
-                if (event.target.className === 'popover-zone' ||
-                    event.target.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.id}`).popover('show');
-                } else if (event.target.parentElement.className === 'popover-zone' ||
-                    event.target.parentElement.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.parentElement.id}`).popover('show');
-                }
-            });
-        });
+        $('.popover-zone').popover('hide');
     }
 
     selectedTab(): void {
         // TODO: fix this code so it's more generic and fits with angular
         $(document).ready(() => {
+            $('.popover-zone').each((i, element) => {
+                $(element).popover({
+                    animation: true,
+                    placement: 'right',
+                    html: true,
+                    content: $(`#${element.getAttribute('data-programName')}`).html(),
+                    template: $('#heroesPopoverTemplate').html(),
+                    trigger: 'focus',
+                });
+            });
+
             $('#selectedFrame').css('bottom', '-200px');
 
             $(window).scroll(() => {
