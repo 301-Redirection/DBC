@@ -1,0 +1,45 @@
+----------------------------------------------------------------------------
+--	Ranked Matchmaking AI v1.3 New Structure
+--	Author: adamqqq		Email:adamqqq@163.com
+----------------------------------------------------------------------------
+--------------------------------------
+-- General Initialization
+--------------------------------------
+local utility = require( GetScriptDirectory().."/utility" ) 
+require(GetScriptDirectory() ..  "/ability_item_usage_generic")
+
+local debugmode=false
+local npcBot = GetBot()
+local Talents ={}
+local Abilities ={}
+local AbilitiesReal ={}
+
+ability_item_usage_generic.InitAbility(Abilities,AbilitiesReal,Talents) 
+
+{{- abilities-to-level -}}
+
+utility.CheckAbilityBuild(AbilityToLevelUp)
+
+function AbilityLevelUpThink()
+	ability_item_usage_generic.AbilityLevelUpThink2(AbilityToLevelUp,TalentTree)
+end
+
+--------------------------------------
+-- Ability Usage Thinking
+--------------------------------------
+local cast={} cast.Desire={} cast.Target={} cast.Type={}
+local Consider ={}
+local CanCast={utility.NCanCast,utility.NCanCast,utility.NCanCast,utility.UCanCast}
+local enemyDisabled=utility.enemyDisabled
+
+function GetComboDamage()
+	return ability_item_usage_generic.GetComboDamage(AbilitiesReal)
+end
+
+function GetComboMana()
+	return ability_item_usage_generic.GetComboMana(AbilitiesReal)
+end
+
+function CourierUsageThink() 
+	ability_item_usage_generic.CourierUsageThink()
+end

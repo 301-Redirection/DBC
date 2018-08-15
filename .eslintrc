@@ -10,6 +10,7 @@
             "always",
             { "ts": "never", "js": "never" },
         ],
+        "import/no-unresolved": 0,
         "array-callback-return": 0,
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
@@ -17,7 +18,19 @@
             "imports": "always-multiline",
             "exports": "always-multiline",
             "functions": "never",
-        }]
+        }],
+        "no-mixed-operators": [
+            "error",
+            {
+                "groups": [
+                    ["&", "|", "^", "~", "<<", ">>", ">>>"],
+                    ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+                    ["&&", "||"],
+                    ["in", "instanceof"]
+                ],
+                "allowSamePrecedence": true
+            }
+        ],
     },
     "globals": {
         "jasmine": false,

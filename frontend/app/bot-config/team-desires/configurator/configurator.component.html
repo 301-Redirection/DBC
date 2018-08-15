@@ -1,0 +1,21 @@
+<form>
+    <div class="form-row d-flex">
+        <div class="dropdown col-md-4">
+            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownTrigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                If {{condition.trigger == null ? "(Select Trigger)" : triggers[condition.trigger]}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownTrigger">
+            <a class="dropdown-item" *ngFor="let t of triggers | enumToArray" (click)="condition.trigger = triggers[t]; changeCondition()">{{t}}</a>
+            </div>
+        </div>
+        <div class="dropdown col-md-4">
+            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownOperator" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                is {{condition.operator == null ? "(Select Operator)" : operators[condition.operator]}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownOperator">
+            <a class="dropdown-item" *ngFor="let t of operators | enumToArray" (click)="condition.operator = operators[t]; changeCondition()">{{t}}</a>
+            </div>
+        </div>
+        <input id="conditionalInput" class="form-control ml-1 col-md-3" type="number" [(ngModel)]="condition.conditional" name="conditional" (keyup.enter)="changeCondition()" (blur)="changeCondition()">
+    </div>
+</form>

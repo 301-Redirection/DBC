@@ -1,9 +1,33 @@
 {
     "extends": "tslint-config-airbnb",
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "./node_modules/codelyzer"
     ],
     "rules": {
-        "ter-indent": [true, 4]
-    }
+        "ter-indent": [true, 4],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-module",
+            "check-separator",
+            "check-rest-spread",
+            "check-type",
+            "check-typecast",
+            "check-type-operator",
+            "check-preblock"
+        ],
+        "no-trailing-whitespace": true,
+        "prefer-template": true,
+        "no-invalid-template-strings": true,
+        "only-arrow-functions": [
+            true
+        ]
+    },
+    "globals": [
+        "it",
+        "expect",
+        "describe"
+    ]
 }

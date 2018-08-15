@@ -1,0 +1,159 @@
+<div class="container-fluid container-fluid-custom">
+    <div class="row">
+        <div class="col-12" id="heroesTitle">
+            <!-- <h3>ABILITY CONFIGURATION</h3><br>  -->
+            Select a hero to customize their ability level order.
+        </div>
+    </div>
+    
+    <!-- Hero list -->
+    <div class="frame row mb-5">
+        <div class="card bot-manage-card">
+            <div class="card-header bot-manage-card-header">
+                <h5>CHOOSE A HERO</h5>
+            </div>
+            <div class="card-body bot-manage-card-body">
+                <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [attr.id]="i"  [style.backgroundImage]="'url('+hero.image+')'">
+                    <div class="hero-name">
+                        {{ hero.name }}
+                    </div>
+                </div>
+                <div *ngIf="selectedHeroes.length == 0">
+                    <h6 class="text-center">No Selected Heroes</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ability Selector -->
+    <div class="row frame mb-5">
+        <div class="card bot-manage-card">
+            <div class="card-header bot-manage-card-header">
+                <h5>Ability Level Up Guide</h5>
+            </div>
+            <div *ngIf="currentHero === undefined" class="card-body bot-manage-card-body">
+                <h6 class="text-center">No Selected Heroes</h6>
+            </div>
+            <div *ngIf="currentHero !== undefined" class="card-body bot-manage-card-body">
+                <div class="ability-row text-center">
+                    <div class="ability-item" *ngFor="let ability of currentHero.abilities">
+                        <div class="selector">
+                            <div class="buttons">
+                                <button id = "btn-ability-prio-{{ ability.type }}-left" class="button button-chevron button-priority button-left" (click)="prioritize(ability.type, 1)">
+                                    <div class="fa fa-fa fa-angle-left"></div>
+                                </button>
+                                <div class="">&nbsp;{{ ability.type }}&nbsp;</div>
+                                <button id = "btn-ability-prio-{{ ability.type }}-right" class="button button-chevron button-priority button-right" (click)="prioritize(ability.type, -1)">
+                                    <div class="fa fa-fa fa-angle-right"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <span *ngIf="ability.type == 'T'; else wrong">
+                            <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
+                                <img class="img d-inline ability-image-display" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
+                            </button>
+                        </span>
+                        <span *ngIf="ability.type != 'T'; else wrong">
+                            <img class="img d-inline ability-image-display" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
+                        </span>
+                        
+                    </div>
+                </div>
+                <div class="ability-row">
+                    <button id = "ability-generate" class="button button-chevron mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
+                </div>
+                <!-- The ability order display -->
+                <div class="ability-row">
+                    <h6>Ability Level Up Order</h6>
+                    <br>
+                    <table class="table ability-table">
+                        <tbody>
+                            <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
+                                <td *ngIf="ability.type == 'T'; else wrong">
+                                    <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
+                                        <img  class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
+                                    </button>
+                                </td>
+                                <td *ngIf="ability.type != 'T'; else wrong">
+                                    <img class="img ability-roster-image" src="{{ ability.src }}" data-toggle="tooltip" (mouseover)="triggerPopover($event.currentTarget, ability)">
+                                </td>
+                                <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
+                                    <span id = "{{ ability.type }}-{{i+1}}" class="ability-level selected-ability" *ngIf="status == 'selected'; else wrong">{{ i+1 }}</span>
+                                    <span id = "{{ ability.type }}-{{i+1}}" class="ability-level unselected-open-ability" *ngIf="status == 'open'; else wrong"></span>
+                                    <span id = "{{ ability.type }}-{{i+1}}" class="ability-level unselected-closed-ability" *ngIf="status == 'closed'; else wrong"></span>
+                                    <span id = "{{ ability.type }}-{{i+1}}" class="ability-level disabled-ability" *ngIf="status == 'disabled'; else wrong"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- The Talent Modal -->
+                <div class="modal fade" id="talentModal">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Talent Choices for {{ currentHero.niceName }}</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="ability-row">
+                                    <div>
+                                        Since talents change so frequently; we decided not to show the specific talents of each hero but if you wish to confirm which talents are available for {{ currentHero.niceName }}:
+                                        <a href="https://dota2.gamepedia.com/{{ currentHero.niceName }}#Talents" target = "_blank">Follow this link</a>
+                                    </div>
+                                    <br>
+                                    <table class="talent-table">
+                                        <tbody>
+                                            <tr *ngFor="let talent of currentHero.talents; let talentNum = index" [attr.data-index]="talentNum">
+                                                <td>
+                                                    <tr class="talent-row">
+                                                        <td class="talent talent-left">
+                                                            <div id = "talent-{{ 25 - 5 * (talentNum) }}-left" *ngIf="talent != 'left'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'left')">Left</div>
+                                                            <div id = "talent-{{ 25 - 5 * (talentNum) }}-left" *ngIf="talent == 'left'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Left</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="talent level"> {{ 25 - 5 * (talentNum) }} </div>
+                                                        </td>
+                                                        <td class="talent talent-right">
+                                                            <div id = "talent-{{ 25 - 5 * (talentNum) }}-right" *ngIf="talent != 'right'; else wrong" class="talent-desc" (click)="onTalentSelect(talentNum, 'right')">Right</div>
+                                                            <div id = "talent-{{ 25 - 5 * (talentNum) }}-right"*ngIf="talent == 'right'; else wrong" class="talent-desc talent-selected" (click)="onTalentSelect(talentNum, 'none')">Right</div>
+                                                        </td>
+                                                    </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Modal -->
+                
+            </div>
+            <!-- End card body -->
+        </div>
+    </div>
+</div>
+
+<!-- Abilities popover template -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="abilitiesPopoverTemplate">
+                <div class="popover popover-dark" role="tooltip">
+                    <div class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div class="popover-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

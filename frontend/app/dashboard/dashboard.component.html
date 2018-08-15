@@ -1,0 +1,162 @@
+<!-- Start Container Fluid --> 
+<div class="container-fluid container-fluid-custom background main-background ">
+    <div class="frame" id="dashboardTitle">
+        <div *ngIf="manage!==true"> <h1>DASHBOARD</h1> </div>
+        <div *ngIf="manage==true"> <h1>MANAGE</h1> </div>
+        <br>
+        <button *ngIf="manage!==true" class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
+            <i class="fas fa-plus mr-2"></i>NEW BOT CONFIGURATION
+        </button>
+    </div>
+
+    <div class="frame">
+        <div id="accordion" class="card bot-manage-card">
+            <!--Heading -->
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>SUMMARY OF YOUR BOTS</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dropdown show dropdown-filter float-right">
+                            <a class="btn dropdown-filter dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="fas fa-filter mr-2"></i>
+                                Filter Bots
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-item" (click)="sortBotScripts(-1)">
+                                    <i class="fas fa-sort-amount-up mr-2"></i>
+                                    Newest First
+                                </div>
+                                <div class="dropdown-item" (click)="sortBotScripts(1)">
+                                    <i class="fas fa-sort-amount-down mr-2"></i>
+                                    Oldest First
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Bot list -->
+            <ul class="list-group list-group-flush" id="botList">
+                <!--Bot item Implementation Notes:
+                _______________________________
+                headingID format: bot#
+                collapseID format: bot#_Collapse
+                _______________________________
+                Contains obtained from DB: 
+                -Title
+                -Description 
+                -Last Edit:  
+                
+                Buttons:
+                ->Edit
+                ->Generate script
+                ->Delete Script
+                -->
+                <div *ngIf="bots == null || bots.length == 0">
+                    <li class="list-group-item manage-list-group-item text-center">
+                        <!-- <i class="fa fa-robot"></i><br> -->
+                        <h5>You currently have no bots</h5>
+                    </li>
+                </div>
+                <div *ngFor="let bot of bots; let i=index">
+                    <li class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
+                        [attr.href]="'#bot'+bot.id+'Collapse'">
+                        <!--Bot Item Heading-->
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h5>{{bot.name}}</h5>
+                            </div>
+                            <div class="col-sm-3">
+                                <sub class="float-right">
+                                    <i class="far fa-edit mr-1"></i>
+                                    {{bot.updatedAt}}
+                                </sub>
+                            </div>
+                        </div>
+                        <!--End of Heading-->
+                        <!--Bot Item details-->
+                        <div class="card-body bot-manage-card-body collapse in" #elem [attr.id]="'bot'+bot.id+'Collapse'">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>{{bot.description}}</p>
+                                </div>
+                            </div>
+                            <a class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'EditBtn'" [routerLink]="'/bot-config/' + bot.id">
+                                <i class="far fa-edit mr-1"></i>
+                                Edit
+                            </a>
+                            <a href="#" class="button button-generate mr-1" #elem [attr.id]="'bot'+bot.id+'DownloadBtn'">
+                                <i class="fas fa-download mr-1"></i>
+                                Generate
+                            </a>
+                            <a class="button button-cancel" #elem [attr.id]="'bot'+bot.id+'DeleteBtn'" (click)="showDeleteModal(bot.id)">
+                                <i class="fas fa-trash-alt mr-1"></i>
+                                Delete
+                            </a>
+                        </div>
+                        <!--End of Details-->
+                    </li>
+                    <!--End of bot item-->
+                    <div *ngIf="i==4 && i==bots.length-1">
+                        <a (click)="viewMore()" id="viewMore" style="text-decoration: none">
+                            <li class="list-group-item manage-list-group-item">
+                                <h5>View More Bots</h5>
+                                <!--End of Details-->
+                            </li>
+                        </a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="frame">
+        <div class="card bot-manage-card" id="botTeams">
+            <div class="card-header">
+                <h5>YOUR BOT TEAMS</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item manage-list-group-item">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h6>Tournament 1</h6>
+                        </div>
+                        <div class="col-sm-3">
+                            <sub class="float-right">
+                                <i class="far fa-edit mr-1"></i>2 weeks ago
+                            </sub>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal modal-confirmation fade delete-modal" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="confirmationModal">
+                        <i class="fas fa-exclamation-circle "></i>
+                        Are you sure you want to delete?
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete this bot script?<br/>This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="deleteBotScript(this.botID)" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Container Fluid -->

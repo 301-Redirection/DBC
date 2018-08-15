@@ -5,7 +5,7 @@
     },
     "apps": [
         {
-            "root": "src",
+            "root": "frontend",
             "outDir": "dist",
             "assets": [
                 "assets",
@@ -42,11 +42,11 @@
     },
     "lint": [
         {
-            "project": "src/tsconfig.app.json",
+            "project": "frontend/tsconfig.app.json",
             "exclude": "**/node_modules/**"
         },
         {
-            "project": "src/tsconfig.spec.json",
+            "project": "frontend/tsconfig.spec.json",
             "exclude": "**/node_modules/**"
         },
         {
@@ -56,7 +56,7 @@
     ],
     "test": {
         "karma": {
-            "config": "./karma.conf.js"
+            "config": "./frontend/karma.conf.js"
         }
     },
     "defaults": {
