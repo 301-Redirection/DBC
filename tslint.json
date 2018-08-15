@@ -23,7 +23,8 @@
         "no-invalid-template-strings": true,
         "only-arrow-functions": [
             true
-        ]
+        ],
+        "no-consecutive-blank-lines": false
     },
     "globals": [
         "it",
