@@ -3,7 +3,6 @@ import { ApiConnectService } from './api-connect.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { RoutesModule } from '../routes/routes.module';
-import { BotConfigModule } from '../bot-config/bot-config.module';
 
 describe('ApiConnectService', () => {
     beforeEach(() => {

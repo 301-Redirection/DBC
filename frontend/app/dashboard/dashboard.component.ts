@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { ROUTE_NAMES } from '../routes/routes.config';
 import { ApiConnectService } from '../services/api-connect.service';
 import { FormsModule, ReactiveFormsModule , FormGroup } from '@angular/forms';
 import * as moment from 'moment';
@@ -74,33 +73,13 @@ export class DashboardComponent implements OnInit {
         this.botID = id;
     }
 
-    swap(array, firstIndex, secondIndex) {
-        const temp = array[firstIndex];
-        array[firstIndex] = array[secondIndex];
-        array[secondIndex] = temp;
-    }
-
-    compareDate(date, otherDate, int) {
-        let bool;
-        if (int >= 0) {
-            bool = date > otherDate;
-        } else {
-            bool = date < otherDate;
-        }
-        return bool;
-    }
-
     sortBotScripts(value) {
-        console.log('called');
-        const array = this.bots;
-        for (let i = 0; i < array.length; i += 1) {
-            for (let j = 1; j < array.length; j += 1) {
-                if (this.compareDate(array[j - 1].updatedAt, array[j].updatedAt, value)) {
-                    this.swap(array, j - 1, j);
-                }
-            }
+        if (value === 1) {
+            this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
+        } else {
+            this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
         }
-        return array;
+        return this.bots;
     }
 
 }

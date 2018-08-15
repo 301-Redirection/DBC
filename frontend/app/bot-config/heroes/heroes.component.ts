@@ -138,7 +138,7 @@ export class HeroesComponent implements OnInit {
         this.hidePopovers();
         if (confirm('Are you sure you want to toggle pools? All changes will be lost.')) {
             if (this.numberOfPools > 1) {
-                this.numberOfPools = 5;
+                this.numberOfPools = 1;
                 document.getElementById('poolTabs').style.height = '0';
                 document.getElementById('poolTabs').style.visibility = 'hidden';
 
@@ -276,6 +276,7 @@ export class HeroesComponent implements OnInit {
     }
 
     selectedTab(): void {
+        // TODO: fix this code so it's more generic and fits with angular
         $(document).ready(() => {
             $('#selectedFrame').css('bottom', '-200px');
 

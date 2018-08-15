@@ -6,7 +6,6 @@ import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { TeamDesiresComponent, ReversePipe } from './team-desires.component';
 import { EnumToArrayPipe } from './configurator/configurator.component';
 import { FormsModule } from '@angular/forms';
-import { SortablejsModule } from '../../../../node_modules/angular-sortablejs/dist';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { MaterialModule } from '../../material/material.module';
 
@@ -28,7 +27,6 @@ describe('TeamDesiresComponent', () => {
                 EnumToArrayPipe,
             ],
             imports: [
-                SortablejsModule,
                 FormsModule,
                 MaterialModule,
             ],

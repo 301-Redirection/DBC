@@ -66,7 +66,6 @@ export class TeamDesiresComponent implements OnInit {
     ];
 
     constructor(
-        // private tdService: TeamDesiresService,
         private botConfigData: BotConfigDataService,
     ) {}
 

@@ -8,18 +8,17 @@ describe('ConfiguratorComponent', () => {
     let component: ConfiguratorComponent;
     let fixture: ComponentFixture<ConfiguratorComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    beforeEach(() => {
+        fixture = TestBed.configureTestingModule({
             declarations: [
                 ConfiguratorComponent,
                 EnumToArrayPipe,
             ],
             imports: [FormsModule],
-        }).compileComponents();
-    }));
+        }).createComponent(ConfiguratorComponent);
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ConfiguratorComponent);
+
+        fixture.detectChanges();
         component = fixture.componentInstance;
         component.condition = {
             trigger: -1,
@@ -35,15 +34,13 @@ describe('ConfiguratorComponent', () => {
 
     it('should change conditional value to 0.25', () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const hostEl = fixture.debugElement;
-            const condInput: HTMLInputElement = hostEl.query(By.css('#conditionalInput'))
-            .nativeElement;
-            condInput.value = '0.25';
-            condInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            expect(component.condition.conditional).toEqual(0.25);
-        });
+        const hostEl = fixture.debugElement;
+        const condInput: HTMLInputElement = hostEl.query(By.css('#conditionalInput'))
+        .nativeElement;
+        condInput.value = '0.25';
+        condInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        expect(component.condition.conditional).toEqual(0.25);
     });
 });
 

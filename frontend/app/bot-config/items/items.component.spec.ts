@@ -5,6 +5,7 @@ import { ItemsComponent } from './items.component';
 import { Observable } from 'rxjs/Rx';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { FormsModule } from '@angular/forms';
 
 describe('ItemsComponent', () => {
     let component: ItemsComponent;
@@ -44,7 +45,7 @@ describe('ItemsComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [ItemsComponent, FilterPipe],
-            imports: [SortablejsModule],
+            imports: [SortablejsModule, FormsModule],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 BotConfigDataService,
