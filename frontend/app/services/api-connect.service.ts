@@ -5,7 +5,6 @@ import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
 import { API_URL } from './api-url-config';
-import { ConfigurationFormat } from '../ConfigurationFormat';
 
 @Injectable()
 export class ApiConnectService {
@@ -47,6 +46,15 @@ export class ApiConnectService {
     public recentBots() {
         return this.http
             .get(`${API_URL}/bots/recent`, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            },
+        )
+        .pipe(catchError(this.handleError));
+    }
+
+    public getAllBots() {
+        return this.http
+            .get(`${API_URL}/bots/all`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             },
         )

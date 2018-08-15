@@ -42,7 +42,7 @@ module.exports = {
         baseIntelligenceGain: {
             type: Sequelize.FLOAT,
         },
-        movespeed: {
+        moveSpeed: {
             type: Sequelize.INTEGER,
         },
         ability_q: {

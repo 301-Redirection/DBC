@@ -1,63 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
-import { ApiConnectService } from '../services/api-connect.service';
-// import { HereosService } from '../services/heroes.service.ts
-
+import { ApiConnectService } from '../../services/api-connect.service';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { FilterPipe } from '../../pipes/filter.pipe';
 // Import JQuery
 declare var $: any;
+
 @Component({
     selector: 'app-items',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.scss'],
 })
 
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit{
     // Variables
-    selectedItemsArray = [];
     allItems: any;
     basicItems = [];
     upgradeItems = [];
     recipes = [];
+
+    // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
     dotaGoldIconURL = '../../assets/images/dota-gold-icon.png';
-    heroItemSelection = [];
+
+    // Hero specific variables
+    selectedHeroes: any;
     selectedHeroIndex: number;
     prevSelectedHeroIndex: number;
+    currentHero: any;
+
+    // Items specific variables
+    heroItemSelection = [];
+    selectedItem: any;
+    selectedItemsArray: any;
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
-    selectedItem: any;
-
-    // Temporary test data
-    selectedHeroes = [
-        {
-            name: 'Anti-Mage',
-            image: 'http://localhost:3000/static/heroes/images/antimage.png',
-        },
-        {
-            name: 'Axe',
-            image: 'http://localhost:3000/static/heroes/images/axe.png',
-        },
-        {
-            name: 'Bane',
-            image: 'http://localhost:3000/static/heroes/images/bane.png',
-        },
-        {
-            name: 'Bloodseeker',
-            image: 'http://localhost:3000/static/heroes/images/bloodseeker.png',
-        },
-    ];
-
-    basicItem = [
-        {
-            name: 'Town Portal Scroll',
-        },
-        {
-            name: 'Ring of Protection',
-        },
-        {
-            name: 'Iron Branch',
-        },
-    ];
+    itemSearch: String;
 
     optionsSource: SortablejsOptions = {
         group: {
@@ -70,35 +48,44 @@ export class ItemsComponent implements OnInit {
 
     optionsTarget: SortablejsOptions = {
         group: 'clone-group',
-        sort: false,
+        sort: true,
     };
 
-    // constructor(private api: ApiConnectService, private heroService: HeroesService) {}
-    constructor(private api: ApiConnectService) {}
+    constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
         this.getHeroes();
         this.getItems();
+
+        // this.popoverDismiss();
     }
 
     getHeroes() {
-        // TODO use hero service
-        // this.heroesService.currentHeroes.subscribe((heroes) => this.selectedHeroes = heroes);
+        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+            this.selectedHeroes = [];
+            heroes.forEach((hero) => {
+                this.selectedHeroes.push(hero);
+                this.heroItemSelection.push([]);
+                this.totalCostPerHero.push(0);
+            });
+            this.currentHero = this.selectedHeroes[0];
+        });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
-        for (const hero of this.selectedHeroes) {
-            this.heroItemSelection.push([]);
-            this.totalCostPerHero.push(0);
-        }
     }
 
     getItems(): void {
         // database call to retrieve all dota items
-        this.api.getAllItems().subscribe((data) => {
-            this.allItems = data['items'];
-            this.sortItemData();
-            this.setSelectedHero(0);
-        });
+        this.api.getAllItems().subscribe(
+            (data) => {
+                this.allItems = data['items'];
+                this.sortItemData();
+                this.selectedItemsArray = [];
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);
@@ -152,6 +139,7 @@ export class ItemsComponent implements OnInit {
     }
 
     setSelectedItem (item) {
+        console.log(this.selectedHeroIndex);
         this.selectedItem = item;
     }
 
@@ -164,6 +152,7 @@ export class ItemsComponent implements OnInit {
         this.setSelectedItemsArray();
     }
     addItemCostToTotal () {
+        this.setSelectedItemsArray();
         this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
     }
 
@@ -180,24 +169,47 @@ export class ItemsComponent implements OnInit {
         this.selectedItemComponentsArray = [];
     }
 
-    triggerPopover(target: HTMLElement, item: any) {
+    getItemNames(items): any {
+        const itemNames = [];
+        items.forEach((item) => {
+            itemNames.push(item.name);
+        });
+        return itemNames;
+    }
+
+    saveItems(): void {
+        for (let i = 0; i < this.selectedHeroes.length; i += 1) {
+            const hero = this.selectedHeroes[i];
+            const items = this.heroItemSelection[i];
+            const itemNames = this.getItemNames(items);
+            this.botConfigData.updateHeroItems(hero.programName, itemNames);
+        }
+        console.log(this.botConfigData.getConfig());
+    }
+
+    onSelect(hero): void {
+        this.currentHero = hero;
+        this.saveItems();
+    }
+    triggerItemPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
+            trigger: 'hover click',
             placement: 'right',
             html: true,
-            content: `
-                <h5 style="text-shadow:none;">
-                    <img src="${item.url}" height="25">
-                    ${item.niceName}
-                </h5>
-                <hr>
-                <h6><b>Cost:</b></h6>
-                <h6>
-                    <img src="${this.dotaGoldIconURL}">
-                    ${item.cost}
-                </h6>
-            `,
-            trigger: 'hover',
+            content: $(`#${item.name}`).html(),
+            template: $('#itemsPopoverTemplate').html(),
+        });
+    }
+
+    triggerHeroPopover(target: HTMLElement, hero: any) {
+        $(target).popover({
+            animation: true,
+            trigger: 'hover click',
+            placement: 'right',
+            html: true,
+            content: $(`#${hero.programName}`).html(),
+            template: $('#heroesPopoverTemplate').html(),
         });
     }
 }

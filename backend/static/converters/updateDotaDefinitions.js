@@ -209,7 +209,7 @@ async function doHeroes() {
                     ability_w: heroObject.abilities[1],
                     ability_e: heroObject.abilities[2],
                     ability_r: heroObject.abilities[3],
-                    movespeed: heroObject.attributes.ms,
+                    moveSpeed: heroObject.attributes.ms,
                     armor: heroObject.attributes.armor,
                     attackDamageMin: heroObject.attributes.dmg.min,
                     attackDamageMax: heroObject.attributes.dmg.max,

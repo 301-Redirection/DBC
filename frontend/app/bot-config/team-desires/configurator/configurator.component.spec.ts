@@ -8,25 +8,21 @@ describe('ConfiguratorComponent', () => {
     let component: ConfiguratorComponent;
     let fixture: ComponentFixture<ConfiguratorComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    beforeEach(() => {
+        fixture = TestBed.configureTestingModule({
             declarations: [
                 ConfiguratorComponent,
                 EnumToArrayPipe,
             ],
             imports: [FormsModule],
-        }).compileComponents();
-    }));
+        }).createComponent(ConfiguratorComponent);
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ConfiguratorComponent);
+        fixture.detectChanges();
         component = fixture.componentInstance;
         component.condition = {
             trigger: -1,
             operator: -1,
-            conditional: '',
-            action: -1,
-            value: '',
+            conditional: -1,
         };
         fixture.detectChanges();
     });
@@ -37,28 +33,13 @@ describe('ConfiguratorComponent', () => {
 
     it('should change conditional value to 0.25', () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const hostEl = fixture.debugElement;
-            const condInput: HTMLInputElement = hostEl.query(By.css('#conditionalInput'))
-            .nativeElement;
-            condInput.value = '0.25';
-            condInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            expect(component.condition.conditional).toEqual(0.25);
-        });
-    });
-
-    it('should change action value to 0.5', () => {
+        const hostEl = fixture.debugElement;
+        const condInput: HTMLInputElement = hostEl.query(By.css('#conditionalInput'))
+        .nativeElement;
+        condInput.value = '0.25';
+        condInput.dispatchEvent(new Event('input'));
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const hostEl = fixture.debugElement;
-            const valueInput: HTMLInputElement = hostEl.query(By.css('#valueInput'))
-            .nativeElement;
-            valueInput.value = '0.5';
-            valueInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            expect(component.condition.value).toEqual(0.5);
-        });
+        expect(component.condition.conditional).toEqual(0.25);
     });
 });
 

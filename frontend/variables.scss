@@ -1,32 +1,38 @@
 @import '/assets/fonts.scss';
 
 /* Global variables */
-
-
 $transition-speed: .3s;
 $font-family: 'Radiance';
 $box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.75);
 $text-shadow: 2px 2px 5px black;
 $nav-background-image: url('http://cdn.dota2.com/apps/dota2/images/header/header_bg.png');
 $general-background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_02.jpg');
+$background-color: #31393C;
 $page-margin-top: 1rem !important;
 $page-margin-bottom: 1rem !important;
 
 /* Global colours */
-
 $red: #e2283b;
 $blue: #007bff;
 $green: #41a041;
 $white: #dddddd;
 $grey: #808080;
+$orange: #FFA500;
 $light-grey: #a3a3a3;
+$dark-grey: #5a5a5a;
 $dark-grey-1: #3d3d3d;
 $dark-grey-2: #333333;
 $dark-grey-3: #292929;
 $black: #181818;
 $light-gold: #5c482a;
+$coin-gold: #fad562;
 
 $dropdown-color-hover:#202020 ;
+
+/* Hero config variables */
+$hero-item-color: #4585c3;
+$hero-item-border-color: #263f56;
+$hero-item-border-color-hover:#3a73a3;
 
 /*Button Variables*/
 $btn-general-border: 2px solid ;
@@ -36,9 +42,9 @@ $btn-cancel-color: #b64f44;
 $btn-cancel-border-color: #5e2d27;
 $btn-cancel-border-color-hover:#b15b52;
 
-$btn-generate-color: #4585C3;
-$btn-generate-border-color: #263f56;
-$btn-generate-border-color-hover:#3A73A3;
+$btn-generate-color: #5bb45b; // lightish
+$btn-generate-border-color: #0e6d0e; //darker
+$btn-generate-border-color-hover:#41a041; //mediumish
 
 $btn-edit-color: #b1884f;
 $btn-edit-border-color: #5b4629;
@@ -62,3 +68,7 @@ $dire-border-color: #ae3207;
 $dire-border-color-dim: rgba(174, 50, 7, 0.5);
 $dire-card-background-color: rgba(112, 42, 23, 0.7);
 
+/* Item config variables */
+$item-color: #4585c3;
+$item-border-color: #263f56;
+$item-border-color-hover:#3a73a3;

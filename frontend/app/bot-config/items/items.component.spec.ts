@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SortablejsModule } from 'angular-sortablejs';
-import { ApiConnectService } from '../services/api-connect.service';
+import { ApiConnectService } from '../../services/api-connect.service';
 import { ItemsComponent } from './items.component';
 import { Observable } from 'rxjs/Rx';
+import { FilterPipe } from '../../pipes/filter.pipe';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { FormsModule } from '@angular/forms';
 
 describe('ItemsComponent', () => {
     let component: ItemsComponent;
@@ -41,10 +44,11 @@ describe('ItemsComponent', () => {
         apiConnectServiceStub.getItemImageURL.and.callThrough();
 
         TestBed.configureTestingModule({
-            declarations: [ItemsComponent],
-            imports: [SortablejsModule],
+            declarations: [ItemsComponent, FilterPipe],
+            imports: [SortablejsModule, FormsModule],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
+                BotConfigDataService,
             ],
         }).compileComponents();
     }));

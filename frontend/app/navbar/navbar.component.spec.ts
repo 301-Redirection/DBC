@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testi
 import { NavbarComponent } from './navbar.component';
 import { By } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
-import { authServiceStub } from '../testing/authServiceStub';
+import { authServiceStub } from '../testing/auth-service-stub';
 import { FormsModule } from '@angular/forms';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
@@ -75,14 +75,10 @@ describe('NavbarComponent', () => {
         });
 
         it('Links should go to logged in places', (done) => {
-            expect(routerLinks.length).toBe(7, 'should have 7 routerLinks');
+            expect(routerLinks.length).toBe(3, 'should have 3 routerLinks');
             expect(routerLinks[0].linkParams).toBe('/home');
             expect(routerLinks[1].linkParams).toBe('/dashboard');
-            expect(routerLinks[2].linkParams).toBe('/bot-management');
-            expect(routerLinks[3].linkParams).toBe('/heroes');
-            expect(routerLinks[4].linkParams).toBe('/abilities');
-            expect(routerLinks[5].linkParams).toBe('/items');
-            expect(routerLinks[6].linkParams).toBe('/desires');
+            expect(routerLinks[2].linkParams).toBe('/bot-config');
             done();
         });
     });

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         ability_w: DataTypes.STRING,
         ability_e: DataTypes.STRING,
         ability_r: DataTypes.STRING,
-        movespeed: DataTypes.INTEGER,
+        moveSpeed: DataTypes.INTEGER,
         armor: DataTypes.FLOAT,
         attackDamageMin: DataTypes.FLOAT,
         attackDamageMax: DataTypes.FLOAT,

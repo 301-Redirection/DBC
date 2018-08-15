@@ -1,7 +1,8 @@
 // const path = require('path');
 // process.env.NODE_PATH = path.join(__dirname, '..');
 // require('module').Module._initPaths();
-const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
+// const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
+const { writeScripts } = require('./generateScript.js');
 const mocks = require('node-mocks-http');
 
 const items = ['item_slippers',
@@ -236,6 +237,4 @@ const officialRequest = {
         configuration: configObject,
     },
 };
-
-writeScripts(officialRequest, mocks.createResponse(), 'LOL', 69);
-shouldRegenerateBotScripts('LOL', 69);
+writeScripts(officialRequest, mocks.createResponse(), 'BMAX', 69);

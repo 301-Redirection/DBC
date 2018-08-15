@@ -3,12 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HeroesComponent } from './heroes.component';
 import { SortablejsModule } from 'angular-sortablejs';
-import { ApiConnectService } from '../services/api-connect.service';
+import { ApiConnectService } from '../../services/api-connect.service';
 import { Observable } from 'rxjs/Rx';
-import { HeroesService } from '../services/heroes.service';
-import { AuthService } from '../auth/auth.service';
-import { authServiceStub } from '../testing/authServiceStub';
-import { FilterPipe } from '../pipes/filter.pipe';
+import { AuthService } from '../../auth/auth.service';
+import { authServiceStub } from '../../testing/auth-service-stub';
+import { FilterPipe } from '../../pipes/filter.pipe';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -31,7 +31,7 @@ describe('HeroesComponent', () => {
                         ability_w: 'Blink',
                         ability_e: 'Spell Shield',
                         ability_r: 'Mana Void',
-                        movespeed: 310,
+                        moveSpeed: 310,
                         armor: 2.08,
                         attackDamageMin: 29,
                         attackDamageMax: 33,
@@ -53,7 +53,7 @@ describe('HeroesComponent', () => {
                     ability_w: 'Blink',
                     ability_e: 'Spell Shield',
                     ability_r: 'Mana Void',
-                    movespeed: 310,
+                    moveSpeed: 310,
                     armor: 2.08,
                     attackDamageMin: 29,
                     attackDamageMax: 33,
@@ -92,7 +92,7 @@ describe('HeroesComponent', () => {
             providers: [
                 { provide: AuthService, useValue: authServiceStub },
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
-                HeroesService,
+                BotConfigDataService,
             ],
         })
         .compileComponents();

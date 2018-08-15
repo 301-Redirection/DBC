@@ -1,7 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RoutesModule, ROUTES } from '../../routes/routes.module';
 import { TeamDesiresComponent, ReversePipe } from './team-desires.component';
-import { TeamDesiresService } from '../../services/team-desires.service';
+import { EnumToArrayPipe } from './configurator/configurator.component';
+import { FormsModule } from '@angular/forms';
+import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { MaterialModule } from '../../material/material.module';
 
 @Component({ selector: 'configurator', template: '' })
 class ConfiguratorStubComponent {
@@ -18,8 +24,15 @@ describe('TeamDesiresComponent', () => {
                 TeamDesiresComponent,
                 ConfiguratorStubComponent,
                 ReversePipe,
+                EnumToArrayPipe,
             ],
-            providers: [TeamDesiresService],
+            imports: [
+                FormsModule,
+                MaterialModule,
+            ],
+            providers: [
+                BotConfigDataService,
+            ],
         }).compileComponents();
     }));
 

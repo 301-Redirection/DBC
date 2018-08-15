@@ -157,11 +157,11 @@ const LuaCodeTemplateManager = function () {
     };
 
     /**
-     *  This this.creates the file content (ability_item_usage) which specifies
+     *  This creates the file content (ability_item_usage) which specifies
      *  which abilities a bot should get using the original bot script file as a
      *  template only replacing the relevant code
      *
-     *  This this.expects the hero name and an object
+     *  This expects the hero name and an object
      *  const input = {
      *    abilities: 'qweqqrewqetnqrnt', talents: ['l','r','l','l']
      *  };

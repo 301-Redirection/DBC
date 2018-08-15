@@ -1,0 +1,182 @@
+/* Global Variables */
+@import '../../../variables';
+
+.ability-roster-image {
+    width: 50px;
+    height: 50px;
+}
+
+.ability-row {
+    margin-top: 1%;
+    display: inline-block;
+    width: 100%;
+}
+
+.ability-table {
+    border: none;
+    width: auto;
+}
+
+.ability-table tr {
+    padding-top: 5px;
+}
+
+.ability-table td{
+    padding: 0 3px;
+    vertical-align: middle;
+    border: none;
+}
+
+.ability-level {
+    display: block;
+    color: black;
+    font-size: 10px;
+    width: 18px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.selected-ability {
+    background-color: #C09B64;
+}
+
+.unselected-open-ability {
+    background-color: #606F7A;
+}
+
+.unselected-closed-ability {
+    background-color: #3D454D;
+}
+
+.disabled-ability {
+    background-color: #212121;
+}
+
+.ability-image-display {
+    width: 80px;
+    max-height: 80px;
+    max-width: 80px;
+}
+
+.ability-item {
+    text-align: center !important;
+    margin-left: 2%;
+    margin-right: 2%;
+    display: inline-block;    
+}
+
+.selector {
+    text-align: center;
+}
+.buttons {
+    display: inline-block;
+}
+
+.buttons * {
+    display: inline-block;
+}
+
+.button-priority {
+    padding: 4px 10px !important;
+}
+
+/* Talents stuff */ 
+.level {
+    color: #f2c58c;
+    border-radius: 30px;
+    border: 2px solid #353A38;
+    padding: 2px;
+    background-color: #101314;
+    margin: 2px;
+    text-align: center;
+    width: 35px;
+}
+
+.talent-desc:hover {
+    // border: 2px solid #353A38;
+    border: 1px solid #f2c58c;
+}
+
+.talent-desc {
+    border-radius: 10px;
+    background-color: #303333;
+    width: 200px;
+    text-align: center;
+}
+
+.talent {
+    margin: 5px 0;
+}
+
+.talent-table {
+    border-spacing: 5px;
+}
+
+.talent-selected {
+    // background-color: #906C46;
+    background: linear-gradient(rgb(147, 114, 69) 0%, rgb(67, 34, 23) 100%);
+    color: #fff;
+}
+
+/* Modal CSS */
+.modal-content {
+    background: $dark-grey-3;
+    color: $light-grey;
+}
+
+.modal-header {
+    border-bottom: 3px solid $light-grey;
+}
+
+.modal-footer {
+    border-top: 3px solid $light-grey;
+}
+
+.btn-talent {
+    background: $dark-grey-2;
+    padding: 0;
+    cursor: pointer;
+    border: 1px solid $dark-grey-1;
+}
+
+.button-chevron { 
+    color: $btn-edit-border-color;
+    background-color: $btn-general-background-color;
+    background-image: none;
+    border: 2px solid $btn-edit-border-color;
+}
+.button-chevron:hover { 
+    background-color: $btn-edit-color;
+}
+
+.tooltip-inner{
+    padding: 2px;
+    text-align: center;
+    margin: 0;
+    background-color: $dark-grey-2;
+    color: $light-grey;
+}
+
+/* -- Popover styles -- */
+.popover-zone {
+    width: 100%;
+    height: 100%;    
+}
+
+.popover-dark {
+    background-color: $dark-grey;
+}
+
+.popover-body {    
+    color: $white;
+}
+
+.popover-dark .arrow:after {
+    border-right-color: $dark-grey;
+    border-left-color: $dark-grey;
+}
+
+.ability-item:nth-child(4n).btn-left {
+    size: 500px;
+}

@@ -1,22 +1,42 @@
+import { Input, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
+import { Title, By } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BotConfigComponent } from './bot-config.component';
-import { FormsModule } from '@angular/forms';
 import { ApiConnectService } from '../services/api-connect.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
+import { ActivatedRouteStub } from '../testing/activated-route-stub';
+import { BotConfigDataService } from '../services/bot-config-data.service';
+
+@Component({ selector: 'configurator', template: '' })
+class ConfiguratorComponent {
+    @Input() condition;
+}
+
+@Component({ selector: 'app-team-desires', template: '' })
+class TeamDesiresComponent {}
+
+@Component({ selector: 'app-heroes', template: '' })
+class HeroesComponent {}
+
+@Component({ selector: 'app-abilities', template: '' })
+class AbilitiesComponent {}
+
+@Component({ selector: 'app-items', template: '' })
+class ItemsComponent {}
 
 describe('BotConfigComponent', () => {
     let component: BotConfigComponent;
     let fixture: ComponentFixture<BotConfigComponent>;
-
+    let activatedRoute: ActivatedRouteStub;
     beforeEach(async(() => {
 
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
             'getSpecificBot',
             'updateBot',
         ]);
-
+        activatedRoute = new ActivatedRouteStub({});
         const specificBot = {
             botConfig: [
                 {
@@ -55,20 +75,27 @@ describe('BotConfigComponent', () => {
             .returnValue(Observable.of(botId));
 
         TestBed.configureTestingModule({
-            declarations: [BotConfigComponent],
+            declarations: [
+                BotConfigComponent,
+                TeamDesiresComponent,
+                HeroesComponent,
+                AbilitiesComponent,
+                ItemsComponent,
+            ],
             imports: [
-                RouterTestingModule,
                 FormsModule,
             ],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
-                { provide: Title, useClass: Title },
+                { provide: ActivatedRoute, useValue: activatedRoute },
+                BotConfigDataService,
             ],
         })
         .compileComponents();
     }));
 
     beforeEach(() => {
+        activatedRoute.setParamMap({ dashboard: true });
         fixture = TestBed.createComponent(BotConfigComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

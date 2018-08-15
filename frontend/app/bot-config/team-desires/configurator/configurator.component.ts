@@ -7,11 +7,10 @@ import {
     PipeTransform,
 } from '@angular/core';
 import {
-    Action,
     Condition,
     Operator,
     Trigger,
-} from '../../../ConfigurationFormat';
+} from '../../../services/ConfigurationFormat';
 
 @Component({
     selector: 'configurator',
@@ -23,7 +22,6 @@ export class ConfiguratorComponent {
     @Input() condition: Condition;
     @Output() conditionChange = new EventEmitter<Condition>();
     triggers = Trigger;
-    actions = Action;
     operators = Operator;
 
     constructor() {}
