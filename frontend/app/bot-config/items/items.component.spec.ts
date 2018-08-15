@@ -3,6 +3,7 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { ItemsComponent } from './items.component';
 import { Observable } from 'rxjs/Rx';
+import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
 describe('ItemsComponent', () => {
@@ -42,7 +43,7 @@ describe('ItemsComponent', () => {
         apiConnectServiceStub.getItemImageURL.and.callThrough();
 
         TestBed.configureTestingModule({
-            declarations: [ItemsComponent],
+            declarations: [ItemsComponent, FilterPipe],
             imports: [SortablejsModule],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },

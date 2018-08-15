@@ -28,89 +28,80 @@
         </div>
     </div>
 
-
-    <!-- Tool Bar -->
-    <!-- <div class="row mb-5">
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <button type="button" class="button button-new-configuration mx-2 float-right" routerLink="/abilities">
-                <i class="fas fa-arrow-right"></i>
-                Abilities
-            </button>
-            <button type="button" class="button button-edit mx-2 float-right" routerLink="/heroes">
-                <i class="fas fa-arrow-left mr-1"></i>
-                Hero Selection
-            </button>
-            <button type="button" class="button button-cancel mx-2 float-right" (click)="reset()">
-                <i class="fas fa-undo mr-1"></i>
-                Reset
-            </button>
-        </div>
-    </div> -->
-
     <!-- List table -->
-    <div class="frame row mt-2" *ngIf="selectedHeroes.length != 0">
-        <div class="col-md-4">
-            <div class="card bot-manage-card">
-                <div class="card-header container-fluid bot-manage-card-header ">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h5 class="align-middle">SELECTED ITEMS</h5>
-                        </div>
-                        <div class="col-sm-3 align-content-center cost-item">
-                            <img class="float-left" [src]="dotaGoldIconURL" height="30px">
-                            <div class="ml-4 pl-3">
-                                <b>{{totalCostPerHero[selectedHeroIndex]}}</b>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="button" class="btn button-cancel float-right" (click)="clearItemsSelectedHero()">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body bot-manage-card-body drop-zone" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget"
-                    (drop)="addItemCostToTotal()">
-                    <div *ngIf="selectedItemsArray.length == 0">
-                        <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
-                    </div>
-                    <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray">
-                        <div class="card-header row">
-                            <div class="col-sm-3">
-                                <img [src]="item.url">
-                            </div>
-                            <div class="col-sm-9 container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-10 ml-0 pl-0">
-                                        <h5>{{item.niceName}}</h5>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button class="btn button-cancel float-right" (click)="removeItemFromList(item)">
-                                            <i id="removeItemIcon" class="fas fa-times"></i>
-                                        </button>
+    <div class="frame">
+        <div class="card-header container-fluid bot-manage-card-header ">
+            <div class="text-left mb-0 pb-0 bot-manage-card-header">
+                <h5 id="itemsHeader">CHOOSE ITEMS FOR EACH HERO</h5>
+                <input [(ngModel)]="itemSearch" name="itemSearch" id="itemSearch" type="text" class="form-control" placeholder="Search items...">
+            </div>
+        </div>
+        <div class="card-body bot-manage-card-body container-fluid">
+            <div class="row mt-2" *ngIf="selectedHeroes.length != 0">
+                <div class="col-md-4">
+                    <div class="card bot-manage-card">
+                        <div class="card-header container-fluid bot-manage-card-header ">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h5 class="align-middle">SELECTED ITEMS</h5>
+                                </div>
+                                <div class="col-sm-3 align-content-center cost-item">
+                                    <img class="float-left" [src]="dotaGoldIconURL" height="30px">
+                                    <div class="ml-4 pl-3">
+                                        <b>{{totalCostPerHero[selectedHeroIndex]}}</b>
                                     </div>
                                 </div>
-                                <div class="row cost-item">
-                                    <img class="float-left" [src]="dotaGoldIconURL" height="25px">
-                                    <div class="ml-2">
-                                        <small>
-                                            <b>{{item.cost}}</b>
-                                        </small>
-                                    </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn button-cancel float-right" (click)="clearItemsSelectedHero()">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="item.components !== 'null'">
-                            <div class="card-body container-fluid ">
-                                <div class="row  mb-3">
-                                    <h6>Items purchased to create {{item.niceName}}:</h6>
+                        <div class="card-body bot-manage-card-body drop-zone item-card-container-border" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget"
+                            (drop)="addItemCostToTotal()">
+                            <div *ngIf="selectedItemsArray.length == 0">
+                                <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
+                                <h6 class="text-center mt-2 text-muted">Order of selected items shown here is the order in which the items will be purchased in.</h6>
+                                <h6 class="text-center text-muted mt-2">Drag item up or down to change its position</h6>
+                            </div>
+                            <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray">
+                                <div class="card-header row">
+                                    <div class="col-sm-3">
+                                        <img [src]="item.url">
+                                    </div>
+                                    <div class="col-sm-9 container-fluid">
+                                        <div class="row">
+                                            <div class="col-sm-10 ml-0 pl-0">
+                                                <h5>{{item.niceName}}</h5>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn button-cancel float-right" (click)="removeItemFromList(item)">
+                                                    <i id="removeItemIcon" class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row cost-item">
+                                            <img class="float-left" [src]="dotaGoldIconURL" height="25px">
+                                            <div class="ml-2">
+                                                <small>
+                                                    <b>{{item.cost}}</b>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="row justify-content-md-center mt-1">
-                                    <div class="mx-1" *ngFor="let component of item.components" [id]="component.name + 'comp'">
-                                        <div (mouseover)="triggerItemPopover($event.currentTarget, component)" data-trigger="hover" data-toggle="popover">
-                                            <img [src]="component.url" class="item-component-image">
+                                <div *ngIf="item.components !== 'null'">
+                                    <div class="card-body container-fluid ">
+                                        <div class="row  mb-3">
+                                            <h6>Items purchased to create {{item.niceName}}:</h6>
+                                        </div>
+                                        <div class="row justify-content-md-center mt-1">
+                                            <div class="mx-1" *ngFor="let component of item.components" [id]="component.name + 'comp'">
+                                                <div (mouseover)="triggerItemPopover($event.currentTarget, component)" data-trigger="hover" data-toggle="popover">
+                                                    <img [src]="component.url" class="item-component-image">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -118,33 +109,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bot-manage-card">
-                <div class="card-header bot-manage-card-header">
-                    <h5 class="align-middle">BASICS</h5>
-                </div>
-                <div class="card-body bot-manage-card-body">
-                    <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-                        <div [id]="item.id" class="item" *ngFor="let item of basicItems" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
-                            (drag)="setSelectedItem(item)">
-                            <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
+                <div class="col-md-4">
+                    <div class="card bot-manage-card item-card-container-border">
+                        <div class="card-header bot-manage-card-header">
+                            <h5 class="align-middle">BASICS</h5>
+                        </div>
+                        <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
+                            <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
+                                <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
+                                    (drag)="setSelectedItem(item)">
+                                    <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bot-manage-card">
-                <div class="card-header bot-manage-card-header">
-                    <h5 class="align-middle">UPGRADES</h5>
-                </div>
-                <div class="card-body bot-manage-card-body">
-                    <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
-                        <div class="item" *ngFor="let item of upgradeItems" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
-                            (drag)="setSelectedItem(item)">
-                            <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
+                <div class="col-md-4">
+                    <div class="card bot-manage-card item-card-container-border">
+                        <div class="card-header bot-manage-card-header">
+                            <h5 class="align-middle">UPGRADES</h5>
+                        </div>
+                        <div class="card-body bot-manage-card-body">
+                            <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
+                                <div class="item" *ngFor="let item of upgradeItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
+                                    (drag)="setSelectedItem(item)">
+                                    <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

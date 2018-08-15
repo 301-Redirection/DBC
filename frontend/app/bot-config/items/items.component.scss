@@ -112,3 +112,26 @@
     border-right-color: $dark-grey;
     border-left-color: $dark-grey;
 }
+
+.item-card-container-border {
+    border: 1px solid rgba($dark-grey-1, 0.8);
+}
+
+
+#itemsHeader {
+    display: inline-block;   
+}
+
+#itemSearch {    
+    font-family: Arial, FontAwesome;    
+    width: 20%;
+    float: right;
+    border-radius: 100px;
+    background-color: $dark-grey-1;
+    border-color: $dark-grey-3;
+    color: $light-grey;
+}
+
+#itemSearch:focus {
+    outline: none !important;
+}

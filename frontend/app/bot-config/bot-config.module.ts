@@ -10,7 +10,7 @@ import { ConfiguratorComponent, EnumToArrayPipe } from
 import { TeamDesiresComponent, ReversePipe } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
-import { ItemsModule } from './items/items.module';
+import { ItemsComponent } from './items/items.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { BotConfigDataService } from '../services/bot-config-data.service';
@@ -21,7 +21,6 @@ import { BotConfigDataService } from '../services/bot-config-data.service';
         NavbarModule,
         RouterModule,
         FormsModule,
-        ItemsModule,
         SortablejsModule.forRoot({
             animation: 200,
         }),
@@ -33,6 +32,7 @@ import { BotConfigDataService } from '../services/bot-config-data.service';
         ConfiguratorComponent,
         TeamDesiresComponent,
         HeroesComponent,
+        ItemsComponent,
         AbilitiesComponent,
         ReversePipe,
         FilterPipe,
