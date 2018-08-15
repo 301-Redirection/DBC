@@ -29,7 +29,7 @@
     </div>
 
     <!-- List table -->
-    <div class="frame">
+    <div class="frame"  *ngIf="selectedHeroes.length != 0">
         <div class="card-header container-fluid bot-manage-card-header ">
             <div class="text-left mb-0 pb-0 bot-manage-card-header">
                 <h5 id="itemsHeader">CHOOSE ITEMS FOR EACH HERO</h5>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="card-body bot-manage-card-body container-fluid">
-            <div class="row mt-2" *ngIf="selectedHeroes.length != 0">
+            <div class="row mt-2">
                 <div class="col-md-4">
                     <div class="card bot-manage-card">
                         <div class="card-header container-fluid bot-manage-card-header ">
@@ -62,8 +62,8 @@
                             (drop)="addItemCostToTotal()">
                             <div *ngIf="selectedItemsArray.length == 0">
                                 <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
-                                <h6 class="text-center mt-2 text-muted">Order of selected items shown here is the order in which the items will be purchased in.</h6>
-                                <h6 class="text-center text-muted mt-2">Drag item up or down to change its position</h6>
+                                <h6 class="text-center mt-2 text-muted">Items purchased according to the order of shown here</h6>
+                                <h6 class="text-center text-muted mt-2">Drag an item up or down to change it's position</h6>
                             </div>
                             <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray">
                                 <div class="card-header row">
