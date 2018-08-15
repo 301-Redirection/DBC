@@ -34,7 +34,6 @@ import { BotConfigDataService } from '../services/bot-config-data.service';
         TeamDesiresComponent,
         HeroesComponent,
         AbilitiesComponent,
-        // ItemsComponent,
         ReversePipe,
         FilterPipe,
     ],

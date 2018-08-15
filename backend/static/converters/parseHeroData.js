@@ -75,7 +75,7 @@ function makeHeroStatsObject(dataObject) {
     heroStats.baseAgilityGain = dataObject.AttributeAgilityGain;
     heroStats.baseIntelligence = dataObject.AttributeBaseIntelligence;
     heroStats.baseIntelligenceGain = dataObject.AttributeIntelligenceGain;
-    heroStats.movespeed = dataObject.MovementSpeed;
+    heroStats.moveSpeed = dataObject.MovementSpeed;
     return heroStats;
 }
 // accepts the hero specific object and builds hero json object

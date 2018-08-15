@@ -7,7 +7,6 @@ import { HeroSpecification } from '../../services/ConfigurationFormat';
 const NUMBER_TALENTS: number = 4;
 const NUMBER_LEVELS: number = 25;
 const NUMBER_ABILITIES: number = 5;
-const GAMEPEDIA_LINK = 'https://dota2.gamepedia.com/';
 
 // Import JQuery
 declare var $: any;
@@ -46,15 +45,11 @@ export class AbilitiesComponent implements OnInit {
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
-                this.selectedHeroes.push(hero);
-            });
-
-            for (let i = 0; i < this.selectedHeroes.length; i += 1) {
-                const hero = this.selectedHeroes[i];
                 hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
                 hero.abilitySet = new AbilitySet();
                 hero.talents = ['none', 'none', 'none', 'none'];
-            }
+                this.selectedHeroes.push(hero);
+            });
 
             this.initAbilityPriorities();
             this.currentHero = this.selectedHeroes[0];
@@ -62,8 +57,7 @@ export class AbilitiesComponent implements OnInit {
     }
 
     initAbilityPriorities() {
-        for (let h = 0; h < this.selectedHeroes.length; h += 1) {
-            const hero = this.selectedHeroes[h];
+        this.selectedHeroes.forEach((hero) => {
             hero.abilityPriorities = [
                 {
                     name: hero.ability_q,
@@ -111,12 +105,11 @@ export class AbilitiesComponent implements OnInit {
             }
             hero.abilities = [];
             hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
-        }
+        });
     }
 
     prioritize(type, direction): void {
-        for (let i = 0; i < this.currentHero.abilityPriorities.length; i += 1) {
-            const ability = this.currentHero.abilityPriorities[i];
+        this.currentHero.abilityPriorities.forEach((ability) => {
             if (ability.type === type) {
                 const oldPriority = ability.priority;
                 const newPriority = ability.priority - direction;
@@ -127,9 +120,8 @@ export class AbilitiesComponent implements OnInit {
                     ability.priority = newPriority;
                     swapAbility.priority = oldPriority;
                 }
-                break;
             }
-        }
+        });
         const newAbilities = [];
         this.currentHero.abilityPriorities.map(ability => newAbilities[ability.priority] = ability);
         this.currentHero.abilities = newAbilities;
@@ -187,18 +179,16 @@ export class AbilitiesComponent implements OnInit {
     }
 
     createArrayFromPrios(): void {
-        // console.log('abilities', this.currentHero.abilities);
         for (let i = 0; i < NUMBER_LEVELS; i += 1) {
             let leveled = false;
-            for (let j = 0; j < NUMBER_ABILITIES; j += 1) {
-                const ability = this.currentHero.abilities[j];
+            this.currentHero.abilities.forEach((ability) => {
                 if (this.canLevelAbility(ability.type, i) && !leveled) {
                     this.currentHero.abilityLevels[ability.index][i] = 'selected';
                     leveled = true;
                 } else {
                     this.currentHero.abilityLevels[ability.index][i] = 'open';
                 }
-            }
+            });
         }
         this.createArrayFromSelected();
     }
@@ -217,20 +207,21 @@ export class AbilitiesComponent implements OnInit {
         }
         for (let i = 0; i < NUMBER_LEVELS; i += 1) {
             const leveled = false;
-            for (let j = 0; j < NUMBER_ABILITIES; j += 1) {
-                const ability = this.currentHero.abilities[j];
-                if (this.currentHero.abilityLevels[ability.index][i] !== 'selected') {
+            this.currentHero.abilities.forEach((ability) => {
+                const abilityLevels = this.currentHero.abilityLevels[ability.index];
+                if (abilityLevels[i] !== 'selected') {
                     if (this.canLevelAbility(ability.type, i)) {
                         if (levelSelected[i]) {
-                            this.currentHero.abilityLevels[ability.index][i] = 'closed';
+                            abilityLevels[i] = 'closed';
                         } else {
-                            this.currentHero.abilityLevels[ability.index][i] = 'open';
+                            abilityLevels[i] = 'open';
                         }
                     } else {
-                        this.currentHero.abilityLevels[ability.index][i] = 'disabled';
+                        abilityLevels[i] = 'disabled';
                     }
                 }
-            }
+
+            });
         }
     }
     overwritePriorities(level, abilityType): void {
@@ -239,9 +230,7 @@ export class AbilitiesComponent implements OnInit {
             abilityLevels[level] = 'open';
             this.createArrayFromSelected();
         } else if (this.canLevelAbility(abilityType, level)) {
-            for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
-                this.currentHero.abilityLevels[i][level] = 'open';
-            }
+            this.currentHero.abilityLevels.forEach(abilityLevel => abilityLevel[level] = 'open');
 
             abilityLevels[level] = 'selected';
             for (let i = 0; i < NUMBER_LEVELS; i += 1) {
@@ -283,10 +272,8 @@ export class AbilitiesComponent implements OnInit {
     *    in the form 'qweeqnnnrnnntqwr'
     **/
     generateAbilitiesString(hero): any {
-        const selectedAbilities = [];
-        for (let i = 0; i < NUMBER_LEVELS; i += 1) {
-            selectedAbilities.push('n');
-        }
+        const selectedAbilities = Array.apply(null, Array(NUMBER_LEVELS)).map((x, i) => 'n');
+
         for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
             for (let j = 0; j < NUMBER_LEVELS; j += 1) {
                 if (hero.abilityLevels[i][j] === 'selected') {
@@ -295,9 +282,7 @@ export class AbilitiesComponent implements OnInit {
             }
         }
         let str = '';
-        selectedAbilities.forEach((abilityType) => {
-            str += abilityType;
-        });
+        selectedAbilities.forEach(abilityType => str += abilityType);
         return this.correctAbilitiesString(str);
     }
 
@@ -313,10 +298,8 @@ export class AbilitiesComponent implements OnInit {
     }
 
     generateTalentArray(hero): any {
-        const talentsArray = [];
-        for (let i = 0; i < NUMBER_TALENTS; i += 1) {
-            talentsArray.push('n');
-        }
+        const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map((x, i) => 'n');
+
         if (hero) {
             for (let i = 0; i < NUMBER_TALENTS; i += 1) {
                 if (hero.talents[i].toLowerCase() === 'left') {

@@ -1,7 +1,6 @@
 <div class="container-fluid container-fluid-custom">
     <div class="row">
         <div class="col-12" id="heroesTitle">
-            <!-- <h3>HERO SELECTION</h3><br> -->
             Click & drag or double-click to select your preferred heroes
         </div>    
     </div>
@@ -80,9 +79,9 @@
                 </div>
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
-                <li class="nav-item" *ngFor="let pool of numberOfPools; let i = index;">                    
-                    <a sortablejs [id]="'poolLink'+i" class="nav-link pool-nav-link" [ngClass]="selectedPool == pool ? 'active' : ''" (click)="setSelectedPool(pool)" (dragenter)="highlightPool(pool)" (dragleave)="unhighlightPool(pool)" (drop)="addHero(selectedHero, pool)">
-                        Pool {{ pool }}
+                <li class="nav-item" *ngFor="let pool of getPools(); let i = index;">                    
+                    <a sortablejs [id]="'poolLink'+i" class="nav-link pool-nav-link" [ngClass]="selectedPool == i ? 'active' : ''" (click)="setSelectedPool(i)" (dragenter)="highlightPool(i)" (dragleave)="unhighlightPool(i)" (drop)="addHero(selectedHero, i)">
+                        Pool {{ i + 1 }}
                         <div [id]="'poolPlusIconCont'+i" class="pool-plus-icon-cont">
                             <i class="pool-plus-icon fas fa-plus"></i>
                         </div>
@@ -91,9 +90,9 @@
             </ul>
             <div class="card-body selected-card-body bot-manage-card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
-                    <div class="card hero-item" *ngFor="let hero of selectedPoolArray" [style.backgroundImage]="'url('+hero.image+')'">
+                    <div class="card hero-item" *ngFor="let hero of pools[selectedPool]" [style.backgroundImage]="'url('+hero.image+')'">
                         <div [id]="'s'+hero.id" class="popover-zone selected-popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
-                            <div class="card-header" (click)="removeHero(hero, selectedPoolArray)">
+                            <div class="card-header" (click)="removeHero(hero, pools[selectedPool])">
                                 <button id="removeIcon" class="button button-cancel btn-sm mx-2">
                                     <i id="timesIcon" class="fas fa-times"></i>
                                 </button>
@@ -147,7 +146,7 @@
                     <b class="popover-item">Armor:</b>&nbsp;{{ hero.armor }}<br>
                     <b class="popover-item">Attack Damage (Max):</b>&nbsp;{{ hero.attackDamageMax }}<br>
                     <b class="popover-item">Attack Damage (Min):</b>&nbsp;{{ hero.attackDamageMin }}<br>
-                    <b class="popover-item">Movement Speed:</b>&nbsp;{{ hero.movespeed }}
+                    <b class="popover-item">Movement Speed:</b>&nbsp;{{ hero.moveSpeed }}
                 </div>
                 <br>
                 <div class="text-center">

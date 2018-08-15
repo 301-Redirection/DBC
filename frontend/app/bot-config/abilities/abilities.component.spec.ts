@@ -19,7 +19,7 @@ describe('AbilitiesComponent', () => {
                 ability_w: 'Blood Rite',
                 ability_e: 'Thirst',
                 ability_r: 'Rupture',
-                movespeed: 285,
+                moveSpeed: 285,
                 armor: 3.36,
                 attackDamageMin: 33,
                 attackDamageMax: 39,
@@ -44,7 +44,7 @@ describe('AbilitiesComponent', () => {
                 ability_w: 'Brain Sap',
                 ability_e: 'Nightmare',
                 ability_r: 'Fiend\'s Grip',
-                movespeed: 310,
+                moveSpeed: 310,
                 armor: 4.22,
                 attackDamageMin: 35,
                 attackDamageMax: 41,
@@ -330,6 +330,4 @@ describe('AbilitiesComponent', () => {
         expect(component.onTalentSelect).toHaveBeenCalled();
         done();
     });
-
-    // TODO: we need more tests here
 });

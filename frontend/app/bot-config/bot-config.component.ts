@@ -65,25 +65,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {}
 
-    test() {
-        this.botConfigData.getTeamDesires().subscribe((teamDesires) => {
-            this.teamDesires = teamDesires;
-            console.log(this.teamDesires);
-        });
-        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
-            this.heroes = heroes;
-            console.log(this.heroes);
-        });
-        this.botConfigData.getAbilities().subscribe((abilities) => {
-            this.abilities = abilities;
-            console.log(this.abilities);
-        });
-        this.botConfigData.getItems().subscribe((items) => {
-            this.items = items;
-            console.log(this.items);
-        });
-    }
-
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
