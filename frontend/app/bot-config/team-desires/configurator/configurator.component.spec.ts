@@ -17,7 +17,6 @@ describe('ConfiguratorComponent', () => {
             imports: [FormsModule],
         }).createComponent(ConfiguratorComponent);
 
-
         fixture.detectChanges();
         component = fixture.componentInstance;
         component.condition = {
