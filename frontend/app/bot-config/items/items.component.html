@@ -15,8 +15,10 @@
             <div class="card-body bot-manage-card-body">
                 <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" [class.hero-selected]="hero === currentHero" (click)="setSelectedHero(i); onSelect(hero);"
                     [attr.id]="i" [style.backgroundImage]="'url('+hero.image+')'">
-                    <div class="hero-name">
-                        {{ hero.name }}
+                    <div [id]="hero.id" class="popover-zone" role="button" (mouseover)="triggerHeroPopover($event.currentTarget, hero)" data-toggle="popover">
+                        <div class="hero-name">
+                            {{ hero.niceName }}
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="selectedHeroes.length == 0">
@@ -107,7 +109,7 @@
                                 </div>
                                 <div class="row justify-content-md-center mt-1">
                                     <div class="mx-1" *ngFor="let component of item.components" [id]="component.name + 'comp'">
-                                        <div (mouseover)="triggerPopover($event.currentTarget, component)" data-trigger="hover" data-toggle="popover">
+                                        <div (mouseover)="triggerItemPopover($event.currentTarget, component)" data-trigger="hover" data-toggle="popover">
                                             <img [src]="component.url" class="item-component-image">
                                         </div>
                                     </div>
@@ -127,7 +129,7 @@
                     <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                         <div [id]="item.id" class="item" *ngFor="let item of basicItems" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
                             (drag)="setSelectedItem(item)">
-                            <div class="popover-zone"  (mouseover)="triggerPopover($event.currentTarget, item)"  data-toggle="popover"></div>
+                            <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
                         </div>
                     </div>
                 </div>
@@ -142,7 +144,7 @@
                     <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
                         <div class="item" *ngFor="let item of upgradeItems" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
                             (drag)="setSelectedItem(item)">
-                            <div class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
+                            <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
                         </div>
                     </div>
                 </div>
@@ -189,6 +191,71 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div id="itemsPopoverTemplate">
+                <div class="popover popover-dark" role="tooltip">
+                    <div class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div class="popover-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero popover -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngFor="let hero of allHeroes">
+            <div [id]="hero.programName">
+                <h5 class="popover-item" style="text-shadow:none;">
+                    <img class="popover-item" src="{{ hero.attributeImage }}" height="25">
+                    {{ hero.niceName }}
+                </h5>
+                <p class="text-center">
+                    <b class="popover-item">{{ hero.roles }}</b>
+                </p>
+                <div class="text-center">
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ strURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseStrength }}</b> + {{ hero.baseStrengthGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ agiURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseAgility }}</b> + {{ hero.baseAgilityGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ intURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseIntelligence }}</b> + {{ hero.baseIntelligenceGain }}
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="hero-attributes">
+                    <b class="popover-item">Armor:</b>&nbsp;{{ hero.armor }}<br>
+                    <b class="popover-item">Attack Damage (Max):</b>&nbsp;{{ hero.attackDamageMax }}<br>
+                    <b class="popover-item">Attack Damage (Min):</b>&nbsp;{{ hero.attackDamageMin }}<br>
+                    <b class="popover-item">Movement Speed:</b>&nbsp;{{ hero.moveSpeed }}
+                </div>
+                <br>
+                <div class="text-center">
+                    <img class="popover-item" src="{{ hero.qImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.wImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.eImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.rImage }}" alt="" height="50">
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heroes popover template -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="heroesPopoverTemplate">
                 <div class="popover popover-dark" role="tooltip">
                     <div class="arrow"></div>
                     <h3 class="popover-header"></h3>

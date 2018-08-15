@@ -190,7 +190,7 @@ export class ItemsComponent implements OnInit{
         this.currentHero = hero;
         this.saveItems();
     }
-    triggerPopover(target: HTMLElement, item: any) {
+    triggerItemPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
             trigger: 'hover click',
@@ -198,6 +198,17 @@ export class ItemsComponent implements OnInit{
             html: true,
             content: $(`#${item.name}`).html(),
             template: $('#itemsPopoverTemplate').html(),
+        });
+    }
+
+    triggerHeroPopover(target: HTMLElement, hero: any) {
+        $(target).popover({
+            animation: true,
+            trigger: 'hover click',
+            placement: 'right',
+            html: true,
+            content: $(`#${hero.programName}`).html(),
+            template: $('#heroesPopoverTemplate').html(),
         });
     }
 }
