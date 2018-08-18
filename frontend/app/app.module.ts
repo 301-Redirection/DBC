@@ -26,12 +26,14 @@ import { LoadingComponent } from './core/loading.component';
 
 import { FilterPipe } from './pipes/filter.pipe';
 import { BotConfigDataService } from './services/bot-config-data.service';
+import { WalkthroughComponent } from './walkthrough/walkthrough.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         CallbackComponent,
         LoadingComponent,
+        WalkthroughComponent,
     ],
     imports: [
         BrowserModule,

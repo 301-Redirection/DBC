@@ -10,6 +10,7 @@ import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { ItemsComponent } from '../bot-config/items/items.component';
 import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { WalkthroughComponent } from '../walkthrough/walkthrough.component';
 
 export const ROUTES: Routes = [
     {
@@ -58,6 +59,12 @@ export const ROUTES: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'walkthrough',
+        component: WalkthroughComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },
