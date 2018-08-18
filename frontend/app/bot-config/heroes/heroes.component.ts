@@ -258,7 +258,7 @@ export class HeroesComponent implements OnInit {
                     html: true,
                     content: $(`#${element.getAttribute('data-programName')}`).html(),
                     template: $('#heroesPopoverTemplate').html(),
-                    trigger: 'focus',
+                    trigger: 'hover',
                 });
             });
 

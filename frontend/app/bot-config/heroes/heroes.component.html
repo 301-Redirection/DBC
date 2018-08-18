@@ -160,7 +160,7 @@
             <div class="card-body selected-card-body bot-manage-card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <div class="card hero-item" *ngFor="let hero of pools[selectedPool]" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div [id]="'s'+hero.id" (load)="alert('hey')" class="popover-zone selected-popover-zone" data-toggle="popover">
+                        <div [id]="'s'+hero.id" class="popover-zone selected-popover-zone" data-toggle="popover">
                             <div class="card-header" (click)="removeHero(hero, pools[selectedPool])">
                                 <button id="removeIcon" class="button button-cancel btn-sm mx-2">
                                     <i id="timesIcon" class="fas fa-times"></i>
