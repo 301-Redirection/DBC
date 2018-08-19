@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
-import { FilterPipe } from '../../pipes/filter.pipe';
+
 // Import JQuery
 declare var $: any;
 
