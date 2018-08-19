@@ -104,9 +104,23 @@ export class ItemsComponent implements OnInit{
         }
     }
     addItemToList (item) {
+        if (item.components !== 'null') {
+            this.checkItemComponentsExistInList(item);
+        }
         this.heroItemSelection[this.selectedHeroIndex].push(item);
         this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
         this.setSelectedItemsArray();
+    }
+
+    // Absorb items that make up components for an upgrade
+    checkItemComponentsExistInList (item) {
+        for (const component of item.components) {
+            const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(component);
+            // Absorb item if in list
+            if (index > -1) {
+                this.removeItemFromList(component);
+            }
+        }
     }
 
     removeItemFromList (item) {
@@ -137,7 +151,6 @@ export class ItemsComponent implements OnInit{
     }
 
     setSelectedItem (item) {
-        console.log(this.selectedHeroIndex);
         this.selectedItem = item;
     }
 
@@ -150,6 +163,10 @@ export class ItemsComponent implements OnInit{
         this.setSelectedItemsArray();
     }
     addItemCostToTotal () {
+        // Absorb items for on drop
+        if (this.selectedItem.components !== 'null') {
+            this.checkItemComponentsExistInList(this.selectedItem);
+        }
         this.setSelectedItemsArray();
         this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
     }
