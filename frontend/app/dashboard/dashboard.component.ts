@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ApiConnectService } from '../services/api-connect.service';
-import { FormsModule, ReactiveFormsModule , FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
 // Import JQuery
@@ -56,7 +54,7 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteBotScript (botScriptID: number) {
-        const response = this.api.removeBot(botScriptID).subscribe(
+        this.api.removeBot(botScriptID).subscribe(
             (data) => {
                 console.log(data);
             },
