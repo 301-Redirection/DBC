@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiConnectService } from '../../services/api-connect.service';
 import * as globalConfig from '../../../../config/config.js';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { HeroSpecification } from '../../services/ConfigurationFormat';
@@ -19,10 +18,6 @@ class AbilitySet {
     abilities: any;
 }
 
-class TalentSet {
-    talents: [string, string, string, string];
-}
-
 @Component({
     selector: 'app-abilities',
     templateUrl: './abilities.component.html',
@@ -34,7 +29,7 @@ export class AbilitiesComponent implements OnInit {
     selectedHeroes: any;
     currentHero: any;
 
-    constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) { }
+    constructor(private botConfigData: BotConfigDataService) { }
 
     ngOnInit() {
         this.getHeroes();
