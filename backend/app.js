@@ -16,10 +16,6 @@ const validator = require('express-validator');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +27,7 @@ app.use(sassMiddleware({
     sourceMap: true,
 }));
 
+// TODO: use a better secret...
 app.use(session({
     secret: 'it\'s really a secret',
     resave: true,
