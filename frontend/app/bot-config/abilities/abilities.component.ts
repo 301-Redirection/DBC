@@ -201,7 +201,6 @@ export class AbilitiesComponent implements OnInit {
             levelSelected.push(isSelected);
         }
         for (let i = 0; i < NUMBER_LEVELS; i += 1) {
-            const leveled = false;
             this.currentHero.abilities.forEach((ability) => {
                 const abilityLevels = this.currentHero.abilityLevels[ability.index];
                 if (abilityLevels[i] !== 'selected') {
@@ -252,10 +251,6 @@ export class AbilitiesComponent implements OnInit {
         this.currentHero.talents[level] = value;
     }
 
-    createHeroSpecification(): void {
-        const i = 5;
-    }
-
     getAbilityType(hero, i): string {
         if (hero.abilityPriorities[i].type) {
             return hero.abilityPriorities[i].type.toLowerCase();
@@ -267,7 +262,7 @@ export class AbilitiesComponent implements OnInit {
     *    in the form 'qweeqnnnrnnntqwr'
     **/
     generateAbilitiesString(hero): any {
-        const selectedAbilities = Array.apply(null, Array(NUMBER_LEVELS)).map(i => 'n');
+        const selectedAbilities = Array.apply(null, Array(NUMBER_LEVELS)).map(( ) => 'n');
 
         for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
             for (let j = 0; j < NUMBER_LEVELS; j += 1) {
@@ -293,7 +288,7 @@ export class AbilitiesComponent implements OnInit {
     }
 
     generateTalentArray(hero): any {
-        const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map((x, i) => 'n');
+        const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map(() => 'n');
 
         if (hero) {
             for (let i = 0; i < NUMBER_TALENTS; i += 1) {
