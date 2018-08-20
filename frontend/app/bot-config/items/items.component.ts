@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
-import { FilterPipe } from '../../pipes/filter.pipe';
 // Import JQuery
 declare var $: any;
 
@@ -130,7 +129,7 @@ export class ItemsComponent implements OnInit{
         this.heroItemSelection = [];
         let index: number;
         index = 0;
-        for (const hero of this.selectedHeroes) {
+        for (let i = 0; i < this.selectedHeroes.length, i += 1) {
             this.heroItemSelection.push([]);
             this.totalCostPerHero[index] = 0;
             index += 1;

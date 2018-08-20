@@ -9,7 +9,6 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRouteStub } from '../testing/activated-route-stub';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
-
 @Component({ selector: 'app-team-desires', template: '' })
 class TeamDesiresComponent {}
 
