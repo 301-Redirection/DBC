@@ -1,7 +1,6 @@
 <!-- Hero popover -->
 <div class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <!-- <div class="modal-content" *ngFor="let hero of allHeroes"> -->
+    <div class="modal-dialog" role="document">        
         <div class="modal-content">
             <div [id]="hero.programName" class="we got a something oer here">
                 <h5 class="popover-item" style="text-shadow:none;">
@@ -64,10 +63,21 @@
     </div>
 </div>
 
+<!-- Hero Item -->
 <div class="hero-item" [style.backgroundImage]="'url('+hero.image+')'">
-    <a tabindex="0" id="hero.id" class="popover-zone" data-toggle="popover" data-trigger="click" data-template="heroesPopoverTemplate" data-content="hero.programName">
+    <a *ngIf="!isSelectedHero" tabindex="0" [id]="isAbilityHero ? 'ability'+hero.id : isItemHero ? 'item'+hero.id : hero.id" class="popover-zone" role="button" data-toggle="popover" data-trigger="focus" (mouseover)="activatePopover()">
         <div class="hero-name">
             {{ hero.niceName }}
-        </div>                        
+        </div>
+    </a>
+    <a *ngIf="isSelectedHero" tabindex="0" [id]="'select'+hero.id" class="popover-zone selected-popover-zone" role="button" data-toggle="popover" data-trigger="focus" (mouseover)="activatePopover()">
+        <div class="card-header" (click)="removeHero(hero, pool)">
+            <button id="removeIcon" class="button button-cancel btn-sm mx-2">
+                <i id="timesIcon" class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="hero-name">
+            {{ hero.niceName }}
+        </div>
     </a>
 </div>
