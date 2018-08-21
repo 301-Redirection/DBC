@@ -113,6 +113,12 @@ export class HeroesComponent implements OnInit {
     }
 
     sortHeroData(): void {
+        // sort heroes alphabetically
+        this.allHeroes.sort((a, b) => {
+            return (a.niceName > b.niceName) ? 1 : ((a.niceName < b.niceName) ? -1 : 0);
+        });
+
+        // distribute into separate arrays based on primary attribute
         this.allHeroes.forEach((hero) => {
             if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);

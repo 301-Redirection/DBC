@@ -1,0 +1,73 @@
+<!-- Hero popover -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <!-- <div class="modal-content" *ngFor="let hero of allHeroes"> -->
+        <div class="modal-content">
+            <div [id]="hero.programName" class="we got a something oer here">
+                <h5 class="popover-item" style="text-shadow:none;">
+                    <img class="popover-item" src="{{ hero.attributeImage }}" height="25">
+                    {{ hero.niceName }}
+                </h5>
+                <p class="text-center">
+                    <b class="popover-item">{{ hero.roles }}</b>
+                </p>
+                <div class="text-center">
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ strURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseStrength }}</b> + {{ hero.baseStrengthGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ agiURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseAgility }}</b> + {{ hero.baseAgilityGain }}
+                        </figcaption>
+                    </figure>&nbsp;&nbsp;&nbsp;
+                    <figure class="text-center d-inline-block">
+                        <img class="popover-item" src="{{ intURL }}" height="25">
+                        <figcaption class="figure-caption text-center">
+                            <b class="popover-item">{{ hero.baseIntelligence }}</b> + {{ hero.baseIntelligenceGain }}
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="hero-attributes">
+                    <b class="popover-item">Armor:</b>&nbsp;{{ hero.armor }}<br>
+                    <b class="popover-item">Attack Damage (Max):</b>&nbsp;{{ hero.attackDamageMax }}<br>
+                    <b class="popover-item">Attack Damage (Min):</b>&nbsp;{{ hero.attackDamageMin }}<br>
+                    <b class="popover-item">Movement Speed:</b>&nbsp;{{ hero.moveSpeed }}
+                </div>
+                <br>
+                <div class="text-center">
+                    <img class="popover-item" src="{{ hero.qImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.wImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.eImage }}" alt="" height="50">&nbsp;
+                    <img class="popover-item" src="{{ hero.rImage }}" alt="" height="50">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heroes popover template -->
+<div class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="heroesPopoverTemplate">
+                <div class="popover popover-dark" role="tooltip">
+                    <div class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div class="popover-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hero-item" [style.backgroundImage]="'url('+hero.image+')'">
+    <a tabindex="0" id="hero.id" class="popover-zone" data-toggle="popover" data-trigger="click" data-template="heroesPopoverTemplate" data-content="hero.programName">
+        <div class="hero-name">
+            {{ hero.niceName }}
+        </div>                        
+    </a>
+</div>
