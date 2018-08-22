@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-// import { SortablejsModule } from 'angular-sortablejs';
 
 // Custom Modules
 import { HomeModule } from './home/home.module';
@@ -23,15 +22,15 @@ import { AuthService } from './auth/auth.service';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
-
-// import { FilterPipe } from './pipes/filter.pipe';
 import { BotConfigDataService } from './services/bot-config-data.service';
+import { WalkthroughComponent } from './walkthrough/walkthrough.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         CallbackComponent,
         LoadingComponent,
+        WalkthroughComponent,
     ],
     imports: [
         BrowserModule,

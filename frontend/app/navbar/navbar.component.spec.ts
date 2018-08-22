@@ -75,10 +75,11 @@ describe('NavbarComponent', () => {
         });
 
         it('Links should go to logged in places', (done) => {
-            expect(routerLinks.length).toBe(3, 'should have 3 routerLinks');
+            expect(routerLinks.length).toBe(4, 'should have 4 routerLinks');
             expect(routerLinks[0].linkParams).toBe('/home');
             expect(routerLinks[1].linkParams).toBe('/dashboard');
             expect(routerLinks[2].linkParams).toBe('/bot-config');
+            expect(routerLinks[3].linkParams).toBe('/walkthrough');
             done();
         });
     });
