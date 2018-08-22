@@ -80,7 +80,7 @@ describe('Server', () => {
         });
         it('Body', (done) => {
             expect(data.body.message).toBe('This is an error response');
-            done()
+            done();
         });
     });
 });

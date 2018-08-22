@@ -122,7 +122,7 @@ describe('Bot API testing', () => {
                 done();
             });
         });
-        it('--Initial All', (done) => {
+        it('-- Initial All', (done) => {
             const options = {
                 url: 'http://localhost:3000/bots/all',
             };
