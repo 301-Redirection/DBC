@@ -22,7 +22,6 @@ import { AuthService } from './auth/auth.service';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { LoadingComponent } from './core/loading.component';
-
 import { BotConfigDataService } from './services/bot-config-data.service';
 import { WalkthroughComponent } from './walkthrough/walkthrough.component';
 
