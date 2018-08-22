@@ -60,8 +60,9 @@ describe('Server', () => {
             });
         });
         // Note => represents a function that doesn't change 'this' variable
-        it('Status 200', () => {
+        it('Status 200', (done) => {
             expect(data.status).toBe(200);
+            done();
         });
     });
     describe('GET /test', () => {
@@ -73,11 +74,13 @@ describe('Server', () => {
                 done();
             });
         });
-        it('Status 500', () => {
+        it('Status 500', (done) => {
             expect(data.status).toBe(500);
+            done();
         });
-        it('Body', () => {
+        it('Body', (done) => {
             expect(data.body.message).toBe('This is an error response');
+            done()
         });
     });
 });

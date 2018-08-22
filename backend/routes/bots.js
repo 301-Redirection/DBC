@@ -13,8 +13,7 @@ const router = express.Router();
 
 /* will always return a JSON object of at most 5 bots */
 router.get('/recent', jwtCheck, (request, response) => {
-    const resp = BotController.getRecentBots(request, response);
-    return resp;
+    BotController.getRecentBots(request, response);
 });
 
 /* will always return JSON of the new record details */
@@ -24,24 +23,20 @@ router.post('/update', jwtCheck, [
     check('description').exists(),
     check('configuration').exists(),
 ], (request, response) => {
-    const resp = BotController.update(request, response);
-    return resp;
+    BotController.updateBot(request, response);
 });
 
 router.get('/get/:botID', jwtCheck, (request, response) => BotController.getBot(request, response));
 
 router.get('/all', jwtCheck, (request, response) => {
-    const resp = BotController.getAllBots(request, response);
-    return resp;
+    BotController.getAllBots(request, response);
 });
 
 router.post('/delete/', jwtCheck, [check('botID').exists()], (request, response) => {
-    const resp = BotController.deleteBot(request, response);
-    return resp;
+    BotController.deleteBot(request, response);
 });
 
 router.get('/getScripts/:botId', (request, response) => {
-    const resp = BotController.getScripts(request, response);
-    return resp;
+    BotController.getScripts(request, response);
 });
 module.exports = router;

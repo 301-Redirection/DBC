@@ -11,7 +11,6 @@ const { validationResult } = require('express-validator/check');
 const { writeScripts, shouldRegenerateBotScripts } = require('controllers/generateScript.js');
 
 const PATH_TO_LUA = path.join(__dirname, '..', '..', '..', 'public', 'lua');
-
 const LIMIT_NUMBER = 5;
 
 class BotController {

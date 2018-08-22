@@ -62,6 +62,9 @@ describe('Bot API testing', () => {
                         // clear all entries from table
                         sequelize.query('DELETE FROM BotConfigs');
                         done();
+                    })
+                    .catch((err) => {
+                        console.log(err);
                     });
             });
     });
@@ -161,6 +164,7 @@ describe('Bot API testing', () => {
                 });
             });
             req.on('error', (e) => {
+                console.log(e);
                 throw e;
             });
             req.write(postData);
