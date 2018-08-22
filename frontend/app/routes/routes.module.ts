@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
@@ -8,8 +7,8 @@ import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.co
 import { AuthGuard } from '../auth/auth.guard';
 import { HeroesComponent } from '../bot-config/heroes/heroes.component';
 import { ItemsComponent } from '../bot-config/items/items.component';
-import { AbilitiesComponent } from '../bot-config/abilities/abilities.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { WalkthroughComponent } from '../walkthrough/walkthrough.component';
 
 export const ROUTES: Routes = [
     {
@@ -58,6 +57,12 @@ export const ROUTES: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'walkthrough',
+        component: WalkthroughComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },

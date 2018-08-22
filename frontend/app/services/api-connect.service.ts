@@ -3,14 +3,12 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
-import { Router } from '@angular/router';
 import { API_URL } from './api-url-config';
 
 @Injectable()
 export class ApiConnectService {
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient) {
         this.http = http;
-        this.router = router;
     }
 
     private get authHeader(): string {
