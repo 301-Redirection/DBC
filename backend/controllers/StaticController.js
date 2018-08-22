@@ -1,6 +1,6 @@
 /**
  *  This is class to interact with both the database objects and
- *  image files already present on the server to provide to the 
+ *  image files already present on the server to provide to the
  *  front-end with data as needed
  */
 

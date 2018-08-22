@@ -8,7 +8,6 @@ const path = require('path');
 const mime = require('mime');
 
 class IndexController {
-    
     static getHomePage(request, response) {
         if (request.user) {
             response.redirect('/user');
