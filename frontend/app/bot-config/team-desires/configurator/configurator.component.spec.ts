@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguratorComponent, EnumToArrayPipe } from './configurator.component';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-// import { DebugElement } from '@angular/core';
 
 describe('ConfiguratorComponent', () => {
     let component: ConfiguratorComponent;
