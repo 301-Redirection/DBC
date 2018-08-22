@@ -25,7 +25,7 @@ class BotController {
             .then((botConfigs) => {
                 response.status(200).json({ botConfigs });
             })
-            .catch((err) => {
+            .catch(() => {
                 response.status(500).json({ error: true, message: 'Database Error' });
             });
     }
@@ -54,7 +54,7 @@ class BotController {
                     writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
                 })
-                .catch((err) => {
+                .catch(() => {
                     response.status(500).json({ error: true, message: 'Database Error' });
                 });
         } else {
@@ -78,7 +78,7 @@ class BotController {
                         response.status(200).json({});
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     response.status(500).json({ error: true, message: 'Database Error' });
                 });
         }
@@ -95,7 +95,7 @@ class BotController {
             .then((botConfig) => {
                 response.status(200).json({ botConfig });
             })
-            .catch((err) => {
+            .catch(() => {
                 response.status(500).json({ error: true, message: 'Database Error' });
             });
     }
@@ -107,7 +107,7 @@ class BotController {
             .then((botConfigs) => {
                 response.status(200).json({ botConfigs });
             })
-            .catch((err) => {
+            .catch(() => {
                 response.status(500).json({ error: true, message: 'Database Error' });
             });
     }
@@ -123,7 +123,7 @@ class BotController {
             .then(() => {
                 response.status(200).json({ deleted: true });
             })
-            .catch((err) => {
+            .catch(() => {
                 response.status(500).json({ error: true, deleted: false });
             });
     }
