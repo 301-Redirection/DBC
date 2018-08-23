@@ -53,7 +53,7 @@ describe('MySQL Intial Testing', () => {
             sequelize.query('show tables;').then((myTableRows) => {
                 let isPresent = false;
                 for (let i = myTableRows.length - 1; i >= 0; i -= 1) {
-                    if (myTableRows[i][0].Tables_in_test === 'BotConfigs') {
+                    if (myTableRows[i][0].Tables_in_test.toLowerCase() === 'BotConfigs'.toLowerCase()) {
                         isPresent = true;
                         break;
                     }

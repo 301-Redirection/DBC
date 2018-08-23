@@ -3,7 +3,7 @@ import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { AbilitiesComponent } from './abilities.component';
 import { Observable } from 'rxjs/Rx';
-import { Title, By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 describe('AbilitiesComponent', () => {
     let component: AbilitiesComponent;
@@ -186,13 +186,13 @@ describe('AbilitiesComponent', () => {
         expect(wLevel1.textContent).toBe('1');
         const eLevel1 = fixture.debugElement.nativeElement
             .querySelector('#E-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(eLevel1.textContent).toBe('');
         const rLevel1 = fixture.debugElement.nativeElement
             .querySelector('#R-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(rLevel1.textContent).toBe('');
         const tLevel1 = fixture.debugElement.nativeElement
             .querySelector('#T-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(tLevel1.textContent).toBe('');
 
         let totalLevels: number = 0;
         let abilityType: any;

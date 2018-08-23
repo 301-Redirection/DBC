@@ -227,7 +227,7 @@ export class HeroesComponent implements OnInit {
     }
 
     getPools() {
-        return this.pools.filter((x, i) => i < this.numberOfPools);
+        return this.pools.filter((_x, i) => i < this.numberOfPools);
     }
 
     highlightPool(pool: number): void {

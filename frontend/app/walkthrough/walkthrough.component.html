@@ -1,0 +1,70 @@
+<div class="container-fluid container-fluid-custom background main-background">
+    <div class="m-5 w-50 mx-auto">
+        <div class="card config-card">
+            <div class="card-body">
+                <h5 class="card-title">How to upload bot scripts locally</h5>
+                <div id = "upload-scripts">
+                    <ol>
+                        <li>Generate your code package: Click the generate button of the bot script you configured</li>
+                        <li>Navigate to your steam directory:</li>
+                        <ul>
+                            <li><span class = "path">Windows: “C:\Program Files (x86)\Steam”</span></li>
+                            <li><span class = "path">Mac: "Users/&lt;USERNAME&gt;/Library/Application Support/Steam</span></li>
+                            <img class = "img img-fluid" src = "../../assets/images/tutorial/steamScriptDirectory.png">
+                        </ul>
+                        <li>Follow the corresponding path: if there is no "bots" folder, then create the folder</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/steamScriptDirectoryBotFolderCreated.png">
+                        <li>Copy the downloaded zip into the bots folder above</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/steamScriptDirectoryPasteZip.png">
+                        <li>Extract the zip containing the code into this directory. If you do not have such software, you can download <a href= "https://www.win-rar.com/download.html?&L=0">WinRar</a> or <a href = "https://www.7-zip.org/download.html">7zip</a></li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/steamScriptDirectoryExtractZip.png">
+                        <li>It is not essential to delete the zip file, however you may wish to.</li>
+                    </ol>
+                    <div>At the end of this walkthrough, your directory should look similar to the following:</div>
+                    <div>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/finalExtractedScripts.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5 w-50 mx-auto">
+        <div class="card config-card">
+            <div class="card-body">
+                <h5 class="card-title">How to start a game with custom bot scripts</h5>
+                <div id="enable-scripts-in-dota">
+                    <ol>
+                        <li><a href = "#upload-scripts">Upload your bot scripts locally</a></li>
+                        <li>Launch Dota 2</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/dotaMainInterface.png">
+                        <li>After clicking the play button, click create under the custom lobbies tab</li>
+                        <div class = "row">
+                            <img class = "img img-fluid col-md-8" src = "../../assets/images/tutorial/dotaLobbyCreate.png">
+                            <img class = "img img-fluid col-md-4" src = "../../assets/images/tutorial/anotated/dotaCreateLobby.png">
+                        </div>
+                        <li>Click on the Edit button (small gear add icon)</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyEditButton.png">
+                        <li>You may have to open the advanced settings tab</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyAdvancedLobbySettings.png">
+                        <li>You will see a tab labelled “Bot settings”: 
+                            <ol>
+                                <li>Although this is not essential, it is recommended that cheats are enabled.</li>
+                                <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyEnableCheats.png">
+                                <li>Ensure that the checkbox “fill empty slots with bots” is checked</li>
+                                <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyFillEmptySlots.png">
+                                <li>On any side(s) of the map where the custom bots are desired to be used, click the dropdown and select the local dev script option</li>
+                                <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyChooseBotType.png">
+                            </ol>
+                        </li>
+                        <div>In Summary, your lobby settings should look similar to the following image</div>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/dotaLobbyEnableBots.png">
+
+                        <li>Start playing!</li>
+                        <img class = "img img-fluid" src = "../../assets/images/tutorial/anotated/dotaLobbyStartGame.png">
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
