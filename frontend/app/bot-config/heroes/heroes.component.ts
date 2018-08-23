@@ -163,7 +163,6 @@ export class HeroesComponent implements OnInit {
                 this.pools[0] = pool1;
                 this.setSelectedPool(0);
             }
-            this.setSelectedHeroesList();
         }
     }
 
@@ -171,7 +170,9 @@ export class HeroesComponent implements OnInit {
         this.selectedHeroesList = [];
         this.pools.forEach((pool) => {
             pool.forEach((hero) => {
-                this.selectedHeroesList.push(hero);
+                if (this.selectedHeroesList.indexOf(hero) === -1) {
+                    this.selectedHeroesList.push(hero);
+                }
             });
         });
         this.saveHeroes();
