@@ -58,14 +58,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body bot-manage-card-body drop-zone item-card-container-border" [sortablejs]="selectedItemsArray" [sortablejsOptions]="optionsTarget"
+                        <div class="card-body bot-manage-card-body drop-zone item-card-container-border" [sortablejs]="heroItemSelection[selectedHeroIndex]" [sortablejsOptions]="optionsTarget"
                             (drop)="addItemCostToTotal()">
                             <div *ngIf="selectedItemsArray.length == 0">
                                 <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
                                 <h6 class="text-center mt-2 text-muted">Items purchased according to the order of shown here</h6>
                                 <h6 class="text-center text-muted mt-2">Drag an item up or down to change it's position</h6>
                             </div>
-                            <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray">
+                            <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray;trackBy: trackItem" [id]="'s'+ item.id">
                                 <div class="card-header row">
                                     <div class="col-sm-3">
                                         <img [src]="item.url">
@@ -114,7 +114,7 @@
                         <div class="card-header bot-manage-card-header">
                             <h5 class="align-middle">BASICS</h5>
                         </div>
-                        <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
+                        <div class="card-body bot-manage-card-body p-0 m-0 pt-2 justify-content-center">
                             <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                                 <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
                                     (drag)="setSelectedItem(item)">
@@ -129,9 +129,9 @@
                         <div class="card-header bot-manage-card-header">
                             <h5 class="align-middle">UPGRADES</h5>
                         </div>
-                        <div class="card-body bot-manage-card-body">
+                        <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
                             <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
-                                <div class="item" *ngFor="let item of upgradeItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
+                                <div [id]="item.id" class="item" *ngFor="let item of upgradeItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
                                     (drag)="setSelectedItem(item)">
                                     <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
                                 </div>

@@ -127,6 +127,14 @@ export class ItemsComponent implements OnInit{
     // Functions to handle selected items
     // **********************************
 
+    // Angular ngfor optimization (Dont rebuild list every time)
+    trackItem(index, item) {
+        // index is needed as part of angular trackby interface
+        let indx = index;
+        indx = indx + 1;
+        // track by item.id if exists
+        return item ? item.id : undefined;
+    }
     // Set the selected hero
     onSelect(hero): void {
         this.currentHero = hero;
@@ -172,8 +180,8 @@ export class ItemsComponent implements OnInit{
     removeItemFromList (item) {
         const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
         if (index !== -1) {
-            this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
             this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
+            this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
             this.setSelectedItemsArray();
         }
     }
