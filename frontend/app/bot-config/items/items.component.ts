@@ -55,10 +55,11 @@ export class ItemsComponent implements OnInit{
     ngOnInit() {
         this.getHeroes();
         this.getItems();
-
-        // this.popoverDismiss();
     }
 
+    // **********************************
+    // Get Item and Hero data from server
+    // **********************************
     getHeroes() {
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];
@@ -86,9 +87,13 @@ export class ItemsComponent implements OnInit{
             },
         );
     }
+
+    // Get full url path for displaying images
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);
     }
+
+    // Categories the items received from the server
     sortItemData(): void {
         for (const item of this.allItems) {
             item['url'] = this.getItemImageFullURL(item['url']);
@@ -103,78 +108,8 @@ export class ItemsComponent implements OnInit{
             }
         }
     }
-    addItemToList (item) {
-        if (item.components !== 'null') {
-            this.checkItemComponentsExistInList(item);
-        }
-        this.heroItemSelection[this.selectedHeroIndex].push(item);
-        this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
-        this.setSelectedItemsArray();
-    }
 
-    // Absorb items that make up components for an upgrade
-    checkItemComponentsExistInList (item) {
-        for (const component of item.components) {
-            const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(component);
-            // Absorb item if in list
-            if (index > -1) {
-                this.removeItemFromList(component);
-            }
-        }
-    }
-
-    removeItemFromList (item) {
-        const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
-        if (index !== -1) {
-            this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
-            this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
-            this.setSelectedItemsArray();
-        }
-    }
-    setSelectedHero (index) {
-        this.prevSelectedHeroIndex = this.selectedHeroIndex;
-        this.selectedHeroIndex = index;
-        this.selectedItemsArray = this.heroItemSelection[index];
-        $(`#${this.prevSelectedHeroIndex}`).removeClass('hero-selected');
-        $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
-    }
-    reset () : void {
-        this.setSelectedHero(0);
-        this.heroItemSelection = [];
-        let i: number;
-        for (i = 0; i < this.selectedHeroes.length; i += 1) {
-            this.heroItemSelection.push([]);
-            this.totalCostPerHero[i] = 0;
-            i += 1;
-        }
-        this.setSelectedItemsArray();
-    }
-
-    setSelectedItem (item) {
-        this.selectedItem = item;
-    }
-
-    setSelectedItemsArray () {
-        this.selectedItemsArray = this.heroItemSelection[this.selectedHeroIndex];
-    }
-    clearItemsSelectedHero () {
-        this.heroItemSelection[this.selectedHeroIndex] = [];
-        this.totalCostPerHero[this.selectedHeroIndex] = 0;
-        this.setSelectedItemsArray();
-    }
-    addItemCostToTotal () {
-        // Stop Adding duplicates if drag in selected items list:
-        if (this.selectedItem !== null) {
-            // Absorb items for on drop
-            if (this.selectedItem.components !== 'null') {
-                this.checkItemComponentsExistInList(this.selectedItem);
-            }
-            this.setSelectedItemsArray();
-            this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
-            this.setSelectedItem(null);
-        }
-    }
-
+    // Gets upgrade item's components, store in the item
     handleItemComponents (item) {
         item['components'] = JSON.parse(item['components']);
         let component: any;
@@ -188,6 +123,105 @@ export class ItemsComponent implements OnInit{
         this.selectedItemComponentsArray = [];
     }
 
+    // **********************************
+    // Functions to handle selected items
+    // **********************************
+
+    // Set the selected hero
+    onSelect(hero): void {
+        this.currentHero = hero;
+        this.saveItems();
+    }
+
+    // Add item to selected list triggered by double click
+    addItemToList (item) {
+        if (item.components !== 'null') {
+            this.checkItemComponentsExistInList(item);
+        }
+        this.heroItemSelection[this.selectedHeroIndex].push(item);
+        this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
+        this.setSelectedItemsArray();
+    }
+
+    // Add item to selected list triggered by drop event, needed handled different to double click
+    addItemCostToTotal () {
+        // Stop Adding duplicates if dragged in selected items list:
+        if (this.selectedItem !== null) {
+            // Absorb items for on drop
+            if (this.selectedItem.components !== 'null') {
+                this.checkItemComponentsExistInList(this.selectedItem);
+            }
+            this.setSelectedItemsArray();
+            this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
+            this.setSelectedItem(null);
+        }
+    }
+
+    // Absorb items that make up components for an upgrade
+    checkItemComponentsExistInList (item) {
+        for (const component of item.components) {
+            const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(component);
+            // Absorb item if in list
+            if (index > -1) {
+                this.removeItemFromList(component);
+            }
+        }
+    }
+
+    // Remove an item that is in selected list
+    removeItemFromList (item) {
+        const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
+        if (index !== -1) {
+            this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
+            this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
+            this.setSelectedItemsArray();
+        }
+    }
+
+    // Set the selected hero, needed to manage per hero items selection
+    setSelectedHero (index) {
+        this.prevSelectedHeroIndex = this.selectedHeroIndex;
+        this.selectedHeroIndex = index;
+        this.selectedItemsArray = this.heroItemSelection[index];
+        $(`#${this.prevSelectedHeroIndex}`).removeClass('hero-selected');
+        $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
+    }
+
+    // Set selected item, needed to insert items into selected list
+    setSelectedItem (item) {
+        this.selectedItem = item;
+    }
+
+    // Set per hero item selected array
+    setSelectedItemsArray () {
+        this.selectedItemsArray = this.heroItemSelection[this.selectedHeroIndex];
+    }
+
+    // General reset all selected items of all selected heroes to null
+    reset () : void {
+        this.setSelectedHero(0);
+        this.heroItemSelection = [];
+        let i: number;
+        for (i = 0; i < this.selectedHeroes.length; i += 1) {
+            this.heroItemSelection.push([]);
+            this.totalCostPerHero[i] = 0;
+            i += 1;
+        }
+        this.setSelectedItemsArray();
+    }
+
+    // Clear items selected for a specific hero
+    clearItemsSelectedHero () {
+        this.heroItemSelection[this.selectedHeroIndex] = [];
+        this.totalCostPerHero[this.selectedHeroIndex] = 0;
+        this.setSelectedItemsArray();
+    }
+
+    // *********************************************************
+    // Functions to save and retrieve selected items from server
+    // *********************************************************
+
+    // get item names to save to server
     getItemNames(items): any {
         const itemNames = [];
         items.forEach((item) => {
@@ -196,6 +230,7 @@ export class ItemsComponent implements OnInit{
         return itemNames;
     }
 
+    // Save items to bot config service
     saveItems(): void {
         for (let i = 0; i < this.selectedHeroes.length; i += 1) {
             const hero = this.selectedHeroes[i];
@@ -206,10 +241,9 @@ export class ItemsComponent implements OnInit{
         console.log(this.botConfigData.getConfig());
     }
 
-    onSelect(hero): void {
-        this.currentHero = hero;
-        this.saveItems();
-    }
+    // ****************************
+    // Functions to handle popovers
+    // ****************************
     triggerItemPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
