@@ -110,7 +110,7 @@
                         <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
                             <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                                 <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
-                                    (drag)="setSelectedItem(item)">
+                                    (drag)="setSelectedItem(item); hideItemPopovers()">
                                     <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
                                 </div>
                             </div>
