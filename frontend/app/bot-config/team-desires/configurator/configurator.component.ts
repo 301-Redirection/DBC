@@ -1,8 +1,6 @@
 import {
     Component,
     Input,
-    Output,
-    EventEmitter,
     Pipe,
     PipeTransform,
 } from '@angular/core';

@@ -3,7 +3,8 @@ import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { AbilitiesComponent } from './abilities.component';
 import { Observable } from 'rxjs/Rx';
-import { Title, By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
+import { HeroItemStubComponent } from '../../testing/hero-item-stub';
 
 describe('AbilitiesComponent', () => {
     let component: AbilitiesComponent;
@@ -82,7 +83,10 @@ describe('AbilitiesComponent', () => {
             .returnValue(Observable.of(heroesArray));
 
         TestBed.configureTestingModule({
-            declarations: [AbilitiesComponent],
+            declarations: [
+                AbilitiesComponent,
+                HeroItemStubComponent,
+            ],
             providers: [
                 { provide: BotConfigDataService, useValue: botConfigDataServiceStub },
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
@@ -184,13 +188,13 @@ describe('AbilitiesComponent', () => {
         expect(wLevel1.textContent).toBe('1');
         const eLevel1 = fixture.debugElement.nativeElement
             .querySelector('#E-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(eLevel1.textContent).toBe('');
         const rLevel1 = fixture.debugElement.nativeElement
             .querySelector('#R-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(rLevel1.textContent).toBe('');
         const tLevel1 = fixture.debugElement.nativeElement
             .querySelector('#T-1');
-        expect(qLevel1.textContent).toBe('');
+        expect(tLevel1.textContent).toBe('');
 
         let totalLevels: number = 0;
         let abilityType: any;
@@ -221,7 +225,8 @@ describe('AbilitiesComponent', () => {
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
         // note component assumes first hero is selected, hence select 2nd one
-        fixture.debugElement.query(By.css('.hero-item:nth-child(2)')).nativeElement.click();
+        // console.log(fixture);
+        fixture.debugElement.query(By.css('app-hero-item:nth-child(2)')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();
         expect(component.onSelect).toHaveBeenCalled();
@@ -270,14 +275,14 @@ describe('AbilitiesComponent', () => {
         // note second hero has prio on w and initial hero has default prio on q
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
-        fixture.debugElement.query(By.css('.hero-item:nth-child(2)')).nativeElement.click();
+        fixture.debugElement.query(By.css('app-hero-item:nth-child(2)')).nativeElement.click();
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#btn-ability-prio-W-left'))
             .nativeElement.click();
         fixture.detectChanges();
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
-        fixture.debugElement.query(By.css('.hero-item:nth-child(1)')).nativeElement.click();
+        fixture.debugElement.query(By.css('app-hero-item:nth-child(1)')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();
         expect(component.onSelect).toHaveBeenCalled();

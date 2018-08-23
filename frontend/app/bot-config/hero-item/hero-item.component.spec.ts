@@ -16,10 +16,12 @@ describe('HeroItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HeroItemComponent);
         component = fixture.componentInstance;
+        component.hero = { id: 'bloodMage' };
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should create', (done) => {
         expect(component).toBeTruthy();
+        done();
     });
 });

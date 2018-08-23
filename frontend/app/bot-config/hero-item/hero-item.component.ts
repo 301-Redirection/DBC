@@ -22,7 +22,6 @@ export class HeroItemComponent implements OnInit {
     agiURL = '/assets/images/agility.png';
     intURL = '/assets/images/intelligence.png';
 
-
     constructor() { }
 
     ngOnInit() { }
