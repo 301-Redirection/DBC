@@ -136,7 +136,7 @@ export class HeroesComponent implements OnInit {
     togglePools(): void {
         this.partitioned = !this.partitioned;
         this.hidePopovers();
-        if (confirm('Are you sure you want to toggle pools? All changes will be lost.')) {
+        if (confirm('Are you sure you want to toggle pools?')) {
             if (this.numberOfPools > 1) {
                 this.numberOfPools = 1;
                 document.getElementById('poolTabs').style.height = '0';
@@ -163,6 +163,7 @@ export class HeroesComponent implements OnInit {
                 this.pools[0] = pool1;
                 this.setSelectedPool(0);
             }
+            this.setSelectedHeroesList();
         }
     }
 
