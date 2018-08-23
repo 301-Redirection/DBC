@@ -163,12 +163,16 @@ export class ItemsComponent implements OnInit{
         this.setSelectedItemsArray();
     }
     addItemCostToTotal () {
-        // Absorb items for on drop
-        if (this.selectedItem.components !== 'null') {
-            this.checkItemComponentsExistInList(this.selectedItem);
+        // Stop Adding duplicates if drag in selected items list:
+        if (this.selectedItem !== null) {
+            // Absorb items for on drop
+            if (this.selectedItem.components !== 'null') {
+                this.checkItemComponentsExistInList(this.selectedItem);
+            }
+            this.setSelectedItemsArray();
+            this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
+            this.setSelectedItem(null);
         }
-        this.setSelectedItemsArray();
-        this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
     }
 
     handleItemComponents (item) {
