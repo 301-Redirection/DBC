@@ -31,7 +31,6 @@ export class ItemsComponent implements OnInit{
     // Items specific variables
     heroItemSelection = [];
     selectedItem: any;
-    selectedItemsArray: any;
     selectedItemComponentsArray = [];
     totalCostPerHero = [];
     itemSearch: String;
@@ -80,7 +79,6 @@ export class ItemsComponent implements OnInit{
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
-                this.selectedItemsArray = [];
             },
             (error) => {
                 console.log(error);
@@ -148,7 +146,6 @@ export class ItemsComponent implements OnInit{
         }
         this.heroItemSelection[this.selectedHeroIndex].push(item);
         this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
-        this.setSelectedItemsArray();
     }
 
     // Add item to selected list triggered by drop event, needed handled different to double click
@@ -159,7 +156,6 @@ export class ItemsComponent implements OnInit{
             if (this.selectedItem.components !== 'null') {
                 this.checkItemComponentsExistInList(this.selectedItem);
             }
-            this.setSelectedItemsArray();
             this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
             this.setSelectedItem(null);
         }
@@ -182,7 +178,6 @@ export class ItemsComponent implements OnInit{
         if (index !== -1) {
             this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
             this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;
-            this.setSelectedItemsArray();
         }
     }
 
@@ -190,7 +185,6 @@ export class ItemsComponent implements OnInit{
     setSelectedHero (index) {
         this.prevSelectedHeroIndex = this.selectedHeroIndex;
         this.selectedHeroIndex = index;
-        this.selectedItemsArray = this.heroItemSelection[index];
         $(`#${this.prevSelectedHeroIndex}`).removeClass('hero-selected');
         $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
     }
@@ -198,11 +192,6 @@ export class ItemsComponent implements OnInit{
     // Set selected item, needed to insert items into selected list
     setSelectedItem (item) {
         this.selectedItem = item;
-    }
-
-    // Set per hero item selected array
-    setSelectedItemsArray () {
-        this.selectedItemsArray = this.heroItemSelection[this.selectedHeroIndex];
     }
 
     // General reset all selected items of all selected heroes to null
@@ -215,14 +204,12 @@ export class ItemsComponent implements OnInit{
             this.totalCostPerHero[i] = 0;
             i += 1;
         }
-        this.setSelectedItemsArray();
     }
 
     // Clear items selected for a specific hero
     clearItemsSelectedHero () {
         this.heroItemSelection[this.selectedHeroIndex] = [];
         this.totalCostPerHero[this.selectedHeroIndex] = 0;
-        this.setSelectedItemsArray();
     }
 
     // *********************************************************

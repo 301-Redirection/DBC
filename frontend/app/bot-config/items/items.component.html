@@ -60,12 +60,12 @@
                         </div>
                         <div class="card-body bot-manage-card-body drop-zone item-card-container-border" [sortablejs]="heroItemSelection[selectedHeroIndex]" [sortablejsOptions]="optionsTarget"
                             (drop)="addItemCostToTotal()">
-                            <div *ngIf="selectedItemsArray.length == 0">
+                            <div *ngIf="heroItemSelection[selectedHeroIndex].length == 0">
                                 <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
                                 <h6 class="text-center mt-2 text-muted">Items purchased according to the order of shown here</h6>
                                 <h6 class="text-center text-muted mt-2">Drag an item up or down to change it's position</h6>
                             </div>
-                            <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of selectedItemsArray;trackBy: trackItem" [id]="'s'+ item.id">
+                            <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of heroItemSelection[selectedHeroIndex]; index as i;trackBy: trackItem" [id]="'s'+ item.id +'_'+ i">
                                 <div class="card-header row">
                                     <div class="col-sm-3">
                                         <img [src]="item.url">
