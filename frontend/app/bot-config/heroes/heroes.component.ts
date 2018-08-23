@@ -145,7 +145,7 @@ export class HeroesComponent implements OnInit {
                 const bigPool = [];
                 this.pools.forEach((pool) => {
                     pool.forEach((hero) => {
-                        if (bigPool.indexOf(hero) === -1 && !this.isDuplicate(bigPool, hero)) {
+                        if (bigPool.indexOf(hero) === -1) {
                             bigPool.push(hero);
                         }
                     });
@@ -205,13 +205,6 @@ export class HeroesComponent implements OnInit {
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
         this.setSelectedHeroesList();
-    }
-
-    isDuplicate(pool: any, hero: any): boolean {
-        if (pool.find(x => x.id === hero.id)) {
-            return true;
-        }
-        return false;
     }
 
     checkHeroExists(hero: any): boolean {
