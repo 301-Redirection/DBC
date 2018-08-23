@@ -113,6 +113,12 @@ export class HeroesComponent implements OnInit {
     }
 
     sortHeroData(): void {
+        // sort heroes alphabetically
+        this.allHeroes.sort((a, b) => {
+            return (a.niceName > b.niceName) ? 1 : ((a.niceName < b.niceName) ? -1 : 0);
+        });
+
+        // distribute into separate arrays based on primary attribute
         this.allHeroes.forEach((hero) => {
             if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);
@@ -205,6 +211,10 @@ export class HeroesComponent implements OnInit {
         this.setSelectedHeroesList();
     }
 
+    onRemoveHero(event: any): void {
+        this.removeHero(event.hero, event.pool);
+    }
+
     checkHeroExists(hero: any): boolean {
         if (this.pools[this.selectedPool].find(x => x.id === hero.id)) {
             alert('This hero already exists in the selected pool.');
@@ -251,17 +261,6 @@ export class HeroesComponent implements OnInit {
     selectedTab(): void {
         // TODO: fix this code so it's more generic and fits with angular
         $(document).ready(() => {
-            $('.popover-zone').each((i, element) => {
-                $(element).popover({
-                    animation: true,
-                    placement: 'right',
-                    html: true,
-                    content: $(`#${element.getAttribute('data-programName')}`).html(),
-                    template: $('#heroesPopoverTemplate').html(),
-                    trigger: 'hover',
-                });
-            });
-
             $('#selectedFrame').css('bottom', '-200px');
 
             $(window).scroll(() => {

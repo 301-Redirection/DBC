@@ -9,6 +9,7 @@ import { AuthService } from '../../auth/auth.service';
 import { authServiceStub } from '../../testing/auth-service-stub';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { HeroItemModule } from '../hero-item/hero-item.module';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -88,6 +89,7 @@ describe('HeroesComponent', () => {
             imports: [
                 FormsModule,
                 SortablejsModule,
+                HeroItemModule,
             ],
             providers: [
                 { provide: AuthService, useValue: authServiceStub },
