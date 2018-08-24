@@ -127,11 +127,11 @@ export class ItemsComponent implements OnInit{
 
     // Angular ngfor optimization (Dont rebuild list every time)
     trackItem(index, item) {
-        // index is needed as part of angular trackby interface
-        let indx = index;
-        indx = indx + 1;
-        // track by item.id if exists
-        return item ? item.id : undefined;
+        // id creates unique identity for each element such that duplicates treated individually
+        let id = index;
+        id += '_';
+        id += item.id;
+        return id;
     }
     // Set the selected hero
     onSelect(hero): void {
@@ -242,7 +242,7 @@ export class ItemsComponent implements OnInit{
     triggerItemPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
-            trigger: 'hover click',
+            trigger: 'hover',
             placement: 'right',
             html: true,
             content: $(`#${item.name}`).html(),
@@ -253,7 +253,7 @@ export class ItemsComponent implements OnInit{
     triggerHeroPopover(target: HTMLElement, hero: any) {
         $(target).popover({
             animation: true,
-            trigger: 'hover click',
+            trigger: 'hover',
             placement: 'right',
             html: true,
             content: $(`#${hero.programName}`).html(),
