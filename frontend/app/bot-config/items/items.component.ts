@@ -139,24 +139,15 @@ export class ItemsComponent implements OnInit{
         this.saveItems();
     }
 
-    // Add item to selected list triggered by double click
+    // Add item to selected list triggered by double click and drop
     addItemToList (item) {
-        if (item.components !== 'null') {
-            this.checkItemComponentsExistInList(item);
-        }
-        this.heroItemSelection[this.selectedHeroIndex].push(item);
-        this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
-    }
-
-    // Add item to selected list triggered by drop event, needed handled different to double click
-    addItemCostToTotal () {
-        // Stop Adding duplicates if dragged in selected items list:
+    // Stop Adding duplicates if dragged in selected items list:
         if (this.selectedItem !== null) {
-            // Absorb items for on drop
-            if (this.selectedItem.components !== 'null') {
-                this.checkItemComponentsExistInList(this.selectedItem);
+            if (item.components !== 'null') {
+                this.checkItemComponentsExistInList(item);
             }
-            this.totalCostPerHero[this.selectedHeroIndex] += this.selectedItem.cost;
+            this.heroItemSelection[this.selectedHeroIndex].push(item);
+            this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
             this.setSelectedItem(null);
         }
     }

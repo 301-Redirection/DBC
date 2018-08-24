@@ -58,8 +58,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body bot-manage-card-body drop-zone item-card-container-border" [sortablejs]="heroItemSelection[selectedHeroIndex]" [sortablejsOptions]="optionsTarget"
-                            (drop)="addItemCostToTotal()">
+                        <div class="card-body bot-manage-card-body drop-zone item-card-container-border" sortablejs [sortablejsOptions]="optionsTarget"
+                            (drop)="addItemToList(selectedItem)">
                             <div *ngIf="heroItemSelection[selectedHeroIndex].length == 0">
                                 <h6 class="text-center">No items selected for {{selectedHeroes[selectedHeroIndex].niceName}}</h6>
                                 <h6 class="text-center mt-2 text-muted">Items purchased according to the order of shown here</h6>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="card-body bot-manage-card-body p-0 m-0 pt-2 justify-content-center">
                             <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
-                                <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
+                                <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="setSelectedItem(item);addItemToList(item);"
                                     (drag)="setSelectedItem(item)">
                                     <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
                                 </div>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
                             <div class="drop-zone" [sortablejs]="upgradeItems" [sortablejsOptions]="optionsSource">
-                                <div [id]="item.id" class="item" *ngFor="let item of upgradeItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
+                                <div [id]="item.id" class="item" *ngFor="let item of upgradeItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="setSelectedItem(item);addItemToList(item)"
                                     (drag)="setSelectedItem(item)">
                                     <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-trigger="hover" data-toggle="popover"></div>
                                 </div>
