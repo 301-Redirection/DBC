@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Status
 
 [![Build Status](https://travis-ci.org/301-Redirection/301-Project.svg?branch=master)](https://travis-ci.org/301-Redirection/301-Project)
+[![Dependencies](https://david-dm.org/301-Redirection/301-Project.svg?branch=master)](https://david-dm.org/301-Redirection/301-Project)
 
 ## Development server
 
