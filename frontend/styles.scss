@@ -59,6 +59,12 @@ p {
     background-image: $general-background-image;
 }
 
+.config-background {
+    background-image: $config-title-background-image;
+    background-size: cover;
+    background-position: top center;
+}
+
 
 /* -- Cards -- */
 
@@ -138,10 +144,11 @@ p {
     font-family: $font-family;
 }
 
-#heroesTitle {
+.config-description {
     color: $grey;
     text-align: center;
     font-family: $font-family;
+    font-size: 18px;
 }
 
 /* -- Buttons -- */

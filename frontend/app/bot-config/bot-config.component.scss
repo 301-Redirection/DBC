@@ -166,9 +166,61 @@ $slider-cursor: pointer;
     cursor: pointer;
 }
 
+/* Config Container */
+#configContainer {
+    padding-top: 0;
+}
+
+/* Config Navbar */
+
 #configNav {
-    margin-left: 5%;
-    margin-right: 5%;
+    height: 45px;
+    background-image: $config-nav-background-image;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    overflow-x: visible;
+}
+
+#configNavContent {
+    background-position: top center;
+    background-repeat: no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-size: 17px;
+    color: $light-grey;
+    width: 588pt;
+    text-align: center;
+    padding-top: 10px;
+    letter-spacing: 2px;
+    border: none;
+}
+
+.nav-spacer {
+    padding-right: 10px;
+    padding-left: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: $dark-grey;
+}
+
+#configNavContent a {
+    text-decoration: none;
+    cursor: pointer;
+    color: $light-grey;
+    font-family: $font-family;
+    width: 100pt;
+    text-align: center;
+}
+
+#configNavContent a:hover {
+    color: $white;
+}
+
+#configNavContent a.active.show {
+    text-shadow: 0 0 3px $white;
+    color: $white;
 }
 
 .nav-item {
