@@ -1,7 +1,7 @@
 # 301-Project
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2.
 
-## Status
+##Status
 [![Build Status](https://travis-ci.org/301-Redirection/301-Project.svg?branch=master)](https://travis-ci.org/301-Redirection/301-Project)
 
 ## Development server
