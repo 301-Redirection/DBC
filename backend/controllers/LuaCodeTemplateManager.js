@@ -9,12 +9,19 @@
  *
  * */
 
+const path = require('path');
+
+process.env.NODE_PATH = path.join(__dirname, '..');
+require('module').Module._initPaths();
+// const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
+
+
 const LEFT = 1;
 const RIGHT = 2;
 // const fs = require('fs');
 const fs = require('fs-extra');
 const copyFileSync = require('fs-copy-file-sync');
-const path = require('path');
+// const path = require('path');
 const config = require('../../config/config.js');
 const LuaCodeManager = require('./LuaCodeManager.js');
 
@@ -129,19 +136,22 @@ const LuaCodeTemplateManager = function () {
      */
     this.generateTalentCode = function (talents) {
         let level = 0;
-        let code = 'local TalentTree={';
-        for (let i = 0; i < talents.length; i += 1) {
-            let talentIndex;
-            if (talents[i] === 'l') {
-                talentIndex = level + LEFT;
-            } else {
-                talentIndex = level + RIGHT;
+        let code = '';
+        if (talents) {
+            code += 'local TalentTree={';
+            for (let i = 0; i < talents.length; i += 1) {
+                let talentIndex;
+                if (talents[i] === 'l') {
+                    talentIndex = level + LEFT;
+                } else {
+                    talentIndex = level + RIGHT;
+                }
+                const content = this.createLuaFunction(`${NEW_LINE}${TAB}`, [`return Talents[${talentIndex}]`]);
+                code += `${content},`;
+                level += 2;
             }
-            const content = this.createLuaFunction(`${NEW_LINE}${TAB}`, [`return Talents[${talentIndex}]`]);
-            code += `${content},`;
-            level += 2;
+            code += `${NEW_LINE}}`;
         }
-        code += `${NEW_LINE}}`;
         return code;
     };
 
@@ -178,9 +188,65 @@ const LuaCodeTemplateManager = function () {
     };
 
     /**
-     * This generates the item_purchase file content as string,
-     * specifying which items the bot must get and in what order
+     *  This recursive function accepts an array of 'item' objects and decomposes
+     *  it into an array of item name strings where the deepest component
+     *  items appear first followed by their parent item.
      *
+     *  @example
+     *   [{
+     *      name: 'dagon_1',
+     *      components: [
+     *          {
+     *              name: 'staff_of_wizardry',
+     *              components: [],
+     *          },
+     *          {
+     *              name: 'null_talisman',
+     *              components: [
+     *
+     *                  {
+     *                      name: 'mantle',
+     *                      components: [],
+     *                  },
+     *                  {
+     *                      name: 'circlet',
+     *                      components: [],
+     *                  },
+     *                  {
+     *                      name: 'recipe',
+     *                      components: [],
+     *                  },
+     *              ],
+     *          },
+     *      ]
+     * }]
+     *
+     * becomes ['mantle' circlet', 'recipe', 'staff_of_wizardry' ,'dagon_1']
+     */
+    this.getComponentAsArray = function (item) {
+        // no item, no array
+        if (!item) {
+            return [];
+        }
+        // base case, has no components
+        if (!item.components) {
+            return [item.name];
+        }
+        const components = [];
+        item.components.forEach((element) => {
+            const arr = this.getComponentAsArray(element);
+            arr.forEach((tempElement) => {
+                components.push(tempElement);
+            });
+        });
+        components.push(item.name);
+        return components;
+    };
+
+    /**
+     *  Generates final LUA code snippet to be inserted into the template file
+     *  as string, specifying which items the bot must get
+     *  and in what order
      */
     this.generateItemCodeFromArray = function (itemArray) {
         const code = this.createLuaTable('ItemsToBuy', itemArray, true);
@@ -207,19 +273,26 @@ const LuaCodeTemplateManager = function () {
      *              ],
      *          },
      *      ]
-     * } 
+     * }
      *
      *  And traverse the list of components in a depth first
      *  manner such that all components are arranged in a
-     *  a single 1-D array 
+     *  a single 1-D array
      *
      */
-    this.generateItemCode = function(itemArray) {
-        
+    this.generateItemCode = function (itemsArray) {
+        // const arr = [];
         let arr = [];
-        arr.push('...');
-
-    }
+        for (let i = 0; i < itemsArray.length; i += 1) {
+            const items = this.getComponentAsArray(itemsArray[i]);
+            // fancy way to join arrays
+            arr = items.reduce((col, item) => {
+                col.push(item);
+                return col;
+            }, arr);
+        }
+        return this.generateItemCodeFromArray(arr);
+    };
 
     /**
      * This generates the item_purchase file using the template code
@@ -366,7 +439,7 @@ const LuaCodeTemplateManager = function () {
 
     this.generateItemFile = function (hero, itemArray) {
         const filename = `item_purchase_${hero}.lua`;
-        const content = this.generateItemFileContent(hero, (item)Array);
+        const content = this.generateItemFileContent(hero, itemArray);
         const pathToFile = path.join(this.pathToStoreCode, filename);
         fs.writeFileSync(pathToFile, content, (err) => {
             if (err) throw err;

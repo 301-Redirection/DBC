@@ -5,14 +5,86 @@
 const { writeScripts } = require('./generateScript.js');
 const mocks = require('node-mocks-http');
 
-const items = ['item_slippers',
-    'item_circlet',
-    'item_recipe_wraith_band',
-    'item_tango'];
+const items = [
+    {
+        name: 'dagon_5',
+        components: [
+            {
+                name: 'dagon_4',
+                components: [
+                    {
+                        name: 'dagon_3',
+                        components: [
+                            {
+                                name: 'dagon_2',
+                                components: [
+                                    {
+                                        name: 'dagon_recipe',
+                                        components: [
+                                            {
+                                                name: 'null_talisman',
+                                                components: [
+                                                    {
+                                                        name: 'mantle',
+                                                        components: [],
+                                                    },
+                                                    {
+                                                        name: 'circlet',
+                                                        components: [],
+                                                    },
+                                                ],
+                                            },
+                                            {
+                                                name: 'staff_of_wizardry',
+                                                components: [],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        name: 'lame',
+        components: [],
+    },
+    {
+        name: 'dagon_2',
+        components: [
+            {
+                name: 'dagon_1',
+                components: [
+                    {
+                        name: 'recipe_null_talisman',
+                        components: [
+                            {
+                                name: 'mantle',
+                                components: [],
+                            },
+                            {
+                                name: 'circlet',
+                                components: [],
+                            },
+                        ],
+                    },
+                    {
+                        name: 'staff_of_wizardry',
+                        components: [],
+                    },
+                ],
+            },
+        ],
+    },
+];
 
 const input = {
     abilities: 'qweqqrewqetnqrnt',
     talents: ['l', 'r', 'l', 'l'],
+    items,
 };
 // const heroes1 = {
 //     partitioned: false,
