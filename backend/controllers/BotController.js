@@ -48,7 +48,7 @@ class BotController {
                     writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
                 })
-                .catch((err) => {
+                .catch(() => {
                     response.status(500).json({ error: true, message: 'Database Error' });
                 });
         } else {
@@ -72,9 +72,9 @@ class BotController {
                         response.status(200).json({});
                     }
                 });
-                // .catch(() => {
-                //     response.status(500).json({ error: true, message: 'Database Error' });
-                // });
+            // .catch(() => {
+            //     response.status(500).json({ error: true, message: 'Database Error' });
+            // });
         }
     }
 

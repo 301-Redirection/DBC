@@ -317,7 +317,6 @@ const getBotScriptDirectory = function (id, botId) {
     if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir);
     }
-    console.log(publicPath);
     return publicPath;
 };
 
@@ -351,7 +350,6 @@ const writeScripts = function (req, res, id, botId) {
         });
         // good practice to catch this error explicitly
         archive.on('error', (err) => {
-            console.log(err);
             throw err;
         });
         // pipe archive data to the file
