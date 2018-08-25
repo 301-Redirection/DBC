@@ -1,18 +1,13 @@
-import { Input, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
-import { Title, By } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BotConfigComponent } from './bot-config.component';
 import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRouteStub } from '../testing/activated-route-stub';
 import { BotConfigDataService } from '../services/bot-config-data.service';
-
-@Component({ selector: 'configurator', template: '' })
-class ConfiguratorComponent {
-    @Input() condition;
-}
 
 @Component({ selector: 'app-team-desires', template: '' })
 class TeamDesiresComponent {}
@@ -68,10 +63,10 @@ describe('BotConfigComponent', () => {
 
         const botId = {};
 
-        const getSpecificBotSpy = apiConnectServiceStub.getSpecificBot.and
+        apiConnectServiceStub.getSpecificBot.and
             .returnValue(Observable.of(specificBot));
 
-        const updateBotSpy = apiConnectServiceStub.updateBot.and
+        apiConnectServiceStub.updateBot.and
             .returnValue(Observable.of(botId));
 
         TestBed.configureTestingModule({

@@ -74,15 +74,11 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
     }
 
-    private trackByFn(index, item) {
-        return index;
-    }
-
-    private saveTeamDesires(): void {
+    saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
-    private addCondition(compoundCondition: CompoundCondition): void {
+    addCondition(compoundCondition: CompoundCondition): void {
         const newCond = this.botConfigData.newCondition();
         const len = compoundCondition.conditions.length;
         compoundCondition.conditions.push(newCond);
@@ -92,7 +88,7 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
     }
 
-    private delCondition(compoundCondition: CompoundCondition, index: number = -1) {
+    delCondition(compoundCondition: CompoundCondition, index: number = -1) {
         const ans = window.confirm('Are you sure you wish to delete this Condition?');
         if (ans) {
             const len = compoundCondition.logicalOperators.length;
@@ -107,12 +103,12 @@ export class TeamDesiresComponent implements OnInit {
         }
     }
 
-    private addConditionGroup(configuration: Configuration): void {
+    addConditionGroup(configuration: Configuration): void {
         configuration.compoundConditions.push(this.botConfigData.newCondGroup());
         this.saveTeamDesires();
     }
 
-    private delCondGroup(configuration: Configuration, index: number = -1) {
+    delCondGroup(configuration: Configuration, index: number = -1) {
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         if (ans) {
             configuration.compoundConditions.splice(index, 1);
@@ -120,11 +116,11 @@ export class TeamDesiresComponent implements OnInit {
         }
     }
 
-    private getOperator(compoundCondition: CompoundCondition, index: number = 0): string {
+    getOperator(compoundCondition: CompoundCondition, index: number = 0): string {
         return compoundCondition.logicalOperators[index] === 1 ? 'AND' : 'OR';
     }
 
-    private addOperator(compoundCondition: CompoundCondition, index: number, op: number) {
+    addOperator(compoundCondition: CompoundCondition, index: number, op: number) {
         const len = compoundCondition.logicalOperators.length;
         if (len === index) {
             this.addCondition(compoundCondition);

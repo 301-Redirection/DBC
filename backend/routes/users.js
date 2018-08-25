@@ -1,32 +1,20 @@
+/**
+ *  This file defines routes used by our auth system to retrieve user profiles
+ *  and to download a zip file (if it exists on server)
+ */
 const express = require('express');
 const connectEnsureLogin = require('connect-ensure-login');
+const { UserController } = require('../controllers/UserController.js');
 
 const ensureLoggedIn = connectEnsureLogin.ensureLoggedIn();
 const router = express.Router();
-const fs = require('fs');
 
 /* GET user profile. */
 router.get('/', ensureLoggedIn, (req, res) => {
-    res.render('user', {
-        user: req.user,
-        userProfile: JSON.stringify(req.user, null, '  '),
-    });
+    UserController.getProfile(req, res);
 });
 
 router.get('/generate', ensureLoggedIn, (req, res) => {
-    const lua = 'io.write("Hello World\\n")';
-    try {
-        fs.mkdirSync('./Lua');
-    } catch (err) {
-        if (err.code !== 'EEXIST') throw err;
-    }
-    fs.writeFile('./Lua/hello.lua', lua, (err) => {
-        if (err) throw err;
-        // res.send('File Generated: hello.lua');
-        const file = './Lua/hello.lua';
-        res.download(file);
-    });
+    UserController.generate(req, res);
 });
-
-
 module.exports = router;

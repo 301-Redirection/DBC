@@ -4,18 +4,9 @@ import {
     AfterViewInit,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {
-    ConfigurationFormat,
-    Condition,
-    Trigger,
-    Operator,
-    Action,
-    LogicalOperator,
-} from '../services/ConfigurationFormat';
 import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
-import { BotConfigDataService } from '../services/bot-config-data.service';
 
 declare var $: any;
 
@@ -51,7 +42,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
-        private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
@@ -75,7 +65,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 configuration: { test: 'true' },
                 faction: this.faction,
             };
-            const response = this.api.updateBot(requestBot).subscribe(
+            this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
@@ -182,7 +172,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     loadBotScript(id) {
         let res: any;
-        const response = this.api.getSpecificBot(id).subscribe(
+        this.api.getSpecificBot(id).subscribe(
             (data) => {
                 res = data['botConfig'];
                 res = res[0];

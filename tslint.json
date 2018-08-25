@@ -23,7 +23,8 @@
         "no-invalid-template-strings": true,
         "only-arrow-functions": [
             true
-        ]
+        ],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
     },
     "globals": [
         "it",

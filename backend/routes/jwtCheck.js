@@ -1,3 +1,9 @@
+/**
+ *  An object that uses the Auth0 API, this ensures that the user that is currently
+ *  logged in, is the user that has been validated by Auth0's security
+ *  service
+ */
+
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 /* Authenticate JWT at route endpoints */
