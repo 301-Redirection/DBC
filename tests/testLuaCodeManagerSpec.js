@@ -1,8 +1,8 @@
 const path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../backend');
 require('module').Module._initPaths();
-const { codeGenerator } = require('controllers/LuaCodeTemplateManager.js');
-const { writeScripts } = require('controllers/generateScript.js');
+const { codeGenerator } = require('controllers/codeGeneration/LuaCodeTemplateManager.js');
+const { writeScripts } = require('controllers/codeGeneration/generateScript.js');
 const fs = require('fs');
 const unzip = require('unzip');
 const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');

@@ -7,8 +7,7 @@ const models = require('models');
 const path = require('path');
 const fs = require('fs');
 const mime = require('mime');
-const { validationResult } = require('express-validator/check');
-const { writeScripts, shouldRegenerateBotScripts } = require('controllers/generateScript.js');
+const { writeScripts, shouldRegenerateBotScripts } = require('./codeGeneration/generateScript.js');
 
 const PATH_TO_LUA = path.join(__dirname, '..', '..', '..', 'public', 'lua');
 const LIMIT_NUMBER = 5;
@@ -31,11 +30,6 @@ class BotController {
     }
 
     static updateBot(request, response) {
-        const errors = validationResult(request);
-        if (!errors.isEmpty()) {
-            response.status(422).json({ errors: errors.mapped() });
-            return;
-        }
         const {
             name, id, description, configuration,
         } = request.body;
@@ -54,7 +48,7 @@ class BotController {
                     writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
                 })
-                .catch(() => {
+                .catch((err) => {
                     response.status(500).json({ error: true, message: 'Database Error' });
                 });
         } else {
@@ -77,10 +71,10 @@ class BotController {
                     } else {
                         response.status(200).json({});
                     }
-                })
-                .catch(() => {
-                    response.status(500).json({ error: true, message: 'Database Error' });
                 });
+                // .catch(() => {
+                //     response.status(500).json({ error: true, message: 'Database Error' });
+                // });
         }
     }
 

@@ -10,9 +10,8 @@
  * */
 
 const path = require('path');
-
-process.env.NODE_PATH = path.join(__dirname, '..', '..');
-require('module').Module._initPaths();
+// process.env.NODE_PATH = path.join(__dirname, '..', '..');
+// require('module').Module._initPaths();
 // const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
 
 // const fs = require('fs');
@@ -26,7 +25,7 @@ const { AbilityCodeGenerator } = require('./AbilityCodeGenerator.js');
 const { HeroCodeGenerator } = require('./HeroCodeGenerator.js');
 
 // Note: this relative to root dir
-const PATH_TO_SCRIPTS = path.join(__dirname, '..' ,'..', '..', 'static', 'scripts');
+const PATH_TO_SCRIPTS = path.join(__dirname, '..', '..', 'static', 'scripts');
 
 const LuaCodeTemplateManager = function () {
     this.pathToStoreCode = path.join('backend', 'static', 'code_generators', 'code_dump');
