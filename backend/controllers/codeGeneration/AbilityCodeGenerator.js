@@ -14,7 +14,7 @@ class AbilityCodeGenerator {
      *  Given a character, returns a string which contains the code to select the ability
      *  to level up according the bot script specification
      */
-    static enerateAbilityCode(characterCode) {
+    static generateAbilityCode(characterCode) {
         switch (characterCode) {
             case 'q': return 'Abilities[1]';
             case 'w': return 'Abilities[2]';
