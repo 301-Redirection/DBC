@@ -5,10 +5,22 @@
 local utility = require( GetScriptDirectory().."/utility" ) 
 
 local ItemsToBuy ={
-	"item_slippers",
-	"item_circlet",
-	"item_recipe_wraith_band",
-	"item_tango",
+	"mantle",
+	"circlet",
+	"null_talisman",
+	"staff_of_wizardry",
+	"dagon_recipe",
+	"dagon_2",
+	"dagon_3",
+	"dagon_4",
+	"dagon_5",
+	"lame",
+	"mantle",
+	"circlet",
+	"recipe_null_talisman",
+	"staff_of_wizardry",
+	"dagon_1",
+	"dagon_2",
 }
 
 

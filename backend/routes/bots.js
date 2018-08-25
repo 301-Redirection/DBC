@@ -6,7 +6,7 @@
 
 const express = require('express');
 const { jwtCheck } = require('./jwtCheck');
-const { check } = require('express-validator/check');
+const { check, validationResult } = require('express-validator/check');
 const { BotController } = require('../controllers/BotController.js');
 
 const router = express.Router();
@@ -23,6 +23,11 @@ router.post('/update', jwtCheck, [
     check('description').exists(),
     check('configuration').exists(),
 ], (request, response) => {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+        response.status(422).json({ errors: errors.mapped() });
+        return;
+    }
     BotController.updateBot(request, response);
 });
 
