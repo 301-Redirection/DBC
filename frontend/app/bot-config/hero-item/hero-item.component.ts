@@ -26,7 +26,7 @@ export class HeroItemComponent implements OnInit {
 
     activatePopover() {
         const selected = this.isSelectedHero ? 'true' : 'false';
-        $(`[data-hero-id="${this.hero.id}"][data-hero-id="${selected}"]`).popover({
+        $(`[data-hero-id^="${this.hero.id}"][data-selected^="${selected}"]`).popover({
             animation: true,
             placement: 'right',
             html: true,
