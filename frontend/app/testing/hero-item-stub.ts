@@ -5,7 +5,5 @@ export class HeroItemStubComponent {
     @Input('hero') hero: any;
     @Input('pool') pool: any;
     @Input('isSelectedHero') isSelectedHero: boolean;
-    @Input('isAbilityHero') isAbilityHero: boolean;
-    @Input('isItemHero') isItemHero: boolean;
     @Output() removeHeroEmitter = new EventEmitter<any>();
 }

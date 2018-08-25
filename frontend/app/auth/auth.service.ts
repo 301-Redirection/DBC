@@ -25,15 +25,13 @@ export class AuthService {
 
     constructor(private router: Router) {
         const localProfile = localStorage.getItem('profile');
-        this.userProfile = JSON.parse(localProfile);
-        this.setLoggedIn(true);
-        return;
-        // if (this.isTokenValid) {
-        //     this.userProfile = JSON.parse(localProfile);
-        //     this.setLoggedIn(true);
-        // } else if (!this.isTokenValid && localProfile) {
-        //     this.logout();
-        // }
+
+        if (this.isTokenValid) {
+            this.userProfile = JSON.parse(localProfile);
+            this.setLoggedIn(true);
+        } else if (!this.isTokenValid && localProfile) {
+            this.logout();
+        }
     }
 
     setLoggedIn(value: boolean) {

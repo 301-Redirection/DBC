@@ -115,7 +115,7 @@ export class HeroesComponent implements OnInit {
     sortHeroData(): void {
         // sort heroes alphabetically
         this.allHeroes.sort((a, b) => {
-            return (a.niceName > b.niceName) ? 1 : ((a.niceName < b.niceName) ? -1 : 0);
+            return a.niceName.localeCompare(b.niceName);
         });
 
         // distribute into separate arrays based on primary attribute

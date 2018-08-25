@@ -27,11 +27,6 @@ describe('ConfiguratorComponent', () => {
     // it('should change conditional value to 0.25', () => {
     //     const condInput = fixture.nativeElement.querySelector('#conditionalInput');
     //     component.condition = new Condition();
-    //     // {
-    //     //     trigger: -1,
-    //     //     operator: -1,
-    //     //     conditional: -5,
-    //     // };
     //     condInput.value = 0.25;
 
     //     condInput.dispatchEvent(new Event('input'));

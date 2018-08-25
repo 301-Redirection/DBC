@@ -1,8 +1,10 @@
 import {
     Component,
     Input,
+    Output,
     Pipe,
     PipeTransform,
+    EventEmitter,
 } from '@angular/core';
 import {
     Condition,
@@ -18,7 +20,7 @@ import {
 
 export class ConfiguratorComponent {
     @Input() condition: Condition;
-    // @Output() conditionChange = new EventEmitter<Condition>();
+    @Output() conditionChange = new EventEmitter<Condition>();
     triggers = Trigger;
     operators = Operator;
 
@@ -27,7 +29,7 @@ export class ConfiguratorComponent {
     ngOnInit() {}
 
     changeCondition() {
-        // this.conditionChange.emit(this.condition);
+        this.conditionChange.emit(this.condition);
     }
 }
 
