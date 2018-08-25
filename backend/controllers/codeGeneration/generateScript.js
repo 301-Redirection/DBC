@@ -10,7 +10,7 @@
  *
  * */
 
-const { codeGenerator } = require('./codeGeneration/LuaCodeTemplateManager.js');
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
@@ -297,8 +297,6 @@ const generateTeamDesires = function (req) {
  *
  */
 const getBotScriptDirectory = function (id, botId) {
-    let stringId = String(id);
-    stringId = stringId.replace('|', '_');
     let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
@@ -307,7 +305,7 @@ const getBotScriptDirectory = function (id, botId) {
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
-    publicPath = path.join(publicPath, stringId);
+    publicPath = path.join(publicPath, id);
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -359,8 +357,6 @@ const writeScripts = function (req, res, id, botId) {
 };
 
 const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
-    let stringId = String(id);
-    stringId = stringId.replace('|', '_');
     let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         return true;
@@ -369,7 +365,7 @@ const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
     if (!fs.existsSync(publicPath)) {
         return true;
     }
-    publicPath = path.join(publicPath, stringId);
+    publicPath = path.join(publicPath, id);
     if (!fs.existsSync(publicPath)) {
         return true;
     }

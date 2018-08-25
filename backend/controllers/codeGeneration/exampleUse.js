@@ -309,4 +309,4 @@ const officialRequest = {
         configuration: configObject,
     },
 };
-writeScripts(officialRequest, mocks.createResponse(), 'BMAX', 69);
+writeScripts(officialRequest, mocks.createResponse(), 'BM', 19);
