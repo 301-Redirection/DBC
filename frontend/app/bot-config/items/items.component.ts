@@ -187,25 +187,20 @@ export class ItemsComponent implements OnInit{
         this.currentHero = hero;
         this.saveItems();
     }
+
     triggerItemPopover(target: HTMLElement, item: any) {
         $(target).popover({
             animation: true,
-            trigger: 'hover click',
+            trigger: 'hover',
             placement: 'right',
             html: true,
             content: $(`#${item.name}`).html(),
             template: $('#itemsPopoverTemplate').html(),
         });
+        $(target).popover('toggle');
     }
 
-    triggerHeroPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            trigger: 'hover click',
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
+    hideItemPopovers() {
+        $('.popover-zone').popover('hide');
     }
 }

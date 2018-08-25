@@ -12,15 +12,8 @@
             <div class="card-header bot-manage-card-header">
                 <h5 class="align-middle">CHOOSE A HERO</h5>
             </div>
-            <div class="card-body bot-manage-card-body">
-                <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" [class.hero-selected]="hero === currentHero" (click)="setSelectedHero(i); onSelect(hero);"
-                    [attr.id]="i" [style.backgroundImage]="'url('+hero.image+')'">
-                    <div [id]="hero.id" class="popover-zone" role="button" (mouseover)="triggerHeroPopover($event.currentTarget, hero)" data-toggle="popover">
-                        <div class="hero-name">
-                            {{ hero.niceName }}
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body bot-manage-card-body">                
+                <app-hero-item *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i); onSelect(hero);" [class.selected]="hero === currentHero" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 <div *ngIf="selectedHeroes.length == 0">
                     <h6 class="text-center">No Selected Heroes</h6>
                 </div>
@@ -117,7 +110,7 @@
                         <div class="card-body bot-manage-card-body p-0 m-0 pt-2">
                             <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                                 <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
-                                    (drag)="setSelectedItem(item)">
+                                    (drag)="setSelectedItem(item); hideItemPopovers()">
                                     <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
                                 </div>
                             </div>

@@ -94,29 +94,9 @@
     width: 68px;
 }
 
-/* -- Popover styles -- */
-.popover-zone {
-    width: 100%;
-    height: 100%;    
-}
-
-.popover-dark {
-    background-color: $dark-grey;
-}
-
-.popover-body {    
-    color: $white;
-}
-
-.popover-dark .arrow:after {
-    border-right-color: $dark-grey;
-    border-left-color: $dark-grey;
-}
-
 .item-card-container-border {
     border: 1px solid rgba($dark-grey-1, 0.8);
 }
-
 
 #itemsHeader {
     display: inline-block;   

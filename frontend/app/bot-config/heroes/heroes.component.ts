@@ -63,7 +63,6 @@ export class HeroesComponent implements OnInit {
         this.getHeroes();
 
         // jquery functions
-        this.popoverDismiss();
         this.selectedTab();
     }
 
@@ -114,6 +113,12 @@ export class HeroesComponent implements OnInit {
     }
 
     sortHeroData(): void {
+        // sort heroes alphabetically
+        this.allHeroes.sort((a, b) => {
+            return a.niceName.localeCompare(b.niceName);
+        });
+
+        // distribute into separate arrays based on primary attribute
         this.allHeroes.forEach((hero) => {
             if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);
@@ -208,6 +213,10 @@ export class HeroesComponent implements OnInit {
         this.setSelectedHeroesList();
     }
 
+    onRemoveHero(event: any): void {
+        this.removeHero(event.hero, event.pool);
+    }
+
     checkHeroExists(hero: any): boolean {
         if (this.pools[this.selectedPool].find(x => x.id === hero.id)) {
             alert('This hero already exists in the selected pool.');
@@ -247,34 +256,8 @@ export class HeroesComponent implements OnInit {
         }
     }
 
-    triggerPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
-
     hidePopovers() {
-        $('[data-toggle="popover"]').popover('hide');
-    }
-
-    popoverDismiss(): void {
-        $(document).ready(() => {
-            $('heroComponent').click((event) => {
-                this.hidePopovers();
-
-                if (event.target.className === 'popover-zone' ||
-                    event.target.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.id}`).popover('show');
-                } else if (event.target.parentElement.className === 'popover-zone' ||
-                    event.target.parentElement.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.parentElement.id}`).popover('show');
-                }
-            });
-        });
+        $('.popover-zone').popover('hide');
     }
 
     selectedTab(): void {
