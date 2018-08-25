@@ -182,10 +182,44 @@ const LuaCodeTemplateManager = function () {
      * specifying which items the bot must get and in what order
      *
      */
-    this.generateItemCode = function (itemArray) {
+    this.generateItemCodeFromArray = function (itemArray) {
         const code = this.createLuaTable('ItemsToBuy', itemArray, true);
         return code;
     };
+
+    /**
+     *  This function expects items as an array of objects as the following
+     * {
+     *      name: 'api_name',
+     *      components: [
+     *          {
+     *              name: 'other_name',
+     *              components: [],
+     *          },
+     *          {
+     *              name: 'other_recipe',
+     *              components: [
+     *
+     *                  {
+     *                  name: 'other_item_name',
+     *                  components: [],
+     *                  },
+     *              ],
+     *          },
+     *      ]
+     * } 
+     *
+     *  And traverse the list of components in a depth first
+     *  manner such that all components are arranged in a
+     *  a single 1-D array 
+     *
+     */
+    this.generateItemCode = function(itemArray) {
+        
+        let arr = [];
+        arr.push('...');
+
+    }
 
     /**
      * This generates the item_purchase file using the template code
@@ -332,7 +366,7 @@ const LuaCodeTemplateManager = function () {
 
     this.generateItemFile = function (hero, itemArray) {
         const filename = `item_purchase_${hero}.lua`;
-        const content = this.generateItemFileContent(hero, itemArray);
+        const content = this.generateItemFileContent(hero, (item)Array);
         const pathToFile = path.join(this.pathToStoreCode, filename);
         fs.writeFileSync(pathToFile, content, (err) => {
             if (err) throw err;

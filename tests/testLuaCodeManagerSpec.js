@@ -260,8 +260,6 @@ describe('Lua Code Manager tests:\n', () => {
             const luaOutput = fs.readFileSync(filePath).toString();
             const expectedFilePath = path.join(pathToExpectedOutput, 'complexOne.lua');
             const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-            // console.log("expectedOutput");
-            // console.log(expectedOutput);
             expect(luaOutput).toBe(expectedOutput);
             done();
         });
