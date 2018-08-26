@@ -67,6 +67,29 @@
             "hero_pool_position_3",
             "hero_pool_position_4",
             "hero_pool_position_5"
+        ],
+         "unimplentedHeroes": [
+            "morphling",
+            "invoker",
+            "meepo",
+            "puck",
+            "storm_spirit",
+            "tinker",
+            "rattletrap",
+            "lone_druid",
+            "pangolier",
+            "wisp",
+            "phoenix",
+            "techies",
+            "rubick",
+            "visage",
+            "dark_willow"
+        ],
+        "unpurchasableItems": [
+            "cheese",
+            "tango_single",
+            "refresher_shard",
+            "pocket_roshan"
         ]
     }
 }

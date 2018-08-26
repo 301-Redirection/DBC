@@ -9,6 +9,10 @@ const models = require('models');
 const path = require('path');
 const config = require('../../config/config.js');
 
+console.log(config);
+const blackListedHeroes = config.lua.unimplentedHeroes;
+const { unpurchasableItems } = config.lua;
+
 class StaticController {
     // A generic function to return an image given a type
     // Note that the route generally supplies the type and
@@ -38,10 +42,14 @@ class StaticController {
             .then((items) => {
                 const newItems = [];
                 for (let i = 0; i < items.length; i += 1) {
-                    newItems.push(items[i]);
-                    newItems[i].dataValues.url = `/static/items/images/${items[i].id}.png`;
+                    const item = items[i];
+                    const isUnpurchasable = unpurchasableItems.indexOf(item.name) !== -1;
+                    if (!isUnpurchasable) {
+                        item.dataValues.url = `/static/items/images/${item.id}.png`;
+                        newItems.push(item);
+                    }
                 }
-                response.status(200).json({ items });
+                response.status(200).json({ items: newItems });
             })
             .catch(() => {
                 response.status(500).send('Database Error');
@@ -58,22 +66,28 @@ class StaticController {
             }],
         })
             .then((heroes) => {
+                const finalHeroes = [];
+                // only return add a hero to final output if they have implemented bots
                 for (let i = 0; i < heroes.length; i += 1) {
                     const hero = heroes[i];
-                    hero.dataValues.url = `/static/heroes/images/${heroes[i].programName}.png`;
-                    const keys = Object.keys(hero.heroStats.dataValues);
-                    for (let j = 0; j < keys.length; j += 1) {
-                        const key = keys[j];
-                        if (!(key === 'id' || key === 'heroId')) {
-                            hero.dataValues[key] = hero.heroStats.dataValues[key];
+                    const isBlackListed = blackListedHeroes.indexOf(hero.programName) !== -1;
+                    if (!isBlackListed) {
+                        hero.dataValues.url = `/static/heroes/images/${heroes[i].programName}.png`;
+                        const keys = Object.keys(hero.heroStats.dataValues);
+                        for (let j = 0; j < keys.length; j += 1) {
+                            const key = keys[j];
+                            if (!(key === 'id' || key === 'heroId')) {
+                                hero.dataValues[key] = hero.heroStats.dataValues[key];
+                            }
                         }
+                        hero.dataValues.url_q = `/static/abilities/images/${heroes[i].programName}_q.png`;
+                        hero.dataValues.url_w = `/static/abilities/images/${heroes[i].programName}_w.png`;
+                        hero.dataValues.url_e = `/static/abilities/images/${heroes[i].programName}_e.png`;
+                        hero.dataValues.url_r = `/static/abilities/images/${heroes[i].programName}_r.png`;
+                        finalHeroes.push(hero);
                     }
-                    hero.dataValues.url_q = `/static/abilities/images/${heroes[i].programName}_q.png`;
-                    hero.dataValues.url_w = `/static/abilities/images/${heroes[i].programName}_w.png`;
-                    hero.dataValues.url_e = `/static/abilities/images/${heroes[i].programName}_e.png`;
-                    hero.dataValues.url_r = `/static/abilities/images/${heroes[i].programName}_r.png`;
                 }
-                response.status(200).json({ heroes });
+                response.status(200).json({ heroes: finalHeroes });
             }).catch(() => {
                 response.status(500).send('Database Error');
             });
