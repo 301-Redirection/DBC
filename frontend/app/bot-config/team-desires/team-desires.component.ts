@@ -81,6 +81,10 @@ export class TeamDesiresComponent implements OnInit {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
+    reset(): void {
+        this.config = this.botConfigData.getDefaultConfiguration();
+    }
+
     addCondition(compoundCondition: CompoundCondition): void {
         const newCond = this.botConfigData.newCondition();
         const len = compoundCondition.conditions.length;

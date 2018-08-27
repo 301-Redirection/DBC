@@ -2,11 +2,16 @@ import {
     Component,
     OnInit,
     AfterViewInit,
+    ViewChild,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
+import { TeamDesiresComponent } from './team-desires/team-desires.component';
+import { HeroesComponent } from './heroes/heroes.component';
+import { AbilitiesComponent } from './abilities/abilities.component';
+import { ItemsComponent } from './items/items.component';
 
 @Component({
     selector: 'app-bot-config',
@@ -15,6 +20,11 @@ import * as globalConfig from '../../../config/config.js';
 })
 export class BotConfigComponent implements OnInit, AfterViewInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
+
+    @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
+    @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
+    @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
+    @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
 
     // Bot variables
     name: string = '';
@@ -71,7 +81,14 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     reset () {
-        location.reload();
+        if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
+            this.name = '';
+            this.description = '';
+            this.teamDesiresComponent.reset();
+            this.heroesComponent.reset();
+            this.abilitiesComponent.reset();
+            this.itemsComponent.reset();
+        }
     }
 
     loadBotScript(id) {

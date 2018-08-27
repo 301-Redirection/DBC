@@ -35,6 +35,10 @@ export class AbilitiesComponent implements OnInit {
         this.getHeroes();
     }
 
+    reset(): void {
+        this.getHeroes();
+    }
+
     getHeroes(): void {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
