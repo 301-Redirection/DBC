@@ -8,8 +8,6 @@ import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
 
-declare var $: any;
-
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
@@ -17,23 +15,11 @@ declare var $: any;
 })
 export class BotConfigComponent implements OnInit, AfterViewInit {
     pageTitle = 'Dota 2 Bot Scripting - Configuration';
-    factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
-    bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';
-    prevFactionSelectionImageURL = this.factionSelectionImageURL;
-    prevBothFactionImageURL = this.bothFactionsImageURL;
-    factionEditAlert = '';
 
     // Bot variables
-    name: string = 'test';
-    description: string = 'test';
+    name: string = '';
+    description: string = '';
     id: number = -1;
-    faction: string = 'both';
-
-    // Configuration data
-    teamDesires: any;
-    heroes: any;
-    abilities: any;
-    items: any;
 
     generateURL = '';
 
@@ -63,7 +49,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 name: this.name,
                 description: this.description,
                 configuration: { test: 'true' },
-                faction: this.faction,
             };
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
@@ -85,87 +70,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         return true;
     }
 
-    showHighlightSelectedFaction (faction) {
-        this.factionSelectionImageURL =
-        `../../assets/images/dota2-mini-map-${faction}-hl.png`;
-    }
-
-    unHighlightSelectedFaction() {
-        this.factionSelectionImageURL = this.prevFactionSelectionImageURL;
-    }
-
-    showHighlightBothFactions () {
-        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
-    }
-
-    unHighlightBothFactions() {
-        this.bothFactionsImageURL = this.prevBothFactionImageURL ;
-    }
-
-    hideAlert() {
-        $('#alertConfig')
-        .addClass('hide')
-        .hide();
-    }
-
-    selectFaction (selectedFaction, notSelectedFaction) {
-        this.faction = selectedFaction;
-        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map-default.png';
-        this.prevBothFactionImageURL = this.bothFactionsImageURL;
-        $('#dotaMiniMap2').removeClass('alert-both');
-        $('#dotaMiniMap')
-            .removeClass(`alert-${notSelectedFaction}`)
-            .addClass(`alert-${selectedFaction}`);
-        this.factionSelectionImageURL =
-            `../../assets/images/dota2-mini-map-${selectedFaction}-hl.png`;
-        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
-        this.factionEditAlert = `You are now editing ${selectedFaction} faction`;
-        $('#alertConfig')
-            .removeClass('hide')
-            .addClass('show')
-            .show()
-            .removeClass(`alert-${notSelectedFaction}`)
-            .removeClass('alert-both')
-            .addClass(`alert-${selectedFaction}`);
-        $('div').each(() => {
-            $(this)
-                .find('div.config-card')
-                .removeClass('config-card-blur')
-                .removeClass('config-card-both')
-                .removeClass(`config-card-${notSelectedFaction}`)
-                .addClass(`config-card-${selectedFaction}`);
-        });
-    }
-
-    selectBothFactions () {
-        this.faction = 'both';
-        $('#dotaMiniMap2').addClass('alert-both');
-        $('#dotaMiniMap')
-            .removeClass('alert-radiant')
-            .removeClass('alert-dire');
-        // Reset image for selectFaction
-        this.factionEditAlert = 'You are now editing both factions';
-        this.bothFactionsImageURL = '../../assets/images/dota2-mini-map.png';
-        this.prevBothFactionImageURL = this.bothFactionsImageURL;
-        this.factionSelectionImageURL = '../../assets/images/dota2-mini-map-default.png';
-        this.prevFactionSelectionImageURL = this.factionSelectionImageURL;
-        $('div').each(() => {
-            $(this)
-                .find('div.config-card')
-                .removeClass('config-card-blur')
-                .removeClass('config-card-radiant')
-                .removeClass('config-card-dire')
-                .addClass('config-card-both');
-        });
-        $('#alertConfig')
-            .removeClass('hide')
-            .addClass('show')
-            .show()
-            .removeClass('alert-dire')
-            .removeClass('alert-radiant')
-            .addClass('alert-both');
-    }
-
     reset () {
         location.reload();
     }
@@ -181,15 +85,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     // this.configuration = JSON.parse(res.configuration);
                     this.description = res.description;
-                    this.faction = res.faction;
-
-                    if (this.faction === 'radiant') {
-                        this.selectFaction('radiant', 'dire');
-                    }else if (this.faction === 'dire') {
-                        this.selectFaction('dire', 'radiant');
-                    }else {
-                        this.selectBothFactions();
-                    }
                 }
             },
             (error) => {

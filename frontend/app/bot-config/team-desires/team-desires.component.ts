@@ -6,6 +6,8 @@ import {
     Configuration,
 } from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+// Import JQuery
+declare var $: any;
 
 @Component({
     selector: 'app-team-desires',
@@ -72,6 +74,7 @@ export class TeamDesiresComponent implements OnInit {
     ngOnInit() {
         this.config = this.botConfigData.getDefaultConfiguration();
         this.saveTeamDesires();
+        this.togglePanel();
     }
 
     saveTeamDesires(): void {
@@ -126,6 +129,18 @@ export class TeamDesiresComponent implements OnInit {
             this.addCondition(compoundCondition);
         }
         compoundCondition.logicalOperators[index] = op;
+    }
+
+    togglePanel() {
+        $(document).ready(() => {
+            $('.collapse').on('show.bs.collapse', function () {
+                $(this).siblings('.heading-desire').addClass('active');
+            });
+
+            $('.collapse').on('hide.bs.collapse', function () {
+                $(this).siblings('.heading-desire').removeClass('active');
+            });
+        });
     }
 }
 
