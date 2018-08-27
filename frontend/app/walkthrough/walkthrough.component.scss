@@ -3,7 +3,12 @@
 
 .img {
 	border: 5px solid $dark-grey-3;
-	border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+.img-col {
+    padding: 0 !important;
 }
 
 /* Card CSS */
@@ -20,9 +25,19 @@
 }
 
 .card-title {
-	font-size: 30px;
+    font-size: 30px;
+    text-align: center;
 }
 
 .card-body {
 	font-size: 18px;
+}
+
+.tutorial {
+    margin-top: 20px;
+}
+
+.tutorial ol li,
+.tutorial ol ul {
+    margin-bottom: 10px;
 }
