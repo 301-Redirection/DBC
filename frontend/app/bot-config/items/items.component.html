@@ -41,21 +41,18 @@
                 <div class="col-md-4">
                     <div class="card bot-manage-card">
                         <div class="card-header container-fluid bot-manage-card-header ">
-                            <div class="row">
-                                <div class="col-sm-6">
+                            <div class="d-flex justify-content-between">
+                                <div class="p-2">
                                     <h5 class="align-middle">SELECTED ITEMS</h5>
                                 </div>
-                                <div class="col-sm-3 align-content-center cost-item">
-                                    <img class="float-left" [src]="dotaGoldIconURL" height="30px">
+                                <div class="p-2"><img class="float-left" [src]="dotaGoldIconURL" height="30px">
                                     <div class="ml-4 pl-3">
                                         <b>{{totalCostPerHero[selectedHeroIndex]}}</b>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <button type="button" class="btn button-cancel float-right" (click)="clearItemsSelectedHero()">
+                                <div class="p-2"><button type="button" class="btn button-cancel float-right" (click)="clearItemsSelectedHero()">
                                         <i class="far fa-trash-alt"></i>
-                                    </button>
-                                </div>
+                                    </button></div>
                             </div>
                         </div>
                         <div class="card-body bot-manage-card-body drop-zone item-card-container-border" sortablejs [sortablejsOptions]="optionsTarget"
@@ -67,26 +64,32 @@
                             </div>
                             <div class="card selected-item-card mb-2 container-fluid" *ngFor="let item of heroItemSelection[selectedHeroIndex]; index as i;trackBy: trackItem" [id]="'s'+ item.id +'_'+ i">
                                 <div class="card-header row">
-                                    <div class="col-sm-3">
-                                        <img [src]="item.url">
-                                    </div>
-                                    <div class="col-sm-9 container-fluid">
-                                        <div class="row">
-                                            <div class="col-sm-10 ml-0 pl-0">
-                                                <h5>{{item.niceName}}</h5>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button class="btn button-cancel float-right" (click)="removeItemFromList(item)">
-                                                    <i id="removeItemIcon" class="fas fa-times"></i>
-                                                </button>
-                                            </div>
+                                    <div class="d-flex flex-row w-100">
+                                        <div class="p-0 align-middle mr-2">
+                                            <img class="selected-item-img pt-1" [src]="item.url">
                                         </div>
-                                        <div class="row cost-item">
-                                            <img class="float-left" [src]="dotaGoldIconURL" height="25px">
-                                            <div class="ml-2">
-                                                <small>
-                                                    <b>{{item.cost}}</b>
-                                                </small>
+                                        <div class="p-0 w-100 ml-0 d-flex flex-row flex-wrap">
+                                            <div class="d-flex flex-row float-left w-100">
+                                                <div class="p-2">
+                                                    <h5 class="h5 align-bottom">
+                                                        {{item.niceName}}
+                                                    </h5>
+                                                </div>
+                                                <div class="p-2 ml-auto float-right">
+                                                    <button class="btn button-cancel float-right" (click)="removeItemFromList(item)">
+                                                        <i id="removeItemIcon" class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row cost-item justify-content-center">
+                                                <div class="p-0 align-top">
+                                                    <img class="p-0 float-left selected-item-gold-img" [src]="dotaGoldIconURL">
+                                                </div>
+                                                <div class="p-0 ml-2 h5 align-middle">
+                                                    <small>
+                                                        <b>{{item.cost}}</b>
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +102,7 @@
                                         <div class="row justify-content-md-center mt-1">
                                             <div class="mx-1" *ngFor="let component of item.components" [id]="component.name + 'comp'">
                                                 <div (mouseover)="triggerItemPopover($event.currentTarget, component)" data-trigger="hover" data-toggle="popover">
-                                                    <img [src]="component.url" class="item-component-image">
+                                                    <img  [src]="component.url" class="item-component-img">
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +118,7 @@
                             <h5 class="align-middle">BASICS</h5>
                         </div>
                         <div class="card-body bot-manage-card-body p-0 m-0 pt-2 justify-content-center">
-                            <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
+                            <div class="drop-zone item-container" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                                 <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="setSelectedItem(item);addItemToList(item);"
                                     (drag)="setSelectedItem(item)">
                                     <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
