@@ -69,6 +69,10 @@ export class TeamDesiresComponent implements OnInit {
         private botConfigData: BotConfigDataService,
     ) {}
 
+    log(data) {
+        console.log(data);
+    }
+
     ngOnInit() {
         this.config = this.botConfigData.getDefaultConfiguration();
         this.saveTeamDesires();
@@ -108,10 +112,13 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
     }
 
-    delCondGroup(configuration: Configuration, index: number = -1) {
+    delCondGroup(compound: CompoundCondition[], index: number = -1) {
+        this.log(compound);
+        this.log(index);
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         if (ans) {
-            configuration.compoundConditions.splice(index, 1);
+            const len = compound.length - 1;
+            compound.splice(len - index, 1);
             this.saveTeamDesires();
         }
     }

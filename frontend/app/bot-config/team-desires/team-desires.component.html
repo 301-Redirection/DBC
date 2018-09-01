@@ -38,8 +38,12 @@
                                     <div class="container">
                                         <div *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length != 0">
                                             <div class="compound-cond list-group" *ngFor="let comp of config.desires[section.prop][lane.prop].compoundConditions | reverse; let j = index">
-                                                <h5>Condition Group</h5>
-                                                <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <h5>Condition Group</h5>
+                                                    <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop][lane.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
+                                                </div>
+                                                
+                                                <button *ngIf="comp.conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
                                                 <div *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
