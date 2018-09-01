@@ -24,6 +24,9 @@ export class ConfiguratorComponent {
     triggers = Trigger;
     operators = Operator;
 
+    min = 0;
+    max = 10;
+
     constructor() {}
 
     ngOnInit() {}
