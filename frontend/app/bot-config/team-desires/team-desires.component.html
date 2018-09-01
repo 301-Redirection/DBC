@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="button-group" *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length != 0" role="group">
                                             <div class="list-group-item">
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="dropdown mr-2 pr-1 col-md-4">
                                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownOperator" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             then {{comp.operator == null ? "(Select Action)" : actions[comp.operator]}}
@@ -159,7 +159,13 @@
                                                         </div>
                                                     </div>
                                                     <input id="valueInput" class="form-control col-md-3" type="number" [(ngModel)]="comp.value" name="value">
-                                                </div>
+                                                </div> -->
+                                                <mat-form-field class="col-md-4">
+                                                    <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
+                                                        <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <mat-slider class="col-md-3 mt-2" min="0" max="100" value="25" thumbLabel="true" [(ngModel)]="comp.value"></mat-slider>
                                             </div>
                                         </div>
                                     </div>
