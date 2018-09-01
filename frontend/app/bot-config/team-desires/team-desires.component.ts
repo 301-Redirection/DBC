@@ -14,12 +14,6 @@ import { BotConfigDataService } from '../../services/bot-config-data.service';
 })
 export class TeamDesiresComponent implements OnInit {
 
-    /*
-    TODO:
-    - Add a Function to change enums' keys into something easier to understand
-    - Add a Delete condition group button
-    */
-
     config: ConfigurationFormat;
 
     actions = Action;

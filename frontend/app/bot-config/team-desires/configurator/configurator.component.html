@@ -30,5 +30,7 @@
             <mat-option *ngFor="let o of operators | enumToArray" [value]="o">{{o}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-slider class="col-md-3 mt-2" [min]="min" [max]="max" step="1" tickInterval="1" [thumbLabel]="condition.conditional" [(ngModel)]="condition.conditional" tickInterval="1"></mat-slider>
+    <mat-form-field class="col-md-4" hintLabel="(Enter a value from {{min}} to {{max}})">
+        <input matInput [min]="min" [max]="max" type="number" [(ngModel)]="condition.conditional" >
+    </mat-form-field>
 </div>
