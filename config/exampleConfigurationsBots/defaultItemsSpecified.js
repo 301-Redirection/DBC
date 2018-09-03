@@ -54,101 +54,110 @@ module.exports = {
                 {
                     name: 'drow_ranger',
                     items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
+                        {
+                            name: 'dagon_5',
+                            components: [
+                                {
+                                    name: 'dagon_4',
+                                    components: [
+                                        {
+                                            name: 'dagon_3',
+                                            components: [
+                                                {
+                                                    name: 'dagon_2',
+                                                    components: [
+                                                        {
+                                                            name: 'dagon_recipe',
+                                                            components: [
+                                                                {
+                                                                    name: 'null_talisman',
+                                                                    components: [
+                                                                        {
+                                                                            name: 'mantle',
+                                                                            components: [],
+                                                                        },
+                                                                        {
+                                                                            name: 'circlet',
+                                                                            components: [],
+                                                                        },
+                                                                    ],
+                                                                },
+                                                                {
+                                                                    name: 'staff_of_wizardry',
+                                                                    components: [],
+                                                                },
+                                                            ],
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            name: 'lame',
+                            components: [],
+                        },
+                        {
+                            name: 'dagon_2',
+                            components: [
+                                {
+                                    name: 'dagon_1',
+                                    components: [
+                                        {
+                                            name: 'recipe_null_talisman',
+                                            components: [
+                                                {
+                                                    name: 'mantle',
+                                                    components: [],
+                                                },
+                                                {
+                                                    name: 'circlet',
+                                                    components: [],
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            name: 'staff_of_wizardry',
+                                            components: [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     ],
                 },
                 {
                     name: 'bane',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'alchemist',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'abaddon',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'antimage',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'axe',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'bloodseeker',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'centaur',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'chen',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'chaos_knight',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
                 {
                     name: 'crystal_maiden',
-                    items: [
-                        'item_slippers',
-                        'item_circlet',
-                        'item_recipe_wraith_band',
-                        'item_tango',
-                    ],
                 },
             ],
             desires: {

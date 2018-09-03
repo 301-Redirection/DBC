@@ -347,5 +347,6 @@ export class AbilitiesComponent implements OnInit {
             template: $('#abilitiesPopoverTemplate').html(),
             content: `<div class = "h5">${ability.name}</div>`,
         });
+        $(target).popover('toggle');
     }
 }

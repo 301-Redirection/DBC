@@ -4,6 +4,16 @@
 @import 'variables';
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
+/* -- Importing bootstrap for customizability -- */
+
+// Required
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+// Optional
+@import "node_modules/bootstrap/scss/popover";
+
 html, 
 body {    
     height: 100%;    
@@ -319,7 +329,8 @@ button:focus {
 
 .popover-zone {
     width: 100%;
-    height: 100%;    
+    height: 100%;
+    display: block;
 }
 
 .popover-dark {
@@ -342,14 +353,3 @@ button:focus {
 .hero-attributes {
     font-family: $font-family;
 }
-
-
-/* -- Importing bootstrap for customizability -- */
-
-// Required
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "node_modules/bootstrap/scss/mixins";
-
-// Optional
-@import "node_modules/bootstrap/scss/popover";

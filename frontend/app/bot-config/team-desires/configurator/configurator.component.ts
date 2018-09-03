@@ -2,9 +2,9 @@ import {
     Component,
     Input,
     Output,
-    EventEmitter,
     Pipe,
     PipeTransform,
+    EventEmitter,
 } from '@angular/core';
 import {
     Condition,
