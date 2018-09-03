@@ -214,11 +214,9 @@ export class ItemsComponent implements OnInit{
     reset () : void {
         this.setSelectedHero(0);
         this.heroItemSelection = [];
-        let i: number;
-        for (i = 0; i < this.selectedHeroes.length; i += 1) {
+        for (let i = 0; i < this.selectedHeroes.length; i += 1) {
             this.heroItemSelection.push([]);
             this.totalCostPerHero[i] = 0;
-            i += 1;
         }
     }
 
@@ -254,6 +252,7 @@ export class ItemsComponent implements OnInit{
             content: $(`#${item.name}`).html(),
             template: $('#itemsPopoverTemplate').html(),
         });
+        $(target).popover('toggle');
     }
 
     triggerHeroPopover(target: HTMLElement, hero: any) {

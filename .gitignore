@@ -107,7 +107,8 @@ package-lock.json
 # Generated Lua Scripts
 /lua/*.lua
 /lua
-/public
+/public/lua
+/public/lua/*
 
 # Scraped data
 /backend/static/images/

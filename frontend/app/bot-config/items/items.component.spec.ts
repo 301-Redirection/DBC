@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { FormsModule } from '@angular/forms';
+import { HeroItemStubComponent } from '../../testing/hero-item-stub';
 
 describe('ItemsComponent', () => {
     let component: ItemsComponent;
@@ -44,7 +45,11 @@ describe('ItemsComponent', () => {
         apiConnectServiceStub.getItemImageURL.and.callThrough();
 
         TestBed.configureTestingModule({
-            declarations: [ItemsComponent, FilterPipe],
+            declarations: [
+                ItemsComponent,
+                FilterPipe,
+                HeroItemStubComponent,
+            ],
             imports: [SortablejsModule, FormsModule],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },

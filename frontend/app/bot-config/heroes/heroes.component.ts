@@ -63,7 +63,6 @@ export class HeroesComponent implements OnInit {
         this.getHeroes();
 
         // jquery functions
-        this.popoverDismiss();
         this.selectedTab();
     }
 
@@ -114,6 +113,12 @@ export class HeroesComponent implements OnInit {
     }
 
     sortHeroData(): void {
+        // sort heroes alphabetically
+        this.allHeroes.sort((a, b) => {
+            return a.niceName.localeCompare(b.niceName);
+        });
+
+        // distribute into separate arrays based on primary attribute
         this.allHeroes.forEach((hero) => {
             if (hero.primaryAttribute === 'str') {
                 this.strengthHeroes.push(hero);
@@ -136,7 +141,7 @@ export class HeroesComponent implements OnInit {
     togglePools(): void {
         this.partitioned = !this.partitioned;
         this.hidePopovers();
-        if (confirm('Are you sure you want to toggle pools? All changes will be lost.')) {
+        if (confirm('Are you sure you want to toggle pools?')) {
             if (this.numberOfPools > 1) {
                 this.numberOfPools = 1;
                 document.getElementById('poolTabs').style.height = '0';
@@ -170,7 +175,9 @@ export class HeroesComponent implements OnInit {
         this.selectedHeroesList = [];
         this.pools.forEach((pool) => {
             pool.forEach((hero) => {
-                this.selectedHeroesList.push(hero);
+                if (this.selectedHeroesList.indexOf(hero) === -1) {
+                    this.selectedHeroesList.push(hero);
+                }
             });
         });
         this.saveHeroes();
@@ -204,6 +211,10 @@ export class HeroesComponent implements OnInit {
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
         this.setSelectedHeroesList();
+    }
+
+    onRemoveHero(event: any): void {
+        this.removeHero(event.hero, event.pool);
     }
 
     checkHeroExists(hero: any): boolean {
@@ -245,34 +256,8 @@ export class HeroesComponent implements OnInit {
         }
     }
 
-    triggerPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
-
     hidePopovers() {
-        $('[data-toggle="popover"]').popover('hide');
-    }
-
-    popoverDismiss(): void {
-        $(document).ready(() => {
-            $('heroComponent').click((event) => {
-                this.hidePopovers();
-
-                if (event.target.className === 'popover-zone' ||
-                    event.target.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.id}`).popover('show');
-                } else if (event.target.parentElement.className === 'popover-zone' ||
-                    event.target.parentElement.className === 'popover-zone selected-popover-zone') {
-                    $(`#${event.target.parentElement.id}`).popover('show');
-                }
-            });
-        });
+        $('.popover-zone').popover('hide');
     }
 
     selectedTab(): void {

@@ -297,7 +297,11 @@ const generateTeamDesires = function (req) {
  *
  */
 const getBotScriptDirectory = function (id, botId) {
-    let publicPath = path.join(NODE_PATH, 'public');
+    let strId = String(id);
+    let strBotId = String(botId);
+    strId = strId.replace('|', '_');
+    strBotId = strBotId.replace('|', '_');
+    let publicPath = path.join(NODE_PATH, '..', 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -305,11 +309,11 @@ const getBotScriptDirectory = function (id, botId) {
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
-    publicPath = path.join(publicPath, id);
+    publicPath = path.join(publicPath, strId);
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
-    const tempDir = path.join(publicPath, String(botId));
+    const tempDir = path.join(publicPath, strBotId);
     if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir);
     }
@@ -374,7 +378,6 @@ const shouldRegenerateBotScripts = function (id, botId, timeLastUpdated) {
         return true;
     }
     publicPath += '.zip';
-    // console.log(publicPath);
     try {
         const stats = fs.stat(publicPath);
         return moment(timeLastUpdated).isAfter(stats.mtime);

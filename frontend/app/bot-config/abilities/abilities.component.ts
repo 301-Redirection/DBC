@@ -288,7 +288,7 @@ export class AbilitiesComponent implements OnInit {
     }
 
     generateTalentArray(hero): any {
-        const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map(( ) => 'n');
+        const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map(() => 'n');
 
         if (hero) {
             for (let i = 0; i < NUMBER_TALENTS; i += 1) {
@@ -343,5 +343,6 @@ export class AbilitiesComponent implements OnInit {
             template: $('#abilitiesPopoverTemplate').html(),
             content: `<div class = "h5">${ability.name}</div>`,
         });
+        $(target).popover('toggle');
     }
 }

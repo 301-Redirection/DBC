@@ -14,6 +14,7 @@ import { ItemsComponent } from './items/items.component';
 import { SortablejsModule } from 'angular-sortablejs';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { BotConfigDataService } from '../services/bot-config-data.service';
+import { HeroItemModule } from './hero-item/hero-item.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { BotConfigDataService } from '../services/bot-config-data.service';
             animation: 200,
         }),
         MaterialModule,
+        HeroItemModule,
     ],
     declarations: [
         BotConfigComponent,

@@ -74,11 +74,11 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
     }
 
-    private saveTeamDesires(): void {
+    saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
-    private addCondition(compoundCondition: CompoundCondition): void {
+    addCondition(compoundCondition: CompoundCondition): void {
         const newCond = this.botConfigData.newCondition();
         const len = compoundCondition.conditions.length;
         compoundCondition.conditions.push(newCond);
