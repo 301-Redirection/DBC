@@ -73,6 +73,28 @@ export class ItemsComponent implements OnInit{
         this.prevSelectedHeroIndex = 0;
     }
 
+    // To be used to retrieve items saved
+    getSavedSelectedItems() {
+        let i = 0;
+        this.selectedHeroes.forEach((hero) => {
+            this.botConfigData.getHeroItemSelection(hero.name).subscribe((itemArr) => {
+                this.heroItemSelection = itemArr;
+                this.totalCostPerHero[i] = this.calculateCostItems(itemArr);
+                i += 1;
+            });
+        });
+    }
+
+    calculateCostItems (itemArr: any) {
+        let cost = 0;
+        if (itemArr !== 'null') {
+            itemArr.array.forEach((item) => {
+                cost += item.cost;
+            });
+        }
+        return cost;
+    }
+
     getItems(): void {
         // database call to retrieve all dota items
         this.api.getAllItems().subscribe(
@@ -97,6 +119,7 @@ export class ItemsComponent implements OnInit{
             item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
                 this.basicItems.push(item);
+                console.log(item);
             }else if (item['name'].indexOf('recipe') === -1) {
                 this.handleItemComponents(item);
                 this.upgradeItems.push(item);
@@ -115,8 +138,10 @@ export class ItemsComponent implements OnInit{
             for (const componentID of item.components) {
                 component = this.allItems.find(x => x.id === componentID);
                 this.selectedItemComponentsArray.push(component);
-                item.components = this.selectedItemComponentsArray;
             }
+            // Sort components according to price
+            this.selectedItemComponentsArray.sort((item1, item2) => item1.cost - item2.cost);
+            item.components = this.selectedItemComponentsArray;
         }
         this.selectedItemComponentsArray = [];
     }
@@ -207,22 +232,12 @@ export class ItemsComponent implements OnInit{
     // Functions to save and retrieve selected items from server
     // *********************************************************
 
-    // get item names to save to server
-    getItemNames(items): any {
-        const itemNames = [];
-        items.forEach((item) => {
-            itemNames.push(item.name);
-        });
-        return itemNames;
-    }
-
     // Save items to bot config service
     saveItems(): void {
         for (let i = 0; i < this.selectedHeroes.length; i += 1) {
             const hero = this.selectedHeroes[i];
-            const items = this.heroItemSelection[i];
-            const itemNames = this.getItemNames(items);
-            this.botConfigData.updateHeroItems(hero.programName, itemNames);
+            const itemsArr = this.heroItemSelection[i];
+            this.botConfigData.updateHeroItems(hero.programName, itemsArr);
         }
         console.log(this.botConfigData.getConfig());
     }

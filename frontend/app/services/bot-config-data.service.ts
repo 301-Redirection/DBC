@@ -140,4 +140,14 @@ export class BotConfigDataService {
         return this.items;
     }
 
+    public getHeroItemSelection(heroName: string): any {
+        let itemsArr: 'null';
+        this.config.heroes.forEach((hero) => {
+            if (hero.name === heroName) {
+                itemsArr = hero.items;
+            }
+        });
+        return itemsArr;
+    }
+
 }
