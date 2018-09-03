@@ -54,6 +54,7 @@ export class ItemsComponent implements OnInit{
     ngOnInit() {
         this.getHeroes();
         this.getItems();
+        this.getSavedSelectedItems();
     }
 
     // **********************************
@@ -87,7 +88,7 @@ export class ItemsComponent implements OnInit{
 
     calculateCostItems (itemArr: any) {
         let cost = 0;
-        if (itemArr !== 'null') {
+        if (itemArr !== null) {
             itemArr.array.forEach((item) => {
                 cost += item.cost;
             });
@@ -119,7 +120,6 @@ export class ItemsComponent implements OnInit{
             item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
                 this.basicItems.push(item);
-                console.log(item);
             }else if (item['name'].indexOf('recipe') === -1) {
                 this.handleItemComponents(item);
                 this.upgradeItems.push(item);
@@ -264,5 +264,8 @@ export class ItemsComponent implements OnInit{
             content: $(`#${hero.programName}`).html(),
             template: $('#heroesPopoverTemplate').html(),
         });
+    }
+    hideItemPopovers() {
+        $('.popover-zone').popover('hide');
     }
 }
