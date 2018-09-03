@@ -141,7 +141,7 @@ export class BotConfigDataService {
     }
 
     public getHeroItemSelection(heroName: string): any {
-        let itemsArr: [];
+        let itemsArr = [];
         this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
                 itemsArr = hero.items;
