@@ -9,8 +9,7 @@ const models = require('models');
 const path = require('path');
 const config = require('../../config/config.js');
 
-console.log(config);
-const blackListedHeroes = config.lua.unimplentedHeroes;
+const { unimplentedHeroes } = config.lua;
 const { unpurchasableItems } = config.lua;
 
 class StaticController {
@@ -70,8 +69,8 @@ class StaticController {
                 // only return add a hero to final output if they have implemented bots
                 for (let i = 0; i < heroes.length; i += 1) {
                     const hero = heroes[i];
-                    const isBlackListed = blackListedHeroes.indexOf(hero.programName) !== -1;
-                    if (!isBlackListed) {
+                    const isUnimplemented = unimplentedHeroes.indexOf(hero.programName) !== -1;
+                    if (!isUnimplemented) {
                         hero.dataValues.url = `/static/heroes/images/${heroes[i].programName}.png`;
                         const keys = Object.keys(hero.heroStats.dataValues);
                         for (let j = 0; j < keys.length; j += 1) {
