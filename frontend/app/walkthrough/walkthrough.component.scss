@@ -1,6 +1,11 @@
 /* Global Variables */
 @import '../../variables';
 
+#walkthroughContainer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
 .img {
 	border: 5px solid $dark-grey-3;
     border-radius: 2px;
