@@ -9,8 +9,7 @@ const models = require('models');
 const path = require('path');
 const config = require('../../config/config.js');
 
-const { unimplentedHeroes } = config.lua;
-const { unpurchasableItems } = config.lua;
+const { unimplentedHeroes, unpurchasableItems } = config.lua;
 
 class StaticController {
     // A generic function to return an image given a type
