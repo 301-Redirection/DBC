@@ -21,7 +21,7 @@ describe('MySQL Intial Testing', () => {
                 dialectOptions: { multipleStatements: true },
             }
         );
-        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
+        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database}; CREATE DATABASE ${config.test.database};`)
             .then(() => {
                 const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
                 const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });

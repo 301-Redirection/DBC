@@ -10,9 +10,9 @@
         </span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar-dropdown">    
+    <div class="collapse navbar-collapse" id="navbar-dropdown">
         <!-- Show only if logged in -->
-        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">                  
+        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">
             <li class="nav-item">
                 <a id="dashboardLink" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>
@@ -30,32 +30,32 @@
                 <button class="button-profile my-2 my-sm-0" type="button" id="logInButton" (click)="auth.login()">
                     <i class="fas fa-sign-in-alt"></i>&nbsp;
                     SIGN IN
-                </button>                
-            </li>   
+                </button>
+            </li>
             
             <!-- Show only if logged in -->
             <li class="nav-item" *ngIf="auth.loggedIn">
                 <div class="dropdown">
-                    <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
-                        <i class="fas fa-user"></i>&nbsp;                      
-                        <div class="d-inline" *ngIf="auth.userProfile?.given_name != null">                            
+                    <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>&nbsp;
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name != null">
                             Hello, {{auth.userProfile?.given_name}}
                         </div>
                         <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname != null">
                             Hello, {{auth.userProfile?.nickname}}
-                        </div>                        
+                        </div>
                         <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname == null && auth.userProfile?.name != null">
                             Hello, {{auth.userProfile?.name}}
                         </div>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="welcomeButton">                        
+                    <div class="dropdown-menu" aria-labelledby="welcomeButton">
                         <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()">
                             <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;
                             SIGN OUT
-                        </button>          
+                        </button>
                     </div>
                 </div>
-            </li>                         
+            </li>
         </ul>
     </div>
 </nav>
