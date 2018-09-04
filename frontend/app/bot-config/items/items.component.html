@@ -1,6 +1,6 @@
 <div id="itemComponent" class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
+        <div class="col-12 config-description">
             <!-- <h3>ITEM SELECTION</h3><br> -->
             Select your item guide for each heroes by clicking and dragging items from the list below
         </div>
@@ -12,7 +12,7 @@
             <div class="card-header bot-manage-card-header">
                 <h5 class="align-middle">CHOOSE A HERO</h5>
             </div>
-            <div class="card-body bot-manage-card-body">                
+            <div class="card-body bot-manage-card-body">
                 <app-hero-item *ngFor="let hero of selectedHeroes; let i=index" (click)="setSelectedHero(i); onSelect(hero);" [class.selected]="hero === currentHero" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 <div *ngIf="selectedHeroes.length == 0">
                     <h6 class="text-center">No Selected Heroes</h6>
@@ -22,7 +22,7 @@
     </div>
 
     <!-- List table -->
-    <div class="frame"  *ngIf="selectedHeroes.length != 0">
+    <div class="frame mb-1" *ngIf="selectedHeroes.length != 0">
         <div class="card-header container-fluid bot-manage-card-header ">
             <div class="text-left mb-0 pb-0 bot-manage-card-header">
                 <h5 id="itemsHeader">CHOOSE ITEMS FOR EACH HERO</h5>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div *ngIf="item.components !== 'null'">
                                     <div class="card-body container-fluid ">
-                                        <div class="row  mb-3">
+                                        <div class="row mb-3">
                                             <h6>Items purchased to create {{item.niceName}}:</h6>
                                         </div>
                                         <div class="row justify-content-md-center mt-1">
@@ -111,7 +111,7 @@
                             <div class="drop-zone" [sortablejs]="basicItems" [sortablejsOptions]="optionsSource">
                                 <div [id]="item.id" class="item" *ngFor="let item of basicItems | filter : itemSearch" [style.backgroundImage]="'url('+item.url+')'" (dblclick)="addItemToList(item)"
                                     (drag)="setSelectedItem(item); hideItemPopovers()">
-                                    <div class="popover-zone"  (mouseover)="triggerItemPopover($event.currentTarget, item)"  data-toggle="popover"></div>
+                                    <div class="popover-zone" (mouseover)="triggerItemPopover($event.currentTarget, item)" data-toggle="popover"></div>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                 <div class="hero-attributes cost-item ">
                     <img class="mx-1 float-left" [src]="dotaGoldIconURL" height="25px">
                     <div class="ml-2 float-none">
-                        <b>{{item.cost}}</b>                        
+                        <b>{{item.cost}}</b>
                     </div>
                 </div>
                 <div class="float-left" *ngIf="item.components !== 'null'">
@@ -159,7 +159,7 @@
                         </div>
                         <div class="row justify-content-md-center mb-2">
                             <div class="mx-1" *ngFor="let component of item.components">
-                                <img [src]="component.url"  height="30px">
+                                <img [src]="component.url" height="30px">
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                     <img class="popover-item" src="{{ hero.wImage }}" alt="" height="50">&nbsp;
                     <img class="popover-item" src="{{ hero.eImage }}" alt="" height="50">&nbsp;
                     <img class="popover-item" src="{{ hero.rImage }}" alt="" height="50">
-                </div>                
+                </div>
             </div>
         </div>
     </div>

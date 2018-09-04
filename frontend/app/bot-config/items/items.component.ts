@@ -86,9 +86,11 @@ export class ItemsComponent implements OnInit{
             },
         );
     }
+
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);
     }
+
     sortItemData(): void {
         for (const item of this.allItems) {
             item['url'] = this.getItemImageFullURL(item['url']);
@@ -103,6 +105,7 @@ export class ItemsComponent implements OnInit{
             }
         }
     }
+
     addItemToList (item) {
         this.heroItemSelection[this.selectedHeroIndex].push(item);
         this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
@@ -117,6 +120,7 @@ export class ItemsComponent implements OnInit{
             this.setSelectedItemsArray();
         }
     }
+
     setSelectedHero (index) {
         this.prevSelectedHeroIndex = this.selectedHeroIndex;
         this.selectedHeroIndex = index;
@@ -124,6 +128,7 @@ export class ItemsComponent implements OnInit{
         $(`#${this.prevSelectedHeroIndex}`).removeClass('hero-selected');
         $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
     }
+
     reset () : void {
         this.setSelectedHero(0);
         this.heroItemSelection = [];

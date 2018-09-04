@@ -1,12 +1,12 @@
 <div>
     <div class="container-fluid container-fluid-custom">
         <div class="row">
-            <div class="col-12" id="heroesTitle">
+            <div class="col-12 config-description">
                 Select a tab to customize your team desires
             </div>
         </div>
 
-        <div class="frame">
+        <div class="frame mb-1">
             <div id="accordion" class="card bot-manage-card">
                 <div *ngFor="let section of sectionsLanes">
                     <!-- Heading -->
@@ -95,7 +95,7 @@
                     <button class="button-profile card-header heading-desire w-100" id="heading{{section.title}}" data-toggle="collapse" [attr.data-target]="'#collapse' + section.title" aria-expanded="true" [attr.aria-controls]="'#collapse' + section.title">
                         Team's {{section.title}} Desires
                     </button>
-                    <div id="collapse{{section.title}}" class="collapse" [attr.aria-labelledby]="'heading' + section.title"  data-parent="#accordion">
+                    <div id="collapse{{section.title}}" class="collapse" [attr.aria-labelledby]="'heading' + section.title" data-parent="#accordion">
                         <div class="card-body bot-manage-card-body">
                             <div class="form-group container">
                                 <label for="{{section.prop}}Default">Default Value</label>
@@ -108,8 +108,8 @@
                                 <div *ngIf="config.desires[section.prop].compoundConditions != []">
                                     <div class="compound-cond container list-group" *ngFor="let comp of config.desires[section.prop].compoundConditions | reverse; let j = index">
                                         <h5>Condition Group</h5>
-                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
-                                        <div  *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
+                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                        <div *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                             <span class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div class="col-md-10">
                                                     <configurator [condition]="condition"></configurator>
