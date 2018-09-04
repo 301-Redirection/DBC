@@ -10,18 +10,18 @@ $nav-background-color: $black ;
 /* padding */
 nav {
     width: 100%;
-    padding: .6rem 5rem;    
-    box-shadow: 0 1px 5px 5px $black;   
+    padding: .6rem 5rem;
+    box-shadow: 0 1px 5px 5px $black;
     background-color: $black !important;
-    background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);    
+    background-image: url(http://cdn.dota2.com/apps/dota2/images/header/header_bg.png);
     background-repeat: no-repeat;
     line-height: normal;
     letter-spacing: .2rem;
 }
  
 /* navbar brand */
-.navbar-brand {    
-    font-family: $font-family;    
+.navbar-brand {
+    font-family: $font-family;
     opacity: 0.8;
     margin-right: auto;
 }
@@ -42,13 +42,13 @@ nav {
 }
  
 #hamburger:focus,
-#hamburger:active {    
+#hamburger:active {
     outline: none;
 }
 
 .hamburger-inner,
 .hamburger-inner:before,
-.hamburger-inner:after {    
+.hamburger-inner:after {
     background-color: $grey;
 }
  
@@ -60,12 +60,12 @@ nav {
 /* nav items */
  
 #navLinksList {
-    margin-left: 1.4rem;    
+    margin-left: 1.4rem;
 }
  
 .nav-item {
     margin-left: .5rem;
-    margin-right: .5rem;        
+    margin-right: .5rem;
     font-family: 'Radiance';
 }
  
@@ -87,7 +87,7 @@ nav {
 /* Display on hover */
 
 li.nav-item div.dropdown:hover > div.dropdown-menu {
-    display: block;    
+    display: block;
 }
  
 /*
@@ -99,14 +99,14 @@ li.nav-item div.dropdown:hover > div.dropdown-menu {
  @media only screen and (max-width: 1050px) {
     nav {
         padding-left: 2rem;
-        padding-right: 2rem;  
+        padding-right: 2rem;
     }
 }
  
 @media only screen and (max-width: 995px) {
     #logInButton {
-        margin-top: 4% !important;        
-    }  
+        margin-top: 4% !important;
+    }
     
     #navLinksList {
         margin-top: 3% !important;
@@ -136,7 +136,7 @@ li.nav-item div.dropdown:hover > div.dropdown-menu {
     #botScriptTitle {
         font-size: 50%;
         letter-spacing: .1rem;
-    }    
+    }
  
     #navLinksList {
         margin-top: 5% !important;

@@ -6,6 +6,7 @@ import {
     Configuration,
 } from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+
 // Import JQuery
 declare var $: any;
 
@@ -81,6 +82,7 @@ export class TeamDesiresComponent implements OnInit {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
 
+    // This is only used by a parent component if this component needs to be reset
     reset(): void {
         this.config = this.botConfigData.getDefaultConfiguration();
     }

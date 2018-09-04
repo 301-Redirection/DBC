@@ -82,6 +82,7 @@ export class HeroesComponent implements OnInit {
         return heroPool;
     }
 
+    // This is only used by a parent component if this component needs to be reset
     reset(): void {
         this.resetPools();
     }
