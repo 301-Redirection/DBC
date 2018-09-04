@@ -76,12 +76,10 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedSelectedItems() {
-        let i = 0;
-        this.selectedHeroes.forEach((hero) => {
+        this.selectedHeroes.forEach((hero, num) => {
             this.botConfigData.getHeroItemSelection(hero.name).subscribe((itemArr) => {
                 this.heroItemSelection = itemArr;
-                this.totalCostPerHero[i] = this.calculateCostItems(itemArr);
-                i += 1;
+                this.totalCostPerHero[num] = this.calculateCostItems(itemArr);
             });
         });
     }
@@ -153,10 +151,7 @@ export class ItemsComponent implements OnInit{
     // Angular ngfor optimization (Dont rebuild list every time)
     trackItem(index, item) {
         // id creates unique identity for each element such that duplicates treated individually
-        let id = index;
-        id += '_';
-        id += item.id;
-        return id;
+        return `${index}_${item.id}`;
     }
     // Set the selected hero
     onSelect(hero): void {
