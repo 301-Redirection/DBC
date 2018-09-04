@@ -111,7 +111,7 @@ export class ItemsComponent implements OnInit{
     getItemImageFullURL (url): string {
         return this.api.getItemImageURL(url);
     }
-    
+
     // Categorise the items received from the server
     sortItemData(): void {
         for (const item of this.allItems) {
@@ -128,7 +128,6 @@ export class ItemsComponent implements OnInit{
         }
     }
 
-<<<<<<< HEAD
     // Gets upgrade item's components, store in the item
     handleItemComponents (item) {
         item['components'] = JSON.parse(item['components']);
@@ -161,8 +160,6 @@ export class ItemsComponent implements OnInit{
     }
 
     // Add item to selected list triggered by double click and drop
-=======
->>>>>>> 7287c4a3ff5afd97ce06a1cf1da9711309f03996
     addItemToList (item) {
     // Stop Adding duplicates if dragged in selected items list:
         if (this.selectedItem !== null) {
@@ -195,10 +192,7 @@ export class ItemsComponent implements OnInit{
         }
     }
 
-<<<<<<< HEAD
     // Set the selected hero, needed to manage per hero items selection
-=======
->>>>>>> 7287c4a3ff5afd97ce06a1cf1da9711309f03996
     setSelectedHero (index) {
         this.prevSelectedHeroIndex = this.selectedHeroIndex;
         this.selectedHeroIndex = index;
@@ -206,15 +200,12 @@ export class ItemsComponent implements OnInit{
         $(`#${this.selectedHeroIndex}`).addClass('hero-selected');
     }
 
-<<<<<<< HEAD
     // Set selected item, needed to insert items into selected list
     setSelectedItem (item) {
         this.selectedItem = item;
     }
 
     // General reset all selected items of all selected heroes to null
-=======
->>>>>>> 7287c4a3ff5afd97ce06a1cf1da9711309f03996
     reset () : void {
         this.setSelectedHero(0);
         this.heroItemSelection = [];
