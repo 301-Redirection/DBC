@@ -321,7 +321,7 @@ const getBotScriptDirectory = function (id, botId) {
 };
 
 /**
- *  This is  the function that does the code generation
+ *  This is the function that does the code generation
  *  via the Lua Code Manager Objects.
  *
  *  TO DO: Get team_desires.lua that we generate to replace the

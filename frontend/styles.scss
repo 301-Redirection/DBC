@@ -19,7 +19,11 @@ body {
     height: 100%;
     width: 100%;
     padding: 0 !important;
-    margin: 0 !important;   
+    margin: 0 !important;
+}
+
+body {
+    background-color: $black;
 }
 
 /* -- Global Styles -- */
@@ -42,40 +46,37 @@ h3, h4, h5, h6 {
 /* Paragraph styles */
 
 p {
-    font-family:  $font-family;
+    font-family: $font-family;
 }
 
 
-/* -- Containers --  */
+/* -- Containers -- */
 
-.container-fluid-custom {    
+.container-fluid-custom {
     height: 100%;
     padding-top: 2rem;
 }
 
 .frame {
     margin: 2% 3% 5% 3%;
-    text-align: center;     
+    text-align: center;
     color: $light-grey;
 }
 
 .banner-frame {
     width: 100%;
-    text-align: center;     
+    text-align: center;
     color: $light-grey;
-}
-
-.background {    
-    background-repeat: no-repeat;
-    background-position: center top;    
-    -webkit-background-size: cover !important;
-    -moz-background-size: cover !important;
-    -o-background-size: cover !important;
-    background-size: cover !important; 
 }
 
 .main-background {
     background-image: $general-background-image;
+}
+
+.config-background {
+    background-image: $config-title-background-image;
+    background-size: cover;
+    background-position: top center;
 }
 
 
@@ -83,7 +84,7 @@ p {
 
 .bot-manage-card {
     background-color: $dark-grey-1;
-    text-align: left;   
+    text-align: left;
     border: none; 
     color: $light-grey;
     height: 100%;
@@ -96,21 +97,21 @@ p {
 }
 
 .bot-manage-card-body {
-    background-color: $dark-grey-3 !important;  
+    background-color: $dark-grey-3 !important;
     width: 100%; 
     text-align: left;
     min-height: 100px;
 }
 
 .manage-list-group-item {
-    background-color: $dark-grey-3 !important;   
+    background-color: $dark-grey-3 !important;
     padding: 1rem 2rem 2rem 2rem !important; 
     cursor: pointer !important;
     border-radius: 0 !important;
 }
 
 .manage-list-group-item:hover {
-    background-color: $dark-grey-2 !important;   
+    background-color: $dark-grey-2 !important;
 }
 
 
@@ -118,16 +119,16 @@ p {
 
 .hero-item {
     display: inline-block;
-    text-align: center;    
+    text-align: center;
     position: relative; 
     margin-right: 10px;
     border: 2px solid $hero-item-border-color;
     border-radius: 4px;
     background-color: $black;
-    background-size: cover;    
+    background-size: cover;
     height: 120px;
-    width: 105px;    
-    cursor: pointer;           
+    width: 105px;
+    cursor: pointer;
 }
 
 .hero-item:hover {
@@ -146,9 +147,9 @@ p {
     padding: 1px;
 }
 
-.hero-name {     
+.hero-name {
     position: absolute;
-    bottom: 0;    
+    bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
     width: 100%;
@@ -157,10 +158,11 @@ p {
     font-family: $font-family;
 }
 
-#heroesTitle {
+.config-description {
     color: $grey;
     text-align: center;
     font-family: $font-family;
+    font-size: 18px;
 }
 
 /* -- Buttons -- */
@@ -173,7 +175,7 @@ button:focus {
 
 .button {
     padding-left: 1rem !important;
-    padding-right: 1rem !important;    
+    padding-right: 1rem !important;
     letter-spacing: .2rem !important;
     font-family: $font-family;
     text-decoration:none;
@@ -201,7 +203,7 @@ button:focus {
     cursor: pointer;
 }
 
-.button-cancel {   
+.button-cancel {
     text-decoration:none;
     color: $btn-cancel-color;
     background-color: $btn-general-background-color;
@@ -273,7 +275,7 @@ button:focus {
     
   }
   
-.button-profile:hover {    
+.button-profile:hover {
     text-decoration:none;
     opacity: 1;
     color: $white;
@@ -288,7 +290,7 @@ button:focus {
     display: inline-block;
 }
 
-.dropdown-filter {    
+.dropdown-filter {
     color: $grey;
 }
 
@@ -297,10 +299,10 @@ button:focus {
 }
 
 .dropdown-menu {
-    background-color: $dropdown-color-hover !important;        
+    background-color: $dropdown-color-hover !important;
     border-color: $dark-grey-1 !important;
     border-radius: 2px !important; 
-    min-width: 100% !important;   
+    min-width: 100% !important;
 }
 
 .dropdown-item {
@@ -308,7 +310,7 @@ button:focus {
 }
 
 .dropdown-item:hover {
-    background-color: $black !important;    
+    background-color: $black !important;
     color: $light-grey !important;
     cursor: pointer !important;
     padding-top: 5px;
@@ -335,7 +337,7 @@ button:focus {
     background-color: $dark-grey;
 }
 
-.popover-body {    
+.popover-body {
     color: $white;
 }
 

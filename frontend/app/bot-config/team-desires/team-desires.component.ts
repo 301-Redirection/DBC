@@ -7,6 +7,9 @@ import {
 } from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
+// Import JQuery
+declare var $: any;
+
 @Component({
     selector: 'app-team-desires',
     templateUrl: './team-desires.component.html',
@@ -72,10 +75,16 @@ export class TeamDesiresComponent implements OnInit {
     ngOnInit() {
         this.config = this.botConfigData.getDefaultConfiguration();
         this.saveTeamDesires();
+        this.togglePanel();
     }
 
     saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
+    }
+
+    // This is only used by a parent component if this component needs to be reset
+    reset(): void {
+        this.config = this.botConfigData.getDefaultConfiguration();
     }
 
     addCondition(compoundCondition: CompoundCondition): void {
@@ -126,6 +135,18 @@ export class TeamDesiresComponent implements OnInit {
             this.addCondition(compoundCondition);
         }
         compoundCondition.logicalOperators[index] = op;
+    }
+
+    togglePanel() {
+        $(document).ready(() => {
+            $('.collapse').on('show.bs.collapse', function () {
+                $(this).siblings('.heading-desire').addClass('active');
+            });
+
+            $('.collapse').on('hide.bs.collapse', function () {
+                $(this).siblings('.heading-desire').removeClass('active');
+            });
+        });
     }
 }
 

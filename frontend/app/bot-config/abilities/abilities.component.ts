@@ -32,10 +32,15 @@ export class AbilitiesComponent implements OnInit {
     constructor(private botConfigData: BotConfigDataService) { }
 
     ngOnInit() {
-        this.getHeroes();
+        this.retrieveHeroes();
     }
 
-    getHeroes(): void {
+    // This is only used by a parent component if this component needs to be reset
+    reset(): void {
+        this.retrieveHeroes();
+    }
+
+    retrieveHeroes(): void {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
             this.selectedHeroes = [];

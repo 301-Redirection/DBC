@@ -1,6 +1,6 @@
 <div id="itemComponent" class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
+        <div class="col-12 config-description">
             <!-- <h3>ITEM SELECTION</h3><br> -->
             Select your item guide for each heroes by clicking and dragging items from the list below
         </div>
@@ -22,7 +22,7 @@
     </div>
 
     <!-- List table -->
-    <div class="frame" *ngIf="selectedHeroes.length != 0">
+    <div class="frame mb-1" *ngIf="selectedHeroes.length != 0">
         <div class="card-header container-fluid bot-manage-card-header ">
             <div class="text-left mb-0 pb-0 bot-manage-card-header">
                 <h5 id="itemsHeader">CHOOSE ITEMS FOR EACH HERO</h5>

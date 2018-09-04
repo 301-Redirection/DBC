@@ -1,7 +1,7 @@
 <div class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
-            <!-- <h3>ABILITY CONFIGURATION</h3><br>  -->
+        <div class="col-12 config-description">
+            <!-- <h3>ABILITY CONFIGURATION</h3><br> -->
             Select a hero to customize their ability level order.
         </div>
     </div>
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Ability Selector -->
-    <div class="row frame mb-5">
+    <div class="row frame mb-1">
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
                 <h5>Ability Level Up Guide</h5>
@@ -67,7 +67,7 @@
                             <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
                                 <td *ngIf="ability.type == 'T'; else wrong">
                                     <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
-                                        <img  class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
+                                        <img class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
                                     </button>
                                 </td>
                                 <td *ngIf="ability.type != 'T'; else wrong">

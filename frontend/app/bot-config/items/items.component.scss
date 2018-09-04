@@ -131,7 +131,7 @@
 .selected-item-card {
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;  
+    color: $light-grey;
     border: 1px solid rgba($dark-grey-1, 0.8);
     width: 100%;
 }
@@ -142,7 +142,7 @@
 
 #removeItemIcon {
     float: right;
-    z-index: 100;    
+    z-index: 100;
 }
 
 .items-position {
@@ -155,14 +155,14 @@
     height: 100%;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;  
+    color: $light-grey;
     width: 100%;
     margin-left: 1%;
-    margin-right: 1%;  
+    margin-right: 1%;
 }
 
 .selected-item-card-body {
-    background-color: $dark-grey-3 !important;  
+    background-color: $dark-grey-3 !important;
     text-align: left;
     width: 100%;
 }
@@ -179,11 +179,11 @@
 }
 
 #itemsHeader {
-    display: inline-block;   
+    display: inline-block;
 }
 
-#itemSearch {    
-    font-family: Arial, FontAwesome;    
+#itemSearch {
+    font-family: Arial, FontAwesome;
     width: 20%;
     float: right;
     border-radius: 100px;
