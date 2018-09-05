@@ -19,7 +19,7 @@
                 </div>
                 
                 <div class="drop-zone text-center" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -28,7 +28,7 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -37,7 +37,7 @@
                     <h6>Intelligence</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
             </div>
         </div>
