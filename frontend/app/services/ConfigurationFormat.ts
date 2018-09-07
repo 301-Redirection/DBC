@@ -143,7 +143,6 @@ export enum Trigger {
     'Number of Enemy Heroes Alive',
     'Number of Allied Heroes Alive',
     'Number of Enemy Heroes Visible to Team',
-    'Number of Allied Heroes in 1000 Radius',
 }
 
 export enum LogicalOperator {
