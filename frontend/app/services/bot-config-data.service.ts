@@ -140,4 +140,9 @@ export class BotConfigDataService {
         return this.items;
     }
 
+    public getHeroItemSelection(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero.name === heroName);
+        return hero && hero.items;
+    }
+
 }
