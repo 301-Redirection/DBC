@@ -35,8 +35,8 @@ export class ConfiguratorComponent {
         this.conditionChange.emit(this.condition);
     }
 
-    updateInputBounds() {
-        if (this.condition.trigger === 'Game Time') {
+    updateInputBounds(data: string) {
+        if (data === 'Game Time') {
             this.min = 0;
             this.max = null;
         } else {
