@@ -29,6 +29,13 @@
     margin-top: 10px;
 }
 
+div.btn-group > button {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1pt solid lightgrey;
+    background: rgba(0, 0, 0, 0);
+}
+
 .list-group-item {
     background: $dark-grey-2;
 }

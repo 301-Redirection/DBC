@@ -128,6 +128,15 @@ export class TeamDesiresComponent implements OnInit {
         }
         compoundCondition.logicalOperators[index] = op;
     }
+
+    sanitizeReturnValue(data: CompoundCondition) {
+        if (data.value < -100) {
+            data.value = -100;
+        }
+        if (data.value > 100) {
+            data.value = 100;
+        }
+    }
 }
 
 @Pipe({

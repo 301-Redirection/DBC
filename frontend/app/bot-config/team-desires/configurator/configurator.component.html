@@ -1,7 +1,7 @@
 <div class="row d-flex align-contents-center">
     <mat-form-field class="col-md-4">
         <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="condition.trigger">
-            <mat-option *ngFor="let t of triggers | enumToArray" [value]="t">{{t}}</mat-option>
+            <mat-option *ngFor="let t of triggers | enumToArray" [value]="t" (click)="updateInputBounds()">{{t}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="col-md-4">
@@ -9,7 +9,7 @@
             <mat-option *ngFor="let o of operators | enumToArray" [value]="o">{{o}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field class="col-md-4" hintLabel="(Enter a value from {{min}} to {{max}})">
-        <input matInput [min]="min" [max]="max" type="number" [(ngModel)]="condition.conditional" >
+    <mat-form-field class="col-md-4" hintLabel="(Enter a value from {{min}} to {{max == null ? 'infinity' : max}})">
+        <input matInput [min]="min" [max]="max" type="number" [(ngModel)]="condition.conditional" (blur)="sanitizeInput()">
     </mat-form-field>
 </div>

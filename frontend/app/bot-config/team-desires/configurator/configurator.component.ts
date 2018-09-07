@@ -25,7 +25,7 @@ export class ConfiguratorComponent {
     operators = Operator;
 
     min = 0;
-    max = 10;
+    max = 5;
 
     constructor() {}
 
@@ -33,6 +33,25 @@ export class ConfiguratorComponent {
 
     changeCondition() {
         this.conditionChange.emit(this.condition);
+    }
+
+    updateInputBounds() {
+        if (this.condition.trigger === 'Game Time') {
+            this.min = 0;
+            this.max = null;
+        } else {
+            this.min = 0;
+            this.max = 5;
+        }
+    }
+
+    sanitizeInput() {
+        if (this.condition.conditional < this.min) {
+            this.condition.conditional = this.min;
+        }
+        if (this.condition.conditional > this.max) {
+            this.condition.conditional = this.max;
+        }
     }
 }
 
