@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguratorComponent, EnumToArrayPipe } from './configurator.component';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material/material.module';
 // import { Condition } from '../../../services/ConfigurationFormat';
 
 describe('ConfiguratorComponent', () => {
@@ -13,7 +14,10 @@ describe('ConfiguratorComponent', () => {
                 ConfiguratorComponent,
                 EnumToArrayPipe,
             ],
-            imports: [FormsModule],
+            imports: [
+                FormsModule,
+                MaterialModule,
+            ],
         }).compileComponents();
         fixture = TestBed.createComponent(ConfiguratorComponent);
 

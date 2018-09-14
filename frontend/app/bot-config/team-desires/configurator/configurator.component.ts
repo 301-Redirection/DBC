@@ -24,12 +24,34 @@ export class ConfiguratorComponent {
     triggers = Trigger;
     operators = Operator;
 
+    min = 0;
+    max = 5;
+
     constructor() {}
 
     ngOnInit() {}
 
     changeCondition() {
         this.conditionChange.emit(this.condition);
+    }
+
+    updateInputBounds(data: string) {
+        if (data === 'Game Time') {
+            this.min = 0;
+            this.max = null;
+        } else {
+            this.min = 0;
+            this.max = 5;
+        }
+    }
+
+    sanitizeInput() {
+        if (this.condition.conditional < this.min) {
+            this.condition.conditional = this.min;
+        }
+        if (this.condition.conditional > this.max) {
+            this.condition.conditional = this.max;
+        }
     }
 }
 
