@@ -1,12 +1,12 @@
 <div id="heroComponent" class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
+        <div class="col-12 config-description">
             Click & drag or double-click to select your preferred heroes
-        </div>    
+        </div>
     </div>
 
     <!-- Hero list -->
-    <div class="frame row mb-5">        
+    <div class="frame row mb-5">
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
                 <h5 id="heroesHeader">HEROES</h5>
@@ -19,7 +19,7 @@
                 </div>
                 
                 <div class="drop-zone text-center" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -28,7 +28,7 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -37,14 +37,14 @@
                     <h6>Intelligence</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <app-hero-item *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
+                    <app-hero-item *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false"></app-hero-item>
                 </div>
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 
     <!-- Pool table -->
-    <div sortablejs id="selectedFrame" class="frame row mb-5">
+    <div sortablejs id="selectedFrame" class="frame row mb-1">
         <div class="card bot-manage-card-body">
             <div id="selectedFrameHeader" class="bot-manage-card-header card-header">
                 <h5 id="cardHeaderText">SELECTED</h5>&nbsp;&nbsp;
@@ -61,17 +61,17 @@
                 </div>
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
-                <li class="nav-item" *ngFor="let pool of getPools(); let i = index;">                    
+                <li class="nav-item" *ngFor="let pool of getPools(); let i = index;">
                     <a sortablejs [id]="'poolLink'+i" class="nav-link pool-nav-link" [ngClass]="selectedPool == i ? 'active' : ''" (click)="setSelectedPool(i)" (dragenter)="highlightPool(i)" (dragleave)="unhighlightPool(i)" (drop)="addHero(selectedHero, i)">
                         Pool {{ i + 1 }}
                         <div [id]="'poolPlusIconCont'+i" class="pool-plus-icon-cont">
                             <i class="pool-plus-icon fas fa-plus"></i>
                         </div>
-                    </a>                    
+                    </a>
                 </li>
             </ul>
             <div class="card-body selected-card-body bot-manage-card-body">
-                <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">                    
+                <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <app-hero-item *ngFor="let hero of pools[selectedPool]" [hero]="hero" [isSelectedHero]="true" [pool]="pools[selectedPool]" (removeHeroEmitter)="onRemoveHero($event)"></app-hero-item>
                 </div>
             </div>

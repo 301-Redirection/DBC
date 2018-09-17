@@ -1,9 +1,19 @@
 /* Global Variables */
 @import '../../variables';
 
+#walkthroughContainer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
 .img {
 	border: 5px solid $dark-grey-3;
-	border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+.img-col {
+    padding: 0 !important;
 }
 
 /* Card CSS */
@@ -11,7 +21,7 @@
     height: 100%;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;    
+    color: $light-grey;
 }
 
 .path {
@@ -20,9 +30,19 @@
 }
 
 .card-title {
-	font-size: 30px;
+    font-size: 30px;
+    text-align: center;
 }
 
 .card-body {
 	font-size: 18px;
+}
+
+.tutorial {
+    margin-top: 20px;
+}
+
+.tutorial ol li,
+.tutorial ol ul {
+    margin-bottom: 10px;
 }

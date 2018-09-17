@@ -15,6 +15,11 @@ $slider-cursor: pointer;
 
 /* -- Heading -- */
 
+#botConfigTitleContainer {
+    padding-top: 2rem;
+    height: 25%;
+}
+
 #botConfigTitle {
     margin-top: $page-margin-top;
     margin-bottom: $page-margin-bottom;
@@ -47,13 +52,13 @@ $slider-cursor: pointer;
     height: 100%;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;    
+    color: $light-grey;
 }
 
 .config-card-dire {
     box-shadow: 0 0 7px $dire-border-color;
     border: 0.5px solid $dire-border-color-dim;
-    background-color: $dire-card-background-color;    
+    background-color: $dire-card-background-color;
 }
 
 .config-card-radiant {
@@ -113,7 +118,7 @@ $slider-cursor: pointer;
     -webkit-appearance: none;
     width: 100%;
     height: 8px;
-    border-radius: 5px;   
+    border-radius: 5px;
     background: rgba($slider-color, 0.7);
     outline: none;
     -webkit-transition: $slider-transition-speed;
@@ -166,14 +171,67 @@ $slider-cursor: pointer;
     cursor: pointer;
 }
 
+/* Config Container */
+#configContainer {
+    padding-top: 0;
+    padding-bottom: 4rem;
+}
+
+/* Config Navbar */
+
 #configNav {
-    margin-left: 5%;
-    margin-right: 5%;
+    height: 45px;
+    background-image: $config-nav-background-image;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    overflow-x: visible;
+}
+
+#configNavContent {
+    background-position: top center;
+    background-repeat: no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-size: 17px;
+    color: $light-grey;
+    width: 588pt;
+    text-align: center;
+    padding-top: 10px;
+    letter-spacing: 2px;
+    border: none;
+}
+
+.nav-spacer {
+    padding-right: 10px;
+    padding-left: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: $dark-grey;
+}
+
+#configNavContent a {
+    text-decoration: none;
+    cursor: pointer;
+    color: $light-grey;
+    font-family: $font-family;
+    width: 100pt;
+    text-align: center;
+}
+
+#configNavContent a:hover {
+    color: $white;
+}
+
+#configNavContent a.active.show {
+    text-shadow: 0 0 3px $white;
+    color: $white;
 }
 
 .nav-item {
     cursor: pointer;
-    width: 20%;    
+    width: 20%;
 }
 
 .nav-link {
@@ -182,22 +240,22 @@ $slider-cursor: pointer;
     border-top-right-radius: .25rem;
     color: $light-grey;
     font-size: 20px;
-    font-family: $font-family;    
+    font-family: $font-family;
 }
 
 .nav-link.active {
-    color: $light-grey;    
-    background-color: transparent;    
-    border-color: transparent transparent $light-grey;    
+    color: $light-grey;
+    background-color: transparent;
+    border-color: transparent transparent $light-grey;
     border-bottom: 4px solid $light-grey;
     font-size: 20px;
     font-weight: bold;
 }
 
-.nav-link:hover {    
+.nav-link:hover {
     color: $light-grey;
     font-weight: bold;
-    border: 1px solid transparent;    
+    border: 1px solid transparent;
     border-bottom: 4px solid $light-grey;
     transition: 0.4s;
 }
