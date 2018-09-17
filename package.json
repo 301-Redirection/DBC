@@ -70,6 +70,7 @@
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "popper.js": "^1.14.3",
+    "revalidator": "^0.3.1",
     "rxjs": "^5.5.6",
     "sequelize": "^4.37.6",
     "serve-favicon": "~2.4.5",

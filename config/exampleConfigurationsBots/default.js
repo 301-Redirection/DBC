@@ -1,8 +1,8 @@
 // Note the heroPool Object is not correct
 module.exports = {
     body: {
-        heroPool: { partitioned: 'false' },
         configuration: {
+            heroPool: { partitioned: false },
             desires: {
                 push: {
                     top: {
