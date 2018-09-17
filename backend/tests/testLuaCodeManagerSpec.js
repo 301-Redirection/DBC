@@ -1,16 +1,16 @@
 const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '../backend');
+process.env.NODE_PATH = path.join(__dirname, '..');
 require('module').Module._initPaths();
 const { codeGenerator } = require('controllers/codeGeneration/LuaCodeTemplateManager.js');
 const { writeScripts } = require('controllers/codeGeneration/generateScript.js');
 const fs = require('fs');
 const unzip = require('unzip');
-const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
-const exampleObjectDefaultAllHeroes = require('../config/exampleConfigurationsBots/defaultAllHeroes.js');
-const exampleObjectDefaultHeroesByPos = require('../config/exampleConfigurationsBots/defaultHeroesByPosition.js');
-const exampleObjectDefaultItemsSpecified = require('../config/exampleConfigurationsBots/defaultItemsSpecified.js');
-const exampleObjectDefaultAbilitiesSpecified = require('../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
-const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
+const exampleObjectDefault = require('../../config/exampleConfigurationsBots/default.js');
+const exampleObjectDefaultAllHeroes = require('../../config/exampleConfigurationsBots/defaultAllHeroes.js');
+const exampleObjectDefaultHeroesByPos = require('../../config/exampleConfigurationsBots/defaultHeroesByPosition.js');
+const exampleObjectDefaultItemsSpecified = require('../../config/exampleConfigurationsBots/defaultItemsSpecified.js');
+const exampleObjectDefaultAbilitiesSpecified = require('../../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
+const exampleObjectComplexOne = require('../../config/exampleConfigurationsBots/complexOne.js');
 const mocks = require('node-mocks-http');
 
 const response = mocks.createResponse();
@@ -124,8 +124,8 @@ describe('Lua Code Manager tests:\n', () => {
         const pathToFiles = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
         const pathToZip = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, `${botId}.zip`);
         const pathToTempFile = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
-        const pathToExpectedOutput = path.join('config', 'exampleConfigurationsBots', 'expectedOutput');
-
+        const pathToExpectedOutput = path.join(process.env.NODE_PATH, '..', 'config', 'exampleConfigurationsBots', 'expectedOutput');
+        console.log(pathToExpectedOutput);
         function unzipProcedure(func) {
             fs.createReadStream(pathToZip)
                 .pipe(unzip.Parse())
@@ -134,15 +134,15 @@ describe('Lua Code Manager tests:\n', () => {
 
         it('test if appropriate folders are created', (done) => {
             writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
-            const rootNodeDir = path.join(__dirname, '..');
+            const rootNodeDir = path.join(__dirname, '..', '..');
             let filePath = path.join(rootNodeDir, 'public');
-            expect(fs.existsSync(filePath)).toBe(true);
+            expect(fs.existsSync(filePath)).toBe(true, `${filePath} should exist`);
             filePath = path.join(filePath, 'lua');
-            expect(fs.existsSync(filePath)).toBe(true);
+            expect(fs.existsSync(filePath)).toBe(true, `${filePath} should exist`);
             filePath = path.join(filePath, String(id));
-            expect(fs.existsSync(filePath)).toBe(true);
+            expect(fs.existsSync(filePath)).toBe(true, `${filePath} should exist`);
             filePath = path.join(filePath, String(botId));
-            expect(fs.existsSync(filePath)).toBe(true);
+            expect(fs.existsSync(filePath)).toBe(true, `${filePath} should exist`);
             done();
         });
         it('test if zip has same files as in <botId> folder', (done) => {
