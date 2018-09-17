@@ -146,6 +146,17 @@ export class TeamDesiresComponent implements OnInit {
             data.value = 100;
         }
     }
+    togglePanel() {
+        $(document).ready(() => {
+            $('.collapse').on('show.bs.collapse', function () {
+                $(this).siblings('.heading-desire').addClass('active');
+            });
+
+            $('.collapse').on('hide.bs.collapse', function () {
+                $(this).siblings('.heading-desire').removeClass('active');
+            });
+        });
+    }
 }
 
 @Pipe({
