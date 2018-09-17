@@ -43,9 +43,8 @@ try {
     ConfigurationValidator.validate(exampleObjectComplexOne.body.configuration);
     // ConfigurationValidator.validate({});
     // ConfigurationValidator.validate([]);
-    const res = ConfigurationValidator.validate(undefined); // <-- weird case.. it passes
+    // const res = ConfigurationValidator.validate(undefined);
     // ConfigurationValidator.validate(exampleObjectComplexOne.body.configuration);
-}
-catch (exception) {
-    console.log(exception);
+} catch (exception) {
+    // console.log(exception);
 }
