@@ -134,16 +134,15 @@ export class Condition {
 }
 
 export enum Action {
-    Modify = 1,
-    Return,
+    'Modify the Desire by' = 1,
+    'Absolutely set the Desire to',
 }
 
 export enum Trigger {
-    Time = 1,
-    EnemyHeroesAlive,
-    AlliedHeroesAlive,
-    NumEnemyHeroesVisible,
-    RadiusAlliedHeroes,
+    'Game Time' = 1,
+    'Number of Enemy Heroes Alive',
+    'Number of Allied Heroes Alive',
+    'Number of Enemy Heroes Visible to Team',
 }
 
 export enum LogicalOperator {
@@ -152,10 +151,10 @@ export enum LogicalOperator {
 }
 
 export enum Operator {
-    LessThan = 1,
-    LessThanEqualTo,
-    EqualTo,
-    GreaterThanEqualTo,
-    GreaterThan,
-    NotEqual,
+    'Less Than' = 1,
+    'Less Than or Equal To',
+    'Equal To',
+    'Greater Than or Equal To',
+    'Greater Than',
+    'Not Equal',
 }
