@@ -10,9 +10,9 @@ declare var $: any;
 })
 export class HeroItemComponent implements OnInit {
 
-    @Input('hover') hover: boolean;
     @Input('hero') hero: any;
     @Input('pool') pool: any;
+    @Input('isHover') isHover: boolean;
     @Input('isSelectedHero') isSelectedHero: boolean;
     @Output() removeHeroEmitter = new EventEmitter<any>();
 
@@ -23,7 +23,9 @@ export class HeroItemComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit() { }
+
+    ngAfterViewInit() {
         this.activatePopover();
     }
 
@@ -35,7 +37,7 @@ export class HeroItemComponent implements OnInit {
             html: true,
             content: $(`#${this.hero.programName}`).html(),
             template: $('#heroesPopoverTemplate').html(),
-            trigger: this.hover ? 'hover' : 'focus',
+            trigger: this.isHover ? 'hover' : 'focus',
         });
     }
 
