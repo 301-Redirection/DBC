@@ -250,16 +250,6 @@ export class ItemsComponent implements OnInit{
         $(target).popover('toggle');
     }
 
-    triggerHeroPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            trigger: 'hover',
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
     hideItemPopovers() {
         $('.popover-zone').popover('hide');
     }

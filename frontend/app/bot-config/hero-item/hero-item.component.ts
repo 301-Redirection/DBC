@@ -10,6 +10,7 @@ declare var $: any;
 })
 export class HeroItemComponent implements OnInit {
 
+    @Input('hover') hover: boolean;
     @Input('hero') hero: any;
     @Input('pool') pool: any;
     @Input('isSelectedHero') isSelectedHero: boolean;
@@ -22,7 +23,9 @@ export class HeroItemComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.activatePopover();
+    }
 
     activatePopover() {
         const selected = this.isSelectedHero ? 'true' : 'false';
@@ -32,7 +35,7 @@ export class HeroItemComponent implements OnInit {
             html: true,
             content: $(`#${this.hero.programName}`).html(),
             template: $('#heroesPopoverTemplate').html(),
-            trigger: 'focus',
+            trigger: this.hover ? 'hover' : 'focus',
         });
     }
 

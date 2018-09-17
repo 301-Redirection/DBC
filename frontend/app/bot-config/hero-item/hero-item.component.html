@@ -65,12 +65,12 @@
 
 <!-- Hero Item -->
 <div class="hero-item" [style.backgroundImage]="'url('+hero.image+')'">
-    <a *ngIf="!isSelectedHero" tabindex="0" data-selected="false" [attr.data-hero-id]="hero.id" class="popover-zone" role="button" data-toggle="popover" data-trigger="focus" (mouseover)="activatePopover()">
+    <a *ngIf="!isSelectedHero" tabindex="0" data-selected="false" [attr.data-hero-id]="hero.id" class="popover-zone" role="button" data-toggle="popover" data-trigger="hover ? 'hover' : 'focus'">
         <div class="hero-name">
             {{ hero.niceName }}
         </div>
     </a>
-    <a *ngIf="isSelectedHero" tabindex="0" data-selected="true" [attr.data-hero-id]="hero.id" class="popover-zone selected-popover-zone" role="button" data-toggle="popover" data-trigger="focus" (mouseover)="activatePopover()">
+    <a *ngIf="isSelectedHero" data-selected="true" [attr.data-hero-id]="hero.id" class="popover-zone selected-popover-zone" role="button">
         <div class="card-header" (click)="removeHero(hero, pool)">
             <button id="removeIcon" class="button button-cancel btn-sm mx-2">
                 <i id="timesIcon" class="fas fa-times"></i>
