@@ -123,7 +123,8 @@ export class BotConfigDataService {
     }
 
     public getSelectedHeroes(): any {
-        return this.selectedHeroes;
+        // return this.selectedHeroes;
+        return this.config.heroes;
     }
 
     // Abilities
