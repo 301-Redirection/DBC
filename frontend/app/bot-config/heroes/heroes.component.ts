@@ -59,7 +59,10 @@ export class HeroesComponent implements OnInit {
             && event.target['localName'] !== 'textarea') {
             if (event.key === 'Backspace') {
                 this.heroSearch = this.heroSearch.slice(0, -1);
-            } else if (event.code.indexOf('Key') !== -1) {
+            } else if (
+                (65 <= event.keyCode && event.keyCode <= 90) ||
+                (97 <= event.keyCode && event.keyCode <= 122)
+            ) {
                 this.heroSearch += event.key;
             }
         }
