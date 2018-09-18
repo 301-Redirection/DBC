@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
 
     sortBotScripts(value) {
         if (value === 1) {
-            this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
+            this.bots.sort((a, b) => a.updatedAt > b.updatedAt);
         } else {
             this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
         }
