@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
     ConfigurationFormat,
     HeroSpecification,
@@ -26,6 +26,8 @@ export class BotConfigDataService {
     currentItems = this.items.asObservable();
 
     config: ConfigurationFormat;
+    private isLoaded = new BehaviorSubject(false);
+    isLoadedState = this.items.asObservable();
 
     constructor() {
         this.reset();
@@ -61,6 +63,9 @@ export class BotConfigDataService {
         if (!exists) {
             const heroSpec = new HeroSpecification();
             heroSpec.name = heroName;
+            this.selectedHeroes.subscribe((heroes) => {
+                heroSpec.heroObject = heroes.find(hero => hero.name === heroName);
+            });
             heroes.push(heroSpec);
         }
     }
@@ -78,7 +83,7 @@ export class BotConfigDataService {
         this.ensureHeroSpecification(heroName);
         this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
-                hero.abilities.talents = talents;
+                hero.talents = talents;
             }
         });
     }
@@ -87,7 +92,7 @@ export class BotConfigDataService {
         this.ensureHeroSpecification(heroName);
         this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
-                hero.abilities.abilities = abilities;
+                hero.abilities = abilities;
             }
         });
     }
@@ -104,8 +109,18 @@ export class BotConfigDataService {
         return this.config;
     }
 
-    public setConfig(config: ConfigurationFormat){
+    public setConfig(config: ConfigurationFormat) {
         this.config = config;
+        let selectedHeroesArr = [];
+        this.config.heroes.forEach((hero) => {
+            selectedHeroesArr.push(hero.heroObject);
+        });
+        this.setSelectedHeroes(selectedHeroesArr);
+        this.isLoaded.next(true);
+    }
+
+    public getHeroesSpecification (): any {
+        return this.config.heroes;
     }
 
     // Team desires
@@ -120,11 +135,14 @@ export class BotConfigDataService {
     // Heroes
     public setSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
+        this.selectedHeroes.forEach((hero) => {
+            this.ensureHeroSpecification(hero.name);
+        });
     }
 
     public getSelectedHeroes(): any {
-        // return this.selectedHeroes;
-        return this.config.heroes;
+        return this.currentHeroes;
+        //return this.config.heroes;
     }
 
     // Abilities
@@ -150,4 +168,7 @@ export class BotConfigDataService {
         return hero && hero.items;
     }
 
+    notifyLoaded(): Observable<any> {
+        return this.isLoadedState;
+    }
 }
