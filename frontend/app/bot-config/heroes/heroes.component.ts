@@ -64,6 +64,7 @@ export class HeroesComponent implements OnInit {
 
         // jquery functions
         this.selectedTab();
+        this.getSavedHeroes();
     }
 
     createHeroPool(): any {
@@ -105,6 +106,18 @@ export class HeroesComponent implements OnInit {
                 console.log(error);
             },
         );
+    }
+
+    getSavedHeroes(): void {
+        console.log(this.botConfigData.getSelectedHeroes());
+        const savedHeroesTemp = this.botConfigData.getSelectedHeroes();
+        if (savedHeroesTemp !== undefined) {
+            for (const heroSaved in savedHeroesTemp) {
+                this.selectedHeroesList.push(
+                this.allHeroes.find(hero => hero.name === heroSaved.name));
+            }
+            this.selectedHeroesList = this.botConfigData.getSelectedHeroes();
+        }
     }
 
     getHeroImages(): void {
