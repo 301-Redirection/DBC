@@ -48,7 +48,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.selectedTab = 'info';
     }
 
