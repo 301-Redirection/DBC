@@ -30,7 +30,7 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
@@ -38,8 +38,12 @@
                                     <div class="container">
                                         <div *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length != 0">
                                             <div class="compound-cond list-group" *ngFor="let comp of config.desires[section.prop][lane.prop].compoundConditions | reverse; let j = index">
-                                                <h5>Condition Group</h5>
-                                                <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <h5>Condition Group</h5>
+                                                    <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop][lane.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
+                                                </div>
+                                                
+                                                <button *ngIf="comp.conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
                                                 <div *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
@@ -70,15 +74,14 @@
                                                 <div class="button-group" *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length != 0" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
-                                                            <div class="dropdown mr-2 pr-1 col-md-4">
-                                                                <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownOperatorLanes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    then {{comp.operator == null ? "(Select Action)" : actions[comp.operator]}}
-                                                                </button>
-                                                                <div class="dropdown-menu" aria-labelledby="dropdownOperatorLanes">
-                                                                <a class="dropdown-item" *ngFor="let t of actions | enumToArray" (click)="comp.operator = actions[t]">{{t}}</a>
-                                                                </div>
-                                                            </div>
-                                                            <input id="valueInput" class="form-control col-md-3" type="number" [(ngModel)]="comp.value" name="value">
+                                                            <mat-form-field class="col-md-4">
+                                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
+                                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field class="col-md-3" hintLabel="Percent (-100 to 100)">
+                                                                <input matInput min="0" max="100" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
+                                                            </mat-form-field>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +102,7 @@
                         <div class="card-body bot-manage-card-body">
                             <div class="form-group container">
                                 <label for="{{section.prop}}Default">Default Value</label>
-                                <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                <mat-slider class="col-md-3" min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                             </div>
                             <div class="container">
                                 <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop])">Add Condition Group</button>
@@ -107,9 +110,12 @@
                             <div class="container">
                                 <div *ngIf="config.desires[section.prop].compoundConditions != []">
                                     <div class="compound-cond container list-group" *ngFor="let comp of config.desires[section.prop].compoundConditions | reverse; let j = index">
-                                        <h5>Condition Group</h5>
-                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0" class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
-                                        <div *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h5>Condition Group</h5>
+                                            <button *ngIf="config.desires[section.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
+                                        </div>
+                                        <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
+                                        <div  *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                             <span class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div class="col-md-10">
                                                     <configurator [condition]="condition"></configurator>
@@ -134,20 +140,15 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <div class="button-group" *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length != 0" role="group">
-                                            <div class="list-group-item">
-                                                <div class="row">
-                                                    <div class="dropdown mr-2 pr-1 col-md-4">
-                                                        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="dropdownOperator" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            then {{comp.operator == null ? "(Select Action)" : actions[comp.operator]}}
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownOperator">
-                                                        <a class="dropdown-item" *ngFor="let t of actions | enumToArray" (click)="comp.operator = actions[t]">{{t}}</a>
-                                                        </div>
-                                                    </div>
-                                                    <input id="valueInput" class="form-control col-md-3" type="number" [(ngModel)]="comp.value" name="value">
-                                                </div>
-                                            </div>
+                                        <div class="list-group-item" *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length != 0">
+                                            <mat-form-field class="col-md-4">
+                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
+                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="col-md-3" hintLabel="Percent">
+                                                <input matInput min="0" max="100" [(ngModel)]="comp.value">
+                                            </mat-form-field>
                                         </div>
                                     </div>
                                 </div>

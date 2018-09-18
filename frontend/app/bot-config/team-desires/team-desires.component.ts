@@ -17,12 +17,6 @@ declare var $: any;
 })
 export class TeamDesiresComponent implements OnInit {
 
-    /*
-    TODO:
-    - Add a Function to change enums' keys into something easier to understand
-    - Add a Delete condition group button
-    */
-
     config: ConfigurationFormat;
 
     actions = Action;
@@ -117,10 +111,11 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
     }
 
-    delCondGroup(configuration: Configuration, index: number = -1) {
+    delCondGroup(compound: CompoundCondition[], index: number = -1) {
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         if (ans) {
-            configuration.compoundConditions.splice(index, 1);
+            const len = compound.length - 1;
+            compound.splice(len - index, 1);
             this.saveTeamDesires();
         }
     }
@@ -137,6 +132,14 @@ export class TeamDesiresComponent implements OnInit {
         compoundCondition.logicalOperators[index] = op;
     }
 
+    sanitizeReturnValue(data: CompoundCondition) {
+        if (data.value < -100) {
+            data.value = -100;
+        }
+        if (data.value > 100) {
+            data.value = 100;
+        }
+    }
     togglePanel() {
         $(document).ready(() => {
             $('.collapse').on('show.bs.collapse', function () {
