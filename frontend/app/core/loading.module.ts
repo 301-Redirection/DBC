@@ -11,6 +11,6 @@ import { LoadingComponent } from './loading.component';
     ],
     exports: [
         LoadingComponent,
-    ]
+    ],
 })
 export class LoadingModule { }

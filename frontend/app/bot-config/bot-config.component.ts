@@ -64,10 +64,11 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
-                    alert("Bot configurations saved!");
+                    alert('Bot configurations saved!');
                 },
                 (error) => {
-                    alert(`Failed to save configuration`);
+                    alert('Failed to save configuration. Please try agin later.');
+                    console.log(error);
                 },
             );
         }
