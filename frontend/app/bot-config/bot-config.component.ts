@@ -56,8 +56,14 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
-            console.log(this.botConfigData.getConfig());
-            this.api.updateBot(this.botConfigData.getConfig()).subscribe(
+            const requestBot = {
+                id: this.id,
+                name: this.name,
+                description: this.description,
+                configuration: this.botConfigData.getConfig(),
+            };
+            console.log(requestBot);
+            this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
