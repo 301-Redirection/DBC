@@ -5,7 +5,7 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
 import { SortablejsModule } from 'angular-sortablejs';
-
+import { LoadingModule } from '../core/loading.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -13,6 +13,7 @@ import { SortablejsModule } from 'angular-sortablejs';
         RouterModule,
         SortablejsModule,
         FormsModule,
+        LoadingModule,
     ],
     declarations: [
         DashboardComponent,
