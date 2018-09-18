@@ -100,6 +100,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             (data) => {
                 res = data['botConfig'];
                 res = res[0];
+                //console.log(res);
                 if (res != null) {
                     this.id = res.id;
                     this.name = res.name;
@@ -107,6 +108,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
                     console.log(this.botConfigData.getConfig());
+                    console.log(this.botConfigData.getHeroesSpecification());
                 }
             },
             (error) => {

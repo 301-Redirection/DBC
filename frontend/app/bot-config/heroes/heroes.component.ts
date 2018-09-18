@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -11,7 +11,7 @@ declare var $: any;
     templateUrl: './heroes.component.html',
     styleUrls: ['./heroes.component.scss'],
 })
-export class HeroesComponent implements OnInit {
+export class HeroesComponent implements OnInit, AfterViewInit {
 
     // Variables
     pools: any;
@@ -52,7 +52,9 @@ export class HeroesComponent implements OnInit {
     constructor(
         private api: ApiConnectService,
         private botConfigData: BotConfigDataService,
-    ) { }
+    ) {
+        
+    }
 
     ngOnInit() {
         document.getElementById('poolTabs').style.height = '0';
@@ -64,7 +66,14 @@ export class HeroesComponent implements OnInit {
 
         // jquery functions
         this.selectedTab();
-        this.getSavedHeroes();
+    }
+
+    ngAfterViewInit() {
+        this.botConfigData.isLoadedState.subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedHeroes();
+            }
+        });
     }
 
     createHeroPool(): any {
@@ -109,15 +118,11 @@ export class HeroesComponent implements OnInit {
     }
 
     getSavedHeroes(): void {
-        console.log(this.botConfigData.getSelectedHeroes());
-        const savedHeroesTemp = this.botConfigData.getSelectedHeroes();
-        if (savedHeroesTemp !== undefined) {
-            for (const heroSaved in savedHeroesTemp) {
-                this.selectedHeroesList.push(
-                this.allHeroes.find(hero => hero.name === heroSaved.name));
-            }
-            this.selectedHeroesList = this.botConfigData.getSelectedHeroes();
-        }
+        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+            this.selectedHeroesList = heroes;
+        });
+        console.log("dgdj");
+        console.log(this.selectedHeroesList);
     }
 
     getHeroImages(): void {
@@ -212,6 +217,7 @@ export class HeroesComponent implements OnInit {
 
     addHero(hero: any, pool: number): void {
         this.setSelectedPool(pool);
+        console.log(hero);
         if (!this.checkHeroExists(hero)) {
             this.pools[this.selectedPool].push(hero);
             this.unhighlightPool(pool);
