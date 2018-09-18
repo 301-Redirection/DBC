@@ -90,12 +90,18 @@ const LuaCodeTemplateManager = function () {
      * This generates a specific hero's item purchase file
      */
     this.generateItemFile = function (hero, itemArray) {
-        const filename = `item_purchase_${hero}.lua`;
-        const content = ItemCodeGenerator.generateItemFileContent(hero, itemArray);
-        const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFileSync(pathToFile, content, (err) => {
-            if (err) throw err;
-        });
+        try {
+            const filename = `item_purchase_${hero}.lua`;
+            const content = ItemCodeGenerator.generateItemFileContent(hero, itemArray);
+            const pathToFile = path.join(this.pathToStoreCode, filename);
+            fs.writeFileSync(pathToFile, content, (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        } catch (err) {
+            throw err;
+        }
     };
 
     /**
@@ -149,10 +155,14 @@ const LuaCodeTemplateManager = function () {
             } else {
                 this.generateHeroesSelectionFile(configObject.heroPool);
                 if (configObject.heroes) {
+                    console.log(configObject.heroes);
                     for (let i = 0; i < configObject.heroes.length; i += 1) {
                         const heroSpec = configObject.heroes[i];
                         const heroName = heroSpec.name;
+                        console.log('HERO SPEC = ');
+                        console.log(heroSpec);
                         if (heroSpec) {
+                            console.log('Analyzing spec');
                             if (heroSpec.abilities) {
                                 this.generateAbilityUsageFile(heroName, heroSpec);
                             } else {
@@ -160,7 +170,11 @@ const LuaCodeTemplateManager = function () {
                                 const filename = `ability_item_usage_${heroName}.lua`;
                                 this.copyScript(filename, filename);
                             }
+                            console.log('Got this far...');
+                            console.log(heroSpec.items);
                             if (heroSpec.items) {
+                                console.log('Checking items ');
+                                console.log('Checking items ');
                                 this.generateItemFile(heroName, heroSpec.items);
                             } else {
                                 // include default bot item file if items unspecified
@@ -176,6 +190,7 @@ const LuaCodeTemplateManager = function () {
                         }
                         // including any bot_${heroName}.lua files if they exist
                         // since they override a lot of the normal bot logic
+                        console.log('out of big if');
                         const filename = `bot_${heroName}.lua`;
                         const pathToScript = path.join(__dirname, '..', 'static', 'scripts', filename);
                         if (fs.existsSync(pathToScript)) {

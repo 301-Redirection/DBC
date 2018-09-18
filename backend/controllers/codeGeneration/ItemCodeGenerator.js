@@ -49,7 +49,7 @@ class ItemCodeGenerator {
             return [];
         }
         // base case, has no components
-        if (!item.components) {
+        if (!item.components || item.components == 'null') {
             return [item.name];
         }
         const components = [];

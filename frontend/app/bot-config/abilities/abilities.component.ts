@@ -314,27 +314,23 @@ export class AbilitiesComponent implements OnInit {
             const name = hero.programName;
             const selectedAbilities = this.generateAbilitiesString(hero);
             const talentsArray = this.generateTalentArray(hero);
-            return {
-                name,
-                abilities: {
-                    abilities: selectedAbilities,
-                    talents: talentsArray,
-                },
-                items: [],
-            };
+            const heroSpec = new HeroSpecification();
+            heroSpec.name = name;
+            heroSpec.abilities = selectedAbilities;
+            heroSpec.talents = talentsArray;
+            heroSpec.items = [];
+            return heroSpec;
         }
         return null;
     }
 
     // saves the heroes' builds to the service/config object
     saveAbilities(): void {
-        const heroSpecs: HeroSpecification[] = [];
         this.selectedHeroes.forEach((hero) => {
             if (hero) {
                 const current = this.constructHeroSpecification(hero);
-                heroSpecs.push(current);
-                this.botConfigData.updateHeroAbilities(current.name, current.abilities.abilities);
-                this.botConfigData.updateHeroTalents(current.name, current.abilities.talents);
+                this.botConfigData.updateHeroAbilities(current.name, current.abilities);
+                this.botConfigData.updateHeroTalents(current.name, current.talents);
             }
         });
     }
