@@ -84,6 +84,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         }
     }
 
+    log(): void {
+        console.log(this.botConfigData.getConfig());
+    }
+
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
             alert('Please enter your bot script name and description');

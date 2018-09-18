@@ -103,7 +103,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         for (let i = 0; i < this.numberOfPools; i += 1) {
             if (this.pools[i]) {
                 this.pools[i].forEach((hero) => {
-                    heroPool.pool.push({ hero: hero.programName, position: i });
+                    heroPool.pool.push({ name: hero.programName, position: i });
                 });
             }
         }

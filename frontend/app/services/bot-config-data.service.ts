@@ -31,6 +31,7 @@ export class BotConfigDataService {
 
     constructor() {
         this.reset();
+        console.log(this.config);
     }
 
     // creates config object according to format
@@ -63,9 +64,6 @@ export class BotConfigDataService {
         if (!exists) {
             const heroSpec = new HeroSpecification();
             heroSpec.name = heroName;
-            this.selectedHeroes.subscribe((heroes) => {
-                heroSpec.heroObject = heroes.find(hero => hero.name === heroName);
-            });
             heroes.push(heroSpec);
         }
     }
@@ -111,10 +109,7 @@ export class BotConfigDataService {
 
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        let selectedHeroesArr = [];
-        this.config.heroes.forEach((hero) => {
-            selectedHeroesArr.push(hero.heroObject);
-        });
+        const selectedHeroesArr = [];
         this.setSelectedHeroes(selectedHeroesArr);
     }
 
@@ -134,14 +129,17 @@ export class BotConfigDataService {
     // Heroes
     public setSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
-        this.selectedHeroes.forEach((hero) => {
-            this.ensureHeroSpecification(hero.name);
-        });
+        // Don't do this... it cannot read values from an array of any,
+        // you're making an heroSpec for "undefined" hero...
+        // this.selectedHeroes.forEach((hero) => {
+        //     console.log(hero);
+        //     this.ensureHeroSpecification(hero.programName);
+        // });
     }
 
     public getSelectedHeroes(): any {
         return this.currentHeroes;
-        //return this.config.heroes;
+        // return this.config.heroes;
     }
 
     // Abilities

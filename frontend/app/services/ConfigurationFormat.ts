@@ -80,12 +80,6 @@ export class HeroSpecification {
     }
 }
 
-export interface AbilityConfiguration {
-    abilities: string;
-    // specifically an array of 4
-    talents: string[];
-}
-
 export interface HeroPoolConfiguration{
     partitioned: boolean;
     pool: HeroConfiguration[];
