@@ -67,7 +67,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-                configuration: this.botConfigData.getConfig(),
+                configuration: JSON.stringify(this.botConfigData.getConfig()),
             };
             console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
@@ -114,6 +114,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     // this.configuration = JSON.parse(res.configuration);
                     this.description = res.description;
+                    this.botConfigData.setConfig(JSON.parse(res.configuration));
+                    console.log(this.botConfigData.getConfig());
                 }
             },
             (error) => {

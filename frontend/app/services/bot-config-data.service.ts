@@ -104,6 +104,10 @@ export class BotConfigDataService {
         return this.config;
     }
 
+    public setConfig(config: ConfigurationFormat){
+        this.config = config;
+    }
+
     // Team desires
     public setTeamDesires(teamDesires: any): void {
         this.teamDesires.next(teamDesires);
