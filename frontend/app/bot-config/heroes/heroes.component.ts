@@ -52,9 +52,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     constructor(
         private api: ApiConnectService,
         private botConfigData: BotConfigDataService,
-    ) {
-        
-    }
+    ) {}
 
     ngOnInit() {
         document.getElementById('poolTabs').style.height = '0';
@@ -119,10 +117,14 @@ export class HeroesComponent implements OnInit, AfterViewInit {
 
     getSavedHeroes(): void {
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
-            this.selectedHeroesList = heroes;
+            //console.log(heroes);
+            if (heroes.length > 0) {
+                this.selectedHeroesList = heroes;
+            }
         });
         console.log("dgdj");
         console.log(this.selectedHeroesList);
+        console.log("dgdj");
     }
 
     getHeroImages(): void {
