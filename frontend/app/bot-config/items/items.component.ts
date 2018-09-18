@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -12,6 +12,9 @@ declare var $: any;
 })
 
 export class ItemsComponent implements OnInit{
+
+    @Input('selected') selected: string;
+
     // Variables
     allItems: any;
     basicItems = [];
@@ -49,12 +52,28 @@ export class ItemsComponent implements OnInit{
         sort: true,
     };
 
+    // Listen for key press to update itemSearch
+    @HostListener('document:keydown', ['$event'])
+    searchEvent(event: KeyboardEvent) {
+        this.hideItemPopovers();
+        if (this.selected === 'items'
+            && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea') {
+            if (event.key === 'Backspace') {
+                this.itemSearch = this.itemSearch.slice(0, -1);
+            } else if (event.code.indexOf('Key') !== -1) {
+                this.itemSearch += event.key;
+            }
+        }
+    }
+
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
         this.getHeroes();
         this.getItems();
         this.getSavedSelectedItems();
+        this.itemSearch = '';
     }
 
     // **********************************

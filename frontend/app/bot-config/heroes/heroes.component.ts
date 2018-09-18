@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -12,6 +12,8 @@ declare var $: any;
     styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent implements OnInit {
+
+    @Input('selected') selected: string;
 
     // Variables
     pools: any;
@@ -52,11 +54,12 @@ export class HeroesComponent implements OnInit {
     // Listen for key press to update heroSearch
     @HostListener('document:keydown', ['$event'])
     searchEvent(event: KeyboardEvent) {
-        if (event.target['localName'] !== 'input'
+        if (this.selected === 'heroes'
+            && event.target['localName'] !== 'input'
             && event.target['localName'] !== 'textarea') {
             if (event.key === 'Backspace') {
                 this.heroSearch = this.heroSearch.slice(0, -1);
-            } else {
+            } else if (event.code.indexOf('Key') !== -1) {
                 this.heroSearch += event.key;
             }
         }
