@@ -12,6 +12,7 @@ import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 @Component({
     selector: 'app-bot-config',
@@ -39,6 +40,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
+        private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
@@ -61,13 +63,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     save() {
         if (this.validateInfo()) {
             // call update bot from api service
-            const requestBot = {
-                id: this.id,
-                name: this.name,
-                description: this.description,
-                configuration: { test: 'true' },
-            };
-            this.api.updateBot(requestBot).subscribe(
+            console.log(this.botConfigData.getConfig());
+            this.api.updateBot(this.botConfigData.getConfig()).subscribe(
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
