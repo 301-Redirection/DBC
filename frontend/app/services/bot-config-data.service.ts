@@ -116,7 +116,6 @@ export class BotConfigDataService {
             selectedHeroesArr.push(hero.heroObject);
         });
         this.setSelectedHeroes(selectedHeroesArr);
-        this.isLoaded.next(true);
     }
 
     public getHeroesSpecification (): any {
@@ -168,7 +167,10 @@ export class BotConfigDataService {
         return hero && hero.items;
     }
 
-    notifyLoaded(): Observable<any> {
+    public setNotifyLoaded() {
+        this.isLoaded.next(true);
+    }
+    public notifyLoaded(): Observable<any> {
         return this.isLoadedState;
     }
 }
