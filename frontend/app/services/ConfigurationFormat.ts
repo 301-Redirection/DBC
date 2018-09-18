@@ -65,16 +65,17 @@ export class Configuration {
 
 export class HeroSpecification {
     name: string;
-    abilities: AbilityConfiguration;
+    // abilities: AbilityConfiguration;
+    abilities: string;
+    // specifically an array of 4
+    talents: string[];
     items: string[];
 
     constructor() {
         this.name = '';
-        this.abilities = {
-            abilities: '',
-            talents: [],
-        };
+        this.abilities = '';
         this.items = [];
+        this.talents = [];
     }
 }
 
