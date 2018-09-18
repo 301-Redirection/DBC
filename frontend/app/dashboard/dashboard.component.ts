@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
+    isRetrieving: boolean;
 
     constructor(private t: Title, private api: ApiConnectService) {
         this.t.setTitle(this.pageTitle);
@@ -23,17 +24,22 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
+        this.isRetrieving = true;
     }
 
     getUserBotScripts () {
         this.api.recentBots().subscribe(
             (data) => {
-                this.bots = data.botConfigs;
-                for (const i in this.bots) {
-                    const bot = this.bots[i];
+                this.isRetrieving = true;
+                let tempBots = [];
+                tempBots = data.botConfigs;
+                for (const i in tempBots) {
+                    const bot = tempBots[i];
                     const date = moment(bot.updatedAt).format(DATE_FORMAT);
                     bot.updatedAt = date;
                 }
+                this.bots = tempBots;
+                this.isRetrieving = false;
             },
             () => { },
         );
@@ -73,7 +79,7 @@ export class DashboardComponent implements OnInit {
 
     sortBotScripts(value) {
         if (value === 1) {
-            this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
+            this.bots.sort((a, b) => a.updatedAt > b.updatedAt);
         } else {
             this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
         }
