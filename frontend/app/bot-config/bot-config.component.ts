@@ -30,6 +30,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     name: string = '';
     description: string = '';
     id: number = -1;
+    selectedTab: string;
 
     generateURL = '';
 
@@ -47,9 +48,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.selectedTab = 'info';
+    }
 
     ngAfterViewInit() {}
+
+    setTabSelected(tab: string) {
+        this.selectedTab = tab;
+    }
 
     save() {
         if (this.validateInfo()) {

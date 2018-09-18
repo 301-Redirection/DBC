@@ -11,15 +11,15 @@
 
 <div id="configNav">
     <div id="configNavContent" class="nav nav-tabs" role="tablist">
-        <a id="nav-home-tab" class="active show" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true">INFO</a>
+        <a id="nav-home-tab" class="active show" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true" (click)="setTabSelected('info')">INFO</a>
         <span class="nav-spacer">|</span>
-        <a id="nav-desires-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true">TEAM DESIRES</a>
+        <a id="nav-desires-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true" (click)="setTabSelected('teamDesires')">TEAM DESIRES</a>
         <span class="nav-spacer">|</span>
-        <a id="nav-heroes-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false">HEROES</a>
+        <a id="nav-heroes-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false" (click)="setTabSelected('heroes')">HEROES</a>
         <span class="nav-spacer">|</span>
-        <a id="nav-abilities-tab" data-toggle="tab" href="#nav-abilities" role="tab" aria-controls="nav-abilities" aria-selected="false">ABILITIES</a>
+        <a id="nav-abilities-tab" data-toggle="tab" href="#nav-abilities" role="tab" aria-controls="nav-abilities" aria-selected="false" (click)="setTabSelected('abilities')">ABILITIES</a>
         <span class="nav-spacer">|</span>
-        <a id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false">ITEMS</a>
+        <a id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false" (click)="setTabSelected('items')">ITEMS</a>
     </div>
 </div>
         
@@ -59,13 +59,13 @@
             <app-team-desires></app-team-desires>
         </div>
         <div class="tab-pane fade" id="nav-heroes" role="tabpanel" aria-labelledby="nav-heroes-tab">
-            <app-heroes></app-heroes>
+            <app-heroes [selected]="selectedTab"></app-heroes>
         </div>
         <div class="tab-pane fade" id="nav-abilities" role="tabpanel" aria-labelledby="nav-abilities-tab">
             <app-abilities></app-abilities>
         </div>
         <div class="tab-pane fade" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
-            <app-items></app-items>
+            <app-items [selected]="selectedTab"></app-items>
         </div>
     </div>
 
