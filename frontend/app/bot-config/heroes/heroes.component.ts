@@ -61,40 +61,32 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.pools = [[], [], [], [], []];
         this.selectedPool = 0;
         this.getHeroes();
-
-        // jquery functions
         this.selectedTab();
     }
 
-    ngAfterViewInit() {
-    }
+    ngAfterViewInit() { }
 
-    createHeroPool(): any {
-        const heroPool = {
-            partitioned: this.partitioned,
-            pool: [],
-        };
-
-        for (let i = 0; i < this.numberOfPools; i += 1) {
-            if (this.pools[i]) {
-                this.pools[i].forEach((hero) => {
-                    heroPool.pool.push({ name: hero.programName, position: i });
-                });
-            }
-        }
-        return heroPool;
-    }
+    /*****************/
+    /*    General    */
+    /*****************/
 
     // This is only used by a parent component if this component needs to be reset
     reset(): void {
         this.resetPools();
     }
 
-    saveHeroes(): void {
-        const heroPool = this.createHeroPool();
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
-        this.botConfigData.setHeroPool(heroPool);
+    // Check if loaded script from db
+    checkIfSavedBotScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedHeroes();
+            }
+        });
     }
+
+    /********************/
+    /* Hero Persistance */
+    /********************/
 
     getHeroes(): void {
         // database call to retrieve all dota heroes
@@ -111,13 +103,10 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         );
     }
 
-    // Check if loaded script from db
-    checkIfSavedBotScript() {
-        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
-            if (isLoadedScript) {
-                this.getSavedHeroes();
-            }
-        });
+    saveHeroes(): void {
+        const heroPool = this.createHeroPool();
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setHeroPool(heroPool);
     }
 
     getSavedHeroes(): void {
@@ -158,39 +147,6 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         }
     }
 
-    getHeroImages(): void {
-        this.allHeroes.forEach((hero) => {
-            hero.image = this.api.getImageURL(hero.url);
-            hero.qImage = this.api.getImageURL(hero.url_q);
-            hero.wImage = this.api.getImageURL(hero.url_w);
-            hero.eImage = this.api.getImageURL(hero.url_e);
-            hero.rImage = this.api.getImageURL(hero.url_r);
-        });
-    }
-
-    sortHeroData(): void {
-        // sort heroes alphabetically
-        this.allHeroes.sort((a, b) => {
-            return a.niceName.localeCompare(b.niceName);
-        });
-
-        // distribute into separate arrays based on primary attribute
-        this.allHeroes.forEach((hero) => {
-            if (hero.primaryAttribute === 'str') {
-                this.strengthHeroes.push(hero);
-                hero.attributeImage = this.strURL;
-            } else if (hero.primaryAttribute === 'agi') {
-                this.agilityHeroes.push(hero);
-                hero.attributeImage = this.agiURL;
-            } else if (hero.primaryAttribute === 'int') {
-                this.intelligenceHeroes.push(hero);
-                hero.attributeImage = this.intURL;
-            }
-        });
-    }
-
-    
-
     setSelectedHeroesList(): void {
         this.selectedHeroesList = [];
         this.pools.forEach((pool) => {
@@ -202,6 +158,10 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         });
         this.saveHeroes();
     }
+
+    /************************/
+    /* Hero Item Management */
+    /************************/
 
     moveSelectedHero(hero: any): void {
         if (!this.checkHeroExists(hero)) {
@@ -249,9 +209,56 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         return false;
     }
 
+    getHeroImages(): void {
+        this.allHeroes.forEach((hero) => {
+            hero.image = this.api.getImageURL(hero.url);
+            hero.qImage = this.api.getImageURL(hero.url_q);
+            hero.wImage = this.api.getImageURL(hero.url_w);
+            hero.eImage = this.api.getImageURL(hero.url_e);
+            hero.rImage = this.api.getImageURL(hero.url_r);
+        });
+    }
+
+    sortHeroData(): void {
+        // sort heroes alphabetically
+        this.allHeroes.sort((a, b) => {
+            return a.niceName.localeCompare(b.niceName);
+        });
+
+        // distribute into separate arrays based on primary attribute
+        this.allHeroes.forEach((hero) => {
+            if (hero.primaryAttribute === 'str') {
+                this.strengthHeroes.push(hero);
+                hero.attributeImage = this.strURL;
+            } else if (hero.primaryAttribute === 'agi') {
+                this.agilityHeroes.push(hero);
+                hero.attributeImage = this.agiURL;
+            } else if (hero.primaryAttribute === 'int') {
+                this.intelligenceHeroes.push(hero);
+                hero.attributeImage = this.intURL;
+            }
+        });
+    }
+
     /*****************/
     /* Pools Manager */
     /*****************/
+
+    createHeroPool(): any {
+        const heroPool = {
+            partitioned: this.partitioned,
+            pool: [],
+        };
+
+        for (let i = 0; i < this.numberOfPools; i += 1) {
+            if (this.pools[i]) {
+                this.pools[i].forEach((hero) => {
+                    heroPool.pool.push({ name: hero.programName, position: i });
+                });
+            }
+        }
+        return heroPool;
+    }
 
     setSelectedPool(pool: number): void {
         this.selectedPool = pool;
