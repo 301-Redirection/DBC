@@ -76,6 +76,7 @@ describe('AbilitiesComponent', () => {
                 'getSelectedHeroes',
                 'getSavedHeroAbilities',
                 'getSavedHeroAbilityLevels',
+                'getSavedHeroTalents',
                 'updateHeroAbilities',
                 'updateHeroTalents',
                 'updateHeroAbilityLevels',

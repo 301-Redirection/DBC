@@ -320,7 +320,7 @@ export class AbilitiesComponent implements OnInit {
         return newStr;
     }
 
-    generateAbilitiesFromString(abilities: string) {
+    generateAbilitiesFromString(abilities: String) {
         // Arrays: [0] => q, [1] => w, [2] => e, [3] => r, [4] => t
         const selectedAbilities = [[], [], [], [], []];
         const abilityOrder = ['q', 'w', 'e', 'r', 't'];
