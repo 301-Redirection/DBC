@@ -68,10 +68,10 @@ export class AbilitiesComponent implements OnInit {
     // To be used to retrieve items saved
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
-            //const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
-            //console.log("talents");
-            //console.log(savedTalents);
-            //this.regenerateTalentArray(hero, savedTalents);
+            const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
+            if (savedTalents !== undefined && savedTalents.length > 0) {
+                this.regenerateTalentArray(hero, savedTalents);
+            }
         });
     }
 
@@ -348,6 +348,7 @@ export class AbilitiesComponent implements OnInit {
             if (hero) {
                 const selectedAbilities = this.generateAbilitiesString(hero);
                 const talentsArray = this.generateTalentArray(hero);
+                console.log(selectedAbilities);
                 this.botConfigData.updateHeroAbilities(hero.programName, selectedAbilities);
                 this.botConfigData.updateHeroTalents(hero.programName, talentsArray);
             }
