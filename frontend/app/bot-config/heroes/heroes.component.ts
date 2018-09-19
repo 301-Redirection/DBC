@@ -131,19 +131,15 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     populateSelectedHeroPools() {
         const heroPools = this.botConfigData.getHeroPools();
         const pools = heroPools.pool;
-        console.log('Selected heroes', this.selectedHeroesList);
-        console.log('Service pools', pools);
-        console.log('Local pools', this.pools);
         pools.forEach((selectedHero) => {
             const heroMatch = this.selectedHeroesList.find((hero) => hero.programName === selectedHero.name);
             this.pools[selectedHero.position].push(heroMatch);
-            console.log('Updated local pools', this.pools[selectedHero.position]);
         });
 
         if (heroPools.partitioned) {
-            this.numberOfPools = 5;
+            this.showPoolsTab(5);
         } else {
-            this.numberOfPools = 1;
+            this.showPoolsTab(1);
         }
     }
 
@@ -270,10 +266,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.hidePopovers();
         if (confirm('Are you sure you want to toggle pools?')) {
             if (this.numberOfPools > 1) {
-                this.numberOfPools = 1;
-                document.getElementById('poolTabs').style.height = '0';
-                document.getElementById('poolTabs').style.visibility = 'hidden';
-
+                this.showPoolsTab(1);
                 const bigPool = [];
                 this.pools.forEach((pool) => {
                     pool.forEach((hero) => {
@@ -287,9 +280,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
                 this.pools[0] = bigPool;
                 this.setSelectedPool(0);
             } else {
-                this.numberOfPools = 5;
-                document.getElementById('poolTabs').style.height = '42px';
-                document.getElementById('poolTabs').style.visibility = 'visible';
+                this.showPoolsTab(5);
                 const pool1 = this.pools[0];
                 this.resetPools();
                 this.pools[0] = pool1;
@@ -313,6 +304,20 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         if (confirm('Are you sure you want to reset?')) {
             this.resetPools();
         }
+    }
+
+    showPoolsTab(numPools: number) {
+        if (numPools == 1) {
+            this.numberOfPools = 1;
+            document.getElementById('poolTabs').style.height = '0';
+            document.getElementById('poolTabs').style.visibility = 'hidden';
+        }
+        else if (numPools == 5) {
+            this.numberOfPools = 5;                
+            document.getElementById('poolTabs').style.height = '42px';
+            document.getElementById('poolTabs').style.visibility = 'visible';
+        }
+        this.setSelectedPool(0);
     }
 
     highlightPool(pool: number): void {

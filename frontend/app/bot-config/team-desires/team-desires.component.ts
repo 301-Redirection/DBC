@@ -82,9 +82,7 @@ export class TeamDesiresComponent implements OnInit {
 
     // To be used to retrieve items saved
     getSavedDesires() {
-        this.botConfigData.getTeamDesires().subscribe((config) => {
-            this.config.desires = config;
-        });
+        this.config.desires = this.botConfigData.getTeamDesires();
     }
     saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
