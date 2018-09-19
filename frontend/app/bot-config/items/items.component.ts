@@ -242,11 +242,13 @@ export class ItemsComponent implements OnInit{
 
     // General reset all selected items of all selected heroes to null
     reset () : void {
-        this.setSelectedHero(0);
-        this.heroItemSelection = [];
-        for (let i = 0; i < this.selectedHeroes.length; i += 1) {
-            this.heroItemSelection.push([]);
-            this.totalCostPerHero[i] = 0;
+        if (this.selectedHeroes != null) {
+            this.setSelectedHero(0);
+            this.heroItemSelection = [];
+            for (let i = 0; i < this.selectedHeroes.length; i += 1) {
+                this.heroItemSelection.push([]);
+                this.totalCostPerHero[i] = 0;
+            }
         }
     }
 

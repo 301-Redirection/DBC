@@ -52,6 +52,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.selectedTab = 'info';
+        this.checkLoadedScript();
     }
 
     ngAfterViewInit() {}
@@ -96,14 +97,26 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         return true;
     }
 
+    checkLoadedScript() {
+        this.route.paramMap.subscribe((paramMap) => {
+            if (paramMap['params']['botScriptID'] === undefined) {
+                this.reset();
+            }
+        });
+    }
+
     reset () {
+        this.name = '';
+        this.description = '';
+        this.teamDesiresComponent.reset();
+        this.heroesComponent.reset();
+        this.abilitiesComponent.reset();
+        this.itemsComponent.reset();
+    }
+
+    confirmReset() {
         if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
-            this.name = '';
-            this.description = '';
-            this.teamDesiresComponent.reset();
-            this.heroesComponent.reset();
-            this.abilitiesComponent.reset();
-            this.itemsComponent.reset();
+            this.reset();
         }
     }
 
@@ -120,8 +133,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     // this.configuration = JSON.parse(res.configuration);
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
-                    console.log(this.botConfigData.getConfig());
-                    console.log(this.botConfigData.getHeroesSpecification());
+                    // console.log(this.botConfigData.getConfig());
+                    // console.log(this.botConfigData.getHeroesSpecification());
                 }
             },
             (error) => {
