@@ -84,12 +84,10 @@ export class TeamDesiresComponent implements OnInit {
     getSavedDesires() {
         this.botConfigData.getTeamDesires().subscribe((config) => {
             this.config.desires = config;
-            // console.log(this.config);
         });
     }
     saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
-        // console.log(this.config.desires);
     }
 
     // This is only used by a parent component if this component needs to be reset

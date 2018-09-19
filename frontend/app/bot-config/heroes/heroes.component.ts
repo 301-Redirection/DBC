@@ -271,7 +271,6 @@ export class HeroesComponent implements OnInit, AfterViewInit {
 
     addHero(hero: any, pool: number): void {
         this.setSelectedPool(pool);
-        console.log(hero);
         if (!this.checkHeroExists(hero)) {
             this.pools[this.selectedPool].push(hero);
             this.unhighlightPool(pool);
