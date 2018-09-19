@@ -29,13 +29,67 @@ class BotController {
             });
     }
 
+    static makeSimpleItemArray(items) {
+        const itemsArr = [];
+        if (items && items.length) {
+            items.forEach((element) => {
+                itemsArr.push(this.makeSimpleItem(element));
+            });
+        }
+        return itemsArr;
+    }
+
+    // Recursive function to simplify item object
+    // into what is needed by the code generator
+    static makeSimpleItem(item) {
+        // console.log(item);
+        if (item) {
+            const newItem = {
+                name: item.name,
+            };
+            if (item.components) {
+                if (item.components === 'null' || item.components === null) {
+                    newItem.components = 'null';
+                } else if (item.components.length) {
+                    const itemParts = [];
+                    newItem.name = `item_recipe_${newItem.name}`;
+                    item.components.forEach((element) => {
+                        itemParts.push(this.makeSimpleItem(element));
+                    });
+                    newItem.components = itemParts;
+                }
+                return newItem;
+            }
+        }
+        return null;
+    }
+
+    static removeRedundantDataFromObject(configuration) {
+        let result = [];
+        // console.log(configuration);
+        if (configuration.heroes && configuration.heroes.length) {
+            configuration.heroes.forEach((element) => {
+                const ele = element;
+                if (element.items && element.items.length) {
+                    result = this.makeSimpleItemArray(element.items);
+                    // console.log(result);
+                    ele.items = result;
+                    // console.log(element.items);
+                }
+            });
+        }
+        return configuration;
+    }
+
     static updateBot(request, response) {
+        let { configuration } = request.body;
         const {
-            name, id, description, configuration,
+            name, id, description,
         } = request.body;
         const userId = request.user.sub;
         // condition for creating a botconfig entry
         if (id === -1) {
+            configuration = this.removeRedundantDataFromObject(configuration);
             models.BotConfig.create({
                 name,
                 description,
@@ -88,10 +142,10 @@ class BotController {
         })
             .then((botConfig) => {
                 response.status(200).json({ botConfig });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, message: 'Database Error' });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, message: 'Database Error' });
+        // });
     }
 
     static getAllBots(request, response) {
@@ -100,10 +154,10 @@ class BotController {
         })
             .then((botConfigs) => {
                 response.status(200).json({ botConfigs });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, message: 'Database Error' });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, message: 'Database Error' });
+        // });
     }
 
     static deleteBot(request, response) {
@@ -116,10 +170,10 @@ class BotController {
         })
             .then(() => {
                 response.status(200).json({ deleted: true });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, deleted: false });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, deleted: false });
+        // });
     }
 
     static getScripts(request, response) {
