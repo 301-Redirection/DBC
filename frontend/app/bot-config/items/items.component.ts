@@ -182,6 +182,7 @@ export class ItemsComponent implements OnInit{
             this.heroItemSelection[this.selectedHeroIndex].push(item);
             this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
             this.setSelectedItem(null);
+            this.saveItems();
         }
     }
 
