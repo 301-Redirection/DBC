@@ -111,6 +111,7 @@ export class BotConfigDataService {
         this.config = config;
         const selectedHeroesArr = [];
         this.setSelectedHeroes(selectedHeroesArr);
+        this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }
 
@@ -121,6 +122,7 @@ export class BotConfigDataService {
     // Team desires
     public setTeamDesires(teamDesires: any): void {
         this.teamDesires.next(teamDesires);
+        this.config.desires = teamDesires;
     }
 
     public getTeamDesires(): any {
