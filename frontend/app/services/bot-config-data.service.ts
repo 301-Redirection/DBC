@@ -148,6 +148,10 @@ export class BotConfigDataService {
         return this.config.heroes;
     }
 
+    public getSavedHeroesPools() {
+        return this.config.heroPool;
+    }
+
     // Abilities
     public setAbilities(abilities: any): void {
         this.abilities.next(abilities);

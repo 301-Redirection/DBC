@@ -93,6 +93,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setHeroSpecification(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
@@ -127,6 +128,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
             heroNames.push(heroObject['name']);
         });
         this.populateSelectedHeroList(heroNames);
+        this.populateSelectedHeroPools();
     }
 
     populateSelectedHeroList(heroNames: any) {
@@ -136,6 +138,25 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         });
         // Reflect regenerate hero list in service
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+    }
+
+    populateSelectedHeroPools() {
+        const heroPools = this.botConfigData.getSavedHeroesPools();
+        const pools = heroPools.pool;
+        console.log('Selected heroes', this.selectedHeroesList);
+        console.log('Service pools', pools);
+        console.log('Local pools', this.pools);
+        // pools.forEach((selectedHero) => {
+        //     const heroMatch = this.selectedHeroesList.find((hero) => hero.programName === selectedHero.name);
+        //     this.pools[selectedHero.position].push(heroMatch);
+        //     console.log('Updated local pools', this.pools[selectedHero.position]);
+        // });
+
+        // if (heroPools.partitioned) {
+        //     this.numberOfPools = 5;    
+        // } else {
+        //     this.numberOfPools = 1;
+        // }
     }
 
     getHeroImages(): void {
