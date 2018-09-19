@@ -105,7 +105,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
@@ -125,7 +125,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
             this.selectedHeroesList.push(this.allHeroes.find(hero => hero.programName === name));
         });
         // Reflect regenerate hero list in service
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
     }
 
     populateSelectedHeroPools() {
@@ -184,11 +184,12 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         const index = pool.indexOf(hero);
         if (index !== -1) {
             pool.splice(index, 1);
+            this.selectedHeroesList.splice(index, 1);
         }
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
-        //this.setSelectedHeroesList();
         this.botConfigData.removeHeroSpecification(hero.programName);
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
     onRemoveHero(event: any): void {
