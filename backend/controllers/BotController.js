@@ -88,10 +88,10 @@ class BotController {
         })
             .then((botConfig) => {
                 response.status(200).json({ botConfig });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, message: 'Database Error' });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, message: 'Database Error' });
+        // });
     }
 
     static getAllBots(request, response) {
@@ -100,10 +100,10 @@ class BotController {
         })
             .then((botConfigs) => {
                 response.status(200).json({ botConfigs });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, message: 'Database Error' });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, message: 'Database Error' });
+        // });
     }
 
     static deleteBot(request, response) {
@@ -116,10 +116,10 @@ class BotController {
         })
             .then(() => {
                 response.status(200).json({ deleted: true });
-            })
-            // .catch(() => {
-            //     response.status(500).json({ error: true, deleted: false });
-            // });
+            });
+        // .catch(() => {
+        //     response.status(500).json({ error: true, deleted: false });
+        // });
     }
 
     static getScripts(request, response) {

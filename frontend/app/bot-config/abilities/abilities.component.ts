@@ -76,7 +76,9 @@ export class AbilitiesComponent implements OnInit {
 
             hero.abilities = savedAbilities;
             hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
+            // 'click' on a selected cell to differentiate between closed and disabled
         });
+        this.resolveClosedCells(this.selectedHeroes);
     }
 
     initAbilityPriorities() {
@@ -336,6 +338,14 @@ export class AbilitiesComponent implements OnInit {
 
         // console.log('Reversed Abilities', selectedAbilities);
         return selectedAbilities;
+    }
+
+    // 'Clicks' on a selected cell to resolve the difference between closed and disabled
+    resolveClosedCells(heroes: any) {
+        heroes.forEach((hero) => {
+            this.onSelect(hero);
+            this.createArrayFromSelected();
+        });
     }
 
     generateTalentArray(hero): any {
