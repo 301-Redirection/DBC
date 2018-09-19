@@ -209,43 +209,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         });
     }
 
-    setSelectedPool(pool: number): void {
-        this.selectedPool = pool;
-        this.hidePopovers();
-    }
-
-    togglePools(): void {
-        this.partitioned = !this.partitioned;
-        this.hidePopovers();
-        if (confirm('Are you sure you want to toggle pools?')) {
-            if (this.numberOfPools > 1) {
-                this.numberOfPools = 1;
-                document.getElementById('poolTabs').style.height = '0';
-                document.getElementById('poolTabs').style.visibility = 'hidden';
-
-                const bigPool = [];
-                this.pools.forEach((pool) => {
-                    pool.forEach((hero) => {
-                        if (bigPool.indexOf(hero) === -1) {
-                            bigPool.push(hero);
-                        }
-                    });
-                });
-
-                this.resetPools();
-                this.pools[0] = bigPool;
-                this.setSelectedPool(0);
-            } else {
-                this.numberOfPools = 5;
-                document.getElementById('poolTabs').style.height = '42px';
-                document.getElementById('poolTabs').style.visibility = 'visible';
-                const pool1 = this.pools[0];
-                this.resetPools();
-                this.pools[0] = pool1;
-                this.setSelectedPool(0);
-            }
-        }
-    }
+    
 
     setSelectedHeroesList(): void {
         this.selectedHeroesList = [];
@@ -293,6 +257,10 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.removeHero(event.hero, event.pool);
     }
 
+    setSelectedHero(hero: any): void {
+        this.selectedHero = hero;
+    }
+
     checkHeroExists(hero: any): boolean {
         if (this.pools[this.selectedPool].find(x => x.id === hero.id)) {
             alert('This hero already exists in the selected pool.');
@@ -301,22 +269,50 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         return false;
     }
 
-    setSelectedHero(hero: any): void {
-        this.selectedHero = hero;
+    /*****************/
+    /* Pools Manager */
+    /*****************/
+
+    setSelectedPool(pool: number): void {
+        this.selectedPool = pool;
+        this.hidePopovers();
+    }
+
+    togglePools(): void {
+        this.partitioned = !this.partitioned;
+        this.hidePopovers();
+        if (confirm('Are you sure you want to toggle pools?')) {
+            if (this.numberOfPools > 1) {
+                this.numberOfPools = 1;
+                document.getElementById('poolTabs').style.height = '0';
+                document.getElementById('poolTabs').style.visibility = 'hidden';
+
+                const bigPool = [];
+                this.pools.forEach((pool) => {
+                    pool.forEach((hero) => {
+                        if (bigPool.indexOf(hero) === -1) {
+                            bigPool.push(hero);
+                        }
+                    });
+                });
+
+                this.resetPools();
+                this.pools[0] = bigPool;
+                this.setSelectedPool(0);
+            } else {
+                this.numberOfPools = 5;
+                document.getElementById('poolTabs').style.height = '42px';
+                document.getElementById('poolTabs').style.visibility = 'visible';
+                const pool1 = this.pools[0];
+                this.resetPools();
+                this.pools[0] = pool1;
+                this.setSelectedPool(0);
+            }
+        }
     }
 
     getPools() {
         return this.pools.filter((_x, i) => i < this.numberOfPools);
-    }
-
-    highlightPool(pool: number): void {
-        document.getElementById(`poolLink${pool}`).style.borderColor = '#a3a3a3';
-        document.getElementById(`poolPlusIconCont${pool}`).style.visibility = 'visible';
-    }
-
-    unhighlightPool(pool: number): void {
-        document.getElementById(`poolLink${pool}`).style.borderColor = 'transparent';
-        document.getElementById(`poolPlusIconCont${pool}`).style.visibility = 'hidden';
     }
 
     resetPools(): void {
@@ -331,6 +327,20 @@ export class HeroesComponent implements OnInit, AfterViewInit {
             this.resetPools();
         }
     }
+
+    highlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool}`).style.borderColor = '#a3a3a3';
+        document.getElementById(`poolPlusIconCont${pool}`).style.visibility = 'visible';
+    }
+
+    unhighlightPool(pool: number): void {
+        document.getElementById(`poolLink${pool}`).style.borderColor = 'transparent';
+        document.getElementById(`poolPlusIconCont${pool}`).style.visibility = 'hidden';
+    }
+    
+    /********************/
+    /* JQuery Functions */
+    /********************/
 
     hidePopovers() {
         $('.popover-zone').popover('hide');
