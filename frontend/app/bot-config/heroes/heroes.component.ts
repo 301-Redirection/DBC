@@ -67,11 +67,6 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.botConfigData.isLoadedState.subscribe((isLoadedScript) => {
-            if (isLoadedScript) {
-                this.getSavedHeroes();
-            }
-        });
     }
 
     createHeroPool(): any {
@@ -108,6 +103,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
                 this.sortHeroData();
+                this.checkIfSavedBotScript();
             },
             (error) => {
                 console.log(error);
@@ -115,16 +111,31 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         );
     }
 
-    getSavedHeroes(): void {
-        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
-            //console.log(heroes);
-            if (heroes.length > 0) {
-                this.selectedHeroesList = heroes;
+    // Check if loaded script from db
+    checkIfSavedBotScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedHeroes();
             }
         });
-        console.log("dgdj");
-        console.log(this.selectedHeroesList);
-        console.log("dgdj");
+    }
+
+    getSavedHeroes(): void {
+        const savedHeroes = this.botConfigData.getSavedHeroes();
+        const heroNames = [];
+        savedHeroes.forEach((heroObject) => {
+            heroNames.push(heroObject['name']);
+        });
+        this.populateSelectedHeroList(heroNames);
+    }
+
+    populateSelectedHeroList(heroNames: any) {
+        this.selectedHeroesList = [];
+        heroNames.forEach((name) => {
+            this.selectedHeroesList.push(this.allHeroes.find(hero => hero.programName === name));
+        });
+        // Reflect regenerate hero list in service
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
     getHeroImages(): void {

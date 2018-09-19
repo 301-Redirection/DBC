@@ -66,9 +66,7 @@ export class Configuration {
 export class HeroSpecification {
     name: string;
     heroObject : any;
-    // abilities: AbilityConfiguration;
     abilities: string;
-    // specifically an array of 4
     talents: string[];
     items: string[];
 
