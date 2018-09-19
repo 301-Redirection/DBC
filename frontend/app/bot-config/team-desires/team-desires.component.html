@@ -80,7 +80,7 @@
                                                                 </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field class="col-md-3" hintLabel="Percent (-100 to 100)">
-                                                                <input matInput min="0" max="100" [(value)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
+                                                                <input matInput min="0" max="100" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>

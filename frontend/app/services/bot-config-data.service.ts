@@ -104,6 +104,7 @@ export class BotConfigDataService {
             const hero = heroes[i];
             if (hero.name === heroName) {
                 this.config.heroes.splice(i, 1);
+                this.config.heroPool.pool.splice(i, 1);
                 exists = true;
             }
             i += 1;
@@ -124,13 +125,17 @@ export class BotConfigDataService {
     }
 
     // Saves the currently selected heroes to the config
-    public setSelectedHeroes(heroes: any): void {
+    public updateSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {
                 this.addHeroSpecification(hero['programName']);
             }
         });
+    }
+
+    public setSelectedHeroes(heroes: any) {
+        this.selectedHeroes.next(heroes);
     }
 
     public getSelectedHeroes(): any {
