@@ -90,14 +90,17 @@ export class ItemsComponent implements OnInit{
                 this.totalCostPerHero.push(0);
             });
             this.currentHero = this.selectedHeroes[0];
-            this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
-                if (isLoadedScript) {
-                    this.getSavedItems();
-                }
-            });
+            this.checkIfLoadedSavedScript();
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
+    }
+    checkIfLoadedSavedScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedItems();
+            }
+        });
     }
 
     // To be used to retrieve items saved
@@ -107,8 +110,7 @@ export class ItemsComponent implements OnInit{
                 const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
                 if (savedItems !== undefined && savedItems.length > 0) {
                     this.heroItemSelection[num] = savedItems;
-                    console.log(savedItems);
-                    this.totalCostPerHero[num] = this.calculateCostItems(this.heroItemSelection[num]);
+                    this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
                 }else {
                     this.heroItemSelection[num] = [];
                     this.totalCostPerHero[num] = 0;

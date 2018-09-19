@@ -56,6 +56,19 @@ export class AbilitiesComponent implements OnInit {
         });
     }
 
+    checkIfLoadedSavedScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedItems();
+            }
+        });
+    }
+
+    // To be used to retrieve items saved
+    getSavedItems() {
+        
+    }
+
     initAbilityPriorities() {
         this.selectedHeroes.forEach((hero) => {
             hero.abilityPriorities = [
