@@ -75,7 +75,6 @@ export class ItemsComponent implements OnInit{
     ngOnInit() {
         this.getHeroes();
         this.getItems();
-        this.getSavedSelectedItems();
         this.itemSearch = '';
     }
 
@@ -91,25 +90,37 @@ export class ItemsComponent implements OnInit{
                 this.totalCostPerHero.push(0);
             });
             this.currentHero = this.selectedHeroes[0];
+            this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+                if (isLoadedScript) {
+                    this.getSavedItems();
+                }
+            });
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
     }
 
     // To be used to retrieve items saved
-    getSavedSelectedItems() {
-        this.selectedHeroes.forEach((hero, num) => {
-            this.botConfigData.getHeroItemSelection(hero.name).subscribe((itemArr) => {
-                this.heroItemSelection = itemArr;
-                this.totalCostPerHero[num] = this.calculateCostItems(itemArr);
+    getSavedItems() {
+        if (this.selectedHeroes !== undefined) {
+            this.selectedHeroes.forEach((hero, num) => {
+                const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
+                if (savedItems !== undefined && savedItems.length > 0) {
+                    this.heroItemSelection[num] = savedItems;
+                    console.log(savedItems);
+                    this.totalCostPerHero[num] = this.calculateCostItems(this.heroItemSelection[num]);
+                }else {
+                    this.heroItemSelection[num] = [];
+                    this.totalCostPerHero[num] = 0;
+                }
             });
-        });
+        }
     }
 
     calculateCostItems (itemArr: any) {
         let cost = 0;
-        if (itemArr !== null) {
-            itemArr.array.forEach((item) => {
+        if (itemArr !== undefined && itemArr.length > 0) {
+            itemArr.forEach((item) => {
                 cost += item.cost;
             });
         }

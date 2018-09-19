@@ -26,8 +26,7 @@ export class BotConfigDataService {
     currentItems = this.items.asObservable();
 
     config: ConfigurationFormat;
-    private isLoaded = new BehaviorSubject(false);
-    isLoadedState = this.items.asObservable();
+    private isLoaded = new BehaviorSubject<boolean>(false);
 
     constructor() {
         this.reset();
@@ -104,6 +103,7 @@ export class BotConfigDataService {
     }
 
     public getConfig(): any {
+        this.setNotifyLoaded(false);
         return this.config;
     }
 
@@ -111,6 +111,7 @@ export class BotConfigDataService {
         this.config = config;
         const selectedHeroesArr = [];
         this.setSelectedHeroes(selectedHeroesArr);
+        this.setNotifyLoaded(true);
     }
 
     public getHeroesSpecification (): any {
@@ -142,6 +143,10 @@ export class BotConfigDataService {
         // return this.config.heroes;
     }
 
+    public getSavedHeroes() {
+        return this.config.heroes;
+    }
+
     // Abilities
     public setAbilities(abilities: any): void {
         this.abilities.next(abilities);
@@ -161,14 +166,15 @@ export class BotConfigDataService {
     }
 
     public getHeroItemSelection(heroName: string): any {
-        const hero = this.config.heroes.find(hero => hero.name === heroName);
-        return hero && hero.items;
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        return hero.items;
     }
 
-    public setNotifyLoaded() {
-        this.isLoaded.next(true);
+    public setNotifyLoaded(state: boolean) {
+        this.isLoaded.next(state);
     }
-    public notifyLoaded(): Observable<any> {
-        return this.isLoadedState;
+
+    public notifyIsLoadedScript(): Observable<any> {
+        return this.isLoaded.asObservable();
     }
 }
