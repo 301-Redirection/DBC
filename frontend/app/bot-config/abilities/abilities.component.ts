@@ -69,6 +69,7 @@ export class AbilitiesComponent implements OnInit {
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
             const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
+            console.log('Saved talents:', savedTalents);
             if (savedTalents !== undefined && savedTalents.length > 0) {
                 this.regenerateTalentArray(hero, savedTalents);
             }
@@ -273,6 +274,7 @@ export class AbilitiesComponent implements OnInit {
     onTalentSelect(level, value) {
         // note that talents[0] referes to the last talent (i.e at lvl 25)
         this.currentHero.talents[level] = value;
+        this.saveAbilities();
     }
 
     getAbilityType(hero, i): string {
@@ -331,9 +333,9 @@ export class AbilitiesComponent implements OnInit {
     regenerateTalentArray(hero, talentsArray): any {
         if (hero) {
             for (let i = 0; i < NUMBER_TALENTS; i += 1) {
-                if (talentsArray[NUMBER_TALENTS - (i + 1)] = 'l') {
+                if (talentsArray[NUMBER_TALENTS - (i + 1)] == 'l') {
                     hero.talents[i] = 'left';
-                } else if (talentsArray[NUMBER_TALENTS - (i + 1)] = 'r') {
+                } else if (talentsArray[NUMBER_TALENTS - (i + 1)] == 'r') {
                     hero.talents[i] = 'right';
                 } else {
                     hero.talents[i] = 'n';
