@@ -96,6 +96,20 @@ export class BotConfigDataService {
         }
     }
 
+    public removeHeroSpecification(heroName): void {
+        const heroes = this.config.heroes;
+        let exists = false;
+        let i = 1;
+        while (!exists && i < heroes.length) {
+            const hero = heroes[i];
+            if (hero.name === heroName) {
+                this.config.heroes.splice(i, 1);
+                exists = true;
+            }
+            i += 1;
+        }
+    }
+
     public setHeroPool(heroPool: any): void {
         this.config.heroPool = heroPool;
     }

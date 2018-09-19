@@ -207,7 +207,8 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         }
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
-        this.setSelectedHeroesList();
+        //this.setSelectedHeroesList();
+        this.botConfigData.removeHeroSpecification(hero.programName);
     }
 
     onRemoveHero(event: any): void {
