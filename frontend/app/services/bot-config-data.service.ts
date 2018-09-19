@@ -111,6 +111,7 @@ export class BotConfigDataService {
 
     // Saves the currently selected heroes to the config
     public setSelectedHeroes(heroes: any): void {
+        console.log(heroes);
         this.selectedHeroes.next(heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {

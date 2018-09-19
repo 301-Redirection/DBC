@@ -69,8 +69,6 @@ export class AbilitiesComponent implements OnInit {
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
             const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
-            console.log("talents");
-            console.log(savedTalents);
             this.regenerateTalentArray(hero, savedTalents);
         });
     }
