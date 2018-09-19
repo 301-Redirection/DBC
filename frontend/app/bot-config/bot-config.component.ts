@@ -104,6 +104,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.heroesComponent.reset();
         this.abilitiesComponent.reset();
         this.itemsComponent.reset();
+        this.botConfigData.reset();
     }
 
     confirmReset() {

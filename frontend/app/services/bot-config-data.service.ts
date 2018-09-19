@@ -9,21 +9,8 @@ import {
 
 @Injectable()
 export class BotConfigDataService {
-    // Team Desires data
-    private teamDesires = new BehaviorSubject([]);
-    currentTeamDesires = this.teamDesires.asObservable();
-
     // Heroes data
     private selectedHeroes = new BehaviorSubject([]);
-    currentHeroes = this.selectedHeroes.asObservable();
-
-    // Abilities data
-    private abilities = new BehaviorSubject([]);
-    currentAbilities = this.abilities.asObservable();
-
-    // Items data
-    private items = new BehaviorSubject([]);
-    currentItems = this.items.asObservable();
 
     config: ConfigurationFormat;
     private isLoaded = new BehaviorSubject<boolean>(false);
@@ -32,73 +19,13 @@ export class BotConfigDataService {
         this.reset();
     }
 
+    /**************************/
+    /*     General Config     */
+    /**************************/
+
     // creates config object according to format
     reset(): void {
         this.config = this.getDefaultConfiguration();
-    }
-
-    public getDefaultConfiguration(): ConfigurationFormat {
-        return new ConfigurationFormat();
-    }
-
-    public newCondition(): Condition {
-        return new Condition();
-    }
-
-    public newCondGroup(): CompoundCondition {
-        return new CompoundCondition();
-    }
-
-    // creates a hero specification for the hero if non-existent
-    private ensureHeroSpecification(heroName): void {
-        const heroes = this.config.heroes;
-        let exists = false;
-        for (let i = 0; i < heroes.length; i += 1) {
-            const hero = heroes[i];
-            if (hero.name === heroName) {
-                exists = true;
-            }
-        }
-        if (!exists) {
-            const heroSpec = new HeroSpecification();
-            heroSpec.name = heroName;
-            heroes.push(heroSpec);
-        }
-    }
-
-    public updateHeroItems(heroName: string, items: any) {
-        this.ensureHeroSpecification(heroName);
-        this.config.heroes.forEach((hero) => {
-            if (hero.name === heroName) {
-                hero.items = items;
-            }
-        });
-    }
-
-    public updateHeroTalents(heroName: string, talents: any) {
-        this.ensureHeroSpecification(heroName);
-        this.config.heroes.forEach((hero) => {
-            if (hero.name === heroName) {
-                hero.talents = talents;
-            }
-        });
-    }
-
-    public updateHeroAbilities(heroName: string, abilities: any) {
-        this.ensureHeroSpecification(heroName);
-        this.config.heroes.forEach((hero) => {
-            if (hero.name === heroName) {
-                hero.abilities = abilities;
-            }
-        });
-    }
-
-    public setHeroSpecification(heroSpecification: any): void {
-        this.config.heroes = heroSpecification;
-    }
-
-    public setHeroPool(heroPool: any): void {
-        this.config.heroPool = heroPool;
     }
 
     public getConfig(): any {
@@ -114,77 +41,131 @@ export class BotConfigDataService {
         this.setNotifyLoaded(true);
     }
 
-    public getHeroesSpecification (): any {
-        return this.config.heroes;
-    }
-
-    // Team desires
-    public setTeamDesires(teamDesires: any): void {
-        this.teamDesires.next(teamDesires);
-        this.config.desires = teamDesires;
-    }
-
-    public getTeamDesires(): any {
-        return this.teamDesires;
-    }
-
-    // Heroes
-    public setSelectedHeroes(heroes: any): void {
-        this.selectedHeroes.next(heroes);
-        // Don't do this... it cannot read values from an array of any,
-        // you're making an heroSpec for "undefined" hero...
-        // this.selectedHeroes.forEach((hero) => {
-        //     console.log(hero);
-        //     this.ensureHeroSpecification(hero.programName);
-        // });
-    }
-
-    public getSelectedHeroes(): any {
-        return this.currentHeroes;
-        // return this.config.heroes;
-    }
-
-    public getSavedHeroes() {
-        return this.config.heroes;
-    }
-
-    public getSavedHeroesPools() {
-        return this.config.heroPool;
-    }
-
-    // Abilities
-    public setAbilities(abilities: any): void {
-        this.abilities.next(abilities);
-    }
-
-    public getAbilities(): any {
-        return this.abilities;
-    }
-
-    public getSavedHeroTalents(heroName: string): any {
-        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
-        return hero.talents;
-    }
-
-    // Items
-    public setItems(items: any): void {
-        this.items.next(items);
-    }
-
-    public getItems(): any {
-        return this.items;
-    }
-
-    public getHeroItemSelection(heroName: string): any {
-        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
-        return hero.items;
-    }
-
+    // Notification Service
     public setNotifyLoaded(state: boolean) {
         this.isLoaded.next(state);
     }
 
     public notifyIsLoadedScript(): Observable<any> {
         return this.isLoaded.asObservable();
+    }
+
+    /**************************/
+    /* Team Desires Functions */
+    /**************************/
+
+    public getDefaultConfiguration(): ConfigurationFormat {
+        return new ConfigurationFormat();
+    }
+
+    public newCondition(): Condition {
+        return new Condition();
+    }
+
+    public newCondGroup(): CompoundCondition {
+        return new CompoundCondition();
+    }
+
+    // Team desires
+    public setTeamDesires(teamDesires: any): void {
+        this.config.desires = teamDesires;
+    }
+
+    public getTeamDesires(): any {
+        return this.config.desires;
+    }
+
+    /**************************/
+    /*     Hero Functions     */
+    /**************************/
+
+    // creates a hero specification for the hero if non-existent
+    private addHeroSpecification(heroName): void {
+        const heroes = this.config.heroes;
+        let exists = false;
+        for (let i = 0; i < heroes.length; i += 1) {
+            const hero = heroes[i];
+            if (hero.name === heroName) {
+                exists = true;
+            }
+        }
+        if (!exists) {
+            const heroSpec = new HeroSpecification();
+            heroSpec.name = heroName;
+            this.config.heroes.push(heroSpec);
+        }
+    }
+
+    public setHeroPool(heroPool: any): void {
+        this.config.heroPool = heroPool;
+    }
+
+    public getHeroPools() {
+        return this.config.heroPool;
+    }
+
+    // Heroes
+    public getHeroesSpecification (): any {
+        return this.config.heroes;
+    }
+
+    // Saves the currently selected heroes to the config
+    public setSelectedHeroes(heroes: any): void {
+        this.selectedHeroes.next(heroes);
+        this.selectedHeroes.forEach((hero) => {
+            if (hero !== undefined) {
+                this.addHeroSpecification(hero['programName']);
+            }
+        });
+    }
+
+    public getSelectedHeroes(): any {
+        return this.selectedHeroes.asObservable();
+    }
+
+    public getSavedHeroes() {
+        return this.config.heroes;
+    }
+
+    /**************************/
+    /*   Abilities Functions  */
+    /**************************/
+
+    public getSavedHeroTalents(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        return hero.talents;
+    }
+
+    public updateHeroTalents(heroName: string, talents: any) {
+        this.config.heroes.forEach((hero) => {
+            if (hero.name === heroName) {
+                hero.talents = talents;
+            }
+        });
+    }
+
+    public updateHeroAbilities(heroName: string, abilities: any) {
+        this.config.heroes.forEach((hero) => {
+            if (hero.name === heroName) {
+                hero.abilities = abilities;
+            }
+        });
+    }
+
+    /**************************/
+    /*     Items Functions    */
+    /**************************/
+
+    public getHeroItemSelection(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        return hero.items;
+    }
+
+    public updateHeroItems(heroName: string, items: any) {
+        this.config.heroes.forEach((hero) => {
+            if (hero.name === heroName) {
+                hero.items = items;
+            }
+        });
     }
 }
