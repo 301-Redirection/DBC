@@ -130,9 +130,10 @@ export class HeroesComponent implements OnInit, AfterViewInit {
 
     populateSelectedHeroPools() {
         const heroPools = this.botConfigData.getHeroPools();
+        const heroesList = this.selectedHeroesList;
         const pools = heroPools.pool;
         pools.forEach((selectedHero) => {
-            const heroMatch = this.selectedHeroesList.find((hero) => hero.programName === selectedHero.name);
+            const heroMatch = heroesList.find(hero => hero.programName === selectedHero.name);
             this.pools[selectedHero.position].push(heroMatch);
         });
 
@@ -307,13 +308,12 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     }
 
     showPoolsTab(numPools: number) {
-        if (numPools == 1) {
+        if (numPools === 1) {
             this.numberOfPools = 1;
             document.getElementById('poolTabs').style.height = '0';
             document.getElementById('poolTabs').style.visibility = 'hidden';
-        }
-        else if (numPools == 5) {
-            this.numberOfPools = 5;                
+        } else if (numPools === 5) {
+            this.numberOfPools = 5;
             document.getElementById('poolTabs').style.height = '42px';
             document.getElementById('poolTabs').style.visibility = 'visible';
         }
@@ -329,7 +329,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         document.getElementById(`poolLink${pool}`).style.borderColor = 'transparent';
         document.getElementById(`poolPlusIconCont${pool}`).style.visibility = 'hidden';
     }
-    
+
     /********************/
     /* JQuery Functions */
     /********************/

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as globalConfig from '../../../../config/config.js';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
-import { HeroSpecification } from '../../services/ConfigurationFormat';
 
 const NUMBER_TALENTS: number = 4;
 const NUMBER_LEVELS: number = 25;
@@ -68,11 +67,15 @@ export class AbilitiesComponent implements OnInit {
     // To be used to retrieve items saved
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
+            const savedAbilities = this.botConfigData.getSavedHeroAbilities(hero.programName);
+            const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
             const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
-            console.log('Saved talents:', savedTalents);
             if (savedTalents !== undefined && savedTalents.length > 0) {
                 this.regenerateTalentArray(hero, savedTalents);
             }
+
+            hero.abilities = savedAbilities;
+            hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
         });
     }
 
@@ -145,6 +148,7 @@ export class AbilitiesComponent implements OnInit {
         const newAbilities = [];
         this.currentHero.abilityPriorities.map(ability => newAbilities[ability.priority] = ability);
         this.currentHero.abilities = newAbilities;
+        this.saveAbilities();
     }
 
     getLevelOfAbility(type, limitIndex: number = NUMBER_LEVELS): number {
@@ -211,6 +215,7 @@ export class AbilitiesComponent implements OnInit {
             });
         }
         this.createArrayFromSelected();
+        this.saveAbilities();
     }
 
     createArrayFromSelected(): void {
@@ -262,7 +267,7 @@ export class AbilitiesComponent implements OnInit {
             }
             this.createArrayFromSelected();
         } else {
-            alert(`cannot get ${abilityType} at this level`);
+            alert(`Cannot get ${abilityType} at this level.`);
         }
     }
 
@@ -313,6 +318,26 @@ export class AbilitiesComponent implements OnInit {
         return newStr;
     }
 
+    generateAbilitiesFromString(abilities: string) {
+        // Arrays: [0] => q, [1] => w, [2] => e, [3] => r, [4] => t
+        const selectedAbilities = [[], [], [], [], []];
+        const abilityOrder = ['q', 'w', 'e', 'r', 't'];
+
+        for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
+            for (let j = 0; j < NUMBER_LEVELS; j += 1) {
+                const abilityValue = abilities.substring(j, j + 1);
+                if (abilityValue === abilityOrder[i]) {
+                    selectedAbilities[i][j] = 'selected';
+                } else {
+                    selectedAbilities[i][j] = 'closed';
+                }
+            }
+        }
+
+        // console.log('Reversed Abilities', selectedAbilities);
+        return selectedAbilities;
+    }
+
     generateTalentArray(hero): any {
         const talentsArray = Array.apply(null, Array(NUMBER_TALENTS)).map(() => 'n');
 
@@ -333,9 +358,9 @@ export class AbilitiesComponent implements OnInit {
     regenerateTalentArray(hero, talentsArray): any {
         if (hero) {
             for (let i = 0; i < NUMBER_TALENTS; i += 1) {
-                if (talentsArray[NUMBER_TALENTS - (i + 1)] == 'l') {
+                if (talentsArray[NUMBER_TALENTS - (i + 1)] === 'l') {
                     hero.talents[i] = 'left';
-                } else if (talentsArray[NUMBER_TALENTS - (i + 1)] == 'r') {
+                } else if (talentsArray[NUMBER_TALENTS - (i + 1)] === 'r') {
                     hero.talents[i] = 'right';
                 } else {
                     hero.talents[i] = 'n';
@@ -350,8 +375,8 @@ export class AbilitiesComponent implements OnInit {
             if (hero) {
                 const selectedAbilities = this.generateAbilitiesString(hero);
                 const talentsArray = this.generateTalentArray(hero);
-                console.log(selectedAbilities);
-                this.botConfigData.updateHeroAbilities(hero.programName, selectedAbilities);
+                this.botConfigData.updateHeroAbilities(hero.programName, hero.abilities);
+                this.botConfigData.updateHeroAbilityLevels(hero.programName, selectedAbilities);
                 this.botConfigData.updateHeroTalents(hero.programName, talentsArray);
             }
         });
