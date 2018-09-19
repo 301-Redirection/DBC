@@ -152,7 +152,6 @@ export class BotConfigDataService {
         if (hero === undefined) {
             return undefined;
         }
-        console.log(hero);
         return hero.abilityLevels;
     }
 
