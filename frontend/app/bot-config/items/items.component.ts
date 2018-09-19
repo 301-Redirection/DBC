@@ -269,7 +269,7 @@ export class ItemsComponent implements OnInit{
             const itemsArr = this.heroItemSelection[i];
             this.botConfigData.updateHeroItems(hero.programName, itemsArr);
         }
-        //console.log(this.botConfigData.getConfig());
+        // console.log(this.botConfigData.getConfig());
     }
 
     // ****************************

@@ -111,7 +111,6 @@ export class BotConfigDataService {
 
     // Saves the currently selected heroes to the config
     public setSelectedHeroes(heroes: any): void {
-        console.log(heroes);
         this.selectedHeroes.next(heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {
@@ -140,10 +139,35 @@ export class BotConfigDataService {
         return hero.talents;
     }
 
+    public getSavedHeroAbilities(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        if (hero === undefined) {
+            return undefined;
+        }
+        return hero.abilities;
+    }
+
+    public getSavedHeroAbilityLevels(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        if (hero === undefined) {
+            return undefined;
+        }
+        console.log(hero);
+        return hero.abilityLevels;
+    }
+
     public updateHeroTalents(heroName: string, talents: any) {
         this.config.heroes.forEach((hero) => {
             if (hero.name === heroName) {
                 hero.talents = talents;
+            }
+        });
+    }
+
+    public updateHeroAbilityLevels(heroName: string, abilityLevels: any) {
+        this.config.heroes.forEach((hero) => {
+            if (hero.name === heroName) {
+                hero.abilityLevels = abilityLevels;
             }
         });
     }
