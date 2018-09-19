@@ -30,7 +30,7 @@ export class BotConfigDataService {
 
     constructor() {
         this.reset();
-        console.log(this.config);
+        // console.log(this.config);
     }
 
     // creates config object according to format
@@ -147,6 +147,10 @@ export class BotConfigDataService {
 
     public getSavedHeroes() {
         return this.config.heroes;
+    }
+
+    public getSavedHeroesPools() {
+        return this.config.heroPool;
     }
 
     // Abilities
