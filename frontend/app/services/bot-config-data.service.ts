@@ -30,7 +30,6 @@ export class BotConfigDataService {
 
     constructor() {
         this.reset();
-        console.log(this.config);
     }
 
     // creates config object according to format
@@ -156,6 +155,11 @@ export class BotConfigDataService {
 
     public getAbilities(): any {
         return this.abilities;
+    }
+
+    public getSavedHeroTalents(heroName: string): any {
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        return hero.talents;
     }
 
     // Items

@@ -53,20 +53,26 @@ export class AbilitiesComponent implements OnInit {
 
             this.initAbilityPriorities();
             this.currentHero = this.selectedHeroes[0];
+            this.checkIfLoadedSavedScript();
         });
     }
 
     checkIfLoadedSavedScript() {
         this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
             if (isLoadedScript) {
-                this.getSavedItems();
+                this.getSavedAbilities();
             }
         });
     }
 
     // To be used to retrieve items saved
-    getSavedItems() {
-        
+    getSavedAbilities() {
+        this.selectedHeroes.forEach((hero) => {
+            const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
+            console.log("talents");
+            console.log(savedTalents);
+            this.regenerateTalentArray(hero, savedTalents);
+        });
     }
 
     initAbilityPriorities() {
@@ -322,6 +328,20 @@ export class AbilitiesComponent implements OnInit {
         return talentsArray;
     }
 
+    regenerateTalentArray(hero, talentsArray): any {
+        if (hero) {
+            for (let i = 0; i < NUMBER_TALENTS; i += 1) {
+                if (talentsArray[NUMBER_TALENTS - (i + 1)] = 'l') {
+                    hero.talents[i] = 'left';
+                } else if (talentsArray[NUMBER_TALENTS - (i + 1)] = 'r') {
+                    hero.talents[i] = 'right';
+                } else {
+                    hero.talents[i] = 'n';
+                }
+            }
+        }
+    }
+
     constructHeroSpecification(hero): HeroSpecification {
         if (hero) {
             const name = hero.programName;
@@ -341,9 +361,11 @@ export class AbilitiesComponent implements OnInit {
     saveAbilities(): void {
         this.selectedHeroes.forEach((hero) => {
             if (hero) {
-                const current = this.constructHeroSpecification(hero);
-                this.botConfigData.updateHeroAbilities(current.name, current.abilities);
-                this.botConfigData.updateHeroTalents(current.name, current.talents);
+                //const current = this.constructHeroSpecification(hero);
+                const selectedAbilities = this.generateAbilitiesString(hero);
+                const talentsArray = this.generateTalentArray(hero);
+                this.botConfigData.updateHeroAbilities(hero.programName, selectedAbilities);
+                this.botConfigData.updateHeroTalents(hero.programName, talentsArray);
             }
         });
     }
