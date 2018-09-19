@@ -133,8 +133,11 @@ export class BotConfigDataService {
     /**************************/
 
     public getSavedHeroTalents(heroName: string): any {
-        //const hero = this.config.heroes.find(hero => hero['name'] === heroName);
-        //return hero.talents;
+        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        if (hero === undefined) {
+            return undefined;
+        }
+        return hero.talents;
     }
 
     public updateHeroTalents(heroName: string, talents: any) {
