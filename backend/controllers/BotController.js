@@ -162,19 +162,19 @@ class BotController {
     }
 
     static deleteBot(request, response) {
-        const id = request.params.botID;
+        const id = request.body.botID;
         models.BotConfig.destroy({
             where: {
                 userId: request.user.sub,
                 id,
             },
         })
+            .catch(() => {
+                response.status(500).json({ error: true, deleted: false });
+            })
             .then(() => {
                 response.status(200).json({ deleted: true });
             });
-        // .catch(() => {
-        //     response.status(500).json({ error: true, deleted: false });
-        // });
     }
 
     static getScripts(request, response) {
