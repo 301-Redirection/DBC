@@ -162,10 +162,10 @@ class BotController {
     }
 
     static deleteBot(request, response) {
-        const id = request.params.botID;
+        const id = request.params['botID'];
         models.BotConfig.destroy({
             where: {
-                userId: request.user.sub,
+                userId: request.user['sub'],
                 id,
             },
         })
