@@ -14,6 +14,7 @@ export class BotConfigDataService {
 
     config: ConfigurationFormat;
     private isLoaded = new BehaviorSubject<boolean>(false);
+    private isScaled = false;
 
     constructor() {
         this.reset();
@@ -69,12 +70,17 @@ export class BotConfigDataService {
 
     // Team desires
     public setTeamDesires(teamDesires: any): void {
-        this.config.desires = this.scaleTeamDesires(teamDesires, true);
-        // this.config.desires = teamDesires;
+        if (this.isScaled) {
+            this.config.desires = teamDesires;
+        }else {
+            this.config.desires = this.scaleTeamDesires(teamDesires, true);
+            this.isScaled = true;
+        }
         console.log(this.config.desires);
     }
 
     public getTeamDesires(): any {
+        this.isScaled = false;
         return this.scaleTeamDesires(this.config.desires, false);
     }
 
