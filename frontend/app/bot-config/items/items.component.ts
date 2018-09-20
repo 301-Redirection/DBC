@@ -75,7 +75,6 @@ export class ItemsComponent implements OnInit{
     ngOnInit() {
         this.getHeroes();
         this.getItems();
-        this.getSavedSelectedItems();
         this.itemSearch = '';
     }
 

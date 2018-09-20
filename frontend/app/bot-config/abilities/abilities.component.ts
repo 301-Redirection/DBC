@@ -352,6 +352,7 @@ export class AbilitiesComponent implements OnInit {
             this.onSelect(hero);
             this.createArrayFromSelected();
         });
+        this.currentHero = this.selectedHeroes[0];
     }
 
     generateTalentArray(hero): any {
