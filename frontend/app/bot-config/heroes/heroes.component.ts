@@ -37,7 +37,7 @@ export class HeroesComponent implements OnInit {
     allPools = [];
     partitioned = false;
 
-    clickTimeoutId: number;
+    clickTimeoutId: any;
 
     optionsSource: SortablejsOptions = {
         group: {
@@ -320,7 +320,7 @@ export class HeroesComponent implements OnInit {
     resetPools(): void {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
-        this.selectedHeroesList = []
+        this.selectedHeroesList = [];
         this.setSelectedHeroesList(this.selectedHeroesList);
     }
 
@@ -387,7 +387,7 @@ export class HeroesComponent implements OnInit {
                     this.openSelectedTab();
                 }
             });
-            
+
             $('body').click((event) => {
                 const idInstances = ['selectedFrameHeader', 'cardHeaderText', 'selectedButtons'];
                 const classExceptions = [
@@ -416,9 +416,7 @@ export class HeroesComponent implements OnInit {
                 } else if (!classExceptions.includes(target.className) &&
                     !idExceptions.includes(target.id) &&
                     !idExceptions.includes(target.parentElement.id) && this.clickTimeoutId === 0) {
-                    this.clickTimeoutId = setTimeout(() => {
-                        this.closeSelectedTab();
-                    }, 290);
+                    this.clickTimeoutId = setTimeout(() => this.closeSelectedTab(), 290);
                 }
             });
         });

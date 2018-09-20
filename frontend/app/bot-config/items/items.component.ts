@@ -108,7 +108,9 @@ export class ItemsComponent implements OnInit{
         if (this.selectedHeroes !== undefined) {
             this.selectedHeroes.forEach((hero, num) => {
                 const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
+                console.log(savedItems);
                 if (savedItems !== undefined && savedItems.length > 0) {
+                    console.log(savedItems);
                     this.heroItemSelection[num] = savedItems;
                     this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
                 }else {
