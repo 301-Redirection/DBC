@@ -68,15 +68,16 @@ export class AbilitiesComponent implements OnInit {
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
             const savedAbilities = this.botConfigData.getSavedHeroAbilities(hero.programName);
-            const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
-            const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
-            if (savedTalents !== undefined && savedTalents.length > 0) {
-                this.regenerateTalentArray(hero, savedTalents);
-            }
+            if (savedAbilities) {
+                const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
+                const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
+                if (savedTalents !== undefined && savedTalents.length > 0) {
+                    this.regenerateTalentArray(hero, savedTalents);
+                }
 
-            hero.abilities = savedAbilities;
-            hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
-            // 'click' on a selected cell to differentiate between closed and disabled
+                hero.abilities = savedAbilities;
+                hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
+            }
         });
         this.resolveClosedCells(this.selectedHeroes);
     }
@@ -390,10 +391,10 @@ export class AbilitiesComponent implements OnInit {
     saveAbilities(): void {
         this.selectedHeroes.forEach((hero) => {
             if (hero) {
-                const selectedAbilities = this.generateAbilitiesString(hero);
+                // const selectedAbilities = this.generateAbilitiesString(hero);
                 const talentsArray = this.generateTalentArray(hero);
                 this.botConfigData.updateHeroAbilities(hero.programName, hero.abilities);
-                this.botConfigData.updateHeroAbilityLevels(hero.programName, selectedAbilities);
+                // this.botConfigData.updateHeroAbilityLevels(hero.programName, selectedAbilities);
                 this.botConfigData.updateHeroTalents(hero.programName, talentsArray);
             }
         });
