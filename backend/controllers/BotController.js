@@ -41,7 +41,8 @@ class BotController {
 
     // Recursive function to simplify item object
     // into what is needed by the code generator
-/*     static makeSimpleItem(item) {
+    /*
+     static makeSimpleItem(item) {
         // console.log(item);
         if (item) {
             const newItem = {
@@ -80,7 +81,7 @@ class BotController {
         }
         return configuration;
     }
- */
+    */
     static updateBot(request, response) {
         const { configuration } = request.body;
         const {
