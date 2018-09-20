@@ -117,9 +117,9 @@ export class BotConfigDataService {
                     conditions.forEach((element) => {
                         const conditional = element['conditional'];
                         if (scaleDown) {
-                            element['conditional'] = conditional / 10;
+                            element['conditional'] = conditional / 100;
                         } else {
-                            element['conditional'] = conditional * 10;
+                            element['conditional'] = conditional * 100;
                         }
                     });
                     condition['conditions'] = conditions;
@@ -127,9 +127,9 @@ export class BotConfigDataService {
                 const value = condition['value'];
                 if (value != null) {
                     if (scaleDown) {
-                        condition['value'] = value / 10;
+                        condition['value'] = value / 100;
                     } else {
-                        condition['value'] = value * 10;
+                        condition['value'] = value * 100;
                     }
                 }
             });
@@ -138,9 +138,9 @@ export class BotConfigDataService {
         const initialValue = desires['initialValue'];
         if (initialValue !== 0) {
             if (scaleDown) {
-                desires['initialValue'] = initialValue / 10;
+                desires['initialValue'] = initialValue / 100;
             } else {
-                desires['initialValue'] = initialValue * 10;
+                desires['initialValue'] = initialValue * 100;
             }
         }
         return desires;
