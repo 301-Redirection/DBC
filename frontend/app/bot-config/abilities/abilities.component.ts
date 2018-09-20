@@ -295,7 +295,7 @@ export class AbilitiesComponent implements OnInit {
     *    in the form 'qweeqnnnrnnntqwr'
     **/
     generateAbilitiesString(hero): any {
-        if (hero === undefined ) {
+        if (hero === undefined) {
             return '';
         }
         const selectedAbilities = Array.apply(null, Array(NUMBER_LEVELS)).map(( ) => 'n');
