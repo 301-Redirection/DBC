@@ -106,7 +106,6 @@ export class BotConfigDataService {
             desires['top'] = this.scaleDesires(desires['top'], false);
         }
         return desires;
-
     }
 
     public scaleDesires (desires: any, scaleDown: boolean) {
