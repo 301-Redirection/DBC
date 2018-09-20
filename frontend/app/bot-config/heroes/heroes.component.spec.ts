@@ -10,6 +10,7 @@ import { authServiceStub } from '../../testing/auth-service-stub';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { HeroItemStubComponent } from '../../testing/hero-item-stub';
+import { By } from '@angular/platform-browser';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -73,12 +74,15 @@ describe('HeroesComponent', () => {
                 },
             ],
         };
+
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
             'getAllHeroes',
             'getImageURL',
         ]);
+
         apiConnectServiceStub.getAllHeroes.and
             .returnValue(Observable.of(testResponse));
+
         apiConnectServiceStub.getImageURL.and.callThrough();
 
         TestBed.configureTestingModule({
@@ -108,5 +112,15 @@ describe('HeroesComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should add hero on double click', () => {
+        component.ngOnInit();
+        fixture.debugElement.query(By.css('.hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        console.log(component.selectedHeroesList);
+        console.log(testResponse);
+        // expect(component.selectedHeroesList).toEqual([this.testResponse.heroes]);
     });
 });
