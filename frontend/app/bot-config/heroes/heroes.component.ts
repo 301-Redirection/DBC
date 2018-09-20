@@ -125,7 +125,7 @@ export class HeroesComponent implements OnInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
@@ -202,9 +202,13 @@ export class HeroesComponent implements OnInit {
     }
 
     removeHero(hero: any, pool: any): void {
-        const index = pool.indexOf(hero);
+        let index = pool.indexOf(hero);
         if (index !== -1) {
             pool.splice(index, 1);
+        }
+
+        index = this.selectedHeroesList.indexOf(hero);
+        if (index !== -1) {
             this.selectedHeroesList.splice(index, 1);
         }
 
@@ -300,16 +304,19 @@ export class HeroesComponent implements OnInit {
                     });
                 });
 
-                this.resetPools();
+                this.selectedPool = 0;
+                this.pools = [[], [], [], [], []];
                 this.pools[0] = bigPool;
                 this.setSelectedPool(0);
             } else {
                 this.showPoolsTab(5);
                 const pool1 = this.pools[0];
-                this.resetPools();
+                this.selectedPool = 0;
+                this.pools = [[], [], [], [], []];
                 this.pools[0] = pool1;
                 this.setSelectedPool(0);
             }
+            this.saveHeroes();
         }
     }
 
@@ -321,7 +328,8 @@ export class HeroesComponent implements OnInit {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
         this.selectedHeroesList = [];
-        this.setSelectedHeroesList(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
     }
 
     triggerResetPools(): void {
