@@ -98,7 +98,7 @@ export class BotConfigDataService {
     }
 
     public removeHeroSpecification(heroName): void {
-        let heroes = this.config.heroes;
+        const heroes = this.config.heroes;
         let exists = false;
         let i = 1;
         while (!exists && i < heroes.length) {
@@ -110,7 +110,7 @@ export class BotConfigDataService {
             i += 1;
         }
 
-        let heroPool = this.config.heroPool.pool;
+        const heroPool = this.config.heroPool.pool;
         exists = false;
         i = 1;
         while (!exists && i < heroPool.length) {
