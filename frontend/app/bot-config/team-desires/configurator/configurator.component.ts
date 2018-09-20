@@ -38,7 +38,7 @@ export class ConfiguratorComponent {
     updateInputBounds(data: string) {
         if (data === 'Game Time') {
             this.min = 0;
-            this.max = null;
+            this.max = 5 * 60;
         } else {
             this.min = 0;
             this.max = 5;

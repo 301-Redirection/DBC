@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs/Rx';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 import { authServiceStub } from '../testing/auth-service-stub';
+import { LoadingModule } from '../core/loading.module';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -78,6 +79,9 @@ describe('DashboardComponent', () => {
             .returnValue(Observable.of('Hey, it got deleted'));
 
         TestBed.configureTestingModule({
+            imports: [
+                LoadingModule,
+            ],
             declarations: [
                 DashboardComponent,
                 RouterLinkDirectiveStub,

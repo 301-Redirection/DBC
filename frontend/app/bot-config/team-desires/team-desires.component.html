@@ -30,7 +30,7 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
@@ -102,7 +102,7 @@
                         <div class="card-body bot-manage-card-body">
                             <div class="form-group container">
                                 <label for="{{section.prop}}Default">Default Value</label>
-                                <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                <mat-slider class="col-md-3" min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                             </div>
                             <div class="container">
                                 <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop])">Add Condition Group</button>
@@ -110,10 +110,10 @@
                             <div class="container">
                                 <div *ngIf="config.desires[section.prop].compoundConditions != []">
                                     <div class="compound-cond container list-group" *ngFor="let comp of config.desires[section.prop].compoundConditions | reverse; let j = index">
-                                            <div class="d-flex justify-content-between mb-2">
-                                                    <h5>Condition Group</h5>
-                                                    <button *ngIf="config.desires[section.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
-                                                </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h5>Condition Group</h5>
+                                            <button *ngIf="config.desires[section.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
+                                        </div>
                                         <button *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length == 0"  class="list-group-item btn btn-add-cond" type="button" (click)="addCondition(comp)">New Condition</button>
                                         <div  *ngFor="let condition of comp.conditions; let i=index;" class="button-group" role="group">
                                             <span class="list-group-item d-flex justify-content-between align-items-center">
