@@ -73,7 +73,9 @@ export class AbilitiesComponent implements OnInit {
             }
 
             const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
-            hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
+            if (savedLevels) {
+                hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);    
+            }
 
             const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
             if (savedTalents !== undefined && savedTalents.length > 0) {
