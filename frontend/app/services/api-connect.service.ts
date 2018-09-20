@@ -68,7 +68,7 @@ export class ApiConnectService {
     }
     public removeBot(botScriptID: number) {
         return this.http
-            .get(`${API_URL}/bots/delete/${botScriptID}`, {
+            .post(`${API_URL}/bots/delete/${botScriptID}`, {
                 headers: new HttpHeaders().set('Authorization', this.authHeader),
             })
             .pipe(catchError(this.handleError));
