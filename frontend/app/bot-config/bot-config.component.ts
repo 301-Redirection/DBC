@@ -51,6 +51,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.botConfigData.reset();
         this.checkLoadedScript();
         this.selectedTab = 'info';
     }
