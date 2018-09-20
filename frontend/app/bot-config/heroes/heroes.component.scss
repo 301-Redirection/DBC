@@ -40,6 +40,11 @@
     transition: 0.3s;
 }
 
+#heroDropZone {
+    max-height: 200px;
+    overflow: auto;
+}
+
 .class-title {
     margin-bottom: 5px;
 }

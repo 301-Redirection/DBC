@@ -138,7 +138,6 @@ export class BotConfigDataService {
 
     public clearSelectedHeroes(heroes: any): void {
         this.selectedHeroes.next(heroes);
-        console.log('Selected heroes:', heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {
                 this.removeHeroSpecification(hero['programName']);
