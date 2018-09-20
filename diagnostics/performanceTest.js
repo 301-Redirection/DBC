@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  *  This file is used to time how long it takes to generate the bot scripts from
  *  the example objects to
