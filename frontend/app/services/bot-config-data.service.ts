@@ -97,7 +97,6 @@ export class BotConfigDataService {
 
     public refineDesires(desires: any, scaleDown: boolean): any {
         if (scaleDown) {
-
             desires['bot'] = this.scaleDesires(desires['bot'], true);
             desires['mid'] = this.scaleDesires(desires['mid'], true);
             desires['top'] = this.scaleDesires(desires['top'], true);
