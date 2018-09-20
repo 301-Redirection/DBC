@@ -70,7 +70,7 @@ export class BotConfigDataService {
     // Team desires
     public setTeamDesires(teamDesires: any): void {
         this.config.desires = this.scaleTeamDesires(teamDesires, true);
-        //this.config.desires = teamDesires;
+        // this.config.desires = teamDesires;
         console.log(this.config.desires);
     }
 
