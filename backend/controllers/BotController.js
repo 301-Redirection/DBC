@@ -41,7 +41,7 @@ class BotController {
 
     // Recursive function to simplify item object
     // into what is needed by the code generator
-    static makeSimpleItem(item) {
+/*     static makeSimpleItem(item) {
         // console.log(item);
         if (item) {
             const newItem = {
@@ -72,24 +72,24 @@ class BotController {
                 const ele = element;
                 if (element.items && element.items.length) {
                     result = this.makeSimpleItemArray(element.items);
-                    // console.log(result);
+                    console.log(result);
                     ele.items = result;
-                    // console.log(element.items);
+                    console.log(element.items);
                 }
             });
         }
         return configuration;
     }
-
+ */
     static updateBot(request, response) {
-        let { configuration } = request.body;
+        const { configuration } = request.body;
         const {
             name, id, description,
         } = request.body;
         const userId = request.user.sub;
         // condition for creating a botconfig entry
         if (id === -1) {
-            configuration = this.removeRedundantDataFromObject(configuration);
+            // configuration = this.removeRedundantDataFromObject(configuration);
             models.BotConfig.create({
                 name,
                 description,

@@ -26,6 +26,7 @@ export class BotConfigDataService {
     // creates config object according to format
     reset(): void {
         this.config = this.getDefaultConfiguration();
+        this.setNotifyLoaded(false);
     }
 
     public getConfig(): any {

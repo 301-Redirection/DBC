@@ -435,29 +435,29 @@ allBotHeroes = {
 }
 
 local hero_pool_position_1 ={
-	"drow_ranger",
-	"bane",
-	"alchemist",
+	"npc_dota_hero_drow_ranger",
+	"npc_dota_hero_bane",
+	"npc_dota_hero_alchemist",
 }
 
 local hero_pool_position_2 ={
-	"abaddon",
-	"antimage",
+	"npc_dota_hero_abaddon",
+	"npc_dota_hero_antimage",
 }
 
 local hero_pool_position_3 ={
-	"axe",
-	"bloodseeker",
+	"npc_dota_hero_axe",
+	"npc_dota_hero_bloodseeker",
 }
 
 local hero_pool_position_4 ={
-	"centaur",
-	"chen",
+	"npc_dota_hero_centaur",
+	"npc_dota_hero_chen",
 }
 
 local hero_pool_position_5 ={
-	"chaos_knight",
-	"crystal_maiden",
+	"npc_dota_hero_chaos_knight",
+	"npc_dota_hero_crystal_maiden",
 }
 
 
