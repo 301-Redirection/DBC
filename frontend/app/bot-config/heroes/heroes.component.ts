@@ -11,7 +11,7 @@ declare var $: any;
     templateUrl: './heroes.component.html',
     styleUrls: ['./heroes.component.scss'],
 })
-export class HeroesComponent implements OnInit, AfterViewInit {
+export class HeroesComponent implements OnInit {
 
     @Input('selected') selected: string;
 
@@ -83,8 +83,6 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.getHeroes();
         this.selectedTab();
     }
-
-    ngAfterViewInit() { }
 
     /*****************/
     /*    General    */
