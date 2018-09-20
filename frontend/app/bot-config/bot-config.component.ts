@@ -31,6 +31,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     name: string = '';
     description: string = '';
     id: number = -1;
+    selectedTab: string;
 
     generateURL = '';
 
@@ -51,9 +52,14 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.checkLoadedScript();
+        this.selectedTab = 'info';
     }
 
     ngAfterViewInit() {}
+
+    setTabSelected(tab: string) {
+        this.selectedTab = tab;
+    }
 
     save() {
         if (this.validateInfo()) {
@@ -69,8 +75,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                    alert('Bot configurations saved!');
                 },
                 (error) => {
+                    alert('Failed to save configuration. Please try agin later.');
                     console.log(error);
                 },
             );

@@ -21,15 +21,14 @@ import { AuthService } from './auth/auth.service';
 // Components
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
-import { LoadingComponent } from './core/loading.component';
 import { BotConfigDataService } from './services/bot-config-data.service';
 import { WalkthroughComponent } from './walkthrough/walkthrough.component';
+import { LoadingModule } from './core/loading.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         CallbackComponent,
-        LoadingComponent,
         WalkthroughComponent,
     ],
     imports: [
@@ -44,6 +43,7 @@ import { WalkthroughComponent } from './walkthrough/walkthrough.component';
         RouterModule,
         MaterialModule,
         BrowserAnimationsModule,
+        LoadingModule,
     ],
     providers: [
         ApiConnectService,

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -12,6 +12,8 @@ declare var $: any;
     styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent implements OnInit, AfterViewInit {
+
+    @Input('selected') selected: string;
 
     // Variables
     pools: any;
@@ -49,6 +51,23 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         sort: false,
     };
 
+    // Listen for key press to update heroSearch
+    @HostListener('document:keydown', ['$event'])
+    searchEvent(event: KeyboardEvent) {
+        if (this.selected === 'heroes'
+            && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea') {
+            if (event.key === 'Backspace') {
+                this.heroSearch = this.heroSearch.slice(0, -1);
+            } else if (
+                (65 <= event.keyCode && event.keyCode <= 90) ||
+                (97 <= event.keyCode && event.keyCode <= 122)
+            ) {
+                this.heroSearch += event.key;
+            }
+        }
+    }
+
     constructor(
         private api: ApiConnectService,
         private botConfigData: BotConfigDataService,
@@ -60,6 +79,7 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.numberOfPools = 1;
         this.pools = [[], [], [], [], []];
         this.selectedPool = 0;
+        this.heroSearch = '';
         this.getHeroes();
         this.selectedTab();
     }

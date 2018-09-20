@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
@@ -13,13 +13,17 @@ import { BotConfigDataService } from '../services/bot-config-data.service';
 class TeamDesiresComponent {}
 
 @Component({ selector: 'app-heroes', template: '' })
-class HeroesComponent {}
+class HeroesComponent {
+    @Input('selected') selected: string;
+}
 
 @Component({ selector: 'app-abilities', template: '' })
 class AbilitiesComponent {}
 
 @Component({ selector: 'app-items', template: '' })
-class ItemsComponent {}
+class ItemsComponent {
+    @Input('selected') selected: string;
+}
 
 describe('BotConfigComponent', () => {
     let component: BotConfigComponent;
