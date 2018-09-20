@@ -37,7 +37,7 @@ router.get('/all', jwtCheck, (request, response) => {
     BotController.getAllBots(request, response);
 });
 
-router.post('/delete/', jwtCheck, [check('botID').exists()], (request, response) => {
+router.post('/delete', jwtCheck, [check('botID').exists()], (request, response) => {
     BotController.deleteBot(request, response);
 });
 
