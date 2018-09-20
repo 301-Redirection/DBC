@@ -49,10 +49,10 @@ export class AbilitiesComponent implements OnInit {
                 hero.talents = ['none', 'none', 'none', 'none'];
                 this.selectedHeroes.push(hero);
             });
-
             this.initAbilityPriorities();
             this.currentHero = this.selectedHeroes[0];
             this.checkIfLoadedSavedScript();
+            this.saveAbilities();
         });
     }
 
