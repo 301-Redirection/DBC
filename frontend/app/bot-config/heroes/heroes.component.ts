@@ -37,6 +37,8 @@ export class HeroesComponent implements OnInit {
     allPools = [];
     partitioned = false;
 
+    clickTimeoutId: number;
+
     optionsSource: SortablejsOptions = {
         group: {
             name: 'clone-group',
@@ -123,7 +125,7 @@ export class HeroesComponent implements OnInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
@@ -162,12 +164,11 @@ export class HeroesComponent implements OnInit {
         }
     }
 
-    setSelectedHeroesList(): void {
-        this.selectedHeroesList = [];
+    setSelectedHeroesList(heroes): void {
         this.pools.forEach((pool) => {
             pool.forEach((hero) => {
-                if (this.selectedHeroesList.indexOf(hero) === -1) {
-                    this.selectedHeroesList.push(hero);
+                if (heroes.indexOf(hero) === -1) {
+                    heroes.push(hero);
                 }
             });
         });
@@ -179,11 +180,13 @@ export class HeroesComponent implements OnInit {
     /************************/
 
     moveSelectedHero(hero: any): void {
+        clearTimeout(this.clickTimeoutId);
+        this.clickTimeoutId = 0;
         if (!this.checkHeroExists(hero)) {
             this.pools[this.selectedPool].push(hero);
             document.getElementById(`poolLink${this.selectedPool}`).click();
             this.openSelectedTab();
-            this.setSelectedHeroesList();
+            this.setSelectedHeroesList(this.selectedHeroesList);
         }
     }
 
@@ -194,7 +197,7 @@ export class HeroesComponent implements OnInit {
             this.unhighlightPool(pool);
             document.getElementById(`poolLink${this.selectedPool}`).click();
             this.openSelectedTab();
-            this.setSelectedHeroesList();
+            this.setSelectedHeroesList(this.selectedHeroesList);
         }
     }
 
@@ -317,7 +320,8 @@ export class HeroesComponent implements OnInit {
     resetPools(): void {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
-        this.setSelectedHeroesList();
+        this.selectedHeroesList = []
+        this.setSelectedHeroesList(this.selectedHeroesList);
     }
 
     triggerResetPools(): void {
@@ -383,7 +387,7 @@ export class HeroesComponent implements OnInit {
                     this.openSelectedTab();
                 }
             });
-
+            
             $('body').click((event) => {
                 const idInstances = ['selectedFrameHeader', 'cardHeaderText', 'selectedButtons'];
                 const classExceptions = [
@@ -411,8 +415,10 @@ export class HeroesComponent implements OnInit {
                     this.openSelectedTab();
                 } else if (!classExceptions.includes(target.className) &&
                     !idExceptions.includes(target.id) &&
-                    !idExceptions.includes(target.parentElement.id)) {
-                    this.closeSelectedTab();
+                    !idExceptions.includes(target.parentElement.id) && this.clickTimeoutId === 0) {
+                    this.clickTimeoutId = setTimeout(() => {
+                        this.closeSelectedTab();
+                    }, 290);
                 }
             });
         });
