@@ -64,7 +64,7 @@
 </div>
 
 <!-- Hero Item -->
-<div class="hero-item" [style.backgroundImage]="'url('+hero.image+')'">
+<div class="hero-item" [style.backgroundImage]="'url('+hero.image+')'" [class.selected]="hero === currentHero">
     <a *ngIf="!isSelectedHero" tabindex="0" data-selected="false" [attr.data-hero-id]="hero.id" class="popover-zone" role="button" data-toggle="popover" [attr.data-trigger]="isHover == true ? 'hover' : 'focus'">
         <div class="hero-name">
             {{ hero.niceName }}
