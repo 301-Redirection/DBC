@@ -70,7 +70,6 @@ export class BotConfigDataService {
     // Team desires
     public setTeamDesires(teamDesires: any): void {
         this.config.desires = this.scaleTeamDesires(teamDesires, true);
-        // this.config.desires = teamDesires;
         console.log(this.config.desires);
     }
 
@@ -117,9 +116,13 @@ export class BotConfigDataService {
                     conditions.forEach((element) => {
                         const conditional = element['conditional'];
                         if (scaleDown) {
-                            element['conditional'] = conditional / 100;
+                            if (conditional > 1) {
+                                element['conditional'] = conditional / 100;
+                            }
                         } else {
-                            element['conditional'] = conditional * 100;
+                            if (conditional < 1) {
+                                element['conditional'] = conditional * 100;
+                            }
                         }
                     });
                     condition['conditions'] = conditions;
@@ -127,9 +130,13 @@ export class BotConfigDataService {
                 const value = condition['value'];
                 if (value != null) {
                     if (scaleDown) {
-                        condition['value'] = value / 100;
+                        if (value > 1) {
+                            condition['value'] = value / 100;
+                        }
                     } else {
-                        condition['value'] = value * 100;
+                        if (value < 1) {
+                            condition['value'] = value * 100;
+                        }
                     }
                 }
             });
@@ -138,9 +145,13 @@ export class BotConfigDataService {
         const initialValue = desires['initialValue'];
         if (initialValue !== 0) {
             if (scaleDown) {
-                desires['initialValue'] = initialValue / 100;
+                if (initialValue > 1) {
+                    desires['initialValue'] = initialValue / 100;
+                }
             } else {
-                desires['initialValue'] = initialValue * 100;
+                if (initialValue < 1) {
+                    desires['initialValue'] = initialValue * 100;
+                }
             }
         }
         return desires;
