@@ -12,12 +12,9 @@ import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { HeroItemStubComponent } from '../../testing/hero-item-stub';
 import { By } from '@angular/platform-browser';
 
-// declare var $: any;
-// declare var jQuery: any;
-
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
-    let heroItemComponent: HeroItemStubComponent;
+    // let heroItemComponent: HeroItemStubComponent;
     let fixture: ComponentFixture<HeroesComponent>;
 
     beforeEach(async(() => {
@@ -126,35 +123,34 @@ describe('HeroesComponent', () => {
         expect(component.allHeroes[0]).toEqual(component.selectedHeroesList[0]);
     });
 
-    it('should remove hero', () => {
-        component.ngOnInit();
+    // it('should remove hero', () => {
+    //     component.ngOnInit();
 
-        // Add hero item
+    //     // Add hero item
+    //     fixture.debugElement.query(By.css('.hero-item'))
+    //         .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+    //     fixture.detectChanges();
+
+    //     heroItemComponent = fixture.debugElement
+    //         .query(By.directive(HeroItemStubComponent)).componentInstance;
+    //     heroItemComponent.ngOnInit();
+
+    //     // Remove hero item
+    //     fixture.debugElement.query(By.css('.removable-hero')).nativeElement.click();
+    //     // heroItemComponent.removeHero(this.selectedHeroesList[0], 0);
+    //     fixture.detectChanges();
+    //     console.log(component.selectedHeroesList[0]);
+    //     // expect(component.selectedHeroesList).toEqual([]);
+    // });
+
+    it('should clear heroes on reset', () => {
+        component.ngOnInit();
         fixture.debugElement.query(By.css('.hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
-        console.log(component.selectedHeroesList[0]);
-
-        heroItemComponent = fixture.debugElement
-            .query(By.directive(HeroItemStubComponent)).componentInstance;
-        heroItemComponent.ngOnInit();
-
-        // Remove hero item
-        fixture.debugElement.query(By.css('.removable-hero')).nativeElement.click();
-        // heroItemComponent.removeHero(this.selectedHeroesList[0], 0);
-        fixture.detectChanges();
-        console.log(component.selectedHeroesList[0]);
-        // expect(component.selectedHeroesList).toEqual([]);
+        spyOn(window, 'confirm').and.returnValue(true);
+        fixture.debugElement.query(By.css('#resetPoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        expect(component.selectedHeroesList).toEqual([]);
     });
-
-    // it('should clear heroes on reset', () => {
-    //     component.ngOnInit();
-    //     fixture.debugElement.query(By.css('#resetPoolsBtn'))
-    //         .triggerEventHandler('click', new MouseEvent('click'));
-    //     let enterKey = jQuery.Event("keypress");
-    //     enterKey.keyCode = 13;
-    //     $("body").trigger(enterKey);
-    //     fixture.detectChanges();
-    //     expect(component.selectedHeroesList).toEqual([]);
-    // });
 });
