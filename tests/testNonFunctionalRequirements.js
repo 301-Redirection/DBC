@@ -21,14 +21,12 @@ const botId = 'test';
 
 let start = process.hrtime();
 
-
 function elapsedTime() {
     // 3 decimal places
     const precision = 3;
     // divide by a million to get nano seconds to milliseconds
     const elapsed = process.hrtime(start)[1] / 1000000;
     const fixedPrecisionTimeElapsed = elapsed.toFixed(precision);
-    // console.log(`${startTime} s, ${fixedPrecisionTimeElapsed} ms - ${statement}`);
     start = process.hrtime(); // reset the timer
     return fixedPrecisionTimeElapsed;
 }

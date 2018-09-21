@@ -14,7 +14,6 @@ const path = require('path');
 const IS_WIN = process.platform === 'win32';
 const { spawnSync } = require('child_process');
 
-
 let isTest;
 if (process.argv.length >= 3) {
     isTest = process.argv[2] === 'test';
@@ -100,7 +99,6 @@ function editDistance(i1, i2) {
     return costs[s2.length];
 }
 
-
 const sequelize = new Sequelize(
     '',
     config.test.username,
@@ -111,7 +109,6 @@ const sequelize = new Sequelize(
         dialectOptions: { multipleStatements: true },
     }
 );
-
 
 let items = [];
 const { staticURLS } = config.app;
@@ -129,7 +126,6 @@ async function doHeroes() {
     if (!fs.existsSync('backend/static/images/heroes/')) {
         fs.mkdirSync('backend/static/images/heroes/');
     }
-    // console.log(body);
     const heroData = body.herodata;
     const heroes = {};
     const heroAbilityBody = await downloadPage(staticURLS.heroAbilityReference);
@@ -178,7 +174,6 @@ async function doHeroes() {
         let abilityNum = 0;
         const row = $('.overviewAbilityRow');
         for (let j = 0; j < row.length; j += 1) {
-            // console.log(row.get(i));
             const $elem = $(row.get(j));
             const text = $elem.find('.overviewAbilityRowDescription h2').text();
             const ability = text.replace(/(\(.*\))/g, '').trim();
@@ -224,7 +219,6 @@ async function doHeroes() {
         await Promise.all(results); // eslint-disable-line no-await-in-loop
 
         if (isTest) {
-            // console.log(`${Math.round(counter / 6 * 10000) / 100}%`);
             if (counter > 2) {
                 break;
             }
@@ -233,7 +227,6 @@ async function doHeroes() {
         }
         counter += 1;
     }
-    // console.log("\n\n\n\n\n\n done and stuff");
     sequelize.close();
 }
 
@@ -332,12 +325,10 @@ async function getItemsAndHeroes() {
         newItems[itemValues[i].id] = itemValues[i];
     }
     items = newItems;
-    // console.log(items);
     const results = [];
     for (let i = 0; i < items.length; i += 1) {
         const item = items[i];
         if (item) {
-            // console.log(item);
             results.push(models.Item.create({
                 id: item.id,
                 name: item.name,

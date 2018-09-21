@@ -224,7 +224,6 @@ describe('Lua Code Manager tests:\n', () => {
         });
 
         it('test generation from empty/default config object', (done) => {
-            // console.log(exampleObjectDefault);
             writeScripts(exampleObjectDefault, response, id, botId);
             let filePath = path.join(pathToTempFile, 'team_desires.lua');
             let luaOutput = fs.readFileSync(filePath).toString();
