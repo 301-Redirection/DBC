@@ -1,8 +1,8 @@
 const path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../backend');
 require('module').Module._initPaths();
-const { codeGenerator } = require('controllers/LuaCodeTemplateManager.js');
-const { writeScripts } = require('controllers/generateScript.js');
+const { codeGenerator } = require('controllers/codeGeneration/LuaCodeTemplateManager.js');
+const { writeScripts } = require('controllers/codeGeneration/generateScript.js');
 const fs = require('fs');
 const unzip = require('unzip');
 const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
@@ -224,7 +224,6 @@ describe('Lua Code Manager tests:\n', () => {
         });
 
         it('test generation from empty/default config object', (done) => {
-            // console.log(exampleObjectDefault);
             writeScripts(exampleObjectDefault, response, id, botId);
             let filePath = path.join(pathToTempFile, 'team_desires.lua');
             let luaOutput = fs.readFileSync(filePath).toString();
@@ -260,8 +259,6 @@ describe('Lua Code Manager tests:\n', () => {
             const luaOutput = fs.readFileSync(filePath).toString();
             const expectedFilePath = path.join(pathToExpectedOutput, 'complexOne.lua');
             const expectedOutput = fs.readFileSync(expectedFilePath).toString();
-            // console.log("expectedOutput");
-            // console.log(expectedOutput);
             expect(luaOutput).toBe(expectedOutput);
             done();
         });

@@ -1,36 +1,41 @@
-import { Input, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
-import { Title, By } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BotConfigComponent } from './bot-config.component';
 import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRouteStub } from '../testing/activated-route-stub';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
-@Component({ selector: 'configurator', template: '' })
-class ConfiguratorComponent {
-    @Input() condition;
-}
-
 @Component({ selector: 'app-team-desires', template: '' })
-class TeamDesiresComponent {}
+class TeamDesiresComponent {reset() { }}
 
 @Component({ selector: 'app-heroes', template: '' })
-class HeroesComponent {}
+class HeroesComponent {
+    reset() { }
+    @Input('selected') selected: string;
+}
 
 @Component({ selector: 'app-abilities', template: '' })
-class AbilitiesComponent {}
+class AbilitiesComponent {reset() { }}
 
 @Component({ selector: 'app-items', template: '' })
-class ItemsComponent {}
+class ItemsComponent {
+    reset() { }
+    @Input('selected') selected: string;
+}
 
 describe('BotConfigComponent', () => {
     let component: BotConfigComponent;
     let fixture: ComponentFixture<BotConfigComponent>;
     let activatedRoute: ActivatedRouteStub;
     beforeEach(async(() => {
+        this.teamDesiresComponent = jasmine.createSpyObj('TeamDesiresComponent', ['reset']);
+        this.heroesComponent = jasmine.createSpyObj('HeroesComponent', ['reset']);
+        this.abilitiesComponent = jasmine.createSpyObj('AbilitiesComponent', ['reset']);
+        this.itemsComponent = jasmine.createSpyObj('ItemsComponent', ['reset']);
 
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
             'getSpecificBot',
@@ -68,10 +73,10 @@ describe('BotConfigComponent', () => {
 
         const botId = {};
 
-        const getSpecificBotSpy = apiConnectServiceStub.getSpecificBot.and
+        apiConnectServiceStub.getSpecificBot.and
             .returnValue(Observable.of(specificBot));
 
-        const updateBotSpy = apiConnectServiceStub.updateBot.and
+        apiConnectServiceStub.updateBot.and
             .returnValue(Observable.of(botId));
 
         TestBed.configureTestingModule({
@@ -95,9 +100,12 @@ describe('BotConfigComponent', () => {
     }));
 
     beforeEach(() => {
-        activatedRoute.setParamMap({ dashboard: true });
         fixture = TestBed.createComponent(BotConfigComponent);
         component = fixture.componentInstance;
+        component.teamDesiresComponent = this.teamDesiresComponent;
+        component.abilitiesComponent = this.abilitiesComponent;
+        component.itemsComponent = this.itemsComponent;
+        component.heroesComponent = this.heroesComponent;
         fixture.detectChanges();
     });
 

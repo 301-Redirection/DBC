@@ -31,6 +31,7 @@ app.use(sassMiddleware({
     sourceMap: true,
 }));
 
+// TODO: use a better secret...
 app.use(session({
     secret: 'it\'s really a secret',
     resave: true,
@@ -60,8 +61,10 @@ app.use((err, req, res) => {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    res.status(err.status || 500).json({
+        message: err.message,
+        error: err,
+    });
 });
 
 module.exports = app;

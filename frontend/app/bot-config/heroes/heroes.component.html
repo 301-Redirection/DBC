@@ -1,16 +1,16 @@
 <div id="heroComponent" class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
+        <div class="col-12 config-description">
             Click & drag or double-click to select your preferred heroes
-        </div>    
+        </div>
     </div>
 
     <!-- Hero list -->
-    <div class="frame row mb-5">        
+    <div class="frame row mb-5">
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
                 <h5 id="heroesHeader">HEROES</h5>
-                <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002;">
+                <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002; Search">
             </div>
             <div class="bot-manage-card-body card-body">
                 <div class="class-title">
@@ -19,13 +19,7 @@
                 </div>
                 
                 <div class="drop-zone text-center" [sortablejs]="strengthHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div [id]="hero.id" class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
-                            <div class="hero-name">
-                                {{ hero.niceName }}
-                            </div>                        
-                        </div>
-                    </div>
+                    <app-hero-item *ngFor="let hero of strengthHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false" [isHover]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -34,13 +28,7 @@
                     <h6>Agility</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="agilityHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div [id]="hero.id" class="popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
-                            <div class="hero-name">
-                                {{ hero.niceName }}
-                            </div>
-                        </div>                        
-                    </div>
+                    <app-hero-item *ngFor="let hero of agilityHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false" [isHover]="false"></app-hero-item>
                 </div>
                 <br><br>
 
@@ -49,20 +37,14 @@
                     <h6>Intelligence</h6>
                 </div>
                 <div class="drop-zone text-center" [sortablejs]="intelligenceHeroes" [sortablejsOptions]="optionsSource">
-                    <div class="hero-item" *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="setSelectedHero(hero)" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div [id]="hero.id" class="popover-zone" role="button" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
-                            <div class="hero-name">
-                                {{ hero.niceName }}
-                            </div>
-                        </div>
-                    </div>
+                    <app-hero-item *ngFor="let hero of intelligenceHeroes | filter : heroSearch" (dblclick)="moveSelectedHero(hero)" (drag)="$event.preventDefault()" (dragstart)="setSelectedHero(hero)" [hero]="hero" [isSelectedHero]="false" [isHover]="false"></app-hero-item>
                 </div>
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 
     <!-- Pool table -->
-    <div sortablejs id="selectedFrame" class="frame row mb-5">
+    <div sortablejs id="selectedFrame" class="frame row mb-1">
         <div class="card bot-manage-card-body">
             <div id="selectedFrameHeader" class="bot-manage-card-header card-header">
                 <h5 id="cardHeaderText">SELECTED</h5>&nbsp;&nbsp;
@@ -79,96 +61,18 @@
                 </div>
             </div>
             <ul id="poolTabs" class="nav nav-tabs">
-                <li class="nav-item" *ngFor="let pool of getPools(); let i = index;">                    
+                <li class="nav-item" *ngFor="let pool of getPools(); let i = index;">
                     <a sortablejs [id]="'poolLink'+i" class="nav-link pool-nav-link" [ngClass]="selectedPool == i ? 'active' : ''" (click)="setSelectedPool(i)" (dragenter)="highlightPool(i)" (dragleave)="unhighlightPool(i)" (drop)="addHero(selectedHero, i)">
                         Pool {{ i + 1 }}
                         <div [id]="'poolPlusIconCont'+i" class="pool-plus-icon-cont">
                             <i class="pool-plus-icon fas fa-plus"></i>
                         </div>
-                    </a>                    
+                    </a>
                 </li>
             </ul>
-            <div class="card-body selected-card-body bot-manage-card-body">
+            <div id="heroDropZone" class="card-body selected-card-body bot-manage-card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
-                    <div class="card hero-item" *ngFor="let hero of pools[selectedPool]" [style.backgroundImage]="'url('+hero.image+')'">
-                        <div [id]="'s'+hero.id" class="popover-zone selected-popover-zone" (mouseover)="triggerPopover($event.currentTarget, hero)" data-toggle="popover">
-                            <div class="card-header" (click)="removeHero(hero, pools[selectedPool])">
-                                <button id="removeIcon" class="button button-cancel btn-sm mx-2">
-                                    <i id="timesIcon" class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="hero-name">
-                                    {{ hero.niceName }}
-                                </div>                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Hero popover -->
-<div class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" *ngFor="let hero of allHeroes">
-            <div [id]="hero.programName">
-                <h5 class="popover-item" style="text-shadow:none;">
-                    <img class="popover-item" src="{{ hero.attributeImage }}" height="25">
-                    {{ hero.niceName }}
-                </h5>
-                <p class="text-center">
-                    <b class="popover-item">{{ hero.roles }}</b>
-                </p>
-                <div class="text-center">
-                    <figure class="text-center d-inline-block">
-                        <img class="popover-item" src="{{ strURL }}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b class="popover-item">{{ hero.baseStrength }}</b> + {{ hero.baseStrengthGain }}
-                        </figcaption>
-                    </figure>&nbsp;&nbsp;&nbsp;
-                    <figure class="text-center d-inline-block">
-                        <img class="popover-item" src="{{ agiURL }}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b class="popover-item">{{ hero.baseAgility }}</b> + {{ hero.baseAgilityGain }}
-                        </figcaption>
-                    </figure>&nbsp;&nbsp;&nbsp;
-                    <figure class="text-center d-inline-block">
-                        <img class="popover-item" src="{{ intURL }}" height="25">
-                        <figcaption class="figure-caption text-center">
-                            <b class="popover-item">{{ hero.baseIntelligence }}</b> + {{ hero.baseIntelligenceGain }}
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="hero-attributes">
-                    <b class="popover-item">Armor:</b>&nbsp;{{ hero.armor }}<br>
-                    <b class="popover-item">Attack Damage (Max):</b>&nbsp;{{ hero.attackDamageMax }}<br>
-                    <b class="popover-item">Attack Damage (Min):</b>&nbsp;{{ hero.attackDamageMin }}<br>
-                    <b class="popover-item">Movement Speed:</b>&nbsp;{{ hero.moveSpeed }}
-                </div>
-                <br>
-                <div class="text-center">
-                    <img class="popover-item" src="{{ hero.qImage }}" alt="" height="50">&nbsp;
-                    <img class="popover-item" src="{{ hero.wImage }}" alt="" height="50">&nbsp;
-                    <img class="popover-item" src="{{ hero.eImage }}" alt="" height="50">&nbsp;
-                    <img class="popover-item" src="{{ hero.rImage }}" alt="" height="50">
-                </div>                
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Heroes popover template -->
-<div class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div id="heroesPopoverTemplate">
-                <div class="popover popover-dark" role="tooltip">
-                    <div class="arrow"></div>
-                    <h3 class="popover-header"></h3>
-                    <div class="popover-body"></div>
+                    <app-hero-item *ngFor="let hero of pools[selectedPool]" [hero]="hero" [isSelectedHero]="true" [pool]="pools[selectedPool]" (removeHeroEmitter)="onRemoveHero($event)" [isHover]="false"></app-hero-item>
                 </div>
             </div>
         </div>

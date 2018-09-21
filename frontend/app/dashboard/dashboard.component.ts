@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ApiConnectService } from '../services/api-connect.service';
-import { FormsModule, ReactiveFormsModule , FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
 // Import JQuery
@@ -17,6 +15,7 @@ export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
+    isRetrieving: boolean;
 
     constructor(private t: Title, private api: ApiConnectService) {
         this.t.setTitle(this.pageTitle);
@@ -25,17 +24,23 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
+        this.isRetrieving = true;
     }
 
     getUserBotScripts () {
         this.api.recentBots().subscribe(
             (data) => {
-                this.bots = data.botConfigs;
-                for (const i in this.bots) {
-                    const bot = this.bots[i];
+                this.isRetrieving = true;
+                let tempBots = [];
+                tempBots = data.botConfigs;
+                for (const i in tempBots) {
+                    const bot = tempBots[i];
                     const date = moment(bot.updatedAt).format(DATE_FORMAT);
                     bot.updatedAt = date;
                 }
+                this.bots = tempBots;
+                this.isRetrieving = false;
+                console.log(this.bots);
             },
             () => { },
         );
@@ -56,8 +61,9 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteBotScript (botScriptID: number) {
-        const response = this.api.removeBot(botScriptID).subscribe(
+        this.api.removeBot(botScriptID).subscribe(
             (data) => {
+                // this.removeScriptFromBots(botScriptID);
                 console.log(data);
             },
             (error) => {
@@ -68,6 +74,21 @@ export class DashboardComponent implements OnInit {
         this.botID = -1;
     }
 
+    removeScriptFromBots(botScriptID) {
+        let index = -1;
+        let found = false;
+        for (let i = 0 ; i < this.bots.length && !found ; i += 1) {
+            if (this.bots[i]['id'] === botScriptID) {
+                found = true;
+                index = i;
+            }
+        }
+
+        if (index !== -1) {
+            this.bots.splice(index, 1);
+        }
+    }
+
     showDeleteModal(id) {
         $('#deleteConfirmation').modal('show');
         this.botID = id;
@@ -75,7 +96,7 @@ export class DashboardComponent implements OnInit {
 
     sortBotScripts(value) {
         if (value === 1) {
-            this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
+            this.bots.sort((a, b) => a.updatedAt > b.updatedAt);
         } else {
             this.bots.sort((a, b) => a.updatedAt < b.updatedAt);
         }

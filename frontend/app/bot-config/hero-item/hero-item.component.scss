@@ -1,0 +1,18 @@
+/* Global Variables */
+@import '../../../variables';
+
+#removeIcon {
+    float: right;
+    z-index: 2;
+    text-shadow: $text-shadow;
+    background-color: $btn-cancel-border-color;
+    border-color: $btn-cancel-border-color-hover;
+    margin-right: 0 !important;
+    padding: 1px 6px !important;
+    height: 26px;
+}
+
+#removeIcon:hover {
+    background-color: transparent;
+    border-color: $btn-cancel-border-color;
+}

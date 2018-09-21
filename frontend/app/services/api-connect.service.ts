@@ -3,14 +3,12 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
-import { Router } from '@angular/router';
 import { API_URL } from './api-url-config';
 
 @Injectable()
 export class ApiConnectService {
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient) {
         this.http = http;
-        this.router = router;
     }
 
     private get authHeader(): string {
@@ -69,10 +67,16 @@ export class ApiConnectService {
             .pipe(catchError(this.handleError));
     }
     public removeBot(botScriptID: number) {
+        const parameters = {
+            botID: botScriptID,
+        };
+        const httpHeaders = {
+            headers: new HttpHeaders({
+                Authorization: this.authHeader,
+            }),
+        };
         return this.http
-            .get(`${API_URL}/bots/delete/${botScriptID}`, {
-                headers: new HttpHeaders().set('Authorization', this.authHeader),
-            })
+            .post(`${API_URL}/bots/delete`, parameters, httpHeaders)
             .pipe(catchError(this.handleError));
     }
     // Handle errors if any

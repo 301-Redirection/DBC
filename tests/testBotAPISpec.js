@@ -43,7 +43,7 @@ describe('Bot API testing', () => {
                 dialectOptions: { multipleStatements: true },
             }
         );
-        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database};  CREATE DATABASE ${config.test.database};`)
+        sequelize.query(`DROP DATABASE IF EXISTS ${config.test.database}; CREATE DATABASE ${config.test.database};`)
             .then(() => {
                 const otherPath = path.join('node_modules', '.bin', IS_WIN ? 'sequelize.cmd' : 'sequelize');
                 const child = spawnSync(otherPath, ['db:migrate'], { stdio: [0, 1, 2] });
@@ -62,6 +62,9 @@ describe('Bot API testing', () => {
                         // clear all entries from table
                         sequelize.query('DELETE FROM BotConfigs');
                         done();
+                    })
+                    .catch((err) => {
+                        console.log(err);
                     });
             });
     });
@@ -119,7 +122,7 @@ describe('Bot API testing', () => {
                 done();
             });
         });
-        it('--Initial All', (done) => {
+        it('-- Initial All', (done) => {
             const options = {
                 url: 'http://localhost:3000/bots/all',
             };
@@ -161,6 +164,7 @@ describe('Bot API testing', () => {
                 });
             });
             req.on('error', (e) => {
+                console.log(e);
                 throw e;
             });
             req.write(postData);

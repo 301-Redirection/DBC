@@ -1,7 +1,7 @@
 <div class="container-fluid container-fluid-custom">
     <div class="row">
-        <div class="col-12" id="heroesTitle">
-            <!-- <h3>ABILITY CONFIGURATION</h3><br>  -->
+        <div class="col-12 config-description">
+            <!-- <h3>ABILITY CONFIGURATION</h3><br> -->
             Select a hero to customize their ability level order.
         </div>
     </div>
@@ -13,11 +13,7 @@
                 <h5>CHOOSE A HERO</h5>
             </div>
             <div class="card-body bot-manage-card-body">
-                <div class="hero-item" *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [attr.id]="i"  [style.backgroundImage]="'url('+hero.image+')'">
-                    <div class="hero-name">
-                        {{ hero.name }}
-                    </div>
-                </div>
+                <app-hero-item *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [hero]="hero" [currentHero]="currentHero" [isSelectedHero]="false" [isHover]="true"></app-hero-item>
                 <div *ngIf="selectedHeroes.length == 0">
                     <h6 class="text-center">No Selected Heroes</h6>
                 </div>
@@ -26,7 +22,7 @@
     </div>
 
     <!-- Ability Selector -->
-    <div class="row frame mb-5">
+    <div class="row frame mb-1">
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
                 <h5>Ability Level Up Guide</h5>
@@ -71,7 +67,7 @@
                             <tr *ngFor="let ability of currentHero.abilityPriorities; let abilityNum = index" [attr.data-index]="abilityNum">
                                 <td *ngIf="ability.type == 'T'; else wrong">
                                     <button type="button" class="btn-talent" data-toggle="modal" data-target="#talentModal">
-                                        <img  class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
+                                        <img class="img ability-roster-image" src="{{ ability.src }}" (mouseover)="triggerPopover($event.currentTarget, ability)" data-toggle="tooltip">
                                     </button>
                                 </td>
                                 <td *ngIf="ability.type != 'T'; else wrong">
@@ -130,7 +126,7 @@
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="button button-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

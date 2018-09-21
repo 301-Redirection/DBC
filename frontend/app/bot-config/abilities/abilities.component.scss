@@ -63,11 +63,12 @@
     text-align: center !important;
     margin-left: 2%;
     margin-right: 2%;
-    display: inline-block;    
+    display: inline-block;
 }
 
 .selector {
     text-align: center;
+    margin-bottom: 5px;
 }
 .buttons {
     display: inline-block;
@@ -141,7 +142,7 @@
 }
 
 .button-chevron { 
-    color: $btn-edit-border-color;
+    color: $btn-edit-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: 2px solid $btn-edit-border-color;
@@ -156,27 +157,4 @@
     margin: 0;
     background-color: $dark-grey-2;
     color: $light-grey;
-}
-
-/* -- Popover styles -- */
-.popover-zone {
-    width: 100%;
-    height: 100%;    
-}
-
-.popover-dark {
-    background-color: $dark-grey;
-}
-
-.popover-body {    
-    color: $white;
-}
-
-.popover-dark .arrow:after {
-    border-right-color: $dark-grey;
-    border-left-color: $dark-grey;
-}
-
-.ability-item:nth-child(4n).btn-left {
-    size: 500px;
 }
