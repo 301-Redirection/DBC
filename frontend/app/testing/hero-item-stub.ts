@@ -16,7 +16,7 @@ export class HeroItemStubComponent {
 
     currentHero: any;
     selectedPool: number;
-    defualtHero = {
+    defaultHero = {
         id: 1,
         programName: 'antimage',
         niceName: 'Anti-Mage',
@@ -71,7 +71,7 @@ export class HeroItemStubComponent {
     };
 
     ngOnInit() {
-        this.currentHero = this.defualtHero;
+        this.currentHero = this.defaultHero;
         this.selectedPool = 0;
     }
 

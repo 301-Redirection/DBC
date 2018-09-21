@@ -117,7 +117,7 @@ describe('HeroesComponent', () => {
 
     it('should add hero on double click', (done) => {
         component.ngOnInit();
-        fixture.debugElement.query(By.css('.hero-item'))
+        fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
         expect(component.allHeroes[0]).toEqual(component.selectedHeroesList[0]);
@@ -128,7 +128,7 @@ describe('HeroesComponent', () => {
         component.ngOnInit();
 
         // Add hero item
-        fixture.debugElement.query(By.css('.hero-item'))
+        fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
 
@@ -149,7 +149,7 @@ describe('HeroesComponent', () => {
 
     it('should clear heroes on reset', (done) => {
         component.ngOnInit();
-        fixture.debugElement.query(By.css('.hero-item'))
+        fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
         spyOn(window, 'confirm').and.returnValue(true);
