@@ -68,10 +68,22 @@ export class TeamDesiresComponent implements OnInit {
 
     ngOnInit() {
         this.config = this.botConfigData.getDefaultConfiguration();
+        this.checkIfLoadedSavedScript();
         this.saveTeamDesires();
         this.togglePanel();
     }
+    checkIfLoadedSavedScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedDesires();
+            }
+        });
+    }
 
+    // To be used to retrieve items saved
+    getSavedDesires() {
+        this.config.desires = this.botConfigData.getTeamDesires();
+    }
     saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
     }

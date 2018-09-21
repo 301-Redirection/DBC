@@ -76,7 +76,7 @@ class HeroCodeGenerator {
         if (heroes.partitioned === false) {
             const heroesArr = [];
             for (let i = 0; i < heroes.pool.length; i += 1) {
-                heroesArr.push(heroes.pool[i].name);
+                heroesArr.push(`npc_dota_hero_${heroes.pool[i].name}`);
             }
             for (let i = 0; i < config.lua.poolNames.length; i += 1) {
                 final.push('');
@@ -91,7 +91,7 @@ class HeroCodeGenerator {
             }
             for (let i = 0; i < heroes.pool.length; i += 1) {
                 const hero = heroes.pool[i];
-                tempArr[(hero.position - 1) % numPools].push(hero.name);
+                tempArr[(hero.position - 1) % numPools].push(`npc_dota_hero_${hero.name}`);
             }
             for (let i = 0; i < numPools; i += 1) {
                 final[i] = LuaCodeGenerator

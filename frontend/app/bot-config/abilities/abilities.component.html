@@ -13,7 +13,7 @@
                 <h5>CHOOSE A HERO</h5>
             </div>
             <div class="card-body bot-manage-card-body">
-                <app-hero-item *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [hero]="hero" [isSelectedHero]="false" [isHover]="true"></app-hero-item>
+                <app-hero-item *ngFor="let hero of selectedHeroes; let i=index" (click)="onSelect(hero)" [class.selected]="hero === currentHero" [hero]="hero" [currentHero]="currentHero" [isSelectedHero]="false" [isHover]="true"></app-hero-item>
                 <div *ngIf="selectedHeroes.length == 0">
                     <h6 class="text-center">No Selected Heroes</h6>
                 </div>
@@ -126,7 +126,7 @@
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="button button-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
