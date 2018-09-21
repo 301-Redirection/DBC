@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
                 }
                 this.bots = tempBots;
                 this.isRetrieving = false;
+                console.log(this.bots);
             },
             () => { },
         );
@@ -62,6 +63,7 @@ export class DashboardComponent implements OnInit {
     deleteBotScript (botScriptID: number) {
         this.api.removeBot(botScriptID).subscribe(
             (data) => {
+                // this.removeScriptFromBots(botScriptID);
                 console.log(data);
             },
             (error) => {
@@ -70,6 +72,21 @@ export class DashboardComponent implements OnInit {
         );
         this.getUserBotScripts();
         this.botID = -1;
+    }
+
+    removeScriptFromBots(botScriptID) {
+        let index = -1;
+        let found = false;
+        for (let i = 0 ; i < this.bots.length && !found ; i += 1) {
+            if (this.bots[i]['id'] === botScriptID) {
+                found = true;
+                index = i;
+            }
+        }
+
+        if (index !== -1) {
+            this.bots.splice(index, 1);
+        }
     }
 
     showDeleteModal(id) {

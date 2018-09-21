@@ -12,6 +12,7 @@ import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 @Component({
     selector: 'app-bot-config',
@@ -39,6 +40,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
+        private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
@@ -49,6 +51,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.botConfigData.reset();
+        this.checkLoadedScript();
         this.selectedTab = 'info';
     }
 
@@ -65,8 +69,9 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-                configuration: { test: 'true' },
+                configuration: this.botConfigData.getConfig(),
             };
+            console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.generateURL =
@@ -81,6 +86,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         }
     }
 
+    log(): void {
+        console.log(this.botConfigData.getConfig());
+    }
+
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
             alert('Please enter your bot script name and description');
@@ -89,14 +98,27 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         return true;
     }
 
+    checkLoadedScript() {
+        this.route.paramMap.subscribe((paramMap) => {
+            if (paramMap['params']['botScriptID'] === undefined) {
+                this.reset();
+            }
+        });
+    }
+
     reset () {
+        this.name = '';
+        this.description = '';
+        this.teamDesiresComponent.reset();
+        this.heroesComponent.reset();
+        this.abilitiesComponent.reset();
+        this.itemsComponent.reset();
+        this.botConfigData.reset();
+    }
+
+    confirmReset() {
         if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
-            this.name = '';
-            this.description = '';
-            this.teamDesiresComponent.reset();
-            this.heroesComponent.reset();
-            this.abilitiesComponent.reset();
-            this.itemsComponent.reset();
+            this.reset();
         }
     }
 
@@ -109,8 +131,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 if (res != null) {
                     this.id = res.id;
                     this.name = res.name;
-                    // this.configuration = JSON.parse(res.configuration);
                     this.description = res.description;
+                    this.botConfigData.setConfig(JSON.parse(res.configuration));
                 }
             },
             (error) => {

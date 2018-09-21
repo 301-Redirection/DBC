@@ -90,12 +90,18 @@ const LuaCodeTemplateManager = function () {
      * This generates a specific hero's item purchase file
      */
     this.generateItemFile = function (hero, itemArray) {
-        const filename = `item_purchase_${hero}.lua`;
-        const content = ItemCodeGenerator.generateItemFileContent(hero, itemArray);
-        const pathToFile = path.join(this.pathToStoreCode, filename);
-        fs.writeFileSync(pathToFile, content, (err) => {
-            if (err) throw err;
-        });
+        try {
+            const filename = `item_purchase_${hero}.lua`;
+            const content = ItemCodeGenerator.generateItemFileContent(hero, itemArray);
+            const pathToFile = path.join(this.pathToStoreCode, filename);
+            fs.writeFileSync(pathToFile, content, (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        } catch (err) {
+            throw err;
+        }
     };
 
     /**

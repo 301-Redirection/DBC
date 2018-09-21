@@ -13,6 +13,7 @@ const router = express.Router();
 
 /* will always return a JSON object of at most 5 bots */
 router.get('/recent', jwtCheck, (request, response) => {
+    // console.log('recent hit');
     BotController.getRecentBots(request, response);
 });
 
@@ -37,7 +38,8 @@ router.get('/all', jwtCheck, (request, response) => {
     BotController.getAllBots(request, response);
 });
 
-router.post('/delete/', jwtCheck, [check('botID').exists()], (request, response) => {
+router.post('/delete', jwtCheck, [check('botID').exists()], (request, response) => {
+    // console.log('delete hit');
     BotController.deleteBot(request, response);
 });
 

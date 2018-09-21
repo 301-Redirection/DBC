@@ -70,7 +70,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="card-body selected-card-body bot-manage-card-body">
+            <div id="heroDropZone" class="card-body selected-card-body bot-manage-card-body">
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <app-hero-item *ngFor="let hero of pools[selectedPool]" [hero]="hero" [isSelectedHero]="true" [pool]="pools[selectedPool]" (removeHeroEmitter)="onRemoveHero($event)" [isHover]="false"></app-hero-item>
                 </div>

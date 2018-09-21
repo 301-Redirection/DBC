@@ -13,6 +13,7 @@ export class HeroItemComponent implements OnInit {
     @Input('hero') hero: any;
     @Input('pool') pool: any;
     @Input('isHover') isHover: boolean;
+    @Input('currentHero') currentHero: any;
     @Input('isSelectedHero') isSelectedHero: boolean;
     @Output() removeHeroEmitter = new EventEmitter<any>();
 

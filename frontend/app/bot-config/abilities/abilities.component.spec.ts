@@ -68,12 +68,19 @@ describe('AbilitiesComponent', () => {
             heroes: heroesArray,
         };
 
+        const isLoadedScript = true;
+
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['getAllHeroes']);
         const botConfigDataServiceStub = jasmine
             .createSpyObj('BotConfigDataService', [
                 'getSelectedHeroes',
+                'getSavedHeroAbilities',
+                'getSavedHeroAbilityLevels',
+                'getSavedHeroTalents',
                 'updateHeroAbilities',
                 'updateHeroTalents',
+                'updateHeroAbilityLevels',
+                'notifyIsLoadedScript',
             ]);
 
         apiConnectServiceStub.getAllHeroes.and
@@ -81,6 +88,9 @@ describe('AbilitiesComponent', () => {
 
         botConfigDataServiceStub.getSelectedHeroes.and
             .returnValue(Observable.of(heroesArray));
+
+        botConfigDataServiceStub.notifyIsLoadedScript.and
+            .returnValue(Observable.of(isLoadedScript));
 
         TestBed.configureTestingModule({
             declarations: [
