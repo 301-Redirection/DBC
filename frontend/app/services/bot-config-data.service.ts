@@ -14,7 +14,6 @@ export class BotConfigDataService {
 
     config: ConfigurationFormat;
     private isLoaded = new BehaviorSubject<boolean>(false);
-    private isScaled = false;
 
     constructor() {
         this.reset();
