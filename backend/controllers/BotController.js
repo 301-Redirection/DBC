@@ -43,7 +43,6 @@ class BotController {
     // into what is needed by the code generator
     /*
      static makeSimpleItem(item) {
-        // console.log(item);
         if (item) {
             const newItem = {
                 name: item.name,
@@ -67,15 +66,12 @@ class BotController {
 
     static removeRedundantDataFromObject(configuration) {
         let result = [];
-        // console.log(configuration);
         if (configuration.heroes && configuration.heroes.length) {
             configuration.heroes.forEach((element) => {
                 const ele = element;
                 if (element.items && element.items.length) {
                     result = this.makeSimpleItemArray(element.items);
-                    console.log(result);
                     ele.items = result;
-                    console.log(element.items);
                 }
             });
         }

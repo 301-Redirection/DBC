@@ -101,7 +101,6 @@ class HeroCodeGenerator {
         return final;
     }
 
-
     /**
      * This function generates the code to be placed in hero_selection.lua
      */

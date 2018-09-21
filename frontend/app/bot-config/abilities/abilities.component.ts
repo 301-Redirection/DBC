@@ -346,7 +346,6 @@ export class AbilitiesComponent implements OnInit {
             }
         }
 
-        // console.log('Reversed Abilities', selectedAbilities);
         return selectedAbilities;
     }
 

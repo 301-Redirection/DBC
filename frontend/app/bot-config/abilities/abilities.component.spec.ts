@@ -113,7 +113,6 @@ describe('AbilitiesComponent', () => {
 
     it('should make q be first skill by default', (done) => {
         spyOn(component, 'createArrayFromPrios').and.callThrough();
-        // console.log(component.currentHero);
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();
@@ -235,7 +234,6 @@ describe('AbilitiesComponent', () => {
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
         // note component assumes first hero is selected, hence select 2nd one
-        // console.log(fixture);
         fixture.debugElement.query(By.css('app-hero-item:nth-child(2)')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();

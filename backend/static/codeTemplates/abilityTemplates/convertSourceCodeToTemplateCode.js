@@ -12,14 +12,10 @@ fs.readdir(folder, (err, files) => {
             const i = file.indexOf('.');
             const beforeFullStop = file.substr(0, i);
             const newFileName = `${beforeFullStop}_template.lua`;
-            // console.log(oldFileName);
-            // console.log(newFileName);
             fs.renameSync(oldFileName, newFileName, (error) => {
                 if (error) throw error;
-            // console.log('renamed complete');
             });
             const filename = newFileName;
-            // console.log(filename);
             const fileContents = fs.readFileSync(filename, 'utf8', (error) => {
                 if (error) throw error;
             });
