@@ -1,14 +1,14 @@
 <!-- Start Container Fluid --> 
-<div class="container-fluid container-fluid-custom background main-background ">
+<div id="dashboardContainer" class="container-fluid container-fluid-custom background main-background">
     <div class="frame" id="dashboardTitle">
-        <div *ngIf="manage!==true"> <h1>DASHBOARD</h1> </div>
-        <div *ngIf="manage==true"> <h1>MANAGE</h1> </div>
         <br>
-        <button *ngIf="manage!==true" class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
+        <div><h1>DASHBOARD</h1></div>
+        <br>
+        <button class="button button-new-configuration my-2 my-sm-0" type="button" id="newConfigButton" routerLink="/bot-config">
             <i class="fas fa-plus mr-2"></i>NEW BOT CONFIGURATION
         </button>
     </div>
-
+    <br>
     <div class="frame">
         <div id="accordion" class="card bot-manage-card">
             <!--Heading -->
@@ -49,22 +49,21 @@
                 Contains obtained from DB: 
                 -Title
                 -Description 
-                -Last Edit:  
+                -Last Edit:
                 
                 Buttons:
                 ->Edit
                 ->Generate script
                 ->Delete Script
                 -->
-                <div *ngIf="bots == null || bots.length == 0">
+                <app-loading *ngIf="isRetrieving" class="loading-icon list-group-item manage-list-group-item"></app-loading>
+                <div *ngIf="!isRetrieving && (bots == null || bots.length == 0)">
                     <li class="list-group-item manage-list-group-item text-center">
-                        <!-- <i class="fa fa-robot"></i><br> -->
                         <h5>You currently have no bots</h5>
                     </li>
                 </div>
-                <div *ngFor="let bot of bots; let i=index">
-                    <li class="list-group-item manage-list-group-item" #elem [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion"
-                        [attr.href]="'#bot'+bot.id+'Collapse'">
+                <div *ngFor="let bot of bots; let i=index;">
+                    <li class="list-group-item manage-list-group-item" [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'Collapse'">
                         <!--Bot Item Heading-->
                         <div class="row">
                             <div class="col-sm-9">
@@ -78,18 +77,19 @@
                             </div>
                         </div>
                         <!--End of Heading-->
+
                         <!--Bot Item details-->
-                        <div class="card-body bot-manage-card-body collapse in" #elem [attr.id]="'bot'+bot.id+'Collapse'">
+                        <div class="bot-details collapse in" [attr.id]="'bot'+bot.id+'Collapse'">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <p>{{bot.description}}</p>
                                 </div>
                             </div>
-                            <a class="button button-edit mr-1" #elem [attr.id]="'bot'+bot.id+'EditBtn'" [routerLink]="'/bot-config/' + bot.id">
+                            <a class="button button-edit mr-2" #elem [attr.id]="'bot'+bot.id+'EditBtn'" [routerLink]="'/bot-config/' + bot.id">
                                 <i class="far fa-edit mr-1"></i>
                                 Edit
                             </a>
-                            <a href="#" class="button button-generate mr-1" #elem [attr.id]="'bot'+bot.id+'DownloadBtn'">
+                            <a href="#" class="button button-generate mr-2" #elem [attr.id]="'bot'+bot.id+'DownloadBtn'">
                                 <i class="fas fa-download mr-1"></i>
                                 Generate
                             </a>
@@ -114,28 +114,6 @@
         </div>
     </div>
 
-    <div class="frame">
-        <div class="card bot-manage-card" id="botTeams">
-            <div class="card-header">
-                <h5>YOUR BOT TEAMS</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item manage-list-group-item">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h6>Tournament 1</h6>
-                        </div>
-                        <div class="col-sm-3">
-                            <sub class="float-right">
-                                <i class="far fa-edit mr-1"></i>2 weeks ago
-                            </sub>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-
     <div class="modal modal-confirmation fade delete-modal" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -152,8 +130,8 @@
                     <p>Do you really want to delete this bot script?<br/>This action cannot be undone.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" (click)="deleteBotScript(this.botID)" data-dismiss="modal">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="button button-cancel" (click)="deleteBotScript(this.botID)" data-dismiss="modal">Delete</button>
+                    <button type="button" class="button button-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

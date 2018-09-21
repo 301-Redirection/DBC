@@ -7,16 +7,16 @@
 
 .nav-item {
     cursor: pointer;
-    width: 20%;    
+    width: 20%;
 }
 
 .nav-link.active {
-    background-color: $light-grey;    
+    background-color: $light-grey;
     border-color: $light-grey;
 }
 
 .nav-link:hover {
-    border-color: $light-grey !important;    
+    border-color: $light-grey !important;
 }
 
 .nav-link.active:hover {
@@ -40,7 +40,7 @@
     transition: 0.3s;
 }
 
-.class-title {    
+.class-title {
     margin-bottom: 5px;
 }
 
@@ -57,11 +57,11 @@
 }
 
 #heroesHeader {
-    display: inline-block;   
+    display: inline-block;
 }
 
-#heroSearch {    
-    font-family: Arial, FontAwesome;    
+#heroSearch {
+    font-family: Arial, FontAwesome;
     width: 20%;
     float: right;
     border-radius: 100px;
@@ -74,8 +74,8 @@
     outline: none !important;
 }
 
-.pool-plus-icon {    
-    color: $green;    
+.pool-plus-icon {
+    color: $green;
 }
 
 .pool-plus-icon-cont {

@@ -9,7 +9,7 @@ class UserController {
     static getProfile(request, response) {
         response.render('user', {
             user: request.user,
-            userProfile: JSON.stringify(request.user, null, '  '),
+            userProfile: JSON.stringify(request.user, null, ' '),
         });
     }
 

@@ -10,11 +10,15 @@
     margin-top: $page-margin-top;
     margin-bottom: $page-margin-bottom;
 }
- 
-#botTeams {
-    margin-bottom: 100%;
+
+.bot-details {
+    margin-top: 1%;
 }
- 
+
+.loading-icon {
+    text-align: center;
+}
+
 /*
  |--------------------------------------
  | Responsive

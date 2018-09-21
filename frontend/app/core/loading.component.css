@@ -2,7 +2,8 @@
     display: block;
 }
 
-img {
-    padding-top: 20%;
-    padding-bottom: 50%;
+.svg-loader{
+    height: 24vmin;
+    padding: 3vmin 20vmin;
+    vertical-align: top;
 }

@@ -2,18 +2,106 @@
 @import '../../../variables';
 @import '../heroes/heroes.component.scss';
 
+/**
+ * Note: Hard coded responsiveness due to custom
+ * component and image sizing wanted, bootstrap doesn't respond well
+ */
+
 .item {
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 2.5px;
+    margin-left: 2.5px;
     border: 2px solid $item-border-color;
     background-color: $black;
     height: 64px;
     width: 85px;
     border-radius: 4px;
     cursor: pointer;
-    position: relative;
-    filter: saturate(50%);    
+    filter: saturate(50%);   
+    background-repeat: no-repeat;
+    background-size: auto; 
+    text-align: center;
 }
+
+.selected-item-img{
+    height: 75.2942%;
+    width: 100%;
+}
+
+.item-component-img {
+    height: 51.2px;
+    width: 68px;
+}
+.selected-item-gold-img{
+    height: 30px;
+    width: 30px;
+}
+.cost-item {
+    color: $coin-gold;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+    .item {
+        height: 32px;
+        width: 42.5px;
+        background-repeat: no-repeat;
+        background-size: 42.5px 32px;
+        border: 1px solid $item-border-color;
+        margin-right: 1.25px;
+        margin-left: 1.25px;
+        text-align: center;
+    }
+    .selected-item-img{
+        height: 41.6px;
+        width: 55.25px;
+    }
+    .item-component-img {
+        height: 30px;
+        width: 40.5px;
+    }
+    .h5 {
+        font-size: 85%;
+    }
+    .selected-item-gold-img{
+        height: 20px;
+        width: 20px;
+    }
+    .cost-item {
+        margin-left: 2px;
+    }
+}
+@media screen  and (min-width: 1201px)and (max-width: 1593px) {
+    .item {
+        height: 44.8px;
+        width: 59.5px;
+        background-repeat: no-repeat;
+        background-size: 59.5px 44.8px;
+        border: 1.4px solid $item-border-color;
+        margin-right: 1.75px;
+        margin-left: 1.75px;
+        text-align: center;
+    }
+    .selected-item-img{
+        height: 44.8px;
+        width: 59.5px;
+    }
+    .item-component-img {
+        height: 42.8px;
+        width: 57.5px;
+    }
+    .h5 {
+        font-size: 95%;
+    }
+    .selected-item-gold-img{
+        height: 25px;
+        width: 25px;
+    }
+    .cost-item {
+        margin-left: 2px;
+    }
+}
+
 
 .item:hover {
     border: 2px solid $item-border-color-hover;
@@ -26,7 +114,9 @@
     border: 2px solid $item-border-color-hover;
     transform: scale(1.05);
 }
-
+.item-container{
+    text-align: center;   
+}
 .item .card-header,
 .item .card-body {
     padding: 1px;
@@ -40,7 +130,7 @@
 .selected-item-card {
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;  
+    color: $light-grey;
     border: 1px solid rgba($dark-grey-1, 0.8);
     width: 100%;
 }
@@ -51,7 +141,7 @@
 
 #removeItemIcon {
     float: right;
-    z-index: 100;    
+    z-index: 100;
 }
 
 .items-position {
@@ -64,22 +154,16 @@
     height: 100%;
     background-color: rgba($dark-grey-2, 0.8);
     text-align: left;
-    color: $light-grey;  
+    color: $light-grey;
     width: 100%;
     margin-left: 1%;
-    margin-right: 1%;  
+    margin-right: 1%;
 }
 
 .selected-item-card-body {
-    background-color: $dark-grey-3 !important;  
+    background-color: $dark-grey-3 !important;
     text-align: left;
     width: 100%;
-}
-
-.cost-item {
-    color: $coin-gold;
-    font-weight: bold;
-    scale: 70%;
 }
 
 .card-list{
@@ -89,21 +173,16 @@
     position: sticky;
 }
 
-.item-component-image {
-    height: 51.2px;
-    width: 68px;
-}
-
 .item-card-container-border {
     border: 1px solid rgba($dark-grey-1, 0.8);
 }
 
 #itemsHeader {
-    display: inline-block;   
+    display: inline-block;
 }
 
-#itemSearch {    
-    font-family: Arial, FontAwesome;    
+#itemSearch {
+    font-family: Arial, FontAwesome;
     width: 20%;
     float: right;
     border-radius: 100px;
