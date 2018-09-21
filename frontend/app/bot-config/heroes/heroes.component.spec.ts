@@ -10,9 +10,11 @@ import { authServiceStub } from '../../testing/auth-service-stub';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { HeroItemStubComponent } from '../../testing/hero-item-stub';
+import { By } from '@angular/platform-browser';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
+    // let heroItemComponent: HeroItemStubComponent;
     let fixture: ComponentFixture<HeroesComponent>;
 
     beforeEach(async(() => {
@@ -73,12 +75,15 @@ describe('HeroesComponent', () => {
                 },
             ],
         };
+
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', [
             'getAllHeroes',
             'getImageURL',
         ]);
+
         apiConnectServiceStub.getAllHeroes.and
             .returnValue(Observable.of(testResponse));
+
         apiConnectServiceStub.getImageURL.and.callThrough();
 
         TestBed.configureTestingModule({
@@ -108,5 +113,63 @@ describe('HeroesComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should add hero on double click', (done) => {
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        expect(component.allHeroes[0]).toEqual(component.selectedHeroesList[0]);
+        done();
+    });
+
+    it('should remove hero', (done) => {
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+
+        // TODO: Test by calling remove function from hero-item-stub
+        // heroItemComponent = fixture.debugElement
+        //     .query(By.directive(HeroItemStubComponent)).componentInstance;
+        // heroItemComponent.ngOnInit();
+        // spyOn(heroItemComponent, 'removeHero').and.callThrough();
+        // heroItemComponent.removeHero(component.selectedHeroesList[0], 0);
+
+        // Remove here item
+        component.removeHero(component.selectedHeroesList[0], component.pools[0]);
+        fixture.detectChanges();
+
+        expect(component.selectedHeroesList).toEqual([]);
+        done();
+    });
+
+    it('should clear heroes on reset', (done) => {
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        spyOn(window, 'confirm').and.returnValue(true);
+        fixture.debugElement.query(By.css('#resetPoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        expect(component.selectedHeroesList).toEqual([]);
+        done();
+    });
+
+    it('should toggle pools on toggle button press', (done) => {
+        const oldNumberOfPools = component.numberOfPools;
+        const oldPartitioned = component.partitioned;
+        spyOn(window, 'confirm').and.returnValue(true);
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        let newNumberOfPools = 0;
+        if (oldNumberOfPools === 1) {
+            newNumberOfPools = 5;
+        } else {
+            newNumberOfPools = 1;
+        }
+        expect(component.numberOfPools).toEqual(newNumberOfPools);
+        expect(component.partitioned).toEqual(!oldPartitioned);
+        done();
     });
 });

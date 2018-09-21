@@ -82,6 +82,7 @@ export class HeroesComponent implements OnInit {
         this.pools = [[], [], [], [], []];
         this.selectedPool = 0;
         this.heroSearch = '';
+        this.selectedHeroesList = [];
         this.getHeroes();
         this.selectedTab();
     }
