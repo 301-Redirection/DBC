@@ -37,7 +37,6 @@ describe('BotConfigDataService', () => {
         const abilities = 'qeqeqewwwwrrnnnntnnnqw';
         service.updateHeroAbilityLevels('luna', abilities);
         config = service.getConfig();
-        console.log(config.heroes);
         expect(config.heroes[0].abilityLevels).toBe(abilities);
     }));
 });

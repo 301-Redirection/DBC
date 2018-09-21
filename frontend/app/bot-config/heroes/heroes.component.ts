@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -82,6 +82,7 @@ export class HeroesComponent implements OnInit {
         this.pools = [[], [], [], [], []];
         this.selectedPool = 0;
         this.heroSearch = '';
+        this.selectedHeroesList = [];
         this.getHeroes();
         this.selectedTab();
     }
