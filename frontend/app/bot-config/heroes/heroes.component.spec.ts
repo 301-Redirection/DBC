@@ -116,7 +116,7 @@ describe('HeroesComponent', () => {
     });
 
     it('should add hero on double click', (done) => {
-        component.ngOnInit();
+        // component.ngOnInit();
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
@@ -125,7 +125,7 @@ describe('HeroesComponent', () => {
     });
 
     it('should remove hero', (done) => {
-        component.ngOnInit();
+        // component.ngOnInit();
 
         // Add hero item
         fixture.debugElement.query(By.css('app-hero-item'))
@@ -148,7 +148,7 @@ describe('HeroesComponent', () => {
     });
 
     it('should clear heroes on reset', (done) => {
-        component.ngOnInit();
+        // component.ngOnInit();
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
@@ -160,7 +160,7 @@ describe('HeroesComponent', () => {
     });
 
     it('should toggle pools on toggle button press', (done) => {
-        component.ngOnInit();
+        // component.ngOnInit();
         const oldNumberOfPools = component.numberOfPools;
         const oldPartitioned = component.partitioned;
         spyOn(window, 'confirm').and.returnValue(true);
