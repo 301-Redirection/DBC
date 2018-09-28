@@ -16,7 +16,7 @@ const path = require('path');
 const archiver = require('archiver');
 const moment = require('moment');
 
-const NODE_PATH = path.join(__dirname, '..', '..');
+const NODE_PATH = path.join(__dirname, '..');
 
 // Trigger enum
 const TRIGGER = {
@@ -398,4 +398,5 @@ module.exports = {
     getLogicalOperator,
     writeScripts,
     shouldRegenerateBotScripts,
+    getBotScriptDirectory,
 };

@@ -6,6 +6,8 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
+const models = require('models');
+const { getBotScriptDirectory } = require('./codeGeneration/generateScript.js');
 
 class IndexController {
     static getHomePage(request, response) {
@@ -36,14 +38,21 @@ class IndexController {
     }
 
     static download(request, response) {
-        const file = `${__dirname}/../Lua/${request.params.id}.zip`;
-        const filename = path.basename(file);
-        const mimetype = mime.lookup(file);
-        response.setHeader('Content-disposition', `attachment; filename=${filename}`);
-        response.setHeader('Content-type', mimetype);
-        const filestream = fs.createReadStream(file);
-        filestream.pipe(response);
-        response.download(file);
+        const botId = request.params.id;
+        // TO DO, validate bot id...
+        let tempId;
+        models.BotConfig.findById(botId).then((botConfig) => {
+            tempId = botConfig.userId;
+            const scriptFolder = getBotScriptDirectory(tempId, botId);
+            const file = path.join(scriptFolder, `${botId}.zip`);
+            const filename = path.basename(file);
+            const mimetype = mime.lookup(file);
+            response.setHeader('Content-disposition', `attachment; filename=${filename}`);
+            response.setHeader('Content-type', mimetype);
+            const filestream = fs.createReadStream(file);
+            filestream.pipe(response);
+            response.download(file);
+        });
     }
 
     static testAuthentication(request, response) {

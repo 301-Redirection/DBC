@@ -121,9 +121,9 @@ describe('Lua Code Manager tests:\n', () => {
         expect(codeGenerator.generate()).toBe('-- nothing to see here\n\n-- Other snippet\n\nfunction test()\n    start code\n    start code\n    middle code\nend\n\nfunction test2()\n    start code\n    end code\nend\n\n');
     });
     describe('Lua code generation from object:', () => {
-        const pathToFiles = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
-        const pathToZip = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, `${botId}.zip`);
-        const pathToTempFile = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
+        const pathToFiles = path.join(process.env.NODE_PATH, 'backend', '..', 'public', 'lua', id, botId);
+        const pathToZip = path.join(process.env.NODE_PATH, 'backend', '..', 'public', 'lua', id, `${botId}.zip`);
+        const pathToTempFile = path.join(process.env.NODE_PATH, 'backend', '..', 'public', 'lua', id, botId);
         const pathToExpectedOutput = path.join('config', 'exampleConfigurationsBots', 'expectedOutput');
 
         function unzipProcedure(func) {

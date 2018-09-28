@@ -29,7 +29,7 @@ router.get('/test', (req, res) => {
     IndexController.test(req, res);
 });
 
-router.get('/download/:id([a-zA-Z0-9_\\.]+)', (req, res) => {
+router.get('/download/:id([0-9]+)', (req, res) => {
     IndexController.download(req, res);
 });
 
