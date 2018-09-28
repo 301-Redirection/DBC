@@ -134,7 +134,7 @@ describe('Lua Code Manager tests:\n', () => {
 
         it('test if appropriate folders are created', (done) => {
             writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
-            const rootNodeDir = path.join(__dirname, '..');
+            const rootNodeDir = process.env.NODE_PATH;
             let filePath = path.join(rootNodeDir, 'public');
             expect(fs.existsSync(filePath)).toBe(true);
             filePath = path.join(filePath, 'lua');
