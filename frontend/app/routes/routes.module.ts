@@ -25,32 +25,11 @@ export const ROUTES: Routes = [
         path: 'bot-config',
         component: BotConfigComponent,
         pathMatch: 'full',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
     },
     {
         path: 'bot-config/:botScriptID',
         component: BotConfigComponent,
-        pathMatch: 'full',
-        // canActivate: [AuthGuard],
-    },
-    {
-        path: 'desires',
-        component: TeamDesiresComponent,
-        pathMatch: 'full',
-    },
-    {
-        path: 'callback',
-        component: CallbackComponent,
-    },
-    {
-        path: 'heroes',
-        component: HeroesComponent,
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-    },
-    {
-        path: 'items',
-        component: ItemsComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
     },
