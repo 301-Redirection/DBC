@@ -80,7 +80,7 @@ module.exports = {
                                         conditional: 4,
                                     },
                                     {
-                                        trigger: 5,
+                                        trigger: 1,
                                         operator: 2,
                                         conditional: 1200,
                                     },
@@ -150,7 +150,7 @@ module.exports = {
                                         conditional: 3,
                                     },
                                     {
-                                        trigger: 4,
+                                        trigger: 1,
                                         operator: 4,
                                         conditional: 3,
                                     },
@@ -201,7 +201,7 @@ module.exports = {
                                         conditional: 3,
                                     },
                                     {
-                                        trigger: 4,
+                                        trigger: 1,
                                         operator: 4,
                                         conditional: 3,
                                     },
@@ -294,7 +294,7 @@ module.exports = {
                         {
                             conditions: [
                                 {
-                                    trigger: 4,
+                                    trigger: 3,
                                     operator: 2,
                                     conditional: 2,
                                 },
@@ -311,7 +311,7 @@ module.exports = {
                                     conditional: 15,
                                 },
                                 {
-                                    trigger: 4,
+                                    trigger: 3,
                                     operator: 4,
                                     conditional: 1,
                                 },
