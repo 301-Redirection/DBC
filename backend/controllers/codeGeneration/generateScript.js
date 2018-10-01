@@ -301,7 +301,7 @@ const getBotScriptDirectory = function (id, botId) {
     let strBotId = String(botId);
     strId = strId.replace('|', '_');
     strBotId = strBotId.replace('|', '_');
-    let publicPath = path.join(NODE_PATH, '..', 'public');
+    let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -398,4 +398,5 @@ module.exports = {
     getLogicalOperator,
     writeScripts,
     shouldRegenerateBotScripts,
+    getBotScriptDirectory,
 };

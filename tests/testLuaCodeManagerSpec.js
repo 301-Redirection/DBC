@@ -121,9 +121,9 @@ describe('Lua Code Manager tests:\n', () => {
         expect(codeGenerator.generate()).toBe('-- nothing to see here\n\n-- Other snippet\n\nfunction test()\n    start code\n    start code\n    middle code\nend\n\nfunction test2()\n    start code\n    end code\nend\n\n');
     });
     describe('Lua code generation from object:', () => {
-        const pathToFiles = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
-        const pathToZip = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, `${botId}.zip`);
-        const pathToTempFile = path.join(process.env.NODE_PATH, '..', 'public', 'lua', id, botId);
+        const pathToFiles = path.join(process.env.NODE_PATH, 'public', 'lua', id, botId);
+        const pathToZip = path.join(process.env.NODE_PATH, 'public', 'lua', id, `${botId}.zip`);
+        const pathToTempFile = path.join(process.env.NODE_PATH, 'public', 'lua', id, botId);
         const pathToExpectedOutput = path.join('config', 'exampleConfigurationsBots', 'expectedOutput');
 
         function unzipProcedure(func) {
@@ -134,7 +134,7 @@ describe('Lua Code Manager tests:\n', () => {
 
         it('test if appropriate folders are created', (done) => {
             writeScripts(exampleObjectDefaultAllHeroes, response, id, botId);
-            const rootNodeDir = path.join(__dirname, '..');
+            const rootNodeDir = process.env.NODE_PATH;
             let filePath = path.join(rootNodeDir, 'public');
             expect(fs.existsSync(filePath)).toBe(true);
             filePath = path.join(filePath, 'lua');
