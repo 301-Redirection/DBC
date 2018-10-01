@@ -24,20 +24,51 @@ const validBoolean = {
     required: true,
 };
 
-// A Number that ranges from 0 to 1
+// A Number that ranges from -1 to 1
 const validProportion = {
     type: 'number',
-    minimum: 0,
+    minimum: -1,
     maximum: 1,
     required: true,
 };
 
+// a condition
+const validCondition = {
+    properties: {
+        trigger: validNumber,
+        operator: validNumber,
+        conditional: validNumber,
+        action: validNumber,
+        value: validNumber,
+    },
+};
+
+// a valid conditionsArray
+const validConditions = {
+    type: 'array',
+    required: true,
+    items: {
+        type: 'string',
+    },
+};
+
 // a compound condition
 const compoundConditionConfig = {
-    conditions: validArray,
-    logicalOperators: validArray,
-    action: validNumber,
-    value: validProportion,
+    type: 'array',
+    items: {
+        type: {
+            properties: {
+                conditions: {
+                    type: 'array',
+                    required: true,
+                },
+                logicalOperators: validArray,
+                action: validNumber,
+                value: validProportion,
+            },
+        },
+    },
+    required: true,
 };
 
 /** Specific Validation Types for the BotConfigObjects */
@@ -92,6 +123,7 @@ const validConfig = {
         compoundConditions: compoundConditionConfig,
         initialValue: validProportion,
     },
+    required: true,
 };
 
 const validLaneConfig = {
@@ -120,7 +152,14 @@ const overallValidConfig = {
         heroes: { // note, not required
             type: 'array',
         },
-        desires: validObject, // note REQUIRED
+        configuration: {
+            properties: {
+                desires: {
+                    type: 'object',
+                    required: true,
+                },
+            },
+        },
     },
 };
 

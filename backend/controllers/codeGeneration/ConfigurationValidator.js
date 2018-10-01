@@ -1,4 +1,4 @@
-const revalidator = require('revalidator');
+var { validate } = require('jsonschema');
 const {
     desiresValidConfig,
     heroSpecificationValidConfig,
@@ -14,7 +14,7 @@ class ConfigurationValidator {
         try {
             if (botConfig) {
                 this.validateOverallObject(botConfig);
-                this.validateDesiresObject(botConfig.desires);
+                this.validateDesiresObject(botConfig.configuration.desires);
                 if (botConfig.heroPool) {
                     this.validateHeroPool(botConfig.heroPool);
                 }
@@ -30,22 +30,23 @@ class ConfigurationValidator {
     }
 
     static validateOverallObject(object) {
-        const result = revalidator.validate(object, overallValidConfig);
-        // console.log(result);
+        const result = validate(object, overallValidConfig);
         if (result.valid === false) {
-            throw new ValidationException('Overall Object Structure Invalid', 'Missing key fields or key fields of wrong type');
+            throw new ValidationException('Overall Object Structure Invalid', result.errors);
         }
     }
 
     static validateDesiresObject(object) {
-        const result = revalidator.validate(object, desiresValidConfig);
+        const result = validate(object, desiresValidConfig);
         if (result.valid === false) {
+            // console.log(object.push.top.compoundConditions);
+            console.log(result.errors[0]);
             throw new ValidationException('Desires Object Structure Invalid', 'Missing key fields or key fields of wrong type');
         }
     }
 
     static validateHeroPool(object) {
-        let result = revalidator.validate(object, heroPoolValidConfig);
+        let result = validate(object, heroPoolValidConfig);
         // console.log(result);
         if (result.valid === false) {
             throw new ValidationException('Hero Pool Object Structure Invalid', 'Missing key fields or key fields of wrong type');
@@ -63,7 +64,7 @@ class ConfigurationValidator {
     static validateHeroSpeficationObject(heroesArray) {
         let result;
         heroesArray.forEach((element, index) => {
-            result = revalidator.validate(element, heroSpecificationValidConfig);
+            result = validate(element, heroSpecificationValidConfig);
             // console.log(result);
             if (result.valid === false) {
                 throw new ValidationException('Hero Specification Array Error', `Hero Specification Element ${index} is invalid`);
@@ -75,7 +76,7 @@ class ConfigurationValidator {
             }
             if (element.items) {
                 element.items.forEach((item, itemIndex) => {
-                    result = revalidator.validate(item, validItemComponent);
+                    result = validate(item, validItemComponent);
                     // console.log(result);
                     if (result.valid === false) {
                         throw new ValidationException('Hero Specification Items Error', `Hero Specification Element ${index} - Item ${itemIndex} invalid`);
