@@ -24,7 +24,7 @@ end
 function UpdateRoshaneDesires()
     local common = 0.25
     local enemiesAlive = getEnemyHeroesAlive()
-    if (DotaTime() >= 35) or (enemiesAlive <= 3) then
+    if (DotaTime() >= 2100) or (enemiesAlive <= 3) then
         common += 0.35
     end
     return common
@@ -37,7 +37,7 @@ function UpdateRoamDesires()
         common += -0.25
     end
     local alliesAlive = getAlliedHeroesAlive()
-    if (DotaTime() <= 15) or (alliesAlive >= 1) then
+    if (DotaTime() <= 900) or (alliesAlive >= 1) then
         common += 0.325
     end
     return common
@@ -45,24 +45,24 @@ end
 
 function UpdatePushLaneDesires()
     local common = 0.2
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.1
     end
     local alliesAlive = getAlliedHeroesAlive()
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive <= 3) and (alliesAlive >= 4) and (DotaTime() <= 1200) then
+    if (enemiesAlive <= 3) and (alliesAlive >= 4) and (DotaTime() <= 72000) then
         common += 0.31666666666666665
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 10) then
+    if (DotaTime() < 600) then
         common = 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() <= 15) then
+    if (DotaTime() <= 900) then
         common = 0.25
     end
     local botCommon = common
@@ -72,19 +72,19 @@ end
 
 function UpdateDefendLaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local botCommon = common
@@ -94,27 +94,27 @@ end
 
 function UpdateFarmLaneDesires()
     local common = 0.25
-    if (DotaTime() <= 20) then
+    if (DotaTime() <= 1200) then
         common += 0.5
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) or (DotaTime() >= 3) then
+    if (enemiesAlive >= 3) or (DotaTime() >= 180) then
         common += -0.225
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.35
-    if (DotaTime() <= 20) then
+    if (DotaTime() <= 1200) then
         common += 0.5
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) and (DotaTime() >= 3) then
+    if (enemiesAlive >= 3) and (DotaTime() >= 180) then
         common += -0.15
     end
     local botCommon = common

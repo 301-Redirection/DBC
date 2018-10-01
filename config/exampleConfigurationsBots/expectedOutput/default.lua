@@ -3,7 +3,7 @@
 
 function UpdateRoshaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     return common
@@ -11,7 +11,7 @@ end
 
 function UpdateRoamDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     return common
@@ -19,19 +19,19 @@ end
 
 function UpdatePushLaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local botCommon = common
@@ -41,19 +41,19 @@ end
 
 function UpdateDefendLaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local botCommon = common
@@ -63,19 +63,19 @@ end
 
 function UpdateFarmLaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local botCommon = common
