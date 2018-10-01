@@ -1,4 +1,4 @@
-var { validate } = require('jsonschema');
+const { validate } = require('jsonschema');
 const {
     desiresValidConfig,
     heroSpecificationValidConfig,
@@ -39,8 +39,8 @@ class ConfigurationValidator {
     static validateDesiresObject(object) {
         const result = validate(object, desiresValidConfig);
         if (result.valid === false) {
-            // console.log(object.push.top.compoundConditions);
-            console.log(result.errors[0]);
+            // console.log(object.push.top.compoundConditions[0]);
+            // console.log(result.errors[0].schema.type.properties);
             throw new ValidationException('Desires Object Structure Invalid', 'Missing key fields or key fields of wrong type');
         }
     }
@@ -53,7 +53,7 @@ class ConfigurationValidator {
         }
         if (object.pool) {
             object.pool.forEach((element, index) => {
-                result = revalidator.validate(element, heroConfigurationValidConfig);
+                result = validate(element, heroConfigurationValidConfig);
                 if (result.valid === false) {
                     throw new ValidationException('Hero Pool Array Error', `Hero Element ${index} is invalid`);
                 }

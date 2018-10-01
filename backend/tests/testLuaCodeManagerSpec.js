@@ -228,7 +228,7 @@ describe('Lua Code Manager tests:\n', () => {
             let luaOutput = fs.readFileSync(filePath).toString();
             let expectedFilePath = path.join(pathToExpectedOutput, 'default.lua');
             let expectedOutput = fs.readFileSync(expectedFilePath).toString();
-            // expect(luaOutput).toBe(expectedOutput);
+            expect(luaOutput).toBe(expectedOutput);
             // testing that the default hero selection file is used
             // by ensuring that it does not match any of our expected
             // hero selection outputs

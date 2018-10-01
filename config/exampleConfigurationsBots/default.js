@@ -13,9 +13,9 @@ module.exports = {
                             {
                                 conditions: [
                                     {
-                                        trigger: 5,
+                                        trigger: 1,
                                         operator: 1,
-                                        conditional: 5
+                                        conditional: 5,
                                     },
                                 ],
                                 action: 1,

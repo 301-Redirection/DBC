@@ -140,7 +140,6 @@ const getConditions = function (compoundConditions) {
     let overrideValue;
     let trigger = '';
     let operator = '';
-    let action = '';
     let logicalOperator = '';
     let scriptBuilder = '';
 
@@ -182,7 +181,7 @@ const getConditions = function (compoundConditions) {
 
                 if (action === 'return') {
                     override = true;
-                    overrideValue = conditions[i].value;
+                    overrideValue = totalValue;
                 }
 
                 if (i < conditions.length - 1) {
@@ -192,7 +191,7 @@ const getConditions = function (compoundConditions) {
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
 
                     if (override === false) {
-                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
+                        scriptBuilder += `    ${action} ${totalValue}\n`;
                     } else {
                         scriptBuilder += `    common = ${overrideValue}\n`;
                     }

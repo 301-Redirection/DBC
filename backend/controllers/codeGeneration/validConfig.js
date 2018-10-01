@@ -9,11 +9,6 @@ const validArray = {
     required: true,
 };
 
-const validObject = {
-    type: 'object',
-    required: true,
-};
-
 const validString = {
     type: 'string',
     required: true,
@@ -38,8 +33,6 @@ const validCondition = {
         trigger: validNumber,
         operator: validNumber,
         conditional: validNumber,
-        action: validNumber,
-        value: validNumber,
     },
 };
 
@@ -48,7 +41,7 @@ const validConditions = {
     type: 'array',
     required: true,
     items: {
-        type: 'string',
+        type: validCondition,
     },
 };
 
@@ -58,10 +51,7 @@ const compoundConditionConfig = {
     items: {
         type: {
             properties: {
-                conditions: {
-                    type: 'array',
-                    required: true,
-                },
+                conditions: validConditions,
                 logicalOperators: validArray,
                 action: validNumber,
                 value: validProportion,
