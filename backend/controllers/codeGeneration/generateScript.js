@@ -16,7 +16,7 @@ const path = require('path');
 const archiver = require('archiver');
 const moment = require('moment');
 
-const NODE_PATH = path.join(__dirname, '..');
+const NODE_PATH = path.join(__dirname, '..', '..');
 
 // Trigger enum
 const TRIGGER = {
@@ -301,7 +301,7 @@ const getBotScriptDirectory = function (id, botId) {
     let strBotId = String(botId);
     strId = strId.replace('|', '_');
     strBotId = strBotId.replace('|', '_');
-    let publicPath = path.join(NODE_PATH, '..', 'public');
+    let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
