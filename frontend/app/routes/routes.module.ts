@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { BotConfigComponent } from '../bot-config/bot-config.component';
-import { CallbackComponent } from '../callback/callback.component';
-import { TeamDesiresComponent } from '../bot-config/team-desires/team-desires.component';
 import { AuthGuard } from '../auth/auth.guard';
-import { HeroesComponent } from '../bot-config/heroes/heroes.component';
-import { ItemsComponent } from '../bot-config/items/items.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { WalkthroughComponent } from '../walkthrough/walkthrough.component';
 
