@@ -66,16 +66,24 @@ export class TeamDesiresComponent implements OnInit {
         private botConfigData: BotConfigDataService,
     ) {}
 
-    log(data) {
-        console.log(data);
-    }
-
     ngOnInit() {
         this.config = this.botConfigData.getDefaultConfiguration();
+        this.checkIfLoadedSavedScript();
         this.saveTeamDesires();
         this.togglePanel();
     }
+    checkIfLoadedSavedScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedDesires();
+            }
+        });
+    }
 
+    // To be used to retrieve items saved
+    getSavedDesires() {
+        this.config.desires = this.botConfigData.getTeamDesires();
+    }
     saveTeamDesires(): void {
         this.botConfigData.setTeamDesires(this.config.desires);
     }
@@ -116,8 +124,6 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     delCondGroup(compound: CompoundCondition[], index: number = -1) {
-        this.log(compound);
-        this.log(index);
         const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
         if (ans) {
             const len = compound.length - 1;

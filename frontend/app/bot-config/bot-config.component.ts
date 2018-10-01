@@ -12,6 +12,7 @@ import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
+import { BotConfigDataService } from '../services/bot-config-data.service';
 
 @Component({
     selector: 'app-bot-config',
@@ -30,6 +31,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     name: string = '';
     description: string = '';
     id: number = -1;
+    selectedTab: string;
 
     generateURL = '';
 
@@ -38,6 +40,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
+        private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
@@ -47,9 +50,17 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.botConfigData.reset();
+        this.checkLoadedScript();
+        this.selectedTab = 'info';
+    }
 
     ngAfterViewInit() {}
+
+    setTabSelected(tab: string) {
+        this.selectedTab = tab;
+    }
 
     save() {
         if (this.validateInfo()) {
@@ -58,18 +69,25 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 id: this.id,
                 name: this.name,
                 description: this.description,
-                configuration: { test: 'true' },
+                configuration: this.botConfigData.getConfig(),
             };
+            console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                    alert('Bot configurations saved!');
                 },
                 (error) => {
+                    alert('Failed to save configuration. Please try agin later.');
                     console.log(error);
                 },
             );
         }
+    }
+
+    log(): void {
+        console.log(this.botConfigData.getConfig());
     }
 
     validateInfo(): boolean {
@@ -80,14 +98,27 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         return true;
     }
 
+    checkLoadedScript() {
+        this.route.paramMap.subscribe((paramMap) => {
+            if (paramMap['params']['botScriptID'] === undefined) {
+                this.reset();
+            }
+        });
+    }
+
     reset () {
+        this.name = '';
+        this.description = '';
+        this.teamDesiresComponent.reset();
+        this.heroesComponent.reset();
+        this.abilitiesComponent.reset();
+        this.itemsComponent.reset();
+        this.botConfigData.reset();
+    }
+
+    confirmReset() {
         if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
-            this.name = '';
-            this.description = '';
-            this.teamDesiresComponent.reset();
-            this.heroesComponent.reset();
-            this.abilitiesComponent.reset();
-            this.itemsComponent.reset();
+            this.reset();
         }
     }
 
@@ -100,8 +131,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 if (res != null) {
                     this.id = res.id;
                     this.name = res.name;
-                    // this.configuration = JSON.parse(res.configuration);
                     this.description = res.description;
+                    this.botConfigData.setConfig(JSON.parse(res.configuration));
                 }
             },
             (error) => {

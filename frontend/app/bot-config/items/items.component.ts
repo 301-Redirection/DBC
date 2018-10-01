@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -12,6 +12,9 @@ declare var $: any;
 })
 
 export class ItemsComponent implements OnInit{
+
+    @Input('selected') selected: string;
+
     // Variables
     allItems: any;
     basicItems = [];
@@ -49,12 +52,30 @@ export class ItemsComponent implements OnInit{
         sort: true,
     };
 
+    // Listen for key press to update itemSearch
+    @HostListener('document:keydown', ['$event'])
+    searchEvent(event: KeyboardEvent) {
+        this.hideItemPopovers();
+        if (this.selected === 'items'
+            && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea') {
+            if (event.key === 'Backspace') {
+                this.itemSearch = this.itemSearch.slice(0, -1);
+            } else if (
+                (65 <= event.keyCode && event.keyCode <= 90) ||
+                (97 <= event.keyCode && event.keyCode <= 122)
+            ) {
+                this.itemSearch += event.key;
+            }
+        }
+    }
+
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
         this.getHeroes();
         this.getItems();
-        this.getSavedSelectedItems();
+        this.itemSearch = '';
     }
 
     // **********************************
@@ -69,25 +90,39 @@ export class ItemsComponent implements OnInit{
                 this.totalCostPerHero.push(0);
             });
             this.currentHero = this.selectedHeroes[0];
+            this.checkIfLoadedSavedScript();
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
     }
+    checkIfLoadedSavedScript() {
+        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+            if (isLoadedScript) {
+                this.getSavedItems();
+            }
+        });
+    }
 
     // To be used to retrieve items saved
-    getSavedSelectedItems() {
-        this.selectedHeroes.forEach((hero, num) => {
-            this.botConfigData.getHeroItemSelection(hero.name).subscribe((itemArr) => {
-                this.heroItemSelection = itemArr;
-                this.totalCostPerHero[num] = this.calculateCostItems(itemArr);
+    getSavedItems() {
+        if (this.selectedHeroes !== undefined) {
+            this.selectedHeroes.forEach((hero, num) => {
+                const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
+                if (savedItems !== undefined && savedItems.length > 0) {
+                    this.heroItemSelection[num] = savedItems;
+                    this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
+                }else {
+                    this.heroItemSelection[num] = [];
+                    this.totalCostPerHero[num] = 0;
+                }
             });
-        });
+        }
     }
 
     calculateCostItems (itemArr: any) {
         let cost = 0;
-        if (itemArr !== null) {
-            itemArr.array.forEach((item) => {
+        if (itemArr !== undefined && itemArr.length > 0) {
+            itemArr.forEach((item) => {
                 cost += item.cost;
             });
         }
@@ -169,6 +204,7 @@ export class ItemsComponent implements OnInit{
             this.heroItemSelection[this.selectedHeroIndex].push(item);
             this.totalCostPerHero[this.selectedHeroIndex] += item.cost;
             this.setSelectedItem(null);
+            this.saveItems();
         }
     }
 
@@ -207,11 +243,13 @@ export class ItemsComponent implements OnInit{
 
     // General reset all selected items of all selected heroes to null
     reset () : void {
-        this.setSelectedHero(0);
-        this.heroItemSelection = [];
-        for (let i = 0; i < this.selectedHeroes.length; i += 1) {
-            this.heroItemSelection.push([]);
-            this.totalCostPerHero[i] = 0;
+        if (this.selectedHeroes != null) {
+            this.setSelectedHero(0);
+            this.heroItemSelection = [];
+            for (let i = 0; i < this.selectedHeroes.length; i += 1) {
+                this.heroItemSelection.push([]);
+                this.totalCostPerHero[i] = 0;
+            }
         }
     }
 
@@ -232,7 +270,6 @@ export class ItemsComponent implements OnInit{
             const itemsArr = this.heroItemSelection[i];
             this.botConfigData.updateHeroItems(hero.programName, itemsArr);
         }
-        console.log(this.botConfigData.getConfig());
     }
 
     // ****************************
@@ -250,16 +287,6 @@ export class ItemsComponent implements OnInit{
         $(target).popover('toggle');
     }
 
-    triggerHeroPopover(target: HTMLElement, hero: any) {
-        $(target).popover({
-            animation: true,
-            trigger: 'hover',
-            placement: 'right',
-            html: true,
-            content: $(`#${hero.programName}`).html(),
-            template: $('#heroesPopoverTemplate').html(),
-        });
-    }
     hideItemPopovers() {
         $('.popover-zone').popover('hide');
     }

@@ -5,7 +5,6 @@ const request = require('request');
 const { spawnSync } = require('child_process');
 const fs = require('fs');
 
-
 let app;
 
 describe('Static testing', () => {

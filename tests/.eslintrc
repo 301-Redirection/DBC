@@ -1,0 +1,16 @@
+{
+    "globals": {
+        "describe": false,
+        "beforeAll": false,
+        "beforeEach": false,
+        "afterAll": false,
+        "it": false,
+        "expect": false,
+    },
+    "rules": {
+        "no-console": 0,
+        "global-require": 0,
+        "import/newline-after-import": 0,
+        "no-underscore-dangle": 0,
+    },
+}

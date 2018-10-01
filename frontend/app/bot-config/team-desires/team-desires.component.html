@@ -30,7 +30,7 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(ngModel)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
@@ -80,7 +80,7 @@
                                                                 </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field class="col-md-3" hintLabel="Percent (-100 to 100)">
-                                                                <input matInput min="0" max="100" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
+                                                                <input matInput min="0" max="100" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -102,7 +102,7 @@
                         <div class="card-body bot-manage-card-body">
                             <div class="form-group container">
                                 <label for="{{section.prop}}Default">Default Value</label>
-                                <mat-slider min="0" max="100" step="1" [(value)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="1" (mouseup)="saveTeamDesires()"></mat-slider>
+                                <mat-slider class="col-md-3" min="0" max="100" step="1" [(ngModel)]="config.desires[section.prop].initialValue" thumbLabel tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
                             </div>
                             <div class="container">
                                 <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop])">Add Condition Group</button>

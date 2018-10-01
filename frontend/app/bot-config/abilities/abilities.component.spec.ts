@@ -68,12 +68,19 @@ describe('AbilitiesComponent', () => {
             heroes: heroesArray,
         };
 
+        const isLoadedScript = true;
+
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['getAllHeroes']);
         const botConfigDataServiceStub = jasmine
             .createSpyObj('BotConfigDataService', [
                 'getSelectedHeroes',
+                'getSavedHeroAbilities',
+                'getSavedHeroAbilityLevels',
+                'getSavedHeroTalents',
                 'updateHeroAbilities',
                 'updateHeroTalents',
+                'updateHeroAbilityLevels',
+                'notifyIsLoadedScript',
             ]);
 
         apiConnectServiceStub.getAllHeroes.and
@@ -81,6 +88,9 @@ describe('AbilitiesComponent', () => {
 
         botConfigDataServiceStub.getSelectedHeroes.and
             .returnValue(Observable.of(heroesArray));
+
+        botConfigDataServiceStub.notifyIsLoadedScript.and
+            .returnValue(Observable.of(isLoadedScript));
 
         TestBed.configureTestingModule({
             declarations: [
@@ -103,7 +113,6 @@ describe('AbilitiesComponent', () => {
 
     it('should make q be first skill by default', (done) => {
         spyOn(component, 'createArrayFromPrios').and.callThrough();
-        // console.log(component.currentHero);
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();
@@ -225,7 +234,6 @@ describe('AbilitiesComponent', () => {
         fixture.debugElement.query(By.css('#ability-generate')).nativeElement.click();
         fixture.detectChanges();
         // note component assumes first hero is selected, hence select 2nd one
-        // console.log(fixture);
         fixture.debugElement.query(By.css('app-hero-item:nth-child(2)')).nativeElement.click();
         fixture.detectChanges();
         expect(component.createArrayFromPrios).toHaveBeenCalled();

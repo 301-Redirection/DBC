@@ -43,6 +43,7 @@ h3, h4, h5, h6 {
     letter-spacing: 2px;
 }
 
+
 /* Paragraph styles */
 
 p {
@@ -142,6 +143,10 @@ p {
     border: 2px solid white;
 }
 
+.hero-item.selected .popover-zone {
+    outline: none !important;
+}
+
 .hero-item .card-header,
 .hero-item .card-body {
     padding: 1px;
@@ -205,7 +210,7 @@ button:focus {
 
 .button-cancel {
     text-decoration:none;
-    color: $btn-cancel-color;
+    color: $btn-cancel-color !important;
     background-color: $btn-general-background-color;
     border: $btn-general-border $btn-cancel-border-color;
  }
@@ -281,7 +286,19 @@ button:focus {
     color: $white;
     background-color: $btn-profile-border-color;
     border-color: $btn-profile-border-color-hover;
-    
+}
+
+.button-secondary {
+    color: $btn-secondary-color;
+    background-color: $btn-general-background-color;
+    background-image: none;
+    border: $btn-general-border $btn-secondary-border-color;
+}
+.button-secondary:hover {
+    text-decoration: none;
+    color: $white;
+    background-color: $btn-secondary-border-color;
+    border-color: $btn-secondary-border-color-hover;
 }
 
 /*  Dropdown Menus */
