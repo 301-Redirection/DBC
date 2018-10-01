@@ -107,8 +107,6 @@ export enum Trigger {
     Time = 1,
     EnemyHeroesAlive,
     AlliedHeroesAlive,
-    NumEnemyHeroesVisible,
-    RadiusAlliedHeroes,
 }
 
 export enum LogicalOperator {
@@ -193,8 +191,6 @@ return common
 * time (the time in the Dota Game),
 * EnemyHeroesAlive which corresponds to the number of enemy heroes that are alive
 * AlliedHeroesAlive which corresponds to the number of allied heroes that are alive
-* NumEnemyHeroesVisible that corresponds to the number of enemy heroes that are currently visible on the minimap
-* RadiusAlliedHeroes which corresponds to the radius of the circle that covers all the allied heroes on the map
 
 `Operator` determines the type of operator to be used in an if statement. They are as follows
 

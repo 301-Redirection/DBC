@@ -84,7 +84,7 @@ module.exports = {
                                         value: 0.35,
                                     },
                                     {
-                                        trigger: 5,
+                                        trigger: 1,
                                         operator: 2,
                                         conditional: 1200,
                                         action: 1,
@@ -156,7 +156,7 @@ module.exports = {
                                         value: -0.2,
                                     },
                                     {
-                                        trigger: 4,
+                                        trigger: 1,
                                         operator: 4,
                                         conditional: 3,
                                         action: 1,
@@ -209,7 +209,7 @@ module.exports = {
                                         value: -0.15,
                                     },
                                     {
-                                        trigger: 4,
+                                        trigger: 1,
                                         operator: 4,
                                         conditional: 3,
                                         action: 1,
@@ -304,7 +304,7 @@ module.exports = {
                         {
                             conditions: [
                                 {
-                                    trigger: 4,
+                                    trigger: 3,
                                     operator: 2,
                                     conditional: 2,
                                     action: 1,
@@ -323,7 +323,7 @@ module.exports = {
                                     value: 0.4,
                                 },
                                 {
-                                    trigger: 4,
+                                    trigger: 3,
                                     operator: 4,
                                     conditional: 1,
                                     action: 1,

@@ -32,10 +32,12 @@ end
 
 function UpdateRoamDesires()
     local common = 0.25
-    if ( <= 2) then
+    local alliesAlive = getAlliedHeroesAlive()
+    if (alliesAlive <= 2) then
         common += -0.25
     end
-    if (DotaTime() <= 15) or ( >= 1) then
+    local alliesAlive = getAlliedHeroesAlive()
+    if (DotaTime() <= 15) or (alliesAlive >= 1) then
         common += 0.325
     end
     return common
@@ -48,7 +50,7 @@ function UpdatePushLaneDesires()
     end
     local alliesAlive = getAlliedHeroesAlive()
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive <= 3) and (alliesAlive >= 4) and ( <= 1200) then
+    if (enemiesAlive <= 3) and (alliesAlive >= 4) and (DotaTime() <= 1200) then
         common += 0.31666666666666665
     end
     local topCommon = common
@@ -96,7 +98,7 @@ function UpdateFarmLaneDesires()
         common += 0.5
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) or ( >= 3) then
+    if (enemiesAlive >= 3) or (DotaTime() >= 3) then
         common += -0.225
     end
     local topCommon = common
@@ -112,7 +114,7 @@ function UpdateFarmLaneDesires()
         common += 0.5
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) and ( >= 3) then
+    if (enemiesAlive >= 3) and (DotaTime() >= 3) then
         common += -0.15
     end
     local botCommon = common
