@@ -129,6 +129,10 @@ const getAction = function (action) {
     return actionString;
 };
 
+const convertToDotaTime = function (minutes) {
+    return minutes * 60;
+};
+
 // Get conditions in the compoundConditions array
 const getConditions = function (compoundConditions) {
     let override = false;
@@ -151,6 +155,9 @@ const getConditions = function (compoundConditions) {
                 }
                 if (conditions[i].trigger === TRIGGER.EnemyHeroesAlive) {
                     hasNumEnemiesTrigger = true;
+                }
+                if (conditions[i].trigger === TRIGGER.Time) {
+                    conditions[i].conditional = convertToDotaTime(conditions[i].conditional);
                 }
             }
 

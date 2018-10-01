@@ -8,7 +8,7 @@ const helperFunctions = {};
 
 const functionStrings = contents.split('--**');
 functionStrings.forEach((f) => {
-    const parts = f.split('**--\n');
+    const parts = f.split('**--\r\n');
     if (parts.length === 2) {
         helperFunctions[parts[0]] = parts[1].trim();
     }
