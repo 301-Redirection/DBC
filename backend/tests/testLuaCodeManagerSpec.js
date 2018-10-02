@@ -12,6 +12,7 @@ const exampleObjectDefaultHeroesByPos = require('../../config/exampleConfigurati
 const exampleObjectDefaultItemsSpecified = require('../../config/exampleConfigurationsBots/defaultItemsSpecified.js');
 const exampleObjectDefaultAbilitiesSpecified = require('../../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
 const exampleObjectComplexOne = require('../../config/exampleConfigurationsBots/complexOne.js');
+const { ConfigurationValidator } = require('../controllers/codeGeneration/ConfigurationValidator.js');
 
 const response = mocks.createResponse();
 
@@ -54,38 +55,43 @@ describe('Lua Code Manager tests:\n', () => {
 
         expect(codeGenerator.generate()).toBe('-- nothing to see here\n\n-- Other snippet\n\n');
     });
-    it('test an API function with just a middle', () => {
+    it('test an API function with just a middle', (done) => {
         codeGenerator.addToAPIFunction('test', 'middle code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    middle code\nend\n\n');
+        done();
     });
-    it('test an API function with a middle and start forwards', () => {
+    it('test an API function with a middle and start forwards', (done) => {
         codeGenerator.addToStartAPIFunction('test', 'start code');
         codeGenerator.addToAPIFunction('test', 'middle code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    middle code\nend\n\n');
+        done();
     });
-    it('test an API function with a middle and start backwards', () => {
+    it('test an API function with a middle and start backwards', (done) => {
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    middle code\nend\n\n');
+        done();
     });
-    it('test an API function with a start, middle and end forwards', () => {
+    it('test an API function with a start, middle and end forwards', (done) => {
         codeGenerator.addToStartAPIFunction('test', 'start code');
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToEndAPIFunction('test', 'end code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    middle code\n    end code\nend\n\n');
+        done();
     });
-    it('test an API function with a start, middle and end backwards', () => {
+    it('test an API function with a start, middle and end backwards', (done) => {
         codeGenerator.addToEndAPIFunction('test', 'end code');
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    middle code\n    end code\nend\n\n');
+        done();
     });
-    it('test an API function with lots of things one', () => {
+    it('test an API function with lots of things one', (done) => {
         codeGenerator.addToEndAPIFunction('test', 'end code');
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToAPIFunction('test', 'middle code');
@@ -93,8 +99,9 @@ describe('Lua Code Manager tests:\n', () => {
         codeGenerator.addToStartAPIFunction('test', 'start code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    middle code\n    middle code\n    middle code\n    end code\nend\n\n');
+        done();
     });
-    it('test an API function with lots of things two', () => {
+    it('test an API function with lots of things two', (done) => {
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
@@ -103,8 +110,9 @@ describe('Lua Code Manager tests:\n', () => {
         codeGenerator.addToEndAPIFunction('test2', 'end code');
 
         expect(codeGenerator.generate()).toBe('function test()\n    start code\n    start code\n    middle code\nend\n\nfunction test2()\n    start code\n    end code\nend\n\n');
+        done();
     });
-    it('test an API function and helper function together', () => {
+    it('test an API function and helper function together', (done) => {
         codeGenerator.addToAPIFunction('test', 'middle code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
         codeGenerator.addToStartAPIFunction('test', 'start code');
@@ -119,6 +127,115 @@ describe('Lua Code Manager tests:\n', () => {
         codeGenerator.addHelperFunction('testHelperFunction');
 
         expect(codeGenerator.generate()).toBe('-- nothing to see here\n\n-- Other snippet\n\nfunction test()\n    start code\n    start code\n    middle code\nend\n\nfunction test2()\n    start code\n    end code\nend\n\n');
+        done();
+    });
+    it('bot scripts validate', (done) => {
+        let config;
+        config = exampleObjectDefault.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        config = exampleObjectDefaultAllHeroes.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        config = exampleObjectDefaultHeroesByPos.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        config = exampleObjectDefaultItemsSpecified.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        config = exampleObjectDefaultAbilitiesSpecified.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        config = exampleObjectComplexOne.body;
+        expect(ConfigurationValidator.validate(config).valid).toBe(true);
+        expect(ConfigurationValidator.validate({ }).valid).toBe(false);
+        const invalid1 = {
+            name: 'test',
+            description: 'other',
+        };
+        expect(ConfigurationValidator.validate(invalid1).valid).toBe(false);
+        const invalid2 = {
+            name: 'test',
+            description: 'other',
+            configuration: {},
+        };
+        expect(ConfigurationValidator.validate(invalid2).valid).toBe(false);
+        const invalid3 = {
+            name: 'test',
+            description: 'other',
+            configuration: {
+                desires: {},
+            },
+        };
+        expect(ConfigurationValidator.validate(invalid3).valid).toBe(false);
+        const invalid4 = {
+            name: 'test',
+            description: 'other',
+            configuration: {
+                desires: {
+                    push: { },
+                    farm: { },
+                    defend: { },
+                    roam: { },
+                    roshan: { },
+                },
+            },
+        };
+        expect(ConfigurationValidator.validate(invalid4).valid).toBe(false);
+        const invalid5 = {
+            name: 'test',
+            description: 'other',
+            configuration: {
+                desires: {
+                    push: {
+                        top: { },
+                        mid: { },
+                        bot: { },
+                    },
+                    farm: {
+                        top: { },
+                        mid: { },
+                        bot: { },
+                    },
+                    defend: {
+                        top: { },
+                        mid: { },
+                        bot: { },
+                    },
+                    roam: { },
+                    roshan: { },
+                },
+            },
+        };
+        expect(ConfigurationValidator.validate(invalid5).valid).toBe(false);
+        const minValidLaneConfig = {
+            compoundConditions: [],
+            initialValue: 0,
+        };
+        const minValidConfig = {
+            name: 'test',
+            description: 'other',
+            configuration: {
+                desires: {
+                    push: {
+                        top: minValidLaneConfig,
+                        mid: minValidLaneConfig,
+                        bot: minValidLaneConfig,
+                    },
+                    farm: {
+                        top: minValidLaneConfig,
+                        mid: minValidLaneConfig,
+                        bot: minValidLaneConfig,
+                    },
+                    defend: {
+                        top: minValidLaneConfig,
+                        mid: minValidLaneConfig,
+                        bot: minValidLaneConfig,
+                    },
+                    roam: minValidLaneConfig,
+                    roshan: minValidLaneConfig,
+                },
+            },
+        };
+        expect(ConfigurationValidator.validate(minValidConfig).valid).toBe(true);
+        expect(ConfigurationValidator.validate().valid).toBe(false);
+        expect(ConfigurationValidator.validate('invalid').valid).toBe(false);
+        done();
     });
     describe('Lua code generation from object:', () => {
         const pathToFiles = path.join(process.env.NODE_PATH, 'public', 'lua', id, botId);

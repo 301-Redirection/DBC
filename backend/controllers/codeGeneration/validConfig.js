@@ -136,6 +136,7 @@ const validLaneConfig = {
         mid: validConfig,
         bot: validConfig,
     },
+    required: true,
 };
 
 const desiresValidConfig = {
@@ -151,19 +152,23 @@ const desiresValidConfig = {
 };
 
 const validBotConfig = {
+    type: 'object',
     properties: {
-        heroPool: heroPoolValidConfig,
-        heroes: { // note, not required
-            type: 'array',
-            items: {
-                type: heroSpecificationValidConfig,
-            },
-        },
         configuration: {
             properties: {
+                heroPool: heroPoolValidConfig, // note, not required
+                heroes: { // note, not required
+                    type: 'array',
+                    items: {
+                        type: heroSpecificationValidConfig,
+                    },
+                },
                 desires: desiresValidConfig,
             },
+            required: true,
         },
+        name: validString,
+        description: validString,
     },
 };
 

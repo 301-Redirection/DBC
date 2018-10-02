@@ -1,10 +1,6 @@
 // Note the heroPool Object is not correct
 module.exports = {
     body: {
-        heroPool: {
-            partitioned: false,
-            pool: [],
-        },
         configuration: {
             desires: {
                 push: {

@@ -53,47 +53,47 @@ module.exports = {
             heroes: [
                 {
                     name: 'drow_ranger',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'crystal_maiden',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'chaos_knight',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'centaur',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'chen',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'bloodseeker',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'axe',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'antimage',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'abaddon',
-                    abilities: 'qweqqrewqetnqrnt',
+                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
             ],
