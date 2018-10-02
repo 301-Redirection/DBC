@@ -220,4 +220,3 @@ const LuaCodeTemplateManager = function () {
 
 const codeGenerator = new LuaCodeTemplateManager();
 module.exports.codeGenerator = codeGenerator;
-

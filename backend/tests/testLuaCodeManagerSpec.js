@@ -5,13 +5,13 @@ const { codeGenerator } = require('controllers/codeGeneration/LuaCodeTemplateMan
 const { writeScripts } = require('controllers/codeGeneration/generateScript.js');
 const fs = require('fs');
 const unzip = require('unzip');
+const mocks = require('node-mocks-http');
 const exampleObjectDefault = require('../../config/exampleConfigurationsBots/default.js');
 const exampleObjectDefaultAllHeroes = require('../../config/exampleConfigurationsBots/defaultAllHeroes.js');
 const exampleObjectDefaultHeroesByPos = require('../../config/exampleConfigurationsBots/defaultHeroesByPosition.js');
 const exampleObjectDefaultItemsSpecified = require('../../config/exampleConfigurationsBots/defaultItemsSpecified.js');
 const exampleObjectDefaultAbilitiesSpecified = require('../../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
 const exampleObjectComplexOne = require('../../config/exampleConfigurationsBots/complexOne.js');
-const mocks = require('node-mocks-http');
 
 const response = mocks.createResponse();
 

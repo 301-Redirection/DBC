@@ -1,6 +1,6 @@
 /** Specific subtypes that are re-used often */
 const validNumber = {
-    type: 'number',
+    type: ['number', 'null'],
     required: true,
 };
 
@@ -21,9 +21,9 @@ const validBoolean = {
 
 // A Number that ranges from -1 to 1
 const validProportion = {
-    type: 'number',
-    minimum: -1,
-    maximum: 1,
+    type: ['number', 'null'],
+    minimum: -100,
+    maximum: 100,
     required: true,
 };
 
@@ -61,16 +61,6 @@ const compoundConditionConfig = {
     required: true,
 };
 
-/** Specific Validation Types for the BotConfigObjects */
-const heroPoolValidConfig = {
-    properties: {
-        partitioned: validBoolean,
-        pool: {
-            type: 'array', // Note not required
-        },
-    },
-};
-
 const heroConfigurationValidConfig = {
     properties: {
         name: validString,
@@ -83,20 +73,16 @@ const heroConfigurationValidConfig = {
     },
 };
 
-const heroSpecificationValidConfig = {
+/** Specific Validation Types for the BotConfigObjects */
+const heroPoolValidConfig = {
+    type: 'object',
     properties: {
-        name: validString,
-        abilities: { // Note not required
-            type: 'string',
-            // TO DO: uncomment this but fix tests
-            // minLength: 25,
-            // maxLength: 25,
-        },
-        talents: { // Note not required but if abilities is present then so must talents
-            type: 'array',
-        },
-        items: {
+        partitioned: validBoolean,
+        pool: {
             type: 'array', // Note not required
+            items: {
+                type: heroConfigurationValidConfig,
+            },
         },
     },
 };
@@ -105,6 +91,34 @@ const validItemComponent = {
     properties: {
         name: validString,
         components: validArray,
+    },
+};
+
+const heroSpecificationValidConfig = {
+    properties: {
+        name: validString,
+        abilities: { // Note not required
+            type: 'string',
+            minLength: 25,
+            maxLength: 25,
+        },
+        talents: { // Note not required but if abilities is present then so must talents
+            type: 'array',
+            minItems: 4,
+            maxItems: 4,
+        },
+
+        dependencies: {
+            talents: {
+                required: ['abilities'],
+            },
+        },
+        items: {
+            type: 'array', // Note not required
+            items: {
+                type: validItemComponent,
+            },
+        },
     },
 };
 
@@ -125,6 +139,8 @@ const validLaneConfig = {
 };
 
 const desiresValidConfig = {
+    type: 'object',
+    required: true,
     properties: {
         push: validLaneConfig,
         farm: validLaneConfig,
@@ -134,49 +150,23 @@ const desiresValidConfig = {
     },
 };
 
-const overallValidConfig = {
+const validBotConfig = {
     properties: {
-        heroPool: { // note, not required
-            type: 'object',
-        },
+        heroPool: heroPoolValidConfig,
         heroes: { // note, not required
             type: 'array',
+            items: {
+                type: heroSpecificationValidConfig,
+            },
         },
         configuration: {
             properties: {
-                desires: {
-                    type: 'object',
-                    required: true,
-                },
+                desires: desiresValidConfig,
             },
         },
     },
 };
 
-class ValidationException {
-    constructor(generalError, specificError) {
-        this.generalError = generalError;
-        this.specificError = specificError;
-    }
-    getErrorType() {
-        return this.generalError;
-    }
-    getError() {
-        return this.specificError;
-    }
-}
-
 module.exports = {
-    desiresValidConfig,
-    validLaneConfig,
-    validConfig,
-    heroSpecificationValidConfig,
-    compoundConditionConfig,
-    validNumber,
-    validProportion,
-    heroPoolValidConfig,
-    heroConfigurationValidConfig,
-    overallValidConfig,
-    validItemComponent,
-    ValidationException,
+    validBotConfig,
 };

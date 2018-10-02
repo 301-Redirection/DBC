@@ -10,12 +10,12 @@
  *
  * */
 
-const { codeGenerator } = require('./LuaCodeTemplateManager.js');
-const { ConfigurationValidator } = require('./ConfigurationValidator.js');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 const moment = require('moment');
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
+const { ConfigurationValidator } = require('./ConfigurationValidator.js');
 
 const NODE_PATH = path.join(__dirname, '..', '..');
 
@@ -340,7 +340,13 @@ const getBotScriptDirectory = function (id, botId) {
  *
  * */
 const writeScripts = function (req, res, id, botId) {
-    ConfigurationValidator.validate(req.body);
+    const result = ConfigurationValidator.validate(req.body);
+    if (!result.valid) {
+        // console.log(result);
+        // console.log('Invalid botconfig');
+        // console.log(result.errors[0].schema.type.properties);
+        // console.log(result.errors[0].instance);
+    }
     // console.log(req.body.configuration.desires.push.top.compoundConditions[0]);
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));

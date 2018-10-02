@@ -1,10 +1,10 @@
 const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '../');
+process.env.NODE_PATH = path.join(__dirname, '..');
 require('module').Module._initPaths();
 const models = require('models');
-const config = require('../../config/config.js');
 const Sequelize = require('sequelize');
 const { spawnSync } = require('child_process');
+const config = require('../../config/config.js');
 
 const IS_WIN = process.platform === 'win32';
 

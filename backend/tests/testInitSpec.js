@@ -18,7 +18,7 @@ block that contains tests connected with that feature. */
 */
 
 const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '../');
+process.env.NODE_PATH = path.join(__dirname, '..');
 require('module').Module._initPaths();
 const Request = require('request');
 const sinon = require('sinon');
