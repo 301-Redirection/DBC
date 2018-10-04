@@ -210,7 +210,7 @@ const generateRoshanDesires = function (req) {
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roshan.initialValue}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -220,7 +220,7 @@ const generateRoamDesires = function (req) {
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roam.initialValue}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -240,7 +240,7 @@ const generateLaneDesires = function (reqType) {
     scriptBuilder += getConditions(bot.compoundConditions);
     scriptBuilder += 'local botCommon = common\n\n';
 
-    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
+    scriptBuilder += 'return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}';
     return scriptBuilder;
 };
 
@@ -252,6 +252,7 @@ const generateLaneDesires = function (reqType) {
 const generateTeamDesires = function (req) {
     // Reset helperFunction and APIFunction objects
     codeGenerator.reset();
+    codeGenerator.addHelperFunction('validateDesire');
 
     // Adds the script name and the description as a comment at the top of the file
     const { name, description } = req.body;
