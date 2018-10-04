@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
 import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -40,6 +40,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
+        private router: Router,
         private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
@@ -74,8 +75,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
-                    this.generateURL =
-                        `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
+                    if (this.id === -1) {
+                        this.id = data.botConfig.id;
+                        this.router.navigate(['/bot-config', { botScriptID: this.id }]);
+                    }
                     alert('Bot configurations saved!');
                 },
                 (error) => {
@@ -130,6 +133,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 res = res[0];
                 if (res != null) {
                     this.id = res.id;
+                    this.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${this.id}`;
                     this.name = res.name;
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));

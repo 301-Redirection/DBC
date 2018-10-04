@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { Title } from '@angular/platform-browser';
@@ -93,6 +93,10 @@ describe('BotConfigComponent', () => {
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
                 { provide: ActivatedRoute, useValue: activatedRoute },
+                {
+                    provide: Router,
+                    useClass: class { navigate = jasmine.createSpy('navigate'); },
+                },
                 BotConfigDataService,
             ],
         })
