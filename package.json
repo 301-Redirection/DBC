@@ -13,7 +13,7 @@
     "lint": "npm run lint-ts && npm run lint-js",
     "lint-ts": "ng lint",
     "lint-js": "./node_modules/.bin/eslint ./ --ext js",
-    "e2e": "ng e2e",
+    "e2e": "node ./backend/www & ng e2e",
     "test-init": "./node_modules/jasmine/bin/jasmine.js init",
     "scrape": "node ./backend/static/converters/updateDotaDefinitions.js",
     "compodoc": "./node_modules/.bin/compodoc -p frontend/tsconfig.app.json -a ./documentation/compodoc",
