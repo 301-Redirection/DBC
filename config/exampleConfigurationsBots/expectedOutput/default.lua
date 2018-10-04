@@ -16,7 +16,7 @@ function UpdateRoshaneDesires()
     if (DotaTime() < 300) then
         common += 0.25
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdateRoamDesires()
@@ -24,7 +24,7 @@ function UpdateRoamDesires()
     if (DotaTime() < 300) then
         common += 0.25
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdatePushLaneDesires()
@@ -46,7 +46,7 @@ function UpdatePushLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateDefendLaneDesires()
@@ -68,7 +68,7 @@ function UpdateDefendLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateFarmLaneDesires()
@@ -90,6 +90,6 @@ function UpdateFarmLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
