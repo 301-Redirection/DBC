@@ -30,7 +30,7 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(ngModel)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5"></mat-slider>
+                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [value]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
@@ -71,7 +71,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="button-group" *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length != 0" role="group">
+                                                <div class="button-group" *ngIf="comp.conditions.length > 0" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
                                                             <mat-form-field class="col-md-4">
