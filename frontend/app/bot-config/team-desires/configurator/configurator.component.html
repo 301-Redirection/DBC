@@ -1,12 +1,12 @@
 <div class="row d-flex align-contents-center">
     <mat-form-field class="col-md-4">
-        <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="condition.trigger">
-            <mat-option *ngFor="let t of triggers | enumToArray" [value]="t" (click)="updateInputBounds(t)">{{t}}</mat-option>
+        <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="triggers[condition.trigger]">
+            <mat-option *ngFor="let t of triggers | enumToArray" [value]="triggers[t]" (click)="updateInputBounds(t)">{{t}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-        <mat-select placeholder="IS" [(value)]="condition.operator" [matTooltip]="condition.operator">
-            <mat-option *ngFor="let o of operators | enumToArray" [value]="o">{{o}}</mat-option>
+        <mat-select placeholder="IS" [(value)]="condition.operator" [matTooltip]="operators[condition.operator]">
+            <mat-option *ngFor="let o of operators | enumToArray" [value]="operators[o]">{{o}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="col-md-4" hintLabel="(Enter a value from {{min}} to {{max == null ? 'infinity' : max}})">

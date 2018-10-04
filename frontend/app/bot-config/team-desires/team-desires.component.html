@@ -75,12 +75,12 @@
                                                     <div class="list-group-item">
                                                         <div class="row">
                                                             <mat-form-field class="col-md-4">
-                                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
-                                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                                <mat-select placeholder="THEN" [(value)]="comp.action" [matTooltip]="actions[comp.action]">
+                                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="actions[t]">{{t}}</mat-option>
                                                                 </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field class="col-md-3" hintLabel="Percent (-100 to 100)">
-                                                                <input matInput min="0" max="100" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
+                                                                <input matInput min="0" max="101" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -142,8 +142,8 @@
                                         </div>
                                         <div class="list-group-item" *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length != 0">
                                             <mat-form-field class="col-md-4">
-                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
-                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                <mat-select placeholder="THEN" [(value)]="comp.action" [matTooltip]="actions[comp.action]">
+                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="actions[t]">{{t}}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
                                             <mat-form-field class="col-md-3" hintLabel="Percent">

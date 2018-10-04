@@ -2,8 +2,8 @@
 // process.env.NODE_PATH = path.join(__dirname, '..');
 // require('module').Module._initPaths();
 // const { writeScripts, shouldRegenerateBotScripts } = require('./generateScript.js');
-const { writeScripts } = require('./generateScript.js');
 const mocks = require('node-mocks-http');
+const { writeScripts } = require('./generateScript.js');
 
 const items = [
     {
@@ -231,19 +231,19 @@ const configObject = {
         push: {
             top: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             mid: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             bot: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
@@ -251,19 +251,19 @@ const configObject = {
         farm: {
             top: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             mid: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             bot: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
@@ -271,32 +271,32 @@ const configObject = {
         defend: {
             top: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             mid: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
             bot: {
                 conditions: [],
-                logicalOperator: [],
+                logicalOperators: [],
                 compoundConditions: [],
                 initialValue: 0.5,
             },
         },
         roam: {
             conditions: [],
-            logicalOperator: [],
+            logicalOperators: [],
             compoundConditions: [],
             initialValue: 0.5,
         },
         roshan: {
             conditions: [],
-            logicalOperator: [],
+            logicalOperators: [],
             compoundConditions: [],
             initialValue: 0.5,
         },
