@@ -299,7 +299,7 @@ const generateTeamDesires = function (req) {
 /**
  *  Will return the user's public directory
  *
- *  Note: If Public/Lua/{id} does not exist in the root,
+ *  Note: If public/Lua/{id} does not exist in the root,
  *  the folders will be created in that order
  *
  */
@@ -330,10 +330,6 @@ const getBotScriptDirectory = function (id, botId) {
 /**
  *  This is the function that does the code generation
  *  via the Lua Code Manager Objects.
- *
- *  TO DO: Get team_desires.lua that we generate to replace the
- *         team_desires.lua copied from the code templates
- *         (There seems to be a synchronousity issue...)
  *
  *  The function takes the code at the specific folder
  *  and then joins it in a zip file for download by the download

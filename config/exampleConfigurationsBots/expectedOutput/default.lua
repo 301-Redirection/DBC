@@ -1,6 +1,16 @@
 -- test --
 [[ default object test ]]
 
+function validateDesire(desire)
+    if desire > 1 then
+        desire = 1
+    end
+    if desire < 0 then
+        desire = 0
+    end
+    return desire
+end
+
 function UpdateRoshaneDesires()
     local common = 0.25
     if (DotaTime() < 300) then
