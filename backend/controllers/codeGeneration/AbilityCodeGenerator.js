@@ -1,6 +1,6 @@
-const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 const path = require('path');
 const fs = require('fs-extra');
+const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 
 const PATH_TO_TEMPLATE_SCRIPTS = path.join(__dirname, '..', '..', 'static', 'codeTemplates');
 const ABILITY_TEMPLATE_FOLDER_NAME = 'abilityTemplates';

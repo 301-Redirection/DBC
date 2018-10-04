@@ -3,16 +3,16 @@
  * This code takes a loooong time to run, since it has to download around seven
  * or eight hundred files from an internet server
 */
-const config = require('../../../config/config.js');
 const request = require('request');
 const fs = require('fs');
 const cheerio = require('cheerio');
-const models = require('../../models');
 const Sequelize = require('sequelize');
 const path = require('path');
+const { spawnSync } = require('child_process');
+const config = require('../../../config/config.js');
+const models = require('../../models');
 
 const IS_WIN = process.platform === 'win32';
-const { spawnSync } = require('child_process');
 
 let isTest;
 if (process.argv.length >= 3) {

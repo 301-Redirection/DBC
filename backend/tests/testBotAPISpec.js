@@ -1,12 +1,12 @@
 const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '../backend');
+process.env.NODE_PATH = path.join(__dirname, '..');
 require('module').Module._initPaths();
-const config = require('../config/config.js');
 const Sequelize = require('sequelize');
 const request = require('request');
 const sinon = require('sinon');
 const http = require('http');
 const { spawnSync } = require('child_process');
+const config = require('../../config/config.js');
 
 const IS_WIN = process.platform === 'win32';
 
@@ -375,4 +375,3 @@ describe('Bot API testing', () => {
         });
     });
 });
-

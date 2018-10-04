@@ -110,8 +110,8 @@ export class BotConfigDataService {
     public scaleDesires (desires: any, scaleDown: boolean) {
         const compoundConditions = desires['compoundConditions'];
         if (compoundConditions.length) {
-            compoundConditions.forEach((condition) => {
-                const conditions = condition['conditions'];
+            compoundConditions.forEach((compoundCondition) => {
+                const conditions = compoundCondition['conditions'];
                 if (conditions != null) {
                     conditions.forEach((element) => {
                         const conditional = element['conditional'];
@@ -125,17 +125,17 @@ export class BotConfigDataService {
                             }
                         }
                     });
-                    condition['conditions'] = conditions;
+                    compoundCondition['conditions'] = conditions;
                 }
-                const value = condition['value'];
+                const value = compoundCondition['value'];
                 if (value != null) {
                     if (scaleDown) {
                         if (value > 1) {
-                            condition['value'] = value / 100;
+                            compoundCondition['value'] = value / 100;
                         }
                     } else {
                         if (value < 1) {
-                            condition['value'] = value * 100;
+                            compoundCondition['value'] = value * 100;
                         }
                     }
                 }

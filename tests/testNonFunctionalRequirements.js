@@ -6,6 +6,7 @@
 const path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../backend');
 require('module').Module._initPaths();
+const mocks = require('node-mocks-http');
 const exampleObjectDefault = require('../config/exampleConfigurationsBots/default.js');
 const exampleObjectDefaultAllHeroes = require('../config/exampleConfigurationsBots/defaultAllHeroes.js');
 const exampleObjectDefaultHeroesByPos = require('../config/exampleConfigurationsBots/defaultHeroesByPosition.js');
@@ -13,7 +14,6 @@ const exampleObjectDefaultItemsSpecified = require('../config/exampleConfigurati
 const exampleObjectDefaultAbilitiesSpecified = require('../config/exampleConfigurationsBots/defaultAbilitiesSpecified.js');
 const exampleObjectComplexOne = require('../config/exampleConfigurationsBots/complexOne.js');
 const { writeScripts } = require('../backend/controllers/codeGeneration/generateScript.js');
-const mocks = require('node-mocks-http');
 
 const response = mocks.createResponse();
 const id = 'timing';

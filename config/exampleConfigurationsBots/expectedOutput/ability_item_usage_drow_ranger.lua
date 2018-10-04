@@ -33,6 +33,15 @@ local AbilityToLevelUp ={
 	Abilities[4],
 	"nil",
 	"talent",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
+	"nil",
 }
 
 
