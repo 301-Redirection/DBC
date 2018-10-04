@@ -79,8 +79,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                         this.id = data.botConfig.id;
                         this.router.navigate(['/bot-config', { botScriptID: this.id }]);
                     }
-                    this.generateURL =
-                        `${globalConfig['app']['API_URL']}/download/${data.botConfig.id}`;
                     alert('Bot configurations saved!');
                 },
                 (error) => {
@@ -135,6 +133,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 res = res[0];
                 if (res != null) {
                     this.id = res.id;
+                    this.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${this.id}`;
                     this.name = res.name;
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
