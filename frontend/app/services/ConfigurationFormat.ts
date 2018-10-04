@@ -137,7 +137,6 @@ export enum Trigger {
     'Game Time' = 1,
     'Number of Enemy Heroes Alive',
     'Number of Allied Heroes Alive',
-    'Number of Enemy Heroes Visible to Team',
 }
 
 export enum LogicalOperator {

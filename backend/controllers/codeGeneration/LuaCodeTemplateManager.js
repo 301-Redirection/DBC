@@ -149,7 +149,7 @@ const LuaCodeTemplateManager = function () {
     this.generateBotScripts = function (configObject, callback) {
         if (configObject.heroPool) {
             if (configObject.heroPool.pool.length === 0) {
-                // if heroPool is an empty object, copy all scripts to the temp dir
+                // if heroPool is an empty array, copy all scripts to the temp dir
                 // so that all heroes are selected as a "default"
                 this.copyAllFilesFromFolder(PATH_TO_SCRIPTS);
             } else {
@@ -220,4 +220,3 @@ const LuaCodeTemplateManager = function () {
 
 const codeGenerator = new LuaCodeTemplateManager();
 module.exports.codeGenerator = codeGenerator;
-
