@@ -51,7 +51,7 @@ function UpdatePushLaneDesires()
     local alliesAlive = getAlliedHeroesAlive()
     local enemiesAlive = getEnemyHeroesAlive()
     if (enemiesAlive <= 3) and (alliesAlive >= 4) and (DotaTime() <= 72000) then
-        common += 0.31666666666666665
+        common += 0.35
     end
     local topCommon = common
     

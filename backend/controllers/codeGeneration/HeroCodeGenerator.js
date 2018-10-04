@@ -1,7 +1,7 @@
-const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 const path = require('path');
-const config = require('../../../config/config.js');
 const fs = require('fs-extra');
+const config = require('../../../config/config.js');
+const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 
 const NEW_LINE = LuaCodeGenerator.getNewLine();
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'heroSelectionTemplate';

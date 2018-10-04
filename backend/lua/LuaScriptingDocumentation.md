@@ -87,7 +87,7 @@ export interface Configuration {
 
 export interface CoumpoundCondition {
     conditions: Condition[];
-    logicalOperator: LogicalOperator[];
+    logicalOperators: LogicalOperator[];
 }
    
 export interface Condition {

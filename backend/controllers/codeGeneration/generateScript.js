@@ -10,11 +10,12 @@
  *
  * */
 
-const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 const moment = require('moment');
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
+const { ConfigurationValidator } = require('./ConfigurationValidator.js');
 
 const NODE_PATH = path.join(__dirname, '..', '..');
 
@@ -139,7 +140,6 @@ const getConditions = function (compoundConditions) {
     let overrideValue;
     let trigger = '';
     let operator = '';
-    let action = '';
     let logicalOperator = '';
     let scriptBuilder = '';
 
@@ -147,6 +147,8 @@ const getConditions = function (compoundConditions) {
         if (compound.conditions.length > 0) {
             const { conditions } = compound;
 
+            const action = getAction(compound.action);
+            const totalValue = compound.value;
             let hasNumAlliesTrigger = false;
             let hasNumEnemiesTrigger = false;
             for (let i = 0; i < conditions.length; i += 1) {
@@ -172,27 +174,24 @@ const getConditions = function (compoundConditions) {
 
             // Begin if statement for the current CompoundCondition
             scriptBuilder += 'if';
-            let totalValue = 0;
             let i = 0;
             for (i = 0; i < conditions.length; i += 1) {
                 trigger = getTrigger(conditions[i].trigger);
                 operator = getOperator(conditions[i].operator);
-                action = getAction(conditions[i].action);
-                totalValue += conditions[i].value;
 
                 if (action === 'return') {
                     override = true;
-                    overrideValue = conditions[i].value;
+                    overrideValue = totalValue;
                 }
 
                 if (i < conditions.length - 1) {
-                    logicalOperator = getLogicalOperator(compound.logicalOperator[i]);
+                    logicalOperator = getLogicalOperator(compound.logicalOperators[i]);
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
                 } else {
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
 
                     if (override === false) {
-                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
+                        scriptBuilder += `    ${action} ${totalValue}\n`;
                     } else {
                         scriptBuilder += `    common = ${overrideValue}\n`;
                     }
@@ -342,6 +341,14 @@ const getBotScriptDirectory = function (id, botId) {
  *
  * */
 const writeScripts = function (req, res, id, botId) {
+    const result = ConfigurationValidator.validate(req.body);
+    if (!result.valid) {
+        // console.log(result);
+        // console.log('Invalid botconfig');
+        // console.log(result.errors[0].schema.type.properties);
+        // console.log(result.errors[0].instance);
+    }
+    // console.log(req.body.configuration.desires.push.top.compoundConditions[0]);
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);
