@@ -69,40 +69,31 @@ export class BotConfigDataService {
 
     // Team desires
     public setTeamDesires(teamDesires: any): void {
-        this.config.desires = this.scaleTeamDesires(teamDesires, true);
+        // this.config.desires = this.scaleTeamDesires(teamDesires, true);
+        this.config.desires = teamDesires;
     }
 
     public getTeamDesires(): any {
-        return this.scaleTeamDesires(this.config.desires, false);
+        // return this.scaleTeamDesires(this.config.desires, false);
+        return this.config.desires;
     }
+    /* Commented out as this should now be redundant.
+        See /backend/controllers/codeGeneration/generateScript.js
+        where I, Russell, have moved this functionality to.
 
     public scaleTeamDesires(teamDesires: any, scaleDown: boolean): any {
-        if (scaleDown) {
-            teamDesires['defend'] = this.refineDesires(teamDesires['defend'], true);
-            teamDesires['farm'] = this.refineDesires(teamDesires['farm'], true);
-            teamDesires['push'] = this.refineDesires(teamDesires['push'], true);
-            teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], true);
-            teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], true);
-        }else {
-            teamDesires['defend'] = this.refineDesires(teamDesires['defend'], false);
-            teamDesires['farm'] = this.refineDesires(teamDesires['farm'], false);
-            teamDesires['push'] = this.refineDesires(teamDesires['push'], false);
-            teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], false);
-            teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], false);
-        }
+        teamDesires['defend'] = this.refineDesires(teamDesires['defend'], scaleDown);
+        teamDesires['farm'] = this.refineDesires(teamDesires['farm'], scaleDown);
+        teamDesires['push'] = this.refineDesires(teamDesires['push'], scaleDown);
+        teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], scaleDown);
+        teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], scaleDown);
         return teamDesires;
     }
 
     public refineDesires(desires: any, scaleDown: boolean): any {
-        if (scaleDown) {
-            desires['bot'] = this.scaleDesires(desires['bot'], true);
-            desires['mid'] = this.scaleDesires(desires['mid'], true);
-            desires['top'] = this.scaleDesires(desires['top'], true);
-        }else {
-            desires['bot'] = this.scaleDesires(desires['bot'], false);
-            desires['mid'] = this.scaleDesires(desires['mid'], false);
-            desires['top'] = this.scaleDesires(desires['top'], false);
-        }
+        desires['bot'] = this.scaleDesires(desires['bot'], scaleDown);
+        desires['mid'] = this.scaleDesires(desires['mid'], scaleDown);
+        desires['top'] = this.scaleDesires(desires['top'], scaleDown);
         return desires;
     }
 
@@ -113,16 +104,8 @@ export class BotConfigDataService {
                 const conditions = compoundCondition['conditions'];
                 if (conditions != null) {
                     conditions.forEach((element) => {
-                        const conditional = element['conditional'];
-                        if (scaleDown) {
-                            if (conditional > 1) {
-                                element['conditional'] = conditional / 100;
-                            }
-                        } else {
-                            if (conditional < 1) {
-                                element['conditional'] = conditional * 100;
-                            }
-                        }
+                        element['conditional'] = scaleDown ? element['conditional'] / 100
+                            : element['conditional'] * 100;
                     });
                     compoundCondition['conditions'] = conditions;
                 }
@@ -155,6 +138,7 @@ export class BotConfigDataService {
         }
         return desires;
     }
+    */
 
     /**************************/
     /*     Hero Functions     */
