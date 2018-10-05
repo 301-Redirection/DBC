@@ -44,9 +44,9 @@ function UpdateRoamDesires()
 end
 
 function UpdatePushLaneDesires()
-    local common = 0.2
+    local common = 0.02
     if (DotaTime() < 300) then
-        common += 0.1
+        common += 0.01
     end
     local alliesAlive = getAlliedHeroesAlive()
     local enemiesAlive = getEnemyHeroesAlive()
@@ -95,7 +95,7 @@ end
 function UpdateFarmLaneDesires()
     local common = 0.25
     if (DotaTime() <= 1200) then
-        common += 0.5
+        common += 0.05
     end
     local enemiesAlive = getEnemyHeroesAlive()
     if (enemiesAlive >= 3) or (DotaTime() >= 180) then
@@ -111,7 +111,7 @@ function UpdateFarmLaneDesires()
     
     common = 0.35
     if (DotaTime() <= 1200) then
-        common += 0.5
+        common += 0.05
     end
     local enemiesAlive = getEnemyHeroesAlive()
     if (enemiesAlive >= 3) and (DotaTime() >= 180) then
