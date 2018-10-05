@@ -209,7 +209,7 @@ const generateRoshanDesires = function (req) {
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roshan.initialValue}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -219,7 +219,7 @@ const generateRoamDesires = function (req) {
     let scriptBuilder = '';
     scriptBuilder += `local common = ${roam.initialValue}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -239,7 +239,7 @@ const generateLaneDesires = function (reqType) {
     scriptBuilder += getConditions(bot.compoundConditions);
     scriptBuilder += 'local botCommon = common\n\n';
 
-    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
+    scriptBuilder += 'return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}';
     return scriptBuilder;
 };
 
@@ -251,6 +251,7 @@ const generateLaneDesires = function (reqType) {
 const generateTeamDesires = function (req) {
     // Reset helperFunction and APIFunction objects
     codeGenerator.reset();
+    codeGenerator.addHelperFunction('validateDesire');
 
     // Adds the script name and the description as a comment at the top of the file
     const { name, description } = req.body;
@@ -298,7 +299,7 @@ const generateTeamDesires = function (req) {
 /**
  *  Will return the user's public directory
  *
- *  Note: If Public/Lua/{id} does not exist in the root,
+ *  Note: If public/Lua/{id} does not exist in the root,
  *  the folders will be created in that order
  *
  */
@@ -329,10 +330,6 @@ const getBotScriptDirectory = function (id, botId) {
 /**
  *  This is the function that does the code generation
  *  via the Lua Code Manager Objects.
- *
- *  TO DO: Get team_desires.lua that we generate to replace the
- *         team_desires.lua copied from the code templates
- *         (There seems to be a synchronousity issue...)
  *
  *  The function takes the code at the specific folder
  *  and then joins it in a zip file for download by the download

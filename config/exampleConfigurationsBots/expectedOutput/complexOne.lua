@@ -1,6 +1,16 @@
 -- test --
 [[ complex object test ]]
 
+function validateDesire(desire)
+    if desire > 1 then
+        desire = 1
+    end
+    if desire < 0 then
+        desire = 0
+    end
+    return desire
+end
+
 function getEnemyHeroesAlive() {    
     local enemiesAlive = 0
     for _,h in pairs(UNIT_LIST_ENEMY_HEROES)
@@ -27,7 +37,7 @@ function UpdateRoshaneDesires()
     if (DotaTime() >= 2100) or (enemiesAlive <= 3) then
         common += 0.35
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdateRoamDesires()
@@ -40,7 +50,7 @@ function UpdateRoamDesires()
     if (DotaTime() <= 900) or (alliesAlive >= 1) then
         common += 0.325
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdatePushLaneDesires()
@@ -67,7 +77,7 @@ function UpdatePushLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateDefendLaneDesires()
@@ -89,7 +99,7 @@ function UpdateDefendLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateFarmLaneDesires()
@@ -119,6 +129,6 @@ function UpdateFarmLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 

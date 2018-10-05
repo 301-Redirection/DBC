@@ -1,12 +1,22 @@
 -- test --
 [[ default object test ]]
 
+function validateDesire(desire)
+    if desire > 1 then
+        desire = 1
+    end
+    if desire < 0 then
+        desire = 0
+    end
+    return desire
+end
+
 function UpdateRoshaneDesires()
     local common = 0.25
     if (DotaTime() < 300) then
         common += 0.25
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdateRoamDesires()
@@ -14,7 +24,7 @@ function UpdateRoamDesires()
     if (DotaTime() < 300) then
         common += 0.25
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdatePushLaneDesires()
@@ -36,7 +46,7 @@ function UpdatePushLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateDefendLaneDesires()
@@ -58,7 +68,7 @@ function UpdateDefendLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateFarmLaneDesires()
@@ -80,6 +90,6 @@ function UpdateFarmLaneDesires()
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 

@@ -98,9 +98,6 @@ class BotController {
                 .then((botConfig) => {
                     writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
-                })
-                .catch(() => {
-                    response.status(500).json({ error: true, message: 'Database Error' });
                 });
         } else {
             models.BotConfig.find({
