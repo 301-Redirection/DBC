@@ -148,7 +148,7 @@ const getConditions = function (compoundConditions) {
             const { conditions } = compound;
 
             const action = getAction(compound.action);
-            const totalValue = compound.value;
+            const totalValue = compound.value / 100;
             let hasNumAlliesTrigger = false;
             let hasNumEnemiesTrigger = false;
             for (let i = 0; i < conditions.length; i += 1) {
@@ -207,7 +207,7 @@ const getConditions = function (compoundConditions) {
 const generateRoshanDesires = function (req) {
     const { roshan } = req.body.configuration.desires;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${roshan.initialValue}\n`;
+    scriptBuilder += `local common = ${roshan.initialValue / 100}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
     scriptBuilder += 'return common';
     return scriptBuilder;
@@ -217,7 +217,7 @@ const generateRoshanDesires = function (req) {
 const generateRoamDesires = function (req) {
     const { roam } = req.body.configuration.desires;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${roam.initialValue}\n`;
+    scriptBuilder += `local common = ${roam.initialValue / 100}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
     scriptBuilder += 'return common';
     return scriptBuilder;
@@ -227,15 +227,15 @@ const generateRoamDesires = function (req) {
 const generateLaneDesires = function (reqType) {
     const { top, mid, bot } = reqType;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${top.initialValue}\n`;
+    scriptBuilder += `local common = ${top.initialValue / 100}\n`;
     scriptBuilder += getConditions(top.compoundConditions);
     scriptBuilder += 'local topCommon = common\n\n';
 
-    scriptBuilder += `common = ${mid.initialValue}\n`;
+    scriptBuilder += `common = ${mid.initialValue / 100}\n`;
     scriptBuilder += getConditions(mid.compoundConditions);
     scriptBuilder += 'local midCommon = common\n\n';
 
-    scriptBuilder += `common = ${bot.initialValue}\n`;
+    scriptBuilder += `common = ${bot.initialValue / 100}\n`;
     scriptBuilder += getConditions(bot.compoundConditions);
     scriptBuilder += 'local botCommon = common\n\n';
 
