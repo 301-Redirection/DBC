@@ -77,68 +77,6 @@ export class BotConfigDataService {
         // return this.scaleTeamDesires(this.config.desires, false);
         return this.config.desires;
     }
-    /* Commented out as this should now be redundant.
-        See /backend/controllers/codeGeneration/generateScript.js
-        where I, Russell, have moved this functionality to.
-
-    public scaleTeamDesires(teamDesires: any, scaleDown: boolean): any {
-        teamDesires['defend'] = this.refineDesires(teamDesires['defend'], scaleDown);
-        teamDesires['farm'] = this.refineDesires(teamDesires['farm'], scaleDown);
-        teamDesires['push'] = this.refineDesires(teamDesires['push'], scaleDown);
-        teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], scaleDown);
-        teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], scaleDown);
-        return teamDesires;
-    }
-
-    public refineDesires(desires: any, scaleDown: boolean): any {
-        desires['bot'] = this.scaleDesires(desires['bot'], scaleDown);
-        desires['mid'] = this.scaleDesires(desires['mid'], scaleDown);
-        desires['top'] = this.scaleDesires(desires['top'], scaleDown);
-        return desires;
-    }
-
-    public scaleDesires (desires: any, scaleDown: boolean) {
-        const compoundConditions = desires['compoundConditions'];
-        if (compoundConditions.length) {
-            compoundConditions.forEach((compoundCondition) => {
-                const conditions = compoundCondition['conditions'];
-                if (conditions != null) {
-                    conditions.forEach((element) => {
-                        element['conditional'] = scaleDown ? element['conditional'] / 100
-                            : element['conditional'] * 100;
-                    });
-                    compoundCondition['conditions'] = conditions;
-                }
-                const value = compoundCondition['value'];
-                if (value != null) {
-                    if (scaleDown) {
-                        if (value > 1) {
-                            compoundCondition['value'] = value / 100;
-                        }
-                    } else {
-                        if (value < 1) {
-                            compoundCondition['value'] = value * 100;
-                        }
-                    }
-                }
-            });
-            desires['compoundConditions'] = compoundConditions;
-        }
-        const initialValue = desires['initialValue'];
-        if (initialValue !== 0) {
-            if (scaleDown) {
-                if (initialValue > 1) {
-                    desires['initialValue'] = initialValue / 100;
-                }
-            } else {
-                if (initialValue < 1) {
-                    desires['initialValue'] = initialValue * 100;
-                }
-            }
-        }
-        return desires;
-    }
-    */
 
     /**************************/
     /*     Hero Functions     */
