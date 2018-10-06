@@ -68,7 +68,7 @@ class StaticController {
                 // only return add a hero to final output if they have implemented bots
                 for (let i = 0; i < heroes.length; i += 1) {
                     const hero = heroes[i];
-                    const isUnimplemented = unimplentedHeroes.indexOf(hero.programName) !== -1;
+                    const isUnimplemented = unimplentedHeroes.indexOf(`npc_dota_hero_${hero.programName}`) !== -1;
                     if (!isUnimplemented) {
                         hero.dataValues.url = `/static/heroes/images/${heroes[i].programName}.png`;
                         const keys = Object.keys(hero.heroStats.dataValues);
