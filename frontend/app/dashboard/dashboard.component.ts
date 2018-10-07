@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
     }
 
     getUserBotScripts () {
-        if (this.viewMoreEnabled === true) {
+        if (this.viewMoreEnabled) {
             this.api.getAllBots().subscribe(
                 (data) => {
                     this.processBotData(data);
@@ -73,7 +73,6 @@ export class DashboardComponent implements OnInit {
                     const date = moment(bot.updatedAt).format(DATE_FORMAT);
                     bot.updatedAt = date;
                 }
-                console.log(this.bots.length);
             },
             () => { },
         );
