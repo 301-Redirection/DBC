@@ -32,32 +32,23 @@ export class DashboardComponent implements OnInit {
     }
 
     processBotData(data) {
-        this.bots = [];
         this.isRetrieving = true;
+        this.numberOfBots = data.numBots;
         let tempBots = [];
         tempBots = data.botConfigs;
-        this.numberOfBots = tempBots.length;
-
-        let botDisplayLimit;
-        if (this.viewMoreEnabled) {
-            botDisplayLimit = tempBots.length;
-        } else {
-            botDisplayLimit = (tempBots.length < 5) ? tempBots.length : 5;
-        }
-
-        for (let i = 0 ; i < botDisplayLimit ; i += 1) {
+        for (const i in tempBots) {
             const bot = tempBots[i];
             const date = moment(bot.updatedAt).format(DATE_FORMAT);
             bot.updatedAt = date;
             bot.generateURL =
                 `${globalConfig['app']['API_URL']}/download/${bot.id}`;
-            this.bots.push(bot);
         }
+        this.bots = tempBots;
         this.isRetrieving = false;
     }
 
     getUserBotScripts () {
-        this.api.getAllBots().subscribe(
+        this.api.recentBots().subscribe(
             (data) => {
                 this.processBotData(data);
             },
@@ -66,8 +57,17 @@ export class DashboardComponent implements OnInit {
     }
 
     viewMore () {
-        this.viewMoreEnabled = true;
-        this.getUserBotScripts();
+        this.api.getAllBots().subscribe(
+            (data) => {
+                this.bots = data.botConfigs;
+                for (const i in this.bots) {
+                    const bot = this.bots[i];
+                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
+                    bot.updatedAt = date;
+                }
+            },
+            () => { },
+        );
     }
 
     deleteBotScript (botScriptID: number) {
