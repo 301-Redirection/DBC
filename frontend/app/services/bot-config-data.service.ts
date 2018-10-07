@@ -69,92 +69,13 @@ export class BotConfigDataService {
 
     // Team desires
     public setTeamDesires(teamDesires: any): void {
-        this.config.desires = this.scaleTeamDesires(teamDesires, true);
-        console.log(this.config.desires);
+        // this.config.desires = this.scaleTeamDesires(teamDesires, true);
+        this.config.desires = teamDesires;
     }
 
     public getTeamDesires(): any {
-        return this.scaleTeamDesires(this.config.desires, false);
-    }
-
-    public scaleTeamDesires(teamDesires: any, scaleDown: boolean): any {
-        if (scaleDown) {
-            teamDesires['defend'] = this.refineDesires(teamDesires['defend'], true);
-            teamDesires['farm'] = this.refineDesires(teamDesires['farm'], true);
-            teamDesires['push'] = this.refineDesires(teamDesires['push'], true);
-            teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], true);
-            teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], true);
-        }else {
-            teamDesires['defend'] = this.refineDesires(teamDesires['defend'], false);
-            teamDesires['farm'] = this.refineDesires(teamDesires['farm'], false);
-            teamDesires['push'] = this.refineDesires(teamDesires['push'], false);
-            teamDesires['roam'] = this.scaleDesires(teamDesires['roam'], false);
-            teamDesires['roshan'] = this.scaleDesires(teamDesires['roshan'], false);
-        }
-        return teamDesires;
-    }
-
-    public refineDesires(desires: any, scaleDown: boolean): any {
-        if (scaleDown) {
-            desires['bot'] = this.scaleDesires(desires['bot'], true);
-            desires['mid'] = this.scaleDesires(desires['mid'], true);
-            desires['top'] = this.scaleDesires(desires['top'], true);
-        }else {
-            desires['bot'] = this.scaleDesires(desires['bot'], false);
-            desires['mid'] = this.scaleDesires(desires['mid'], false);
-            desires['top'] = this.scaleDesires(desires['top'], false);
-        }
-        return desires;
-    }
-
-    public scaleDesires (desires: any, scaleDown: boolean) {
-        const compoundConditions = desires['compoundConditions'];
-        if (compoundConditions.length) {
-            compoundConditions.forEach((compoundCondition) => {
-                const conditions = compoundCondition['conditions'];
-                if (conditions != null) {
-                    conditions.forEach((element) => {
-                        const conditional = element['conditional'];
-                        if (scaleDown) {
-                            if (conditional > 1) {
-                                element['conditional'] = conditional / 100;
-                            }
-                        } else {
-                            if (conditional < 1) {
-                                element['conditional'] = conditional * 100;
-                            }
-                        }
-                    });
-                    compoundCondition['conditions'] = conditions;
-                }
-                const value = compoundCondition['value'];
-                if (value != null) {
-                    if (scaleDown) {
-                        if (value > 1) {
-                            compoundCondition['value'] = value / 100;
-                        }
-                    } else {
-                        if (value < 1) {
-                            compoundCondition['value'] = value * 100;
-                        }
-                    }
-                }
-            });
-            desires['compoundConditions'] = compoundConditions;
-        }
-        const initialValue = desires['initialValue'];
-        if (initialValue !== 0) {
-            if (scaleDown) {
-                if (initialValue > 1) {
-                    desires['initialValue'] = initialValue / 100;
-                }
-            } else {
-                if (initialValue < 1) {
-                    desires['initialValue'] = initialValue * 100;
-                }
-            }
-        }
-        return desires;
+        // return this.scaleTeamDesires(this.config.desires, false);
+        return this.config.desires;
     }
 
     /**************************/
