@@ -107,7 +107,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-mocks-http": "^1.7.0",
-    "node-sass": "^4.8.3",
+    "node-sass": "^4.9.3",
     "protractor": "~5.1.2",
     "proxyquire": "^2.0.1",
     "seedquelize": "^1.0.1",
