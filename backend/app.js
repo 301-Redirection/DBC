@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const cors = require('cors');
 const index = require('routes/index.js');
@@ -24,12 +23,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(sassMiddleware({
-    src: path.join(__dirname, '../public'),
-    dest: path.join(__dirname, '../public'),
-    indentedSyntax: true, // true = .sass and false = .scss
-    sourceMap: true,
-}));
 
 // TODO: use a better secret...
 app.use(session({
