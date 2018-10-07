@@ -15,6 +15,7 @@ const DATE_FORMAT = 'DD/MM/YYYY [at] HH:mm';
 export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
+    numberOfBots: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
     isRetrieving: boolean;
     viewMoreEnabled: boolean;
@@ -31,36 +32,37 @@ export class DashboardComponent implements OnInit {
     }
 
     processBotData(data) {
+        this.bots = [];
         this.isRetrieving = true;
         let tempBots = [];
         tempBots = data.botConfigs;
-        for (const i in tempBots) {
+        this.numberOfBots = tempBots.length;
+
+        let botDisplayLimit;
+        if (this.viewMoreEnabled) {
+            botDisplayLimit = tempBots.length;
+        } else {
+            botDisplayLimit = (tempBots.length < 5) ? tempBots.length : 5;
+        }
+
+        for (let i = 0 ; i < botDisplayLimit ; i += 1) {
             const bot = tempBots[i];
             const date = moment(bot.updatedAt).format(DATE_FORMAT);
             bot.updatedAt = date;
             bot.generateURL =
                 `${globalConfig['app']['API_URL']}/download/${bot.id}`;
+            this.bots.push(bot);
         }
-        this.bots = tempBots;
         this.isRetrieving = false;
     }
 
     getUserBotScripts () {
-        if (this.viewMoreEnabled) {
-            this.api.getAllBots().subscribe(
-                (data) => {
-                    this.processBotData(data);
-                },
-                () => { },
-            );
-        } else {
-            this.api.recentBots().subscribe(
-                (data) => {
-                    this.processBotData(data);
-                },
-                () => { },
-            );
-        }
+        this.api.getAllBots().subscribe(
+            (data) => {
+                this.processBotData(data);
+            },
+            () => { },
+        );
     }
 
     viewMore () {
@@ -93,6 +95,8 @@ export class DashboardComponent implements OnInit {
         if (index !== -1) {
             this.bots.splice(index, 1);
         }
+
+        this.numberOfBots -= 1;
     }
 
     showDeleteModal(id) {

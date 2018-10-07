@@ -66,6 +66,16 @@ export class ApiConnectService {
             })
             .pipe(catchError(this.handleError));
     }
+
+    public getNumberOfBots() {
+        return this.http
+            .get(`${API_URL}/bots/count`, {
+                headers: new HttpHeaders().set('Authorization', this.authHeader),
+            },
+        )
+        .pipe(catchError(this.handleError));
+    }
+
     public removeBot(botScriptID: number) {
         const parameters = {
             botID: botScriptID,
