@@ -4,7 +4,7 @@ block that contains tests connected with that feature. */
 
 /*
     some documentation:
-    http://jasmine.github.io/2.0/introduction.html#section-Included_Matchers
+    http://jasmine.github.io/2.0/introduction.html
 */
 
 /* describe -- represents a test suite
