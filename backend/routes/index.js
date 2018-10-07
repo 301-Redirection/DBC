@@ -16,15 +16,6 @@ router.get('/', (req, res) => {
     IndexController.getHomePage(req, res);
 });
 
-// Perform session logout and redirect to homepage
-// router.get('/logout', (req, res) => {
-//     IndexController.logout(req, res);
-// });
-
-// router.get('/failure', (req, res) => {
-//     IndexController.failure(req, res);
-// });
-
 router.get('/test', (req, res) => {
     IndexController.test(req, res);
 });
@@ -32,9 +23,4 @@ router.get('/test', (req, res) => {
 router.get('/download/:id([0-9]+)', (req, res) => {
     IndexController.download(req, res);
 });
-
-/* just to test request and via its details */
-// router.get('/testAuthentication', jwtCheck, (req, res) => {
-//     IndexController.testAuthentication(req, res);
-// });
 module.exports = router;
