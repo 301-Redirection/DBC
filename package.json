@@ -67,7 +67,6 @@
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "ngx-popper": "^4.1.0",
-    "node-sass-middleware": "0.9.8",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "popper.js": "^1.14.3",
