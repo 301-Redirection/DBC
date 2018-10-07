@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
     botID: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
     isRetrieving: boolean;
+    viewMoreEnabled: boolean;
 
     constructor(private t: Title, private api: ApiConnectService) {
         this.t.setTitle(this.pageTitle);
@@ -26,29 +27,44 @@ export class DashboardComponent implements OnInit {
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
         this.isRetrieving = true;
+        this.viewMoreEnabled = false;
+    }
+
+    processBotData(data) {
+        this.isRetrieving = true;
+        let tempBots = [];
+        tempBots = data.botConfigs;
+        for (const i in tempBots) {
+            const bot = tempBots[i];
+            const date = moment(bot.updatedAt).format(DATE_FORMAT);
+            bot.updatedAt = date;
+            bot.generateURL =
+                `${globalConfig['app']['API_URL']}/download/${bot.id}`;
+        }
+        this.bots = tempBots;
+        this.isRetrieving = false;
     }
 
     getUserBotScripts () {
-        this.api.recentBots().subscribe(
-            (data) => {
-                this.isRetrieving = true;
-                let tempBots = [];
-                tempBots = data.botConfigs;
-                for (const i in tempBots) {
-                    const bot = tempBots[i];
-                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                    bot.updatedAt = date;
-                    bot.generateURL =
-                        `${globalConfig['app']['API_URL']}/download/${bot.id}`;
-                }
-                this.bots = tempBots;
-                this.isRetrieving = false;
-            },
-            () => { },
-        );
+        if (this.viewMoreEnabled === true) {
+            this.api.getAllBots().subscribe(
+                (data) => {
+                    this.processBotData(data);
+                },
+                () => { },
+            );
+        } else {
+            this.api.recentBots().subscribe(
+                (data) => {
+                    this.processBotData(data);
+                },
+                () => { },
+            );
+        }
     }
 
     viewMore () {
+        this.viewMoreEnabled = true;
         this.api.getAllBots().subscribe(
             (data) => {
                 this.bots = data.botConfigs;
