@@ -62,7 +62,7 @@
                         <h5>You currently have no bots</h5>
                     </li>
                 </div>
-                <div *ngFor="let bot of bots; let i=index;">
+                <div *ngFor="let bot of bots; let i = index;">
                     <li class="list-group-item manage-list-group-item" [attr.id]="'bot'+bot.id" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#bot'+bot.id+'Collapse'">
                         <!--Bot Item Heading-->
                         <div class="row">
@@ -101,11 +101,10 @@
                         <!--End of Details-->
                     </li>
                     <!--End of bot item-->
-                    <div *ngIf="i==4 && i==bots.length-1">
-                        <a (click)="viewMore()" id="viewMore" style="text-decoration: none">
-                            <li class="list-group-item manage-list-group-item">
-                                <h5>View More Bots</h5>
-                                <!--End of Details-->
+                    <div *ngIf="i == 4 && i == bots.length-1">
+                        <a id="viewMore">
+                            <li id="viewMoreGroupItem" class="list-group-item manage-list-group-item text-center">
+                                <button class="button button-generate" (click)="viewMore()">View More Bots</button>
                             </li>
                         </a>
                     </div>

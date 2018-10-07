@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
                     const date = moment(bot.updatedAt).format(DATE_FORMAT);
                     bot.updatedAt = date;
                 }
+                console.log(this.bots.length);
             },
             () => { },
         );
@@ -65,15 +66,13 @@ export class DashboardComponent implements OnInit {
     deleteBotScript (botScriptID: number) {
         this.api.removeBot(botScriptID).subscribe(
             (data) => {
-                // this.removeScriptFromBots(botScriptID);
+                this.removeScriptFromBots(botScriptID);
                 console.log(data);
             },
             (error) => {
                 console.log(error);
             },
         );
-        this.getUserBotScripts();
-        this.botID = -1;
     }
 
     removeScriptFromBots(botScriptID) {

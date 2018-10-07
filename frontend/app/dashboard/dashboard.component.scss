@@ -19,6 +19,14 @@
     text-align: center;
 }
 
+#viewMore {
+    text-decoration: none;
+}
+
+#viewMoreGroupItem:hover {
+    background-color: $dark-grey-3 !important;
+}
+
 /*
  |--------------------------------------
  | Responsive
