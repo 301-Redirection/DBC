@@ -83,7 +83,7 @@ export class HeroesComponent implements OnInit {
         this.selectedPool = 0;
         this.heroSearch = '';
         this.selectedHeroesList = [];
-        this.getHeroes();
+        this.getHeroData();
         this.selectedTab();
     }
 
@@ -109,7 +109,24 @@ export class HeroesComponent implements OnInit {
     /* Hero Persistance */
     /********************/
 
-    getHeroes(): void {
+    getHeroes(): any[] {
+        return this.allHeroes;
+    }
+
+    getHeroDataTemp(): any[] {
+        // database call to retrieve all dota heroes
+        this.api.getAllHeroes().subscribe(
+            (data) => {
+                return data['heroes'];
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+        return [];
+    }
+
+    getHeroData(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe(
             (data) => {

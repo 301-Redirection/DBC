@@ -74,7 +74,7 @@ export class ItemsComponent implements OnInit{
 
     ngOnInit() {
         this.getHeroes();
-        this.getItems();
+        this.getItemsData();
         this.itemSearch = '';
     }
 
@@ -129,7 +129,11 @@ export class ItemsComponent implements OnInit{
         return cost;
     }
 
-    getItems(): void {
+    getItems(): any[] {
+        return this.allItems;
+    }
+
+    getItemsData(): void {
         // database call to retrieve all dota items
         this.api.getAllItems().subscribe(
             (data) => {

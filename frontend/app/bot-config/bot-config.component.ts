@@ -13,6 +13,11 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
+import {
+    ConfigurationFormat,
+} from '../services/ConfigurationFormat';
+
+const MAX_DEPTH = 10;
 
 @Component({
     selector: 'app-bot-config',
@@ -138,7 +143,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     this.description = res.description;
                     // problem area
-                    this.botConfigData.readConfiguration(JSON.parse(res.configuration));
+                    // this.buildConfigData(JSON.parse(res.configuration));
+                    this.readConfig(JSON.parse(res.configuration));
                 }
             },
             (error) => {
@@ -146,4 +152,86 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             },
         );
     }
+
+    /**
+     * Reads the simplified server configuration and creates the template configuration
+     * that the frontend manipulates
+     */
+    readConfig(config: ConfigurationFormat): void {
+        // Building hero object
+        const selectedHeroes = [];
+        setTimeout(null, 1000);
+        const heroes = this.heroesComponent.getHeroes();
+        console.log('heroes');
+        console.log(heroes);
+        console.log('config.heroPool.pool');
+        console.log(config.heroPool.pool);
+        if (config.heroPool.partitioned) {
+            // TO DO
+            config.heroPool.pool.forEach((heroSpec) => {
+                const currentHero = heroes.find(tempHero => tempHero['name'] === heroSpec.name);
+                if (currentHero !== undefined) {
+                    selectedHeroes.push(currentHero);
+                }
+            });
+        } else {
+            config.heroPool.pool.forEach((heroSpec) => {
+                const currentHero = heroes.find(tempHero => tempHero['name'] === heroSpec.name);
+                if (currentHero !== undefined) {
+                    selectedHeroes.push(currentHero);
+                }
+            });
+        }
+        // Building items object
+        // const items = this.itemsComponent.getItems();
+        // console.log(items);
+        // if (config.heroes) {
+        //     config.heroes.forEach((heroSpec) => {
+        //         heroSpec.items = this.createComplexItemArray(heroSpec.items, items);
+        //     });
+        // }
+
+        this.botConfigData.setConfig(config);
+        console.log('selectedHeroes');
+        console.log(selectedHeroes);
+        this.botConfigData.setSelectedHeroes(selectedHeroes);
+    }
+
+    createComplexItemArray(items, validItems) {
+        const itemsArr = [];
+        if (items && items.length) {
+            items.forEach((element) => {
+                const tempArr = this.createComplexItem(element, validItems, 0);
+                if (tempArr !== null) {
+                    itemsArr.concat(tempArr);
+                }
+            });
+        }
+        return itemsArr;
+    }
+
+    // Recursive function to find complext item object
+    createComplexItem(item, validItems, depth) {
+        if (item) {
+            const newItems = [];
+            if (item.components) {
+                if (item.components === 'null' || item.components === null || depth >= MAX_DEPTH) {
+                    const newItem = validItems.find(tempItem => tempItem.name === item.name);
+                    if (newItem !== undefined) {
+                        newItems.push(newItem);
+                    }
+                } else if (item.components.length) {
+                    item.components.forEach((element) => {
+                        const tempItems = this.createComplexItem(element, validItems, depth + 1);
+                        if (tempItems !== undefined) {
+                            newItems.concat(tempItems);
+                        }
+                    });
+                }
+                return newItems;
+            }
+        }
+        return null;
+    }
+
 }

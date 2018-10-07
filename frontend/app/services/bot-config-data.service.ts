@@ -34,22 +34,10 @@ export class BotConfigDataService {
         return this.config;
     }
 
-    // public buildItemsArray(config: ConfigurationFormat): any[] {
-    //     const items = [];
-    //     config.heroes.forEach((heroSpec) => {
-
-    //     });
-    //     return items;
-    // }
-
-    public readConfiguration(config: ConfigurationFormat) {
-        this.setConfig(config);
-    }
-
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        const selectedHeroesArr = [];
-        this.setSelectedHeroes(selectedHeroesArr);
+        // const selectedHeroesArr = [];
+        // this.setSelectedHeroes(selectedHeroesArr);
         this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }
