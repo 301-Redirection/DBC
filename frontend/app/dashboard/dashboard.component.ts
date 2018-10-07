@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
+import * as globalConfig from '../../../config/config.js';
 import * as moment from 'moment';
 
 // Import JQuery
@@ -37,10 +38,11 @@ export class DashboardComponent implements OnInit {
                     const bot = tempBots[i];
                     const date = moment(bot.updatedAt).format(DATE_FORMAT);
                     bot.updatedAt = date;
+                    bot.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${bot.id}`;
                 }
                 this.bots = tempBots;
                 this.isRetrieving = false;
-                console.log(this.bots);
             },
             () => { },
         );
