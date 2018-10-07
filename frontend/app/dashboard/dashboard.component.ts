@@ -65,17 +65,7 @@ export class DashboardComponent implements OnInit {
 
     viewMore () {
         this.viewMoreEnabled = true;
-        this.api.getAllBots().subscribe(
-            (data) => {
-                this.bots = data.botConfigs;
-                for (const i in this.bots) {
-                    const bot = this.bots[i];
-                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                    bot.updatedAt = date;
-                }
-            },
-            () => { },
-        );
+        this.getUserBotScripts();
     }
 
     deleteBotScript (botScriptID: number) {
