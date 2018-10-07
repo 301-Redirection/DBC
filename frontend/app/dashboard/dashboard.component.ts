@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
     numberOfBots: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
     isRetrieving: boolean;
-    viewMoreEnabled: boolean;
 
     constructor(private t: Title, private api: ApiConnectService) {
         this.t.setTitle(this.pageTitle);
@@ -28,7 +27,6 @@ export class DashboardComponent implements OnInit {
         $('#deleteConfirmation').modal('hide');
         this.getUserBotScripts();
         this.isRetrieving = true;
-        this.viewMoreEnabled = false;
     }
 
     processBotData(data) {
