@@ -137,7 +137,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                         `${globalConfig['app']['API_URL']}/download/${this.id}`;
                     this.name = res.name;
                     this.description = res.description;
-                    this.botConfigData.setConfig(JSON.parse(res.configuration));
+                    // problem area
+                    this.botConfigData.readConfiguration(JSON.parse(res.configuration));
                 }
             },
             (error) => {
