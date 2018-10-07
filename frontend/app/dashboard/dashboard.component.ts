@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
     processBotData(data) {
         this.isRetrieving = true;
-        this.numberOfBots = data.numBots;
+        this.numberOfBots = data.numBots ? data.numBots : data.botConfigs.length;
         let tempBots = [];
         tempBots = data.botConfigs;
         for (const i in tempBots) {
@@ -57,12 +57,7 @@ export class DashboardComponent implements OnInit {
     viewMore () {
         this.api.getAllBots().subscribe(
             (data) => {
-                this.bots = data.botConfigs;
-                for (const i in this.bots) {
-                    const bot = this.bots[i];
-                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                    bot.updatedAt = date;
-                }
+                this.processBotData(data);
             },
             () => { },
         );
