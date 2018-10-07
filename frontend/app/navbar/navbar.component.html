@@ -4,13 +4,13 @@
         &nbsp;<sub id="botScriptTitle">BOT SCRIPTING</sub>
     </a>
 
-    <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-dropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar-dropdown">
+    <div class="collapse navbar-collapse" id="navbarDropdown">
         <!-- Show only if logged in -->
         <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">
             <li class="nav-item">
@@ -34,7 +34,7 @@
             </li>
             
             <!-- Show only if logged in -->
-            <li class="nav-item" *ngIf="auth.loggedIn">
+            <li id="signOutNavItem" class="nav-item" *ngIf="auth.loggedIn">
                 <div class="dropdown">
                     <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
@@ -48,7 +48,7 @@
                             Hello, {{auth.userProfile?.name}}
                         </div>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="welcomeButton">
+                    <div id="signOutDropdown" class="dropdown-menu" aria-labelledby="welcomeButton">
                         <button class="dropdown-item dropdown-item-danger" id="logoutButton" type="button" (click)="logout()">
                             <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;
                             SIGN OUT
