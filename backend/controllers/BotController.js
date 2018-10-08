@@ -7,6 +7,7 @@ const models = require('models');
 const path = require('path');
 const fs = require('fs');
 const mime = require('mime');
+const sequelize = require('sequelize');
 const { writeScripts, shouldRegenerateBotScripts } = require('./codeGeneration/generateScript.js');
 
 const PATH_TO_LUA = path.join(__dirname, '..', '..', '..', 'public', 'lua');
@@ -22,7 +23,16 @@ class BotController {
             limit: LIMIT_NUMBER,
         })
             .then((botConfigs) => {
-                response.status(200).json({ botConfigs });
+                models.BotConfig.findAll({
+                    where: { userId: request.user.sub },
+                    attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'numBots']],
+                })
+                    .then((returned) => {
+                        response.status(200).json({
+                            botConfigs,
+                            numBots: returned[0].dataValues.numBots,
+                        });
+                    });
             })
             .catch(() => {
                 response.status(500).json({ error: true, message: 'Database Error' });

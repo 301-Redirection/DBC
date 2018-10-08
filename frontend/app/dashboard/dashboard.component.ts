@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
+import * as globalConfig from '../../../config/config.js';
 import * as moment from 'moment';
 
 // Import JQuery
@@ -14,6 +15,7 @@ const DATE_FORMAT = 'DD/MM/YYYY [at] HH:mm';
 export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
+    numberOfBots: number;
     pageTitle = 'Dota 2 Bot Scripting - Dashboard';
     isRetrieving: boolean;
 
@@ -27,20 +29,26 @@ export class DashboardComponent implements OnInit {
         this.isRetrieving = true;
     }
 
+    processBotData(data) {
+        this.isRetrieving = true;
+        this.numberOfBots = data.numBots ? data.numBots : data.botConfigs.length;
+        let tempBots = [];
+        tempBots = data.botConfigs;
+        for (const i in tempBots) {
+            const bot = tempBots[i];
+            const date = moment(bot.updatedAt).format(DATE_FORMAT);
+            bot.updatedAt = date;
+            bot.generateURL =
+                `${globalConfig['app']['API_URL']}/download/${bot.id}`;
+        }
+        this.bots = tempBots;
+        this.isRetrieving = false;
+    }
+
     getUserBotScripts () {
         this.api.recentBots().subscribe(
             (data) => {
-                this.isRetrieving = true;
-                let tempBots = [];
-                tempBots = data.botConfigs;
-                for (const i in tempBots) {
-                    const bot = tempBots[i];
-                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                    bot.updatedAt = date;
-                }
-                this.bots = tempBots;
-                this.isRetrieving = false;
-                console.log(this.bots);
+                this.processBotData(data);
             },
             () => { },
         );
@@ -49,12 +57,7 @@ export class DashboardComponent implements OnInit {
     viewMore () {
         this.api.getAllBots().subscribe(
             (data) => {
-                this.bots = data.botConfigs;
-                for (const i in this.bots) {
-                    const bot = this.bots[i];
-                    const date = moment(bot.updatedAt).format(DATE_FORMAT);
-                    bot.updatedAt = date;
-                }
+                this.processBotData(data);
             },
             () => { },
         );
@@ -63,15 +66,13 @@ export class DashboardComponent implements OnInit {
     deleteBotScript (botScriptID: number) {
         this.api.removeBot(botScriptID).subscribe(
             (data) => {
-                // this.removeScriptFromBots(botScriptID);
+                this.removeScriptFromBots(botScriptID);
                 console.log(data);
             },
             (error) => {
                 console.log(error);
             },
         );
-        this.getUserBotScripts();
-        this.botID = -1;
     }
 
     removeScriptFromBots(botScriptID) {
@@ -87,6 +88,8 @@ export class DashboardComponent implements OnInit {
         if (index !== -1) {
             this.bots.splice(index, 1);
         }
+
+        this.numberOfBots -= 1;
     }
 
     showDeleteModal(id) {

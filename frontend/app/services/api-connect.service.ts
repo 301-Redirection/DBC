@@ -66,6 +66,7 @@ export class ApiConnectService {
             })
             .pipe(catchError(this.handleError));
     }
+
     public removeBot(botScriptID: number) {
         const parameters = {
             botID: botScriptID,
