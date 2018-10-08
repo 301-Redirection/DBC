@@ -8,7 +8,7 @@ The Dota 2 Bot Configurator is a tool that allows a Dota 2 player to specify a s
 
 #### Features
 
-- Exactly zero coding knowledge required. Write a bot scripts in minutes!
+- Exactly zero coding knowledge required. Write a bot script in minutes!
 - Familiar interface for Dota 2 players.
 - Save and edit multiple sets of bot scripts.
 
@@ -25,7 +25,7 @@ Clone this repository with `git clone git@github.com:301-Redirection/301-Project
 
 Make sure to run `npm install && npm run scrape` to install project dependencies and fetch the images for the heroes and items. 
 
-Run `npm start` to start. This will start the node server, running on http://localhost:3000 and the live server at http://localhost:4200. The app will automatically reload if you change any of the source files.
+Run `npm start` to start. This will start the node server, running on http://localhost:3000 and the live server at http://localhost:4200. The GUI will automatically reload if you change any of the source files.
 
 
 
@@ -74,7 +74,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `npm run test-frontend` to execute the unit tests via [Karma](https://karma-runner.github.io), `npm run test-backend` to execute the tests for the node server and `npm run test-all` to run both sets of tests.
+Run `npm run test-frontend` to execute the unit tests via [Karma](https://karma-runner.github.io), `npm run test-backend` to execute the tests for the node server and `npm run test-all` to run both sets of tests. These commands also run the linters for our project.
 
 ## Screenshots
 
