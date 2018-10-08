@@ -129,13 +129,6 @@ describe('HeroesComponent', () => {
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
 
-        // TODO: Test by calling remove function from hero-item-stub
-        // heroItemComponent = fixture.debugElement
-        //     .query(By.directive(HeroItemStubComponent)).componentInstance;
-        // heroItemComponent.ngOnInit();
-        // spyOn(heroItemComponent, 'removeHero').and.callThrough();
-        // heroItemComponent.removeHero(component.selectedHeroesList[0], 0);
-
         // Remove here item
         component.removeHero(component.selectedHeroesList[0], component.pools[0]);
         fixture.detectChanges();
@@ -170,6 +163,20 @@ describe('HeroesComponent', () => {
         }
         expect(component.numberOfPools).toEqual(newNumberOfPools);
         expect(component.partitioned).toEqual(!oldPartitioned);
+        done();
+    });
+
+    it('should not allow duplicate heroes to be added to a pool', (done) => {
+        spyOn(window, 'alert');
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Attempt to add same hero
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        expect(window.alert).toHaveBeenCalledWith('This hero already exists in the selected pool.');
         done();
     });
 });
