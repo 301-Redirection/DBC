@@ -44,7 +44,11 @@ Run `npm start` to start. This will start the node server, running on http://loc
     <li>
         <a href="https://github.com/301-Redirection/301-Project/raw/dev/documentation/UserManual.pdf" target="_blank">User Manual</a>
     </li>
-    <h4>Diagrams</h4>
+</ul>
+
+#### Diagrams
+
+<ul>
     <li>
         <a href="https://github.com/301-Redirection/301-Project/raw/dev/documentation/Architectural%20Diagram.pdf" target="_blank">Architectural Diagram</a>
     </li>
@@ -59,7 +63,7 @@ Run `npm start` to start. This will start the node server, running on http://loc
     </li>
 </ul>
 
-
+//TODO Add Lua scripting docs
 
 ## Build
 
@@ -73,16 +77,16 @@ Run `npm run test-frontend` to execute the unit tests via [Karma](https://karma-
 
 Choose Your Heroes!
 
-![](images/heroes.jpg)
+![](images/heroes-min.jpg)
 
 
 
 Customize Abilities!
 
-![](images/abilities.png)
+![](images/abilities-min.jpg)
 
 
 
 Specify Item Builds!
 
-![](images/items.jpg)
+![](images/items-min.jpg)
