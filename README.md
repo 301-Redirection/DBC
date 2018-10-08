@@ -44,6 +44,9 @@ Run `npm start` to start. This will start the node server, running on http://loc
     <li>
         <a href="https://github.com/301-Redirection/301-Project/raw/dev/documentation/UserManual.pdf" target="_blank">User Manual</a>
     </li>
+    <li>
+        <a href="https://github.com/301-Redirection/301-Project/blob/master/backend/lua/LuaScriptingDocumentation.md" target="_blank">Lua Scripting Format</a>
+    </li>
 </ul>
 
 #### Diagrams
@@ -63,7 +66,7 @@ Run `npm start` to start. This will start the node server, running on http://loc
     </li>
 </ul>
 
-//TODO Add Lua scripting docs
+
 
 ## Build
 
