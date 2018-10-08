@@ -6,6 +6,16 @@
     padding-bottom: 2rem;
 }
 
+.walkthrough-title {
+    text-align: center;
+    color: $light-grey;
+}
+
+.link {
+    color: #007bff !important;
+    cursor: pointer;
+}
+
 .img {
 	border: 5px solid $dark-grey-3;
     border-radius: 2px;
@@ -30,7 +40,7 @@
 }
 
 .card-title {
-    font-size: 30px;
+    font-size: 26px;
     text-align: center;
 }
 

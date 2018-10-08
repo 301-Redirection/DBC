@@ -9,6 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class WalkthroughComponent implements OnInit {
 
     constructor() { }
+
     ngOnInit() { }
+
+    scroll(element) {
+        element.scrollIntoView();
+    }
 
 }
