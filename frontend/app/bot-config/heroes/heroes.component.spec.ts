@@ -131,6 +131,7 @@ describe('HeroesComponent', () => {
         component.removeHero(component.selectedHeroesList[0], component.pools[0]);
         fixture.detectChanges();
         expect(component.selectedHeroesList).toEqual([]);
+        expect(component.pools[0]).toEqual([]);
         done();
     });
 
@@ -142,6 +143,11 @@ describe('HeroesComponent', () => {
         fixture.debugElement.query(By.css('#resetPoolsBtn'))
             .triggerEventHandler('click', new MouseEvent('click'));
         expect(component.selectedHeroesList).toEqual([]);
+        expect(component.pools[0]).toEqual([]);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 
@@ -175,6 +181,11 @@ describe('HeroesComponent', () => {
         fixture.detectChanges();
         expect(window.alert)
             .toHaveBeenCalledWith('This hero already exists in the selected pool.');
+        expect(component.pools[0].length).toEqual(1);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 
@@ -189,6 +200,10 @@ describe('HeroesComponent', () => {
             .triggerEventHandler('click', new MouseEvent('click'));
         fixture.detectChanges();
         expect(component.pools[0][0]['id']).toEqual(component.selectedHeroesList[0]['id']);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 
@@ -210,8 +225,43 @@ describe('HeroesComponent', () => {
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
-        const numHeroesInPool = component.pools[0].length;
-        expect(numHeroesInPool).toEqual(1);
+        // Change from multiple pools to single pool
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        const numHeroesInPool1 = component.pools[0].length;
+        expect(numHeroesInPool1).toEqual(1);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
+        done();
+    });
+
+    it('should not allow duplicate heroes in partitioned pools', (done) => {
+        spyOn(window, 'alert').and.returnValue(true);
+        spyOn(window, 'confirm').and.returnValue(true);
+        // Change from single pool to multiple pools
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+         // Select Pool 2 tab
+        fixture.debugElement.query(By.css('#poolLink1'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Attempt to add hero item again
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        expect(component.pools[1].length).toEqual(1);
+        expect(component.pools[0]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 });
