@@ -1,7 +1,9 @@
 <div id="heroComponent" class="container-fluid container-fluid-custom">
     <div class="row">
         <div class="col-12 config-description">
-            Click & drag or double-click to select your preferred heroes
+            <p>Click & drag or double-click to select your preferred heroes</p>
+            <button class="button button-new-configuration" data-toggle="modal" data-target="#readMoreHeroes">READ MORE</button>
+            <br>
         </div>
     </div>
 
@@ -74,6 +76,44 @@
                 <div class="drop-zone" sortablejs [sortablejsOptions]="optionsTarget" (drop)="addHero(selectedHero, selectedPool)">
                     <app-hero-item *ngFor="let hero of pools[selectedPool]" [hero]="hero" [isSelectedHero]="true" [pool]="pools[selectedPool]" (removeHeroEmitter)="onRemoveHero($event)" [isHover]="false"></app-hero-item>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heroes Read More Modal -->
+<div class="modal fade" id="readMoreHeroes">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">HERO SELECTION</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>
+                    Select which heroes you would like to be used in your custom bot scripts.
+                </p>
+                <br>
+                <h5>Selecting Heroes</h5>
+                <p>
+                    Select a hero by either <span class="code">double clicking</span> or <span class="code">dragging and dropping</span> a selected hero into the selection area at the bottom of the page. Double clicking will automatically add the hero to the currenty selected pool (See 'Changing Pools' below). To remove a hero from the selected area, simply click on the red 'X' as indicated in the top right corner of the hero.
+                </p>
+                <p>
+                    To reset your selected heroes, click the <span class="code">Reset</span> button next to the <span class="code">Toggle Pools</span> button. Note that this action will remove all previously selected heroes.
+                </p>
+                <p>
+                    To search for a specific hero, simply start typing the name of the hero. Alternatively, you can sleect the Search text field at the top right corner of the list of heroes to perform your search.
+                </p>
+                <br>
+                <h5>Changing Pools</h5>
+                <p>
+                    By default, there is one pool where all selected heroes will be picked from at the beginning of the game, and will be assigned to random positions.
+                </p>
+                <p>
+                    To change the number of pools, click the <span class="code">Toggle Pools</span> button to toggle between 1 and 5 pools. If there are 5 pools, then each pool corresponds to a specific position in the game, allowing you to specifiy your selected heroes' positions.
+                </p>
             </div>
         </div>
     </div>

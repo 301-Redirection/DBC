@@ -54,19 +54,12 @@ export class HeroesComponent implements OnInit {
     };
 
     // Listen for key press to update heroSearch
-    @HostListener('document:keydown', ['$event'])
+    @HostListener('document:keypress', ['$event'])
     searchEvent(event: KeyboardEvent) {
         if (this.selected === 'heroes'
             && event.target['localName'] !== 'input'
             && event.target['localName'] !== 'textarea') {
-            if (event.key === 'Backspace') {
-                this.heroSearch = this.heroSearch.slice(0, -1);
-            } else if (
-                (65 <= event.keyCode && event.keyCode <= 90) ||
-                (97 <= event.keyCode && event.keyCode <= 122)
-            ) {
-                this.heroSearch += event.key;
-            }
+            this.heroSearch += event.key;
         }
     }
 
