@@ -14,6 +14,9 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
+
+declare var swal: any;
+
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
@@ -82,14 +85,14 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
+                    swal('Success!', 'Bot configuration saved.', 'success');
                     if (this.id === -1) {
                         this.id = data.botConfig.id;
                         this.router.navigate(['/bot-config', { botScriptID: this.id }]);
                     }
-                    alert('Bot configurations saved!');
                 },
                 (error) => {
-                    alert('Failed to save configuration. Please try agin later.');
+                    swal('Error', 'Failed to save configuration. Please try again later.', 'error');
                     console.log(error);
                 },
             );
@@ -102,7 +105,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
-            alert('Please enter your bot script name and description');
+            swal('Warning', 'Please enter your bot script name and description', 'warning');
             return false;
         }
         return true;
@@ -127,9 +130,18 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     confirmReset() {
-        if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
-            this.reset();
-        }
+        swal({
+            title: 'Are you sure?',
+            text: 'Once reset, all unsaved work will be lost.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willReset) => {
+            if (willReset) {
+                this.reset();
+            }
+        });
     }
 
     loadBotScript(id) {
