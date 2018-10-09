@@ -12,9 +12,10 @@ import { BotConfigDataService } from '../../services/bot-config-data.service';
 import { HeroItemStubComponent } from '../../testing/hero-item-stub';
 import { By } from '@angular/platform-browser';
 
+// declare var swal: any;
+
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
-    // let heroItemComponent: HeroItemStubComponent;
     let fixture: ComponentFixture<HeroesComponent>;
 
     beforeEach(async(() => {
@@ -128,14 +129,6 @@ describe('HeroesComponent', () => {
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
-
-        // TODO: Test by calling remove function from hero-item-stub
-        // heroItemComponent = fixture.debugElement
-        //     .query(By.directive(HeroItemStubComponent)).componentInstance;
-        // heroItemComponent.ngOnInit();
-        // spyOn(heroItemComponent, 'removeHero').and.callThrough();
-        // heroItemComponent.removeHero(component.selectedHeroesList[0], 0);
-
         // Remove here item
         component.removeHero(component.selectedHeroesList[0], component.pools[0]);
         fixture.detectChanges();
@@ -145,17 +138,30 @@ describe('HeroesComponent', () => {
     });
 
     it('should clear heroes on reset', (done) => {
+        component.triggerResetPools = jasmine.createSpy('triggerResetPools() spy')
+            .and.callFake(() => {
+                if (confirm('Are sure you want to reset?')) {
+                    component.resetPools();
+                }
+            });
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
         spyOn(window, 'confirm').and.returnValue(true);
         fixture.debugElement.query(By.css('#resetPoolsBtn'))
             .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
         expect(component.selectedHeroesList).toEqual([]);
         done();
     });
 
     it('should toggle pools on toggle button press', (done) => {
+        component.confirmTogglePools = jasmine.createSpy('confirmTogglePools() spy')
+            .and.callFake(() => {
+                if (confirm('Are sure you want to toggle pools?')) {
+                    component.togglePools();
+                }
+            });
         const oldNumberOfPools = component.numberOfPools;
         const oldPartitioned = component.partitioned;
         spyOn(window, 'confirm').and.returnValue(true);
