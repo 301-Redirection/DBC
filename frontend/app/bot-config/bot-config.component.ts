@@ -120,7 +120,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
-            swal('Warning', 'Please enter your bot script name and description', 'warning');
+            swal('', 'Please enter your bot script name and description to continue.', 'warning');
             return false;
         }
         return true;

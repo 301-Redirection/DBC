@@ -39,13 +39,19 @@
                                 <h4>Script Details</h4>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                <label for="inputName" class="col-sm-3 col-form-label">
+                                    Name
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                                <label for="inputDescription" class="col-sm-3 col-form-label">
+                                    Description
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
                                 </div>

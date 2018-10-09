@@ -2,7 +2,7 @@
 @import '../../../variables';
 
 .heading-desire {
-    border: 1pt solid $dark-grey-2;
+    border-bottom: 1px solid $dark-grey-3;
     background-color: $dark-grey-2;
     text-shadow: 2px 2px 5px black;
     font-family: $font-family;
@@ -80,4 +80,8 @@ ul.nav-tabs>li>a {
 ul.nav-tabs>li>a.active {
     background-color: $light-grey;
     color: $dark-grey-1;
+}
+
+.code {
+    color: $blue;
 }

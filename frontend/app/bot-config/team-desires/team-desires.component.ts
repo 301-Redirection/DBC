@@ -72,6 +72,7 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
         this.togglePanel();
     }
+
     checkIfLoadedSavedScript() {
         this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
             if (isLoadedScript) {
@@ -168,6 +169,7 @@ export class TeamDesiresComponent implements OnInit {
             data.value = 100;
         }
     }
+
     togglePanel() {
         $(document).ready(() => {
             $('.collapse').on('show.bs.collapse', function () {
