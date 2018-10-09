@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -22,6 +22,8 @@ export class HeroesComponent implements OnInit {
     selectedHero: any;
     selectedHeroesList: any;
     allHeroes = [];
+    @Output() dataReceived = new EventEmitter<boolean>();
+    didReceive: boolean;
 
     // hero category objects
     strengthHeroes = [];
@@ -85,6 +87,7 @@ export class HeroesComponent implements OnInit {
         this.selectedHeroesList = [];
         this.getHeroData();
         this.selectedTab();
+        this.didReceive = false;
     }
 
     /*****************/
@@ -113,25 +116,15 @@ export class HeroesComponent implements OnInit {
         return this.allHeroes;
     }
 
-    getHeroDataTemp(): any[] {
-        // database call to retrieve all dota heroes
-        this.api.getAllHeroes().subscribe(
-            (data) => {
-                return data['heroes'];
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-        return [];
-    }
-
     getHeroData(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe(
             (data) => {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
+                this.didReceive = true;
+                this.dataReceived.emit(this.didReceive);
+                console.log('data received');
                 this.sortHeroData();
                 this.checkIfSavedBotScript();
             },

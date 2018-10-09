@@ -24,7 +24,7 @@ export class BotConfigDataService {
     /**************************/
 
     // creates config object according to format
-    reset(): void {
+    public reset(): void {
         this.config = this.getDefaultConfiguration();
         this.setNotifyLoaded(false);
     }
@@ -49,6 +49,10 @@ export class BotConfigDataService {
 
     public notifyIsLoadedScript(): Observable<any> {
         return this.isLoaded.asObservable();
+    }
+
+    public setHeroSpecArray(heroSpecArray: any[]) {
+        this.config.heroes = heroSpecArray;
     }
 
     /**************************/

@@ -59,13 +59,13 @@
             <app-team-desires></app-team-desires>
         </div>
         <div class="tab-pane fade" id="nav-heroes" role="tabpanel" aria-labelledby="nav-heroes-tab">
-            <app-heroes [selected]="selectedTab"></app-heroes>
+            <app-heroes (dataReceived)="heroesReady()" [selected]="selectedTab"></app-heroes>
         </div>
         <div class="tab-pane fade" id="nav-abilities" role="tabpanel" aria-labelledby="nav-abilities-tab">
             <app-abilities></app-abilities>
         </div>
         <div class="tab-pane fade" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
-            <app-items [selected]="selectedTab"></app-items>
+            <app-items (dataReceived)="itemsReady()" [selected]="selectedTab"></app-items>
         </div>
     </div>
 

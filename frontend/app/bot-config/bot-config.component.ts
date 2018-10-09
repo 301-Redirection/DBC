@@ -38,6 +38,11 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     id: number = -1;
     selectedTab: string;
 
+    // State variables to reload bots
+    heroesLoaded: boolean;
+    itemsLoaded: boolean;
+    config: ConfigurationFormat;
+
     generateURL = '';
 
     constructor
@@ -57,6 +62,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.heroesLoaded = false;
+        this.itemsLoaded = false;
         this.botConfigData.reset();
         this.checkLoadedScript();
         this.selectedTab = 'info';
@@ -137,6 +144,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 res = data['botConfig'];
                 res = res[0];
                 if (res != null) {
+                    this.config = JSON.parse(res.configuration);
                     this.id = res.id;
                     this.generateURL =
                         `${globalConfig['app']['API_URL']}/download/${this.id}`;
@@ -144,7 +152,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.description = res.description;
                     // problem area
                     // this.buildConfigData(JSON.parse(res.configuration));
-                    this.readConfig(JSON.parse(res.configuration));
                 }
             },
             (error) => {
@@ -160,36 +167,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     readConfig(config: ConfigurationFormat): void {
         // Building hero object
         const selectedHeroes = [];
-        setTimeout(null, 1000);
-        const heroes = this.heroesComponent.getHeroes();
-        console.log('heroes');
-        console.log(heroes);
-        console.log('config.heroPool.pool');
-        console.log(config.heroPool.pool);
-        if (config.heroPool.partitioned) {
-            // TO DO
-            config.heroPool.pool.forEach((heroSpec) => {
-                const currentHero = heroes.find(tempHero => tempHero['name'] === heroSpec.name);
-                if (currentHero !== undefined) {
-                    selectedHeroes.push(currentHero);
-                }
-            });
-        } else {
-            config.heroPool.pool.forEach((heroSpec) => {
-                const currentHero = heroes.find(tempHero => tempHero['name'] === heroSpec.name);
-                if (currentHero !== undefined) {
-                    selectedHeroes.push(currentHero);
-                }
+        
+        // Building items object
+        const items = this.itemsComponent.getItems();
+        console.log(items);
+        if (config.heroes) {
+            config.heroes.forEach((heroSpec) => {
+                heroSpec.items = this.createComplexItemArray(heroSpec.items, items);
             });
         }
-        // Building items object
-        // const items = this.itemsComponent.getItems();
-        // console.log(items);
-        // if (config.heroes) {
-        //     config.heroes.forEach((heroSpec) => {
-        //         heroSpec.items = this.createComplexItemArray(heroSpec.items, items);
-        //     });
-        // }
 
         this.botConfigData.setConfig(config);
         console.log('selectedHeroes');
@@ -197,34 +183,120 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.botConfigData.setSelectedHeroes(selectedHeroes);
     }
 
-    createComplexItemArray(items, validItems) {
-        const itemsArr = [];
-        if (items && items.length) {
-            items.forEach((element) => {
-                const tempArr = this.createComplexItem(element, validItems, 0);
-                if (tempArr !== null) {
-                    itemsArr.concat(tempArr);
+    heroesReady() {
+        // console.log('config');
+        // console.log(this.config);
+        const selectedHeroes = [];
+        // console.log('heroes ready');
+        this.heroesLoaded = true;
+        const heroes = this.heroesComponent.getHeroes();
+        // console.log('heroes');
+        // console.log(heroes);
+        // console.log('config.heroPool.pool');
+        // console.log(this.config.heroPool.pool);
+        if (this.config.heroPool.partitioned) {
+            // TO DO
+            this.config.heroPool.pool.forEach((heroSpec) => {
+                const currentHero = heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
+                if (currentHero !== undefined) {
+                    selectedHeroes.push(currentHero);
+                }
+                else {
+                    // console.log('ignoring ' + heroSpec.name);
+                }
+            });
+        } else {
+            this.config.heroPool.pool.forEach((heroSpec) => {
+                const currentHero = heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
+                if (currentHero !== undefined) {
+                    selectedHeroes.push(currentHero);
+                }
+                else {
+                    // console.log('ignoring ' + heroSpec.name);
                 }
             });
         }
+        // console.log('selectedHeroes');
+        // console.log(selectedHeroes);
+        this.botConfigData.setSelectedHeroes(selectedHeroes);
+        // this.abilitiesComponent.reset();
+        // console.log(this.heroesComponent.getHeroes());
+    }
+
+    itemsReady() {
+        console.log('items ready');
+        this.itemsLoaded = true;
+        // Building items object
+        const items = this.itemsComponent.getItems();
+        // console.log('items in itemsReady');
+        // console.log(items);
+        if (this.config.heroes) {
+            this.config.heroes.forEach((heroSpec) => {
+                heroSpec.items = this.createComplexItemArray(heroSpec.items, items);
+                // console.log(heroSpec.name + "'s items:");
+                // console.log(heroSpec);
+            });
+        }
+        else {
+            // in case there is a race condition keep calling this
+            // so that the config.heroes exists
+            this.itemsReady()
+        }
+        console.log(this.config.heroes);
+    }
+
+    createComplexItemArray(items, validItems) {
+        console.log('createComplexItemArray');
+        let itemsArr = [];
+        if (items && items.length) {
+            items.forEach((element) => {
+                // console.log('------> ' + element.name);
+                const tempArr = this.createComplexItem(element, validItems, 0);
+                // console.log(tempArr);
+                if (tempArr !== null) {
+                    // console.log('tempArr');
+                    // console.log(tempArr);
+                    // console.log('itemsArr before concat');
+                    // console.log(itemsArr);
+                    itemsArr = itemsArr.concat(tempArr);
+                    // console.log('itemsArr after concat');
+                    // console.log(itemsArr);
+                }
+                else {
+                    // console.log('tempArr was nulL!');
+                }
+            });
+        }
+        // console.log('result => ');
+        // console.log(itemsArr);
         return itemsArr;
     }
 
     // Recursive function to find complext item object
     createComplexItem(item, validItems, depth) {
         if (item) {
-            const newItems = [];
+            let newItems = [];
             if (item.components) {
                 if (item.components === 'null' || item.components === null || depth >= MAX_DEPTH) {
                     const newItem = validItems.find(tempItem => tempItem.name === item.name);
                     if (newItem !== undefined) {
+                        // console.log('pushed ') + newItem);
+                        // console.log(newItem)
                         newItems.push(newItem);
+                    }
+                    else {
+                        console.log('ignoring ' + item.name);
                     }
                 } else if (item.components.length) {
                     item.components.forEach((element) => {
                         const tempItems = this.createComplexItem(element, validItems, depth + 1);
                         if (tempItems !== undefined) {
-                            newItems.concat(tempItems);
+                            // console.log('pushed ');
+                            // console.log(tempItems);
+                            newItems = newItems.concat(tempItems);
+                        }
+                        else {
+                            // console.log('ignoring array ' + item.name);
                         }
                     });
                 }

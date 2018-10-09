@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -14,12 +14,14 @@ declare var $: any;
 export class ItemsComponent implements OnInit{
 
     @Input('selected') selected: string;
+    @Output() dataReceived = new EventEmitter<boolean>();
 
     // Variables
     allItems: any;
     basicItems = [];
     upgradeItems = [];
     recipes = [];
+    didReceive: boolean;
 
     // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
@@ -139,6 +141,8 @@ export class ItemsComponent implements OnInit{
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
+                this.didReceive = true;
+                this.dataReceived.emit(this.didReceive);
             },
             (error) => {
                 console.log(error);
