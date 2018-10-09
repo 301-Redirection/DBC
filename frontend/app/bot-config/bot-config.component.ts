@@ -3,6 +3,7 @@ import {
     OnInit,
     AfterViewInit,
     ViewChild,
+    HostListener,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
@@ -13,7 +14,6 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
-
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
@@ -26,6 +26,13 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
     @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
     @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
+
+    @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event) {
+        const confirmationMessage = '\o/';
+        event.returnValue = confirmationMessage;
+        return confirmationMessage;
+    }
 
     // Bot variables
     name: string = '';
