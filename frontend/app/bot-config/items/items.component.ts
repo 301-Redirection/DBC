@@ -211,7 +211,7 @@ export class ItemsComponent implements OnInit{
     // Absorb items that make up components for an upgrade
     checkItemComponentsExistInList (item) {
         for (const component of item.components) {
-            const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(component);
+            const index = this.findIndexOfItem(component);
             // Absorb item if in list
             if (index > -1) {
                 this.removeItemFromList(component);
@@ -219,9 +219,18 @@ export class ItemsComponent implements OnInit{
         }
     }
 
+    findIndexOfItem (item) {
+        for (let i = 0; i < this.heroItemSelection[this.selectedHeroIndex].length; i += 1) {
+            if (this.heroItemSelection[this.selectedHeroIndex][i].id === item.id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     // Remove an item that is in selected list
     removeItemFromList (item) {
-        const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
+        const index = this.findIndexOfItem(item);
         if (index !== -1) {
             this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
             this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;

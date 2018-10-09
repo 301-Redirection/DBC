@@ -258,7 +258,7 @@ describe('ItemsComponent', () => {
         expect(component.heroItemSelection[0]).toEqual([itemWithComponents]);
     });
 
-    /* it('should absorb components already in selectedItem list', () => {
+    it('should absorb components already in selectedItem list', () => {
         const item1 = testItems.items[2];
         component.selectedHeroIndex = 0;
         component.currentHero = component.selectedHeroes[0];
@@ -266,12 +266,14 @@ describe('ItemsComponent', () => {
         component.addItemToList(item1);
         component.selectedItem = item1;
         component.addItemToList(item1);
-        component.selectedHeroIndex = 0;
         component.selectedItem = itemWithComponents;
         component.addItemToList(itemWithComponents);
-        console.log(component.heroItemSelection[0]);
+        console.log("hero items: ");
+        component.heroItemSelection[0].forEach((element) => {
+            console.log(element.name);
+        });
         expect(component.heroItemSelection[0]).toEqual([itemWithComponents]);
-    }); */
+    });
 
     it('should remove an item from selectedItem list correctly', () => {
         const item1 = testItems.items[2];
