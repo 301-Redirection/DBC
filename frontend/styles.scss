@@ -254,14 +254,16 @@ button:focus {
     border-color: $btn-edit-border-color-hover;
 }
 
-.button-new-configuration {
+.button-new-configuration,
+.swal-button--confirm {
     color: $btn-new-configuration-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-new-configuration-color;
 }
   
-.button-new-configuration:hover {
+.button-new-configuration:hover,
+.swal-button--confirm:hover {
     text-decoration:none;
     color: $btn-new-configuration-color;
     background-color: $btn-new-configuration-border-color;
@@ -293,16 +295,14 @@ button:focus {
 }
 
 .button-secondary,
-.swal-button--cancel,
-.swal-button--confirm, {
+.swal-button--cancel {
     color: $btn-secondary-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-secondary-border-color;
 }
 .button-secondary:hover,
-.swal-button--cancel:hover,
-.swal-button--confirm:hover, {
+.swal-button--cancel:hover {
     text-decoration: none;
     color: $white;
     background-color: $btn-secondary-border-color;
@@ -388,4 +388,10 @@ button:focus {
 .swal-text {
     color: $light-grey !important;
     font-family: $font-family;
+}
+
+.swal-icon::before,
+.swal-icon::after,
+.swal-icon--success__hide-corners {
+    background: transparent !important;
 }

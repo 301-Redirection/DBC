@@ -44,6 +44,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     selectedTab: string;
 
     generateURL = '';
+    isSaved: boolean;
 
     constructor
     (
@@ -65,6 +66,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.botConfigData.reset();
         this.checkLoadedScript();
         this.selectedTab = 'info';
+        this.isSaved = false;
     }
 
     ngAfterViewInit() {}
@@ -85,6 +87,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
+                    this.isSaved = true;
                     swal('Success!', 'Bot configuration saved.', 'success');
                     if (this.id === -1) {
                         this.id = data.botConfig.id;
@@ -96,6 +99,25 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     console.log(error);
                 },
             );
+        }
+    }
+
+    generateScript(): void {
+        if (this.isSaved) {
+            // TODO: Get donwloading of script working
+            this.router.navigate([`${this.generateURL}`]);
+        } else {
+            swal({
+                title: '',
+                text: 'Please save your configuration to continue.',
+                icon: 'warning',
+                buttons: ['Cancel', 'Save'],
+            })
+            .then((willSave) => {
+                if (willSave) {
+                    this.save();
+                }
+            });
         }
     }
 
