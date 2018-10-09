@@ -14,7 +14,6 @@ import { By } from '@angular/platform-browser';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
-    // let heroItemComponent: HeroItemStubComponent;
     let fixture: ComponentFixture<HeroesComponent>;
 
     beforeEach(async(() => {
@@ -128,19 +127,11 @@ describe('HeroesComponent', () => {
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
-
-        // TODO: Test by calling remove function from hero-item-stub
-        // heroItemComponent = fixture.debugElement
-        //     .query(By.directive(HeroItemStubComponent)).componentInstance;
-        // heroItemComponent.ngOnInit();
-        // spyOn(heroItemComponent, 'removeHero').and.callThrough();
-        // heroItemComponent.removeHero(component.selectedHeroesList[0], 0);
-
         // Remove here item
         component.removeHero(component.selectedHeroesList[0], component.pools[0]);
         fixture.detectChanges();
-
         expect(component.selectedHeroesList).toEqual([]);
+        expect(component.pools[0]).toEqual([]);
         done();
     });
 
@@ -152,6 +143,11 @@ describe('HeroesComponent', () => {
         fixture.debugElement.query(By.css('#resetPoolsBtn'))
             .triggerEventHandler('click', new MouseEvent('click'));
         expect(component.selectedHeroesList).toEqual([]);
+        expect(component.pools[0]).toEqual([]);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 
@@ -170,6 +166,102 @@ describe('HeroesComponent', () => {
         }
         expect(component.numberOfPools).toEqual(newNumberOfPools);
         expect(component.partitioned).toEqual(!oldPartitioned);
+        done();
+    });
+
+    it('should not allow duplicate heroes to be added to a pool', (done) => {
+        spyOn(window, 'alert');
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Attempt to add same hero
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        expect(window.alert)
+            .toHaveBeenCalledWith('This hero already exists in the selected pool.');
+        expect(component.pools[0].length).toEqual(1);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
+        done();
+    });
+
+    it('should add heroes to first pool when toggled to multiple pools', (done) => {
+        spyOn(window, 'confirm').and.returnValue(true);
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Change pools to multiple pools
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        expect(component.pools[0][0]['id']).toEqual(component.selectedHeroesList[0]['id']);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
+        done();
+    });
+
+    it('should not add duplicates heroes when toggling to single pool', (done) => {
+        spyOn(window, 'confirm').and.returnValue(true);
+        // Change from single pool to multiple pools
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Select Pool 2 tab
+        fixture.debugElement.query(By.css('#poolLink1'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Change from multiple pools to single pool
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        const numHeroesInPool1 = component.pools[0].length;
+        expect(numHeroesInPool1).toEqual(1);
+        expect(component.pools[1]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
+        done();
+    });
+
+    it('should not allow duplicate heroes in partitioned pools', (done) => {
+        spyOn(window, 'alert').and.returnValue(true);
+        spyOn(window, 'confirm').and.returnValue(true);
+        // Change from single pool to multiple pools
+        fixture.debugElement.query(By.css('#togglePoolsBtn'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+         // Select Pool 2 tab
+        fixture.debugElement.query(By.css('#poolLink1'))
+            .triggerEventHandler('click', new MouseEvent('click'));
+        fixture.detectChanges();
+        // Add hero item
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        // Attempt to add hero item again
+        fixture.debugElement.query(By.css('app-hero-item'))
+            .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+        fixture.detectChanges();
+        expect(component.pools[1].length).toEqual(1);
+        expect(component.pools[0]).toEqual([]);
+        expect(component.pools[2]).toEqual([]);
+        expect(component.pools[3]).toEqual([]);
+        expect(component.pools[4]).toEqual([]);
         done();
     });
 });
