@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
 import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -51,13 +51,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
-        private router: Router,
         private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
             if (paramMap['params']['botScriptID']) {
                 this.loadBotScript(paramMap['params']['botScriptID']);
+                this.isSaved = true;
+            } else {
+                this.isSaved = false;
             }
         });
     }
@@ -66,7 +68,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.botConfigData.reset();
         this.checkLoadedScript();
         this.selectedTab = 'info';
-        this.isSaved = false;
     }
 
     ngAfterViewInit() {}
@@ -75,7 +76,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.selectedTab = tab;
     }
 
-    save() {
+    save(andGenerate) {
         if (this.validateInfo()) {
             // call update bot from api service
             const requestBot = {
@@ -84,19 +85,25 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 description: this.description,
                 configuration: this.botConfigData.getConfig(),
             };
-            console.log(requestBot);
+
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.isSaved = true;
-                    swal('Success!', 'Bot configuration saved.', 'success');
                     if (this.id === -1) {
                         this.id = data.botConfig.id;
-                        this.router.navigate(['/bot-config', { botScriptID: this.id }]);
+                    }
+                    this.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${this.id}`;
+
+                    if (andGenerate) {
+                        swal('Success!', 'Bot configuration saved and generated.', 'success');
+                        window.open(this.generateURL);
+                    } else {
+                        swal('Success!', 'Bot configuration saved.', 'success');
                     }
                 },
-                (error) => {
+                () => {
                     swal('Error', 'Failed to save configuration. Please try again later.', 'error');
-                    console.log(error);
                 },
             );
         }
@@ -104,8 +111,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     generateScript(): void {
         if (this.isSaved) {
-            // TODO: Get donwloading of script working
-            this.router.navigate([`${this.generateURL}`]);
+            window.open(this.generateURL);
         } else {
             swal({
                 title: '',
@@ -115,7 +121,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             })
             .then((willSave) => {
                 if (willSave) {
-                    this.save();
+                    const andGenerate = true;
+                    this.save(andGenerate);
                 }
             });
         }
