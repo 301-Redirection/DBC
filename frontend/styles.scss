@@ -178,7 +178,8 @@ button:focus {
 
 /* -- Custom Button Styles to mimic Dota 2 -- */ 
 
-.button {
+.button,
+.swal-button {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     letter-spacing: .2rem !important;
@@ -206,16 +207,19 @@ button:focus {
     -moz-box-shadow: $box-shadow;
     box-shadow: $box-shadow;
     cursor: pointer;
+    outline: none;
 }
 
-.button-cancel {
+.button-cancel,
+.swal-button--confirm.swal-button--danger {
     text-decoration:none;
     color: $btn-cancel-color !important;
     background-color: $btn-general-background-color;
     border: $btn-general-border $btn-cancel-border-color;
  }
   
-.button-cancel:hover {
+.button-cancel:hover,
+.swal-button--confirm.swal-button--danger:hover {
     text-decoration:none;
     background-color: $btn-cancel-border-color;
     color: $btn-cancel-color;
@@ -288,13 +292,17 @@ button:focus {
     border-color: $btn-profile-border-color-hover;
 }
 
-.button-secondary {
+.button-secondary,
+.swal-button--cancel,
+.swal-button--confirm, {
     color: $btn-secondary-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-secondary-border-color;
 }
-.button-secondary:hover {
+.button-secondary:hover,
+.swal-button--cancel:hover,
+.swal-button--confirm:hover, {
     text-decoration: none;
     color: $white;
     background-color: $btn-secondary-border-color;
@@ -367,5 +375,17 @@ button:focus {
 }
 
 .hero-attributes {
+    font-family: $font-family;
+}
+
+/* SweetAlert customized styles */
+
+.swal-modal {
+    background-color: $dark-grey-3 !important; 
+}
+
+.swal-title,
+.swal-text {
+    color: $light-grey !important;
     font-family: $font-family;
 }
