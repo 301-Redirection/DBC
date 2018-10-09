@@ -34,6 +34,15 @@
             <div *ngIf="currentHero !== undefined" class="card-body bot-manage-card-body">
                 <div class="ability-row text-center">
                     <h6>Ability Level Up Priorities</h6>
+
+                    <div class="priority-arrows">
+                        <div class="float-left">
+                            <i class="fas fa-angle-left float-left"></i>&nbsp;&nbsp;Higher Priority
+                        </div>
+                        <div class="float-right">
+                            Lower Priority&nbsp;&nbsp;<i class="fas fa-angle-right float-right"></i>
+                        </div>
+                    </div>
                     <br>
                     <div class="ability-item" *ngFor="let ability of currentHero.abilities">
                         <div class="selector">
