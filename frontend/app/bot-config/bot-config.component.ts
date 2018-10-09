@@ -113,23 +113,9 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         if (this.isSaved) {
             window.open(this.generateURL);
         } else {
-            swal({
-                title: '',
-                text: 'Please save your configuration to continue.',
-                icon: 'warning',
-                buttons: ['Cancel', 'Save'],
-            })
-            .then((willSave) => {
-                if (willSave) {
-                    const andGenerate = true;
-                    this.save(andGenerate);
-                }
-            });
+            const andGenerate = true;
+            this.save(andGenerate);
         }
-    }
-
-    log(): void {
-        console.log(this.botConfigData.getConfig());
     }
 
     validateInfo(): boolean {
@@ -188,9 +174,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
                 }
             },
-            (error) => {
-                console.log(error);
-            },
+            () => { },
         );
     }
 }
