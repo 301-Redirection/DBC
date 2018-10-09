@@ -15,6 +15,7 @@ import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 import {
     ConfigurationFormat,
+    HeroPoolConfiguration,
 } from '../services/ConfigurationFormat';
 
 const MAX_DEPTH = 10;
@@ -150,6 +151,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                         `${globalConfig['app']['API_URL']}/download/${this.id}`;
                     this.name = res.name;
                     this.description = res.description;
+                    this.botConfigData.setConfig(this.config);
                     // problem area
                     // this.buildConfigData(JSON.parse(res.configuration));
                 }
@@ -218,7 +220,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         }
         // console.log('selectedHeroes');
         // console.log(selectedHeroes);
-        this.botConfigData.setSelectedHeroes(selectedHeroes);
+        // this.botConfigData.setSelectedHeroes(selectedHeroes);
+        this.botConfigData.config.heroPool = new HeroPoolConfiguration();
+        this.botConfigData.config.heroPool.partitioned = this.config.heroPool.partitioned;
+        this.botConfigData.config.heroPool.pool = selectedHeroes;
         // this.abilitiesComponent.reset();
         // console.log(this.heroesComponent.getHeroes());
     }
