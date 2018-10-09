@@ -219,6 +219,7 @@ export class ItemsComponent implements OnInit{
         }
     }
 
+    // Find item based on item ID
     findIndexOfItem (item) {
         for (let i = 0; i < this.heroItemSelection[this.selectedHeroIndex].length; i += 1) {
             if (this.heroItemSelection[this.selectedHeroIndex][i].id === item.id) {

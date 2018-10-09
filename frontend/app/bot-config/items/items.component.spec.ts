@@ -268,10 +268,6 @@ describe('ItemsComponent', () => {
         component.addItemToList(item1);
         component.selectedItem = itemWithComponents;
         component.addItemToList(itemWithComponents);
-        console.log("hero items: ");
-        component.heroItemSelection[0].forEach((element) => {
-            console.log(element.name);
-        });
         expect(component.heroItemSelection[0]).toEqual([itemWithComponents]);
     });
 
@@ -352,5 +348,4 @@ describe('ItemsComponent', () => {
         expect(component.heroItemSelection[0].length).toEqual(0);
         expect(component.totalCostPerHero[0]).toEqual(0);
     });
-
 });
