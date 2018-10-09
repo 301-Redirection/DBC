@@ -1,6 +1,6 @@
 <div class="row d-flex align-contents-center">
     <mat-form-field class="col-md-4">
-        <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="triggers[condition.trigger]">
+        <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="getTriggerTooltip()">
             <mat-option *ngFor="let t of triggers | enumToArray" [value]="triggers[t]" (click)="updateInputBounds(t)">{{t}}</mat-option>
         </mat-select>
     </mat-form-field>

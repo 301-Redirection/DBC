@@ -53,6 +53,17 @@ export class ConfiguratorComponent {
             this.condition.conditional = this.max;
         }
     }
+
+    getTriggerTooltip() {
+        let tooltip: string = '';
+        if (this.condition.trigger != null) {
+            tooltip = this.triggers[this.condition.trigger];
+            if (this.condition.trigger === 1) {
+                tooltip = `${tooltip} in minutes`;
+            }
+        }
+        return tooltip;
+    }
 }
 
 /*
