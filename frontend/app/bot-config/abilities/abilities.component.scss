@@ -147,3 +147,18 @@
     background-color: $dark-grey-2;
     color: $light-grey;
 }
+
+.priority-arrows {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+}
+
+.priority-arrows div {
+    font-family: $font-family;
+}
+
+.priority-arrows div svg {
+    padding-top: 5px !important;
+}

@@ -1,8 +1,9 @@
 <div id="itemComponent" class="container-fluid container-fluid-custom">
     <div class="row">
         <div class="col-12 config-description">
-            <!-- <h3>ITEM SELECTION</h3><br> -->
-            Select your item guide for each hero by double clicking items from the list below
+            <p>Select your item guide for each hero by double clicking items from the list below</p>
+            <button class="button button-new-configuration" data-toggle="modal" data-target="#readMoreItems">READ MORE</button>
+            <br>
         </div>
     </div>
 
@@ -23,9 +24,9 @@
 
     <!-- List table -->
     <div class="frame mb-1" *ngIf="selectedHeroes.length != 0">
-        <div class="card-header container-fluid bot-manage-card-header ">
+        <div class="card-header container-fluid bot-manage-card-header">
             <div class="text-left mb-0 pb-0 bot-manage-card-header">
-                <h5 id="itemsHeader">CHOOSE ITEMS FOR EACH HERO</h5>
+                <h5 id="itemsHeader">CHOOSING ITEMS FOR: {{ currentHero.niceName }}</h5>
                 <input [(ngModel)]="itemSearch" name="itemSearch" id="itemSearch" type="text" class="form-control" placeholder="&#xF002; Search">
             </div>
         </div>
@@ -248,3 +249,42 @@
         </div>
     </div>
 </div>
+
+<!-- Abilities Read More Modal -->
+<div class="modal fade" id="readMoreItems">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">ITEMS</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>In this section, specify which items must be bought by each selected hero throughout the game, as well as the order in which they are bought.</p>
+                <br>
+                <h5>Selecting Items</h5>
+                <p>
+                    Select an item by either <span class="code">double clicking</span> or <span class="code">dragging and dropping</span> a selected item into the selection area on the left side of the page. To remove a hero from the selected area, simply click on the red 'X' as indicated.
+                </p>
+                <p>
+                    The order of items to be bought can also be specified by dragging and dropping the items in the Selected Items area to shuffle their order. The items closer to the top of the list are more likely to be bought first.
+                </p>
+                <p>
+                    To reset the Selected Items list, click on the 'trash' icon at the top right corner of this list.
+                </p>
+                <br>
+                <h5>Basic Items</h5>
+                <p>
+                    Basic items are those which do not require any other items to be bought before they are used.
+                </p>
+                <br>
+                <h5>Upgrade Items</h5>
+                <p>
+                    Upgrade items are those which require multiple other basic items to be bought beofre it can be used. However, by simply double clicking or dragging and dropping an Upgrade Item, these basic items are automatically added to the list to be purchased by the hero.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    
