@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -14,14 +14,12 @@ declare var $: any;
 export class ItemsComponent implements OnInit{
 
     @Input('selected') selected: string;
-    @Output() dataReceived = new EventEmitter<boolean>();
 
     // Variables
     allItems: any;
     basicItems = [];
     upgradeItems = [];
     recipes = [];
-    didReceive: boolean;
 
     // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
@@ -76,7 +74,7 @@ export class ItemsComponent implements OnInit{
 
     ngOnInit() {
         this.getHeroes();
-        this.getItemsData();
+        this.getItems();
         this.itemSearch = '';
     }
 
@@ -131,18 +129,12 @@ export class ItemsComponent implements OnInit{
         return cost;
     }
 
-    getItems(): any[] {
-        return this.allItems;
-    }
-
-    getItemsData(): void {
+    getItems(): void {
         // database call to retrieve all dota items
         this.api.getAllItems().subscribe(
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
-                this.didReceive = true;
-                this.dataReceived.emit(this.didReceive);
             },
             (error) => {
                 console.log(error);
@@ -219,7 +211,7 @@ export class ItemsComponent implements OnInit{
     // Absorb items that make up components for an upgrade
     checkItemComponentsExistInList (item) {
         for (const component of item.components) {
-            const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(component);
+            const index = this.findIndexOfItem(component);
             // Absorb item if in list
             if (index > -1) {
                 this.removeItemFromList(component);
@@ -227,9 +219,19 @@ export class ItemsComponent implements OnInit{
         }
     }
 
+    // Find item based on item ID
+    findIndexOfItem (item) {
+        for (let i = 0; i < this.heroItemSelection[this.selectedHeroIndex].length; i += 1) {
+            if (this.heroItemSelection[this.selectedHeroIndex][i].id === item.id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     // Remove an item that is in selected list
     removeItemFromList (item) {
-        const index = this.heroItemSelection[this.selectedHeroIndex].indexOf(item);
+        const index = this.findIndexOfItem(item);
         if (index !== -1) {
             this.heroItemSelection[this.selectedHeroIndex].splice(index, 1);
             this.totalCostPerHero[this.selectedHeroIndex] -= item.cost;

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
@@ -22,8 +22,6 @@ export class HeroesComponent implements OnInit {
     selectedHero: any;
     selectedHeroesList: any;
     allHeroes = [];
-    @Output() dataReceived = new EventEmitter<boolean>();
-    didReceive: boolean;
 
     // hero category objects
     strengthHeroes = [];
@@ -85,9 +83,8 @@ export class HeroesComponent implements OnInit {
         this.selectedPool = 0;
         this.heroSearch = '';
         this.selectedHeroesList = [];
-        this.getHeroData();
+        this.getHeroes();
         this.selectedTab();
-        this.didReceive = false;
     }
 
     /*****************/
@@ -112,56 +109,12 @@ export class HeroesComponent implements OnInit {
     /* Hero Persistance */
     /********************/
 
-    getHeroes(): any[] {
-        return this.allHeroes;
-    }
-
-    getHeroData(): void {
+    getHeroes(): void {
         // database call to retrieve all dota heroes
         this.api.getAllHeroes().subscribe(
             (data) => {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
-                // console.log('config');
-                // console.log(this.config);
-                const selectedHeroes = [];
-                // console.log('heroes ready');
-                this.heroesLoaded = true;
-                const heroes = this.heroesComponent.getHeroes();
-                // console.log('heroes');
-                // console.log(heroes);
-                // console.log('config.heroPool.pool');
-                // console.log(this.config.heroPool.pool);
-                if (this.partitioned) {
-                    // TO DO
-                    this.pools.forEach((heroSpec) => {
-                        const currentHero =
-                            heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
-                        if (currentHero !== undefined) {
-                            selectedHeroes.push(currentHero);
-                        } else {
-                            // console.log('ignoring ' + heroSpec.name);
-                        }
-                    });
-                } else {
-                    this.pools.forEach((heroSpec) => {
-                        const currentHero =
-                            heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
-                        if (currentHero !== undefined) {
-                            selectedHeroes.push(currentHero);
-                        } else {
-                            // console.log('ignoring ' + heroSpec.name);
-                        }
-                    });
-                }
-                // console.log('selectedHeroes');
-                // console.log(selectedHeroes);
-                // this.botConfigData.setSelectedHeroes(selectedHeroes);
-                this.botConfigData.config.heroPool = new HeroPoolConfiguration();
-                this.botConfigData.config.heroPool.partitioned = this.config.heroPool.partitioned;
-                this.botConfigData.config.heroPool.pool = selectedHeroes;
-                // this.abilitiesComponent.reset();
-                // console.log(this.heroesComponent.getHeroes());
                 this.sortHeroData();
                 this.checkIfSavedBotScript();
             },

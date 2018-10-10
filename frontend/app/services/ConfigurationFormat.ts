@@ -79,14 +79,9 @@ export class HeroSpecification {
     }
 }
 
-export class HeroPoolConfiguration{
+export interface HeroPoolConfiguration{
     partitioned: boolean;
     pool: HeroConfiguration[];
-
-    constructor() {
-        this.partitioned = false;
-        this.pool = [];
-    }
 }
 
 export interface HeroConfiguration {
