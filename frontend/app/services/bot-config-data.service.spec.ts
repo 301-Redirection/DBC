@@ -23,7 +23,7 @@ describe('BotConfigDataService', () => {
         expect(service).toBeTruthy();
         const heroes = ['luna', 'blood_seeker'];
         service.updateSelectedHeroes(heroes);
-        service.getSelectedHeroes().subscribe((resultHeroes) => {
+        service.getSelectedHeroesObservable().subscribe((resultHeroes) => {
             expect(resultHeroes).toBe(heroes);
         });
     }));

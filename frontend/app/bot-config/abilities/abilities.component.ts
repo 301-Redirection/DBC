@@ -30,10 +30,12 @@ export class AbilitiesComponent implements OnInit {
 
     // state variables
     hasLoaded: any;
+    initialized: boolean;
 
     constructor(private botConfigData: BotConfigDataService) {
         this.hasLoaded = { };
         this.selectedHeroes = [];
+        this.initialized = false;
     }
 
     ngOnInit() {
@@ -42,17 +44,20 @@ export class AbilitiesComponent implements OnInit {
 
     // This is only used by a parent component if this component needs to be reset
     reset(): void {
+        this.hasLoaded = { };
+        this.selectedHeroes = [];
+        this.initialized = false;
         this.retrieveHeroes();
     }
 
     retrieveHeroes(): void {
         // Retrieving selected heroes from service
-        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
-            console.log('loading');
+        this.botConfigData.getSelectedHeroesObservable().subscribe((heroes) => {
+            // console.log('loading');
             heroes.forEach((hero) => {
-                console.log(this.hasLoaded);
+                // console.log(this.hasLoaded);
                 if (this.hasLoaded.hasOwnProperty(hero.programName) === true) {
-                    console.log(`${hero.programName} was loaded!`);
+                    console.log(`${hero.programName} was loaded already!`);
                 } else {
                     this.hasLoaded[hero.programName] = true;
                     hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
@@ -63,39 +68,30 @@ export class AbilitiesComponent implements OnInit {
                 }
             });
             this.currentHero = this.selectedHeroes[0];
-            this.checkIfLoadedSavedScript();
+            // this.checkIfLoadedSavedScript();
+            // if (!this.initialized) {
+            //     this.initialized = true;
+            // }
             this.saveAbilities();
         });
-        // const heroes = this.botConfigData.getSelectedHeroesAny();
-        // heroes.forEach((heroes) => {
-        //     console.log('getSelectedHeroes()');
-        //     this.selectedHeroes = [];
-        //     heroes.forEach((hero) => {
-        //         hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
-        //         hero.abilitySet = new AbilitySet();
-        //         hero.talents = ['none', 'none', 'none', 'none'];
-        //         this.selectedHeroes.push(hero);
-        //     });
-        //     this.initAbilityPriorities();
-        //     this.currentHero = this.selectedHeroes[0];
-        //     this.checkIfLoadedSavedScript();
-        //     this.saveAbilities();
-        // });
     }
 
-    checkIfLoadedSavedScript() {
-        this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
-            if (isLoadedScript) {
-                this.getSavedAbilities();
-            }
-        });
-    }
+    // checkIfLoadedSavedScript() {
+    //     this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
+    //         if (isLoadedScript) {
+    //             this.getSavedAbilities();
+    //         }
+    //     });
+    // }
 
     // To be used to retrieve items saved
     getSavedAbilities() {
+
+        this.botConfigData.getSelectedHeroes();
         console.log('getSavedAbilities');
         console.log(this.selectedHeroes);
         this.selectedHeroes.forEach((hero) => {
+            console.log(hero);
             const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
             const abilities = 'QWERT';
             if (savedPriorities) {
@@ -370,6 +366,8 @@ export class AbilitiesComponent implements OnInit {
         if (!abilities) {
             return [];
         }
+        console.log('WTF!!');
+        console.log(abilities);
         // Arrays: [0] => q, [1] => w, [2] => e, [3] => r, [4] => t
         const selectedAbilities = [[], [], [], [], []];
         const abilityOrder = ['q', 'w', 'e', 'r', 't'];

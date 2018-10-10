@@ -30,7 +30,7 @@ export class BotConfigDataService {
     }
 
     public getConfig(): any {
-        this.setNotifyLoaded(false);
+        // this.setNotifyLoaded(false);
         return this.config;
     }
 
@@ -49,6 +49,10 @@ export class BotConfigDataService {
 
     public notifyIsLoadedScript(): Observable<any> {
         return this.isLoaded.asObservable();
+    }
+
+    public getIsLoaded(): any {
+        return this.isLoaded.getValue();
     }
 
     /**************************/
@@ -162,6 +166,10 @@ export class BotConfigDataService {
     }
 
     public getSelectedHeroes(): any {
+        return this.selectedHeroes.getValue();
+    }
+
+    public getSelectedHeroesObservable(): any {
         return this.selectedHeroes.asObservable();
     }
 

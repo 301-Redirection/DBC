@@ -137,6 +137,9 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
+                    this.abilitiesComponent.getSavedAbilities();
+                    this.heroesComponent.getSavedHeroes();
+                    this.itemsComponent.getSavedItems();
                 }
             },
             (error) => {

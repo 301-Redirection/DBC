@@ -81,7 +81,7 @@ export class ItemsComponent implements OnInit{
     // Get Item and Hero data from server
     // **********************************
     getHeroes() {
-        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+        this.botConfigData.getSelectedHeroesObservable().subscribe((heroes) => {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
                 this.selectedHeroes.push(hero);
