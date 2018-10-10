@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "node ./backend/www & ng serve",
     "build": "ng build --prod",
-    "test-all": "npm run lint && npm run test",
+    "test-all": "npm run lint && npm run test && npm run codecov",
     "test": "npm run test-backend && npm run test-frontend",
     "test-backend": "\"./node_modules/jasmine/bin/jasmine.js\" --config=jasmine.json",
     "test-frontend": "\"./node_modules/.bin/karma\" start frontend/karma.conf.js --single-run",

@@ -28,10 +28,21 @@ module.exports = function (config) {
         angularCli: {
             environment: 'dev',
         },
+        // preprocess matching files before serving them to the browser
+        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        preprocessors: {
+            'src.js': ['coverage'],
+        },
+
+
+        // test results reporter to use
+        // possible values: 'dots', 'progress'
+        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: ['progress', 'coverage'],
+
+
         coverageReporter: {
-            type: 'lcov',
-            dir: 'coverage/',
+            reporters: [{ type: 'lcov' }],
         },
         port: 9876,
         colors: true,
