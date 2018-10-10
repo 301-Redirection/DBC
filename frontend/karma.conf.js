@@ -5,6 +5,7 @@ const karmaChromeLauncher = require('karma-chrome-launcher');
 const karmaJasmineHTMLReporter = require('karma-jasmine-html-reporter');
 const karmaCoverageIstanbul = require('karma-coverage-istanbul-reporter');
 const karma = require('@angular/cli/plugins/karma');
+const karmaCoverage = require('karma-coverage')
 
 module.exports = function (config) {
     config.set({
@@ -15,7 +16,7 @@ module.exports = function (config) {
             karmaChromeLauncher,
             karmaJasmineHTMLReporter,
             karmaCoverageIstanbul,
-            'karma-coverage',
+            karmaCoverage,
             karma,
         ],
         client: {
@@ -34,16 +35,18 @@ module.exports = function (config) {
             'src.js': ['coverage'],
         },
 
-
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
-
-
         coverageReporter: {
             reporters: [{ type: 'lcov' }],
         },
+        remapIstanbulReporter: {
+            reports: {
+                html: 'coverage',
+                lcovonly: './coverage/coverage.lcov',
+            },
+        },
+        reporters: config.angularCli && config.angularCli.codeCoverage
+            ? ['progress', 'karma-remap-istanbul']
+            : ['progress', 'coverage'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
