@@ -17,7 +17,8 @@
     "test-init": "./node_modules/jasmine/bin/jasmine.js init",
     "scrape": "node ./backend/static/converters/updateDotaDefinitions.js",
     "compodoc": "./node_modules/.bin/compodoc -p frontend/tsconfig.app.json -a ./documentation/compodoc",
-    "docs": "compodoc -s -d ./documentation"
+    "docs": "compodoc -s -d ./documentation",
+    "report-coverage": "codecov"
   },
   "dependencies": {
     "@angular/animations": "^5.2.11",
@@ -99,6 +100,7 @@
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-typescript": "^0.12.0",
     "htmllint": "^0.7.2",
+    "istanbul": "^0.4.5",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
@@ -108,6 +110,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-mocks-http": "^1.7.0",
     "node-sass": "^4.9.3",
+    "nyc": "^13.0.1",
     "protractor": "~5.1.2",
     "proxyquire": "^2.0.1",
     "seedquelize": "^1.0.1",

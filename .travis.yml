@@ -13,9 +13,12 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
+    - npm install codecov -g
     - npm install
     - ./node_modules/.bin/ng build
 services:
     - mysql
 script:
     - npm run test-all
+    - istanbul cover node_modules\jasmine\bin\jasmine.js
+    - codecov

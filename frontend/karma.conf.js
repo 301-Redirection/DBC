@@ -27,7 +27,15 @@ module.exports = function (config) {
         angularCli: {
             environment: 'dev',
         },
-        reporters: ['progress', 'kjhtml'],
+        reporters: ['progress', 'kjhtml', 'coverage'],
+        coverageReporter: {
+            reporters: [
+                // generates ./coverage/lcov.info
+                { type: 'lcovonly', subdir: '.' },
+                // generates ./coverage/coverage-final.json
+                { type: 'json', subdir: '.' },
+            ],
+        },
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
