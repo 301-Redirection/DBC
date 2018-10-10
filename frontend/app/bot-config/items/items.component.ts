@@ -73,6 +73,7 @@ export class ItemsComponent implements OnInit{
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
+        this.selectedHeroes = [];
         this.getItems();
         this.itemSearch = '';
     }
@@ -89,7 +90,7 @@ export class ItemsComponent implements OnInit{
                 this.totalCostPerHero.push(0);
             });
             this.currentHero = this.selectedHeroes[0];
-            this.checkIfLoadedSavedScript();
+            // this.checkIfLoadedSavedScript();
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
@@ -104,9 +105,11 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedItems() {
+        this.selectedHeroes = this.botConfigData.getSelectedHeroes();
         if (this.selectedHeroes && this.selectedHeroes.length > 0) {
             this.selectedHeroes.forEach((hero, num) => {
                 const savedItemsMinimal = this.botConfigData.getHeroItemSelection(hero.programName);
+                console.log(savedItemsMinimal);
                 const savedItems = this.populateSavedItems(savedItemsMinimal);
                 if (savedItems !== undefined && savedItems.length > 0) {
                     this.heroItemSelection[num] = savedItems;

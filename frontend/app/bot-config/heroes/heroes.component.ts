@@ -116,7 +116,17 @@ export class HeroesComponent implements OnInit {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
                 this.sortHeroData();
-                this.checkIfSavedBotScript();
+                if (this.selectedHeroesList && this.selectedHeroesList.length > 0) {
+                    const newHeroList = [];
+                    this.selectedHeroesList.forEach((minHero) => {
+                        const foundHero = this.allHeroes.find((bigHero) => {
+                            return bigHero.programName === minHero.name;
+                        });
+                        newHeroList.push(foundHero);
+                    });
+                    this.selectedHeroesList = newHeroList;
+                    this.populateSelectedHeroPools();
+                }
             },
             (error) => {
                 console.log(error);
@@ -137,16 +147,22 @@ export class HeroesComponent implements OnInit {
             heroNames.push(heroObject['name']);
         });
         this.populateSelectedHeroList(heroNames);
-        this.populateSelectedHeroPools();
     }
 
     populateSelectedHeroList(heroNames: any) {
         this.selectedHeroesList = [];
+        let allHeroesLoaded = true;
         heroNames.forEach((name) => {
-            this.selectedHeroesList.push(this.allHeroes.find(hero => hero.programName === name));
+            let hero = this.allHeroes.find(hero => hero.programName === name);
+            if (!hero) {
+                hero = { name };
+                allHeroesLoaded = false;
+            }
+            this.selectedHeroesList.push(hero);
         });
-        // Reflect regenerate hero list in service
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        if (allHeroesLoaded) {
+            this.populateSelectedHeroPools();
+        }
     }
 
     populateSelectedHeroPools() {

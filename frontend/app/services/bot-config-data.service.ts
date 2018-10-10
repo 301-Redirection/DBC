@@ -37,7 +37,7 @@ export class BotConfigDataService {
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
         const selectedHeroesArr = [];
-        this.setSelectedHeroes(selectedHeroesArr);
+        this.setSelectedHeroes(this.config.heroes);
         this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }
@@ -144,6 +144,7 @@ export class BotConfigDataService {
 
     // Saves the currently selected heroes to the config
     public updateSelectedHeroes(heroes: any): void {
+        console.log(heroes);
         this.selectedHeroes.next(heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {
@@ -153,6 +154,7 @@ export class BotConfigDataService {
     }
 
     public clearSelectedHeroes(heroes: any): void {
+        console.log(heroes);
         this.selectedHeroes.next(heroes);
         heroes.forEach((hero) => {
             if (hero !== undefined) {
@@ -162,6 +164,7 @@ export class BotConfigDataService {
     }
 
     public setSelectedHeroes(heroes: any) {
+        console.log(heroes);
         this.selectedHeroes.next(heroes);
     }
 

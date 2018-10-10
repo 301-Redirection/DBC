@@ -24,8 +24,8 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
-    @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
-    @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
+    // @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
+    // @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
 
     // Bot variables
     name: string = '';
@@ -137,9 +137,9 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
-                    this.abilitiesComponent.getSavedAbilities();
                     this.heroesComponent.getSavedHeroes();
-                    this.itemsComponent.getSavedItems();
+                    // this.abilitiesComponent.getSavedAbilities();
+                    // this.itemsComponent.getSavedItems();
                 }
             },
             (error) => {
