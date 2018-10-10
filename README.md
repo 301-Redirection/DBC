@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/301-Redirection/301-Project.svg?branch=master)](https://travis-ci.org/301-Redirection/301-Project)
 [![Dependencies Status](https://david-dm.org/301-Redirection/301-Project/status.svg)](https://david-dm.org/301-Redirection/301-Project)
 [![DevDependencies Status](https://david-dm.org/301-Redirection/301-Project/dev-status.svg)](https://david-dm.org/301-Redirection/301-Project?type=dev)
+[![Coverage Status](https://coveralls.io/repos/github/301-Redirection/301-Project/badge.svg?branch=master)](https://coveralls.io/github/301-Redirection/301-Project?branch=master)
 
 The Dota 2 Bot Configurator is a tool that allows a Dota 2 player to specify a set of configuration options by means of a Web-based, Graphical User Interface from which a set of Lua scripts are generated. These scripts can be used by the game to alter the default bot behaviour in-game.
 
