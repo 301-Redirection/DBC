@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Scripting - Home';
 
     constructor(
-        private title: Title, 
+        private title: Title,
         private router: Router,
         private auth: AuthService,
     ) {
