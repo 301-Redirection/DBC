@@ -126,6 +126,7 @@ export class HeroesComponent implements OnInit {
                     });
                     this.selectedHeroesList = newHeroList;
                     this.populateSelectedHeroPools();
+                    this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
                 }
             },
             (error) => {
@@ -162,6 +163,7 @@ export class HeroesComponent implements OnInit {
         });
         if (allHeroesLoaded) {
             this.populateSelectedHeroPools();
+            this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
         }
     }
 

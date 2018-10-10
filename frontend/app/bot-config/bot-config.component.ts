@@ -24,7 +24,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
-    // @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
+    @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
     // @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
 
     // Bot variables

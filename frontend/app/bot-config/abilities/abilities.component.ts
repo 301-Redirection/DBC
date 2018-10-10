@@ -53,21 +53,28 @@ export class AbilitiesComponent implements OnInit {
     retrieveHeroes(): void {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroesObservable().subscribe((heroes) => {
-            console.log('loading', heroes);
+            const newSelectedHeroes = [];
             heroes.forEach((hero) => {
-                console.log("hero?", hero);
-                if (this.hasLoaded.hasOwnProperty(hero.name) === true) {
-                    console.log(`${hero.name} was loaded already!`);
-                } else {
-                    this.hasLoaded[hero.name] = true;
-                    hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
-                    hero.abilitySet = new AbilitySet();
-                    hero.talents = ['none', 'none', 'none', 'none'];
-                    this.selectedHeroes.push(hero);
-                    this.initAbilityPriority(hero);
-                    console.log("hero here", hero);
+                if (this.hasLoaded.hasOwnProperty(hero.programName) === true) {
+                    console.log(`${hero.programName} was loaded already!`);
+                    const foundHero = this.selectedHeroes.find((findingHero) => {
+                        return findingHero.programName === hero.programName;
+                    })
+                    if (foundHero) {
+                        newSelectedHeroes.push(foundHero);
+                        return;
+                    }
                 }
+                this.hasLoaded[hero.programName] = true;
+                hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
+                hero.abilitySet = new AbilitySet();
+                hero.talents = ['none', 'none', 'none', 'none'];
+                this.initAbilityPriority(hero);
+                this.getSavedAbilities(hero);
+                newSelectedHeroes.push(hero);
             });
+            this.selectedHeroes = newSelectedHeroes;
+            this.resolveClosedCells(this.selectedHeroes);
             this.currentHero = this.selectedHeroes[0];
             // this.checkIfLoadedSavedScript();
             // if (!this.initialized) {
@@ -86,37 +93,30 @@ export class AbilitiesComponent implements OnInit {
     // }
 
     // To be used to retrieve items saved
-    getSavedAbilities() {
+    getSavedAbilities(hero) {
+        console.log(hero);
+        const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
+        const abilities = 'QWERT';
+        if (savedPriorities) {
+            Object.keys(savedPriorities).forEach((x, i) => {
+                hero.abilityPriorities[abilities.indexOf(x)].priority = i;
+            });
+            hero.abilities = savedPriorities;
+        }
 
-        this.selectedHeroes = this.botConfigData.getSelectedHeroes();
-        // console.log('getSavedAbilities');
-        // console.log(this.selectedHeroes);
-        this.selectedHeroes.forEach((hero) => {
-            // console.log(hero);
-            const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
-            const abilities = 'QWERT';
-            if (savedPriorities) {
-                Object.keys(savedPriorities).forEach((x, i) => {
-                    hero.abilityPriorities[abilities.indexOf(x)].priority = i;
-                });
-                hero.abilities = savedPriorities;
-            }
+        const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
+        if (savedLevels) {
+            hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
+        }
 
-            const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
-            if (savedLevels) {
-                hero.abilityLevels = this.generateAbilitiesFromString(savedLevels);
-            }
-
-            const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
-            if (savedTalents !== undefined && savedTalents.length > 0) {
-                this.regenerateTalentArray(hero, savedTalents);
-            }
-            if (savedPriorities && savedLevels) {
-                hero.abilities = [];
-                hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
-            }
-        });
-        this.resolveClosedCells(this.selectedHeroes);
+        const savedTalents = this.botConfigData.getSavedHeroTalents(hero.programName);
+        if (savedTalents !== undefined && savedTalents.length > 0) {
+            this.regenerateTalentArray(hero, savedTalents);
+        }
+        if (savedPriorities && savedLevels) {
+            hero.abilities = [];
+            hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
+        }
     }
 
     initAbilityPriority(hero) {
