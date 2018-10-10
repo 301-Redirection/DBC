@@ -15,6 +15,7 @@ module.exports = function (config) {
             karmaChromeLauncher,
             karmaJasmineHTMLReporter,
             karmaCoverageIstanbul,
+            'karma-coverage',
             karma,
         ],
         client: {
@@ -27,14 +28,10 @@ module.exports = function (config) {
         angularCli: {
             environment: 'dev',
         },
-        reporters: ['progress', 'kjhtml', 'coverage'],
+        reporters: ['progress', 'coverage'],
         coverageReporter: {
-            reporters: [
-                // generates ./coverage/lcov.info
-                { type: 'lcovonly', subdir: '.' },
-                // generates ./coverage/coverage-final.json
-                { type: 'json', subdir: '.' },
-            ],
+            type: 'lcov',
+            dir: 'coverage/',
         },
         port: 9876,
         colors: true,

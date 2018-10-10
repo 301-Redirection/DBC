@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "node ./backend/www & ng serve",
     "build": "ng build --prod",
-    "test-all": "npm run lint && npm run test",
+    "test-all": "npm run lint && npm run test && npm run report-coverage ",
     "test": "npm run test-backend && npm run test-frontend",
     "test-backend": "\"./node_modules/jasmine/bin/jasmine.js\" --config=jasmine.json",
     "test-frontend": "\"./node_modules/.bin/karma\" start frontend/karma.conf.js --single-run",
@@ -18,7 +18,8 @@
     "scrape": "node ./backend/static/converters/updateDotaDefinitions.js",
     "compodoc": "./node_modules/.bin/compodoc -p frontend/tsconfig.app.json -a ./documentation/compodoc",
     "docs": "compodoc -s -d ./documentation",
-    "report-coverage": "codecov"
+    "test-backend-coverage": "istanbul cover \"./node_modules/jasmine/bin/jasmine.js\" --config=jasmine.json",
+    "report-coverage": "npm run test-backend-coverage && codecov"
   },
   "dependencies": {
     "@angular/animations": "^5.2.11",
@@ -89,9 +90,9 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "babel-eslint": "^8.2.3",
+    "codecov": "^3.1.0",
     "codelyzer": "^4.0.1",
     "compodoc": "0.0.41",
-    "coveralls": "^3.0.2",
     "diff": "^3.5.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
