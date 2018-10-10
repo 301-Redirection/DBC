@@ -72,7 +72,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 description: this.description,
                 configuration: this.botConfigData.getConfig(),
             };
-            console.log(requestBot);
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     if (this.id === -1) {

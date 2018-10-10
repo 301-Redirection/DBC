@@ -107,14 +107,7 @@ export class ItemsComponent implements OnInit{
         if (this.selectedHeroes !== undefined) {
             this.selectedHeroes.forEach((hero, num) => {
                 const savedItemsMinimal = this.botConfigData.getHeroItemSelection(hero.programName);
-                this.allItems.forEach((x) => {
-                    if (x.name.indexOf('radiance') !== -1) {
-                        console.log(x);
-                    }
-                });
-                console.log(this.allItems);
                 const savedItems = this.populateSavedItems(savedItemsMinimal);
-                console.log(savedItems);
                 if (savedItems !== undefined && savedItems.length > 0) {
                     this.heroItemSelection[num] = savedItems;
                     this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
@@ -134,7 +127,6 @@ export class ItemsComponent implements OnInit{
             }
             const newItem = this.allItems.find(item => item.name === x.name);
             if (x && x.components && x.components !== 'null' && x.components.length > 0) {
-                console.log('components', x.components);
                 newItem.components = this.populateSavedItems(x.components);
             }
             savedItems.push(newItem);

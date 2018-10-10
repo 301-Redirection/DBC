@@ -36,7 +36,6 @@ export class BotConfigDataService {
 
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        console.log(config);
         const selectedHeroesArr = [];
         this.setSelectedHeroes(selectedHeroesArr);
         this.setTeamDesires(this.config.desires);
@@ -199,9 +198,7 @@ export class BotConfigDataService {
     }
 
     public getSavedHeroAbilityLevels(heroName: string): any {
-        console.log(heroName);
         const hero = this.config.heroes.find(hero => hero['name'] === heroName);
-        console.log(hero);
         if (hero === undefined) {
             return undefined;
         }
