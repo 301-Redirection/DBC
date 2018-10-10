@@ -104,7 +104,7 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedItems() {
-        if (this.selectedHeroes !== undefined) {
+        if (this.selectedHeroes && this.selectedHeroes.length > 0) {
             this.selectedHeroes.forEach((hero, num) => {
                 const savedItemsMinimal = this.botConfigData.getHeroItemSelection(hero.programName);
                 const savedItems = this.populateSavedItems(savedItemsMinimal);

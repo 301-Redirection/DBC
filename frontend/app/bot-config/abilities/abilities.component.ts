@@ -28,7 +28,13 @@ export class AbilitiesComponent implements OnInit {
     selectedHeroes: any;
     currentHero: any;
 
-    constructor(private botConfigData: BotConfigDataService) { }
+    // state variables
+    hasLoaded: any;
+
+    constructor(private botConfigData: BotConfigDataService) {
+        this.hasLoaded = { };
+        this.selectedHeroes = [];
+    }
 
     ngOnInit() {
         this.retrieveHeroes();
@@ -42,18 +48,39 @@ export class AbilitiesComponent implements OnInit {
     retrieveHeroes(): void {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
-            this.selectedHeroes = [];
+            console.log('loading');
             heroes.forEach((hero) => {
-                hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
-                hero.abilitySet = new AbilitySet();
-                hero.talents = ['none', 'none', 'none', 'none'];
-                this.selectedHeroes.push(hero);
+                console.log(this.hasLoaded);
+                if (this.hasLoaded.hasOwnProperty(hero.programName) === true) {
+                    console.log(`${hero.programName} was loaded!`);
+                } else {
+                    this.hasLoaded[hero.programName] = true;
+                    hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
+                    hero.abilitySet = new AbilitySet();
+                    hero.talents = ['none', 'none', 'none', 'none'];
+                    this.selectedHeroes.push(hero);
+                    this.initAbilityPriority(hero);
+                }
             });
-            this.initAbilityPriorities();
             this.currentHero = this.selectedHeroes[0];
             this.checkIfLoadedSavedScript();
             this.saveAbilities();
         });
+        // const heroes = this.botConfigData.getSelectedHeroesAny();
+        // heroes.forEach((heroes) => {
+        //     console.log('getSelectedHeroes()');
+        //     this.selectedHeroes = [];
+        //     heroes.forEach((hero) => {
+        //         hero.url = `${globalConfig['app']['API_URL']}${hero.url}`;
+        //         hero.abilitySet = new AbilitySet();
+        //         hero.talents = ['none', 'none', 'none', 'none'];
+        //         this.selectedHeroes.push(hero);
+        //     });
+        //     this.initAbilityPriorities();
+        //     this.currentHero = this.selectedHeroes[0];
+        //     this.checkIfLoadedSavedScript();
+        //     this.saveAbilities();
+        // });
     }
 
     checkIfLoadedSavedScript() {
@@ -66,6 +93,8 @@ export class AbilitiesComponent implements OnInit {
 
     // To be used to retrieve items saved
     getSavedAbilities() {
+        console.log('getSavedAbilities');
+        console.log(this.selectedHeroes);
         this.selectedHeroes.forEach((hero) => {
             const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
             const abilities = 'QWERT';
@@ -91,55 +120,59 @@ export class AbilitiesComponent implements OnInit {
         this.resolveClosedCells(this.selectedHeroes);
     }
 
+    initAbilityPriority(hero) {
+        hero.abilityPriorities = [
+            {
+                name: hero.ability_q,
+                type: 'Q',
+                src: `${globalConfig['app']['API_URL']}${hero.url_q}`,
+                priority: 2,
+                index: 0,
+            },
+            {
+                name: hero.ability_w,
+                type: 'W',
+                src: `${globalConfig['app']['API_URL']}${hero.url_w}`,
+                priority: 3,
+                index: 1,
+            },
+            {
+                name: hero.ability_e,
+                type: 'E',
+                src: `${globalConfig['app']['API_URL']}${hero.url_e}`,
+                priority: 4,
+                index: 2,
+            },
+            {
+                name: hero.ability_r,
+                type: 'R',
+                src: `${globalConfig['app']['API_URL']}${hero.url_r}`,
+                priority: 0,
+                index: 3,
+            },
+            {
+                name: 'Talents',
+                type: 'T',
+                src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGV' +
+                'udHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
+                priority: 1,
+                index: 4,
+            },
+        ];
+        hero.abilityLevels = [];
+        for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
+            hero.abilityLevels[i] = [];
+            for (let j = 0; j < NUMBER_LEVELS; j += 1) {
+                hero.abilityLevels[i].push('open');
+            }
+        }
+        hero.abilities = [];
+        hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
+    }
+
     initAbilityPriorities() {
         this.selectedHeroes.forEach((hero) => {
-            hero.abilityPriorities = [
-                {
-                    name: hero.ability_q,
-                    type: 'Q',
-                    src: `${globalConfig['app']['API_URL']}${hero.url_q}`,
-                    priority: 2,
-                    index: 0,
-                },
-                {
-                    name: hero.ability_w,
-                    type: 'W',
-                    src: `${globalConfig['app']['API_URL']}${hero.url_w}`,
-                    priority: 3,
-                    index: 1,
-                },
-                {
-                    name: hero.ability_e,
-                    type: 'E',
-                    src: `${globalConfig['app']['API_URL']}${hero.url_e}`,
-                    priority: 4,
-                    index: 2,
-                },
-                {
-                    name: hero.ability_r,
-                    type: 'R',
-                    src: `${globalConfig['app']['API_URL']}${hero.url_r}`,
-                    priority: 0,
-                    index: 3,
-                },
-                {
-                    name: 'Talents',
-                    type: 'T',
-                    src: 'https://image.winudf.com/v2/image/Y29tLnRyZW5jaHdhcmZhcmVkb3RhLnRhbGV' +
-                    'udHRyZWVmb3Jkb3RhX2ljb25fNTgyZ2hqbzg/icon.png?w=170&fakeurl=1&type=.png',
-                    priority: 1,
-                    index: 4,
-                },
-            ];
-            hero.abilityLevels = [];
-            for (let i = 0; i < NUMBER_ABILITIES; i += 1) {
-                hero.abilityLevels[i] = [];
-                for (let j = 0; j < NUMBER_LEVELS; j += 1) {
-                    hero.abilityLevels[i].push('open');
-                }
-            }
-            hero.abilities = [];
-            hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
+            this.initAbilityPriority(hero);
         });
     }
 
@@ -334,7 +367,7 @@ export class AbilitiesComponent implements OnInit {
     }
 
     generateAbilitiesFromString(abilities: String) {
-        if (abilities === undefined) {
+        if (!abilities) {
             return [];
         }
         // Arrays: [0] => q, [1] => w, [2] => e, [3] => r, [4] => t
