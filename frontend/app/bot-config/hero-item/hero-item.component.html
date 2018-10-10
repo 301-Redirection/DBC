@@ -71,7 +71,7 @@
         </div>
     </a>
     <a *ngIf="isSelectedHero" data-selected="true" [attr.data-hero-id]="hero.id" class="popover-zone selected-popover-zone" role="button">
-        <div class="card-header" (click)="removeHero(hero, pool)">
+        <div id="removeHeroIcon" class="card-header" (click)="removeHero(hero, pool)">
             <button id="removeIcon" class="button button-cancel btn-sm mx-2">
                 <i id="timesIcon" class="fas fa-times"></i>
             </button>
