@@ -169,7 +169,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     readConfig(config: ConfigurationFormat): void {
         // Building hero object
         const selectedHeroes = [];
-        
+
         // Building items object
         const items = this.itemsComponent.getItems();
         console.log(items);
@@ -186,46 +186,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     heroesReady() {
-        // console.log('config');
-        // console.log(this.config);
-        const selectedHeroes = [];
-        // console.log('heroes ready');
-        this.heroesLoaded = true;
-        const heroes = this.heroesComponent.getHeroes();
-        // console.log('heroes');
-        // console.log(heroes);
-        // console.log('config.heroPool.pool');
-        // console.log(this.config.heroPool.pool);
-        if (this.config.heroPool.partitioned) {
-            // TO DO
-            this.config.heroPool.pool.forEach((heroSpec) => {
-                const currentHero = heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
-                if (currentHero !== undefined) {
-                    selectedHeroes.push(currentHero);
-                }
-                else {
-                    // console.log('ignoring ' + heroSpec.name);
-                }
-            });
-        } else {
-            this.config.heroPool.pool.forEach((heroSpec) => {
-                const currentHero = heroes.find(tempHero => tempHero['programName'] === heroSpec.name);
-                if (currentHero !== undefined) {
-                    selectedHeroes.push(currentHero);
-                }
-                else {
-                    // console.log('ignoring ' + heroSpec.name);
-                }
-            });
-        }
-        // console.log('selectedHeroes');
-        // console.log(selectedHeroes);
-        // this.botConfigData.setSelectedHeroes(selectedHeroes);
-        this.botConfigData.config.heroPool = new HeroPoolConfiguration();
-        this.botConfigData.config.heroPool.partitioned = this.config.heroPool.partitioned;
-        this.botConfigData.config.heroPool.pool = selectedHeroes;
-        // this.abilitiesComponent.reset();
-        // console.log(this.heroesComponent.getHeroes());
+        
     }
 
     itemsReady() {
@@ -241,11 +202,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 // console.log(heroSpec.name + "'s items:");
                 // console.log(heroSpec);
             });
-        }
-        else {
+        } else {
             // in case there is a race condition keep calling this
             // so that the config.heroes exists
-            this.itemsReady()
+            this.itemsReady();
         }
         console.log(this.config.heroes);
     }
@@ -266,8 +226,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     itemsArr = itemsArr.concat(tempArr);
                     // console.log('itemsArr after concat');
                     // console.log(itemsArr);
-                }
-                else {
+                } else {
                     // console.log('tempArr was nulL!');
                 }
             });
