@@ -73,7 +73,6 @@ export class ItemsComponent implements OnInit{
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
-        this.getHeroes();
         this.getItems();
         this.itemSearch = '';
     }
@@ -107,16 +106,40 @@ export class ItemsComponent implements OnInit{
     getSavedItems() {
         if (this.selectedHeroes !== undefined) {
             this.selectedHeroes.forEach((hero, num) => {
-                const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
+                const savedItemsMinimal = this.botConfigData.getHeroItemSelection(hero.programName);
+                this.allItems.forEach((x) => {
+                    if (x.name.indexOf('radiance') !== -1) {
+                        console.log(x);
+                    }
+                });
+                console.log(this.allItems);
+                const savedItems = this.populateSavedItems(savedItemsMinimal);
+                console.log(savedItems);
                 if (savedItems !== undefined && savedItems.length > 0) {
                     this.heroItemSelection[num] = savedItems;
                     this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
-                }else {
+                } else {
                     this.heroItemSelection[num] = [];
                     this.totalCostPerHero[num] = 0;
                 }
             });
         }
+    }
+
+    populateSavedItems(items) {
+        const savedItems = [];
+        items.forEach((x) => {
+            if (x.name.indexOf('item_recipe_') === 0) {
+                x.name = x.name.substring(12);
+            }
+            const newItem = this.allItems.find(item => item.name === x.name);
+            if (x && x.components && x.components !== 'null' && x.components.length > 0) {
+                console.log('components', x.components);
+                newItem.components = this.populateSavedItems(x.components);
+            }
+            savedItems.push(newItem);
+        });
+        return savedItems;
     }
 
     calculateCostItems (itemArr: any) {
@@ -135,6 +158,7 @@ export class ItemsComponent implements OnInit{
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
+                this.getHeroes();
             },
             (error) => {
                 console.log(error);
@@ -153,10 +177,10 @@ export class ItemsComponent implements OnInit{
             item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
                 this.basicItems.push(item);
-            }else if (item['name'].indexOf('recipe') === -1) {
+            } else if (item['name'].indexOf('recipe') === -1) {
                 this.handleItemComponents(item);
                 this.upgradeItems.push(item);
-            }else {
+            } else {
                 item['url'] = this.recipeIconURL;
                 this.recipes.push(item);
             }

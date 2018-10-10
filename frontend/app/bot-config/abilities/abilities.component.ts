@@ -67,9 +67,13 @@ export class AbilitiesComponent implements OnInit {
     // To be used to retrieve items saved
     getSavedAbilities() {
         this.selectedHeroes.forEach((hero) => {
-            const savedAbilities = this.botConfigData.getSavedHeroAbilities(hero.programName);
-            if (savedAbilities) {
-                hero.abilities = savedAbilities;
+            const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
+            const abilities = 'QWERT';
+            if (savedPriorities) {
+                Object.keys(savedPriorities).forEach((x, i) => {
+                    hero.abilityPriorities[abilities.indexOf(x)].priority = i;
+                });
+                hero.abilities = savedPriorities;
             }
 
             const savedLevels = this.botConfigData.getSavedHeroAbilityLevels(hero.programName);
@@ -81,6 +85,8 @@ export class AbilitiesComponent implements OnInit {
             if (savedTalents !== undefined && savedTalents.length > 0) {
                 this.regenerateTalentArray(hero, savedTalents);
             }
+            hero.abilities = [];
+            hero.abilityPriorities.map(ability => hero.abilities[ability.priority] = ability);
         });
         this.resolveClosedCells(this.selectedHeroes);
     }

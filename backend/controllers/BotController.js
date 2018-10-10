@@ -87,13 +87,16 @@ class BotController {
     // removes unnecessary fields from json
     static reduceAbilityObject(abilityObject) {
         const abilityTempObject = abilityObject;
+        abilityTempObject.priorities = {};
+        abilityTempObject.abilities.forEach((x) => {
+            abilityTempObject.priorities[x.type] = x.priority;
+        });
         abilityTempObject.abilities = abilityTempObject.abilityLevels;
         delete abilityTempObject.abilityLevels;
         return abilityTempObject;
     }
 
     static removeRedundantDataFromObject(configuration) {
-        console.log('removeRedundantDataFromObject called');
         let result = [];
         if (configuration.heroes && configuration.heroes.length) {
             configuration.heroes.forEach((element) => {
@@ -103,8 +106,6 @@ class BotController {
                     ele.items = result;
                 }
                 if (element.abilities) {
-                    console.log('reducing ability of');
-                    console.log(ele);
                     ele = this.reduceAbilityObject(element);
                 }
             });
@@ -120,7 +121,6 @@ class BotController {
         const userId = request.user.sub;
         // condition for creating a botconfig entry
         configuration = this.removeRedundantDataFromObject(configuration);
-        console.log(configuration);
         if (id === -1) {
             models.BotConfig.create({
                 name,

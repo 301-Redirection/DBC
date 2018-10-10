@@ -69,6 +69,7 @@ export class HeroSpecification {
     abilityLevels: string;
     talents: string[];
     items: string[];
+    priorities: any;
 
     constructor() {
         this.name = '';
