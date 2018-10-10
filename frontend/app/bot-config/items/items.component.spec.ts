@@ -230,8 +230,10 @@ describe('ItemsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ItemsComponent);
         component = fixture.componentInstance;
-        component.heroItemSelection[0] = [];
         fixture.detectChanges();
+        component.heroItemSelection[0] = [];
+        component.selectedHeroIndex = 0;
+        component.currentHero = component.selectedHeroes[0];
     });
 
     it('should create', () => {
@@ -241,8 +243,6 @@ describe('ItemsComponent', () => {
     it('should add item to selectedItem list', () => {
         const item1 = testItems.items[0];
         const item2 = testItems.items[1];
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1;
         component.addItemToList(item1);
         component.selectedItem = item2;
@@ -251,8 +251,6 @@ describe('ItemsComponent', () => {
     });
 
     it('should add an item with components correctly selectedItem list', () => {
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = itemWithComponents;
         component.addItemToList(itemWithComponents);
         expect(component.heroItemSelection[0]).toEqual([itemWithComponents]);
@@ -260,8 +258,6 @@ describe('ItemsComponent', () => {
 
     it('should absorb components already in selectedItem list', () => {
         const item1 = testItems.items[2];
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1;
         component.addItemToList(item1);
         component.selectedItem = item1;
@@ -274,8 +270,6 @@ describe('ItemsComponent', () => {
     it('should remove an item from selectedItem list correctly', () => {
         const item1 = testItems.items[2];
         const item2 = testItems.items[3];
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1;
         component.addItemToList(item1);
         component.selectedItem = item2;
@@ -288,8 +282,6 @@ describe('ItemsComponent', () => {
     it('should remove an items from selectedItem list, check empty array', () => {
         const item1 = testItems.items[2];
         const item2 = testItems.items[3];
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1;
         component.addItemToList(item1);
         component.selectedItem = item2;
@@ -311,8 +303,6 @@ describe('ItemsComponent', () => {
         const costH1 = item1H1.cost + item2H1.cost;
         const costH2 = item1H2.cost + item2H2.cost;
         // Hero 1
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1H1;
         component.addItemToList(item1H1);
         component.selectedItem = item2H1;
@@ -335,8 +325,6 @@ describe('ItemsComponent', () => {
         const item1H1 = testItems.items[0];
         const item2H1 = testItems.items[1];
         // Hero 1
-        component.selectedHeroIndex = 0;
-        component.currentHero = component.selectedHeroes[0];
         component.selectedItem = item1H1;
         component.addItemToList(item1H1);
         component.selectedItem = item2H1;
