@@ -110,6 +110,18 @@ describe('HeroesComponent', () => {
         fixture = TestBed.createComponent(HeroesComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        component.confirmTogglePools = jasmine.createSpy('confirmTogglePools() spy')
+            .and.callFake(() => {
+                if (confirm('Are sure you want to toggle pools?')) {
+                    component.togglePools();
+                }
+            });
+        component.triggerResetPools = jasmine.createSpy('triggerResetPools() spy')
+            .and.callFake(() => {
+                if (confirm('Are sure you want to reset?')) {
+                    component.resetPools();
+                }
+            });
     });
 
     it('should create', () => {
@@ -138,12 +150,6 @@ describe('HeroesComponent', () => {
     });
 
     it('should clear heroes on reset', (done) => {
-        component.triggerResetPools = jasmine.createSpy('triggerResetPools() spy')
-            .and.callFake(() => {
-                if (confirm('Are sure you want to reset?')) {
-                    component.resetPools();
-                }
-            });
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
         fixture.detectChanges();
@@ -161,12 +167,6 @@ describe('HeroesComponent', () => {
     });
 
     it('should toggle pools on toggle button press', (done) => {
-        component.confirmTogglePools = jasmine.createSpy('confirmTogglePools() spy')
-            .and.callFake(() => {
-                if (confirm('Are sure you want to toggle pools?')) {
-                    component.togglePools();
-                }
-            });
         const oldNumberOfPools = component.numberOfPools;
         const oldPartitioned = component.partitioned;
         spyOn(window, 'confirm').and.returnValue(true);
@@ -202,12 +202,7 @@ describe('HeroesComponent', () => {
     });
 
     it('should add heroes to first pool when toggled to multiple pools', (done) => {
-        component.triggerResetPools = jasmine.createSpy('triggerResetPools() spy')
-            .and.callFake(() => {
-                if (confirm('Are sure you want to toggle pools?')) {
-                    component.togglePools();
-                }
-            });
+        spyOn(window, 'confirm').and.returnValue(true);
         // Add hero item
         fixture.debugElement.query(By.css('app-hero-item'))
             .triggerEventHandler('dblclick', new MouseEvent('dblclick'));
@@ -226,12 +221,6 @@ describe('HeroesComponent', () => {
 
     it('should not add duplicates heroes when toggling to single pool', (done) => {
         spyOn(window, 'confirm').and.returnValue(true);
-        component.confirmTogglePools = jasmine.createSpy('confirmTogglePools() spy')
-            .and.callFake(() => {
-                if (confirm('Are sure you want to toggle pools?')) {
-                    component.togglePools();
-                }
-            });
         // Change from single pool to multiple pools
         fixture.debugElement.query(By.css('#togglePoolsBtn'))
             .triggerEventHandler('click', new MouseEvent('click'));
@@ -263,12 +252,6 @@ describe('HeroesComponent', () => {
 
     it('should not allow duplicate heroes in partitioned pools', (done) => {
         spyOn(window, 'confirm').and.returnValue(true);
-        component.confirmTogglePools = jasmine.createSpy('confirmTogglePools() spy')
-            .and.callFake(() => {
-                if (confirm('Are sure you want to toggle pools?')) {
-                    component.togglePools();
-                }
-            });
         // Change from single pool to multiple pools
         fixture.debugElement.query(By.css('#togglePoolsBtn'))
             .triggerEventHandler('click', new MouseEvent('click'));
