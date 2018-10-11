@@ -197,6 +197,7 @@ describe('ItemsComponent', () => {
             'BotConfigDataService',
             [
                 'getSelectedHeroes',
+                'getSelectedHeroesObservable',
                 'getHeroItemSelection',
                 'updateHeroItems',
                 'notifyIsLoadedScript',
@@ -204,9 +205,12 @@ describe('ItemsComponent', () => {
         );
 
         botConfigDataServiceStub.getSelectedHeroes.and.returnValue(
-            Observable.of(heroesArray),
+            heroesArray,
         );
 
+        botConfigDataServiceStub.getSelectedHeroesObservable.and.returnValue(
+            Observable.of(heroesArray),
+        );
         botConfigDataServiceStub.updateHeroItems.and.returnValue(
             true,
         );
