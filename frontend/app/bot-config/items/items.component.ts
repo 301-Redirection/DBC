@@ -17,7 +17,7 @@ export class ItemsComponent implements OnInit{
     @Input('selected') selected: string;
 
     // Variables
-    allItems: [];
+    allItems: any;
     basicItems = [];
     upgradeItems = [];
     recipes = [];
