@@ -27,7 +27,7 @@
         <div class="card-header container-fluid bot-manage-card-header">
             <div class="text-left mb-0 pb-0 bot-manage-card-header">
                 <h5 id="itemsHeader">CHOOSING ITEMS FOR: {{ currentHero.niceName }}</h5>
-                <input [(ngModel)]="itemSearch" name="itemSearch" id="itemSearch" type="text" class="form-control" placeholder="&#xF002; Search">
+                <input [(ngModel)]="itemSearch" name="itemSearch" id="itemSearch" type="text" class="form-control" placeholder="&#xF002; Search" data-toggle="tooltip" data-placement="top" title="Press ESCAPE to clear">
             </div>
         </div>
         <div class="card-body bot-manage-card-body container-fluid">
@@ -272,6 +272,9 @@
                 </p>
                 <p>
                     To reset the Selected Items list, click on the 'trash' icon at the top right corner of this list.
+                </p>
+                <p>
+                    To search for a specific item, simply start typing the name of the hero. Alternatively, you can select the Search text field at the top right corner of the list of items to perform your search. To clear the search, press the <span class="code">Escape</span> key on your keyboard.
                 </p>
                 <br>
                 <h5>Basic Items</h5>

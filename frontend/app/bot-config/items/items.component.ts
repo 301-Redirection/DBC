@@ -55,18 +55,21 @@ export class ItemsComponent implements OnInit{
     // Listen for key press to update itemSearch
     @HostListener('document:keydown', ['$event'])
     searchEvent(event: KeyboardEvent) {
-        this.hideItemPopovers();
+        if (this.selected === 'items'
+            && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea'
+            && event.code.includes('Key')) {
+            this.itemSearch += event.key;
+        }
+    }
+
+    // Listen for escape key to clear search
+    @HostListener('document:keydown.escape', ['$event'])
+    clearSearch(event: KeyboardEvent) {
         if (this.selected === 'items'
             && event.target['localName'] !== 'input'
             && event.target['localName'] !== 'textarea') {
-            if (event.key === 'Backspace') {
-                this.itemSearch = this.itemSearch.slice(0, -1);
-            } else if (
-                (65 <= event.keyCode && event.keyCode <= 90) ||
-                (97 <= event.keyCode && event.keyCode <= 122)
-            ) {
-                this.itemSearch += event.key;
-            }
+            this.itemSearch = '';
         }
     }
 

@@ -12,7 +12,7 @@
         <div class="card bot-manage-card">
             <div class="card-header bot-manage-card-header">
                 <h5 id="heroesHeader">HEROES</h5>
-                <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002; Search">
+                <input [(ngModel)]="heroSearch" name="heroSearch" id="heroSearch" type="text" class="form-control" placeholder="&#xF002; Search" data-toggle="tooltip" data-placement="top" title="Press ESCAPE to clear">
             </div>
             <div class="bot-manage-card-body card-body">
                 <div class="class-title">
@@ -104,7 +104,7 @@
                     To reset your selected heroes, click the <span class="code">Reset</span> button next to the <span class="code">Toggle Pools</span> button. Note that this action will remove all previously selected heroes.
                 </p>
                 <p>
-                    To search for a specific hero, simply start typing the name of the hero. Alternatively, you can sleect the Search text field at the top right corner of the list of heroes to perform your search.
+                    To search for a specific hero, simply start typing the name of the hero. Alternatively, you can select the Search text field at the top right corner of the list of heroes to perform your search. To clear the search, press the <span class="code">Escape</span> key on your keyboard.
                 </p>
                 <br>
                 <h5>Changing Pools</h5>
