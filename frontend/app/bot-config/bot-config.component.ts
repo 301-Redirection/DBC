@@ -14,6 +14,7 @@ import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
+
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
@@ -25,7 +26,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
     @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
-    // @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
+    @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
 
     // Bot variables
     name: string = '';
@@ -114,7 +115,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.teamDesiresComponent.reset();
         this.heroesComponent.reset();
         this.abilitiesComponent.reset();
-        this.itemsComponent.reset();
+        // this.itemsComponent.reset();
         this.botConfigData.reset();
     }
 
@@ -138,8 +139,15 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
                     this.heroesComponent.getSavedHeroes();
-                    // this.abilitiesComponent.getSavedAbilities();
-                    // this.itemsComponent.getSavedItems();
+                    // Need Saved heroes to load completely before moving on
+                    this.heroesComponent.isSavedHeroesLoaded.subscribe((state) => {
+                        console.log(state);
+                        if (state === true) {
+                            this.itemsComponent.getSavedItems();
+                        }
+                    });
+                    this.heroesComponent.isSavedHeroesLoaded.next(false);
+                    this.abilitiesComponent.getSavedAbilities(null);
                 }
             },
             (error) => {

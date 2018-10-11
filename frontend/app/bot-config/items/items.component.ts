@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BehaviorSubject } from 'rxjs';
 // Import JQuery
 declare var $: any;
 
@@ -16,10 +17,11 @@ export class ItemsComponent implements OnInit{
     @Input('selected') selected: string;
 
     // Variables
-    allItems: any;
+    allItems: [];
     basicItems = [];
     upgradeItems = [];
     recipes = [];
+    isAllItemsLoaded = new BehaviorSubject(false);
 
     // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
@@ -74,6 +76,7 @@ export class ItemsComponent implements OnInit{
 
     ngOnInit() {
         this.selectedHeroes = [];
+        this.isAllItemsLoaded.next(false);
         this.getItems();
         this.itemSearch = '';
     }
@@ -105,21 +108,30 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedItems() {
-        this.selectedHeroes = this.botConfigData.getSelectedHeroes();
-        if (this.selectedHeroes && this.selectedHeroes.length > 0) {
-            this.selectedHeroes.forEach((hero, num) => {
-                const savedItemsMinimal = this.botConfigData.getHeroItemSelection(hero.programName);
-                console.log(savedItemsMinimal);
-                const savedItems = this.populateSavedItems(savedItemsMinimal);
-                if (savedItems !== undefined && savedItems.length > 0) {
-                    this.heroItemSelection[num] = savedItems;
-                    this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
-                } else {
-                    this.heroItemSelection[num] = [];
-                    this.totalCostPerHero[num] = 0;
+        this.isAllItemsLoaded.subscribe((state) => {
+            if (state) {
+                console.log("Item page: Loaded Script");
+
+                this.selectedHeroes = this.botConfigData.getSelectedHeroes();
+                if (this.selectedHeroes && this.selectedHeroes.length > 0) {
+                    this.selectedHeroes.forEach((hero, num) => {
+                        const savedItemsMinimal = this.botConfigData
+                            .getHeroItemSelection(hero.programName);
+                        console.log(savedItemsMinimal);
+                        console.log("hero:", this.heroItemSelection);
+                        const savedItems = this.populateSavedItems(savedItemsMinimal);
+                        if (savedItems !== undefined && savedItems.length > 0) {
+                            this.heroItemSelection[num] = savedItems;
+                            this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
+                        } else {
+                            this.heroItemSelection[num] = [];
+                            this.totalCostPerHero[num] = 0;
+                        }
+                    });
                 }
-            });
-        }
+
+            }
+        });
     }
 
     populateSavedItems(items) {
@@ -153,6 +165,7 @@ export class ItemsComponent implements OnInit{
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
+                this.isAllItemsLoaded.next(true);
                 this.getHeroes();
             },
             (error) => {

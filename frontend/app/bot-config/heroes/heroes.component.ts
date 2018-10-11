@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BehaviorSubject } from 'rxjs';
 
 // Import JQuery
 declare var $: any;
@@ -28,6 +29,7 @@ export class HeroesComponent implements OnInit {
     agilityHeroes = [];
     intelligenceHeroes = [];
     heroSearch: String;
+    isSavedHeroesLoaded = new BehaviorSubject(false);
 
     // attribute urls
     strURL = '/assets/images/strength.png';
@@ -125,6 +127,7 @@ export class HeroesComponent implements OnInit {
                         newHeroList.push(foundHero);
                     });
                     this.selectedHeroesList = newHeroList;
+                    this.isSavedHeroesLoaded.next(true);
                     this.populateSelectedHeroPools();
                     this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
                 }
@@ -164,6 +167,7 @@ export class HeroesComponent implements OnInit {
         if (allHeroesLoaded) {
             this.populateSelectedHeroPools();
             this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+            //this.isSavedHeroesLoaded.next(true);
         }
     }
 
