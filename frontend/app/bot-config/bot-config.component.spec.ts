@@ -8,6 +8,7 @@ import { BotConfigComponent } from './bot-config.component';
 import { ApiConnectService } from '../services/api-connect.service';
 import { ActivatedRouteStub } from '../testing/activated-route-stub';
 import { BotConfigDataService } from '../services/bot-config-data.service';
+import { LoadingModule } from '../core/loading.module';
 
 @Component({ selector: 'app-team-desires', template: '' })
 class TeamDesiresComponent {reset() { }}
@@ -89,6 +90,7 @@ describe('BotConfigComponent', () => {
             ],
             imports: [
                 FormsModule,
+                LoadingModule,
             ],
             providers: [
                 { provide: ApiConnectService, useValue: apiConnectServiceStub },
