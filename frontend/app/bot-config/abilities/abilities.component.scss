@@ -137,7 +137,8 @@
     border: 2px solid $btn-edit-border-color;
 }
 .button-chevron:hover { 
-    background-color: $btn-edit-color;
+    background-color: $btn-edit-border-color;
+    border: 2px solid $btn-edit-color;
 }
 
 .tooltip-inner{
