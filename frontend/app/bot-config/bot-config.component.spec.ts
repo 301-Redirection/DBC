@@ -27,7 +27,7 @@ class ItemsComponent {
     @Input('selected') selected: string;
 }
 
-describe('BotConfigComponent', () => {
+fdescribe('BotConfigComponent', () => {
     let component: BotConfigComponent;
     let fixture: ComponentFixture<BotConfigComponent>;
     let activatedRoute: ActivatedRouteStub;
@@ -70,6 +70,8 @@ describe('BotConfigComponent', () => {
                 },
             ],
         };
+        component.name = '';
+        component.description = '';
 
         const botId = {};
 
@@ -121,4 +123,28 @@ describe('BotConfigComponent', () => {
         const title = TestBed.get(Title);
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
     }));
+
+    fit('should change the title of the bot script', () => {
+        const currentName: string = '';
+        const inputName = fixture.nativeElement.querySelector('input');
+        console.log(inputName);
+
+        expect(currentName).toEqual(this.name);
+    });
+
+    it('should fail the validate info test', () => {
+
+    });
+
+    it('should change the description of the bot script', () => {
+
+    });
+
+    it('should pass the validate info test', () => {
+
+    });
+
+    it('should reset the fields to null', () => {
+
+    });
 });
