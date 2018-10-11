@@ -298,7 +298,7 @@ export class AbilitiesComponent implements OnInit {
                     }
                 }
 
-            });
+            }
         }
     }
     overwritePriorities(level, abilityType): void {
