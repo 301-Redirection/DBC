@@ -167,7 +167,7 @@ export class HeroesComponent implements OnInit {
         if (allHeroesLoaded) {
             this.populateSelectedHeroPools();
             this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
-            //this.isSavedHeroesLoaded.next(true);
+            // this.isSavedHeroesLoaded.next(true);
         }
     }
 

@@ -14,7 +14,6 @@ import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
-
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',

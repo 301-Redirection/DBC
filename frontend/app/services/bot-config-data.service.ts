@@ -36,7 +36,7 @@ export class BotConfigDataService {
 
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        //const selectedHeroesArr = [];
+        // const selectedHeroesArr = [];
         this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }

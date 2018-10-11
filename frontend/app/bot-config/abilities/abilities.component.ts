@@ -56,7 +56,7 @@ export class AbilitiesComponent implements OnInit {
             const newSelectedHeroes = [];
             heroes.forEach((hero) => {
                 if (this.hasLoaded.hasOwnProperty(hero.programName) === true) {
-                    //console.logconsole.log(`${hero.programName} was loaded already!`);
+                    // console.logconsole.log(`${hero.programName} was loaded already!`);
                     const foundHero = this.selectedHeroes.find((findingHero) => {
                         return findingHero.programName === hero.programName;
                     });
@@ -94,7 +94,7 @@ export class AbilitiesComponent implements OnInit {
 
     // To be used to retrieve items saved
     getSavedAbilities(hero) {
-        //console.log(hero);
+        // console.log(hero);
         const savedPriorities = this.botConfigData.getSavedHeroPriorities(hero.programName);
         const abilities = 'QWERT';
         if (savedPriorities) {

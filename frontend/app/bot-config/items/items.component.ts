@@ -108,17 +108,14 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedItems() {
+        // Wait for all items to load properly to be able to populate correctly
         this.isAllItemsLoaded.subscribe((state) => {
             if (state) {
-                console.log("Item page: Loaded Script");
-
                 this.selectedHeroes = this.botConfigData.getSelectedHeroes();
                 if (this.selectedHeroes && this.selectedHeroes.length > 0) {
                     this.selectedHeroes.forEach((hero, num) => {
                         const savedItemsMinimal = this.botConfigData
                             .getHeroItemSelection(hero.programName);
-                        console.log(savedItemsMinimal);
-                        console.log("hero:", this.heroItemSelection);
                         const savedItems = this.populateSavedItems(savedItemsMinimal);
                         if (savedItems !== undefined && savedItems.length > 0) {
                             this.heroItemSelection[num] = savedItems;
