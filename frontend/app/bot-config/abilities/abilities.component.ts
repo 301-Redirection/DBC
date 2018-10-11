@@ -6,8 +6,8 @@ const NUMBER_TALENTS: number = 4;
 const NUMBER_LEVELS: number = 25;
 const NUMBER_ABILITIES: number = 5;
 
-// Import JQuery
 declare var $: any;
+declare var swal: any;
 
 class AbilitySet {
     abilityPriorities: any;
@@ -319,7 +319,7 @@ export class AbilitiesComponent implements OnInit {
             }
             this.createArrayFromSelected();
         } else {
-            alert(`Cannot get ${abilityType} at this level.`);
+            swal('', `Cannot get ${abilityType} at this level.`, 'error');
         }
     }
 

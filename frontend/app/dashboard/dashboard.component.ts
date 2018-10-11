@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
     bots: any;
     botID: number;
     numberOfBots: number;
-    pageTitle = 'Dota 2 Bot Scripting - Dashboard';
+    pageTitle = 'Dota 2 Bot Configurator - Dashboard';
     isRetrieving: boolean;
 
     constructor(private t: Title, private api: ApiConnectService) {

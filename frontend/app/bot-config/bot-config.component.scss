@@ -17,7 +17,8 @@ $slider-cursor: pointer;
 
 #botConfigTitleContainer {
     padding-top: 2rem;
-    height: 25%;
+    padding-bottom: .5rem;
+    min-height: 20%;
 }
 
 #botConfigTitle {
@@ -94,6 +95,10 @@ $slider-cursor: pointer;
 #inputName:focus,
 #inputDescription:focus {
     background-color: transparent;
+}
+
+.required {
+    color: $red;
 }
 
 

@@ -39,7 +39,6 @@ export const ROUTES: Routes = [
         path: 'walkthrough',
         component: WalkthroughComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuard],
     },
 ];
 

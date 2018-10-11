@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { Title, By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../auth/auth.service';
+import { authServiceStub } from '../testing/auth-service-stub';
+// import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -8,7 +12,15 @@ describe('HomeComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [HomeComponent],
+            declarations: [
+                HomeComponent,
+            ],
+            imports: [
+                RouterTestingModule,
+            ],
+            providers: [
+                { provide: AuthService, useValue: authServiceStub },
+            ],
         })
         .compileComponents();
     }));
@@ -23,9 +35,9 @@ describe('HomeComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should have the title \'Dota 2 Bot Scripting - Home\'', async(() => {
+    it('should have the title \'Dota 2 Bot Configurator - Home\'', async(() => {
         const title = TestBed.get(Title);
-        expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Home');
+        expect(title.getTitle()).toEqual('Dota 2 Bot Configurator - Home');
     }));
 
     it('should render title in a h1 tag', async(() => {
@@ -34,7 +46,7 @@ describe('HomeComponent', () => {
         const compiled = fixture.debugElement
             .query(By.css('#createBotsTitle')).nativeElement.textContent;
 
-        expect(compiled).toEqual('DOTA 2 Bots - Your way');
+        expect(compiled).toEqual('Create DOTA 2 Bots Your Way');
     }));
 
 });

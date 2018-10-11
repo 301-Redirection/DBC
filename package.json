@@ -75,6 +75,7 @@
     "serve-favicon": "~2.4.5",
     "sinon": "^5.0.7",
     "sortablejs": "^1.7.0",
+    "sweetalert": "^2.1.0",
     "webdriver": "^5.0.0-alpha.7",
     "zone.js": "^0.8.19"
   },

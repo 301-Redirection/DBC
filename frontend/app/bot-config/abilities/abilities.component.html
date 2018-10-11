@@ -1,8 +1,9 @@
 <div class="container-fluid container-fluid-custom">
     <div class="row">
         <div class="col-12 config-description">
-            <!-- <h3>ABILITY CONFIGURATION</h3><br> -->
-            Select a hero to customize their ability level order.
+            <p>Select a hero to customize their ability level order.</p>
+            <button class="button button-new-configuration" data-toggle="modal" data-target="#readMoreAbilities">READ MORE</button>
+            <br>
         </div>
     </div>
     
@@ -28,10 +29,21 @@
                 <h5>Ability Level Up Guide</h5>
             </div>
             <div *ngIf="currentHero === undefined" class="card-body bot-manage-card-body">
-                <h6 class="text-center">No Selected Heroes</h6>
+                <h6>No Selected Heroes</h6>
             </div>
             <div *ngIf="currentHero !== undefined" class="card-body bot-manage-card-body">
                 <div class="ability-row text-center">
+                    <h6>Ability Level Up Priorities</h6>
+
+                    <div class="priority-arrows">
+                        <div class="float-left">
+                            <i class="fas fa-angle-left float-left"></i>&nbsp;&nbsp;Higher Priority
+                        </div>
+                        <div class="float-right">
+                            Lower Priority&nbsp;&nbsp;<i class="fas fa-angle-right float-right"></i>
+                        </div>
+                    </div>
+                    <br>
                     <div class="ability-item" *ngFor="let ability of currentHero.abilities">
                         <div class="selector">
                             <div class="buttons">
@@ -58,6 +70,7 @@
                 <div class="ability-row">
                     <button id = "ability-generate" class="button button-chevron mx-auto d-block" (click)="createArrayFromPrios()">Generate</button>
                 </div>
+                <br><br><br>
                 <!-- The ability order display -->
                 <div class="ability-row">
                     <h6>Ability Level Up Order</h6>
@@ -153,3 +166,44 @@
         </div>
     </div>
 </div>
+
+<!-- Abilities Read More Modal -->
+<div class="modal fade" id="readMoreAbilities">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">ABILITIES</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>
+                        This section allows you to specifiy the ability priorities and order in which abilities are upgraded for each selected hero.
+                    </p>
+                    <br>
+                    <h5>Level Up Priorities</h5>
+                    <p>
+                        To change the priority of an ability, click on the left and right arrows above the ability image. The priority position goes from left to right, where the ability on the far left has highest priority to be leveled up, and the ability on the far right has the lowest ability to be leveled up.
+                    </p>
+                    <br>
+                    <h5>Ability Level Up Order</h5>
+                    <p>
+                        By clicking the <span class="code">Generate</span> button, an Ability Level Up Order is automatically created, based on the positions of the abilities and their priorities.
+                    </p>
+                    <p>
+                        One can then customize the order of which abilities are leveled up by selecting an available block. Note that some sequences of leveling up abilities may not be allowed due to the nature of the game.
+                    </p>
+                    <br>
+                    <h5>Talent Tree</h5>
+                    <p>
+                        To specify the order of which talents are upgraded when available, click on the talent tree icon in either the Ability Level Up Priorities section, or the Ability Level Up Order section.
+                    </p>
+                    <p>
+                        To see what talents are availabe to choose from for the specific hero, click on available link in the talent tree window to be redirected to that hero's Dota 2 wiki page.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        
