@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
-import { Title } from '@angular/platform-browser';
+import { Title, By } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BotConfigComponent } from './bot-config.component';
 import { ApiConnectService } from '../services/api-connect.service';
@@ -70,8 +70,6 @@ fdescribe('BotConfigComponent', () => {
                 },
             ],
         };
-        component.name = '';
-        component.description = '';
 
         const botId = {};
 
@@ -124,27 +122,51 @@ fdescribe('BotConfigComponent', () => {
         expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
     }));
 
-    fit('should change the title of the bot script', () => {
-        const currentName: string = '';
-        const inputName = fixture.nativeElement.querySelector('input');
-        console.log(inputName);
+    it('should change the title of the bot script', () => {
+        const inputName = fixture.debugElement.query(By.css('#inputName')).nativeElement;
 
-        expect(currentName).toEqual(this.name);
+        inputName.value = 'Push Bot Script';
+        inputName.dispatchEvent(new Event('input'));
+
+        expect(inputName.value).toEqual(component.name);
     });
 
     it('should fail the validate info test', () => {
-
+        const validateResult = component.validateInfo();
+        expect(validateResult).toBeFalsy();
     });
 
     it('should change the description of the bot script', () => {
+        const inputDescription = fixture.debugElement.query(
+            By.css('#inputDescription')).nativeElement;
 
+        inputDescription.value = 'This is a bot script testing the pushing potential';
+        inputDescription.dispatchEvent(new Event('input'));
+
+        expect(inputDescription.value).toEqual(component.description);
     });
 
     it('should pass the validate info test', () => {
-
+        component.name = 'Test Bots';
+        component.description = 'Description of bots';
+        const validateResult = component.validateInfo();
+        expect(validateResult).toBeTruthy();
     });
 
     it('should reset the fields to null', () => {
+        component.name = 'Test Bots';
+        component.description = 'Description of bots';
 
+        component.reset();
+
+        expect(component.name).toEqual('');
+        expect(component.description).toEqual('');
+    });
+
+    it('should navigate to team desires configuration and update the selected tab property', () => {
+        const navTab = fixture.debugElement.query(By.css('#nav-desires-tab')).nativeElement;
+        navTab.click();
+
+        expect(component.selectedTab).toEqual('teamDesires');
     });
 });
