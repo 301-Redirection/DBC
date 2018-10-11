@@ -284,7 +284,7 @@ export class AbilitiesComponent implements OnInit {
             levelSelected.push(isSelected);
         }
         for (let i = 0; i < NUMBER_LEVELS; i += 1) {
-            this.currentHero.abilities.forEach((ability) => {
+            for (const ability of this.currentHero.abilities) {
                 const abilityLevels = this.currentHero.abilityLevels[ability.index];
                 if (abilityLevels[i] !== 'selected') {
                     if (this.canLevelAbility(ability.type, i)) {
