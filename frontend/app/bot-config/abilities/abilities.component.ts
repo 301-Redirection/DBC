@@ -98,6 +98,7 @@ export class AbilitiesComponent implements OnInit {
                 this.getSavedAbilities(hero);
             });
         }
+        return true;
     }
 
     // To be used to retrieve items saved
