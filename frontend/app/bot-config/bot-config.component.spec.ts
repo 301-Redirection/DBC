@@ -117,8 +117,8 @@ describe('BotConfigComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should have the title \'Dota 2 Bot Scripting - Configuration\'', async(() => {
+    it('should have the title \'Dota 2 Bot Configurator - Configuration\'', async(() => {
         const title = TestBed.get(Title);
-        expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Configuration');
+        expect(title.getTitle()).toEqual('Dota 2 Bot Configurator - Configuration');
     }));
 });
