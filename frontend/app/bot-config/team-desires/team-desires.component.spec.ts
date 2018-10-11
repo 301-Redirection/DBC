@@ -17,7 +17,7 @@ class ConfiguratorStubComponent {
     @Input() condition;
 }
 
-fdescribe('TeamDesiresComponent', () => {
+describe('TeamDesiresComponent', () => {
     let component: TeamDesiresComponent;
     let fixture: ComponentFixture<TeamDesiresComponent>;
 
