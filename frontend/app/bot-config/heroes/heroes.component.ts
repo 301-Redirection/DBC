@@ -234,13 +234,23 @@ export class HeroesComponent implements OnInit {
             pool.splice(index, 1);
         }
 
-        index = this.selectedHeroesList.indexOf(hero);
-        if (index !== -1) {
+        const poolIndex = this.pools.indexOf(pool);
+        let shouldRemove = true;
+        this.pools.forEach((pool, i) => {
+            if (i !== poolIndex) {
+                if (pool.indexOf(hero) !== -1) {
+                    shouldRemove = false;
+                }
+            }
+        });
+        if (shouldRemove) {
+            index = this.selectedHeroesList.indexOf(hero);
             this.selectedHeroesList.splice(index, 1);
         }
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
-        this.botConfigData.removeHeroSpecification(hero.programName);
+        console.log('looking for', pool, 'found', poolIndex);
+        this.botConfigData.removeHeroFromPool(hero.programName, poolIndex);
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
@@ -367,9 +377,9 @@ export class HeroesComponent implements OnInit {
     resetPools(): void {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
+        this.botConfigData.setHeroPool(this.pools);
         this.selectedHeroesList = [];
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
-        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes([]);
     }
 
     triggerResetPools(): void {

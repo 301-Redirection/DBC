@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
     ConfigurationFormat,
-    HeroSpecification,
     Condition,
     CompoundCondition,
 } from './ConfigurationFormat';
@@ -36,7 +35,7 @@ export class BotConfigDataService {
 
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        // const selectedHeroesArr = [];
+        this.selectedHeroes.next(this.config.heroes);
         this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }
@@ -86,45 +85,21 @@ export class BotConfigDataService {
     /**************************/
 
     // creates a hero specification for the hero if non-existent
-    private addHeroSpecification(heroName): void {
-        const heroes = this.config.heroes;
-        let exists = false;
-        for (let i = 0; i < heroes.length; i += 1) {
-            const hero = heroes[i];
-            if (hero.name === heroName) {
-                exists = true;
-            }
-        }
-        if (!exists) {
-            const heroSpec = new HeroSpecification();
-            heroSpec.name = heroName;
-            this.config.heroes.push(heroSpec);
-        }
-    }
+    // private addHeroToPool(heroName, heroPool): void {
+    //     const hero = this.config.heroPool.pool.find(hero => hero.name === heroName);
+    //     if (!hero) {
+    //         this.config.heroPool.pool.push({ name: heroName, position: heroPool });
+    //     }
+    // }
 
-    public removeHeroSpecification(heroName): void {
-        const heroes = this.config.heroes;
-        let exists = false;
-        let i = 1;
-        while (!exists && i < heroes.length) {
-            const hero = heroes[i];
-            if (hero.name === heroName) {
-                this.config.heroes.splice(i, 1);
-                exists = true;
-            }
-            i += 1;
-        }
-
-        const heroPool = this.config.heroPool.pool;
-        exists = false;
-        i = 1;
-        while (!exists && i < heroPool.length) {
-            const hero = heroPool[i];
-            if (hero.name === heroName) {
-                this.config.heroPool.pool.splice(i, 1);
-                exists = true;
-            }
-            i += 1;
+    public removeHeroFromPool(heroName, heroPool): void {
+        const hero = this.config.heroPool.pool.find((hero) => {
+            return hero.name === heroName && hero.position === heroPool;
+        });
+        if (!hero) {
+            throw `Removed a hero from a pool, but they doesn't exist in that pool`;
+        } else {
+            this.config.heroPool.pool.splice(this.config.heroPool.pool.indexOf(hero), 1);
         }
     }
 
@@ -136,35 +111,15 @@ export class BotConfigDataService {
         return this.config.heroPool;
     }
 
-    // Heroes
-    public getHeroesSpecification (): any {
-        return this.config.heroes;
-    }
-
     // Saves the currently selected heroes to the config
     public updateSelectedHeroes(heroes: any): void {
-        console.log(heroes);
         this.selectedHeroes.next(heroes);
-        heroes.forEach((hero) => {
-            if (hero !== undefined) {
-                this.addHeroSpecification(hero['programName']);
-            }
-        });
-    }
-
-    public clearSelectedHeroes(heroes: any): void {
-        console.log(heroes);
-        this.selectedHeroes.next(heroes);
-        heroes.forEach((hero) => {
-            if (hero !== undefined) {
-                this.removeHeroSpecification(hero['programName']);
-            }
-        });
+        this.config.heroes = heroes;
     }
 
     public setSelectedHeroes(heroes: any) {
-        console.log(heroes);
         this.selectedHeroes.next(heroes);
+        this.config.heroes = heroes;
     }
 
     public getSelectedHeroes(): any {

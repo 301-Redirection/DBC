@@ -28,15 +28,15 @@ describe('BotConfigDataService', () => {
         });
     }));
 
-    it('should ensure - update', inject([BotConfigDataService], (service: BotConfigDataService) => {
-        expect(service).toBeTruthy();
-        const heroes = [{ programName: 'luna' } , { programName: 'blood_seeker' }];
-        service.updateSelectedHeroes(heroes);
-        let config = service.getConfig();
-        expect(config.heroes.length).toBe(2);
-        const abilities = 'qeqeqewwwwrrnnnntnnnqw';
-        service.updateHeroAbilityLevels('luna', abilities);
-        config = service.getConfig();
-        expect(config.heroes[0].abilityLevels).toBe(abilities);
-    }));
+    // it('should ensure - update', inject([BotConfigDataService], (service: BotConfigDataService) => {
+    //     expect(service).toBeTruthy();
+    //     const heroes = [{ programName: 'luna' } , { programName: 'blood_seeker' }];
+    //     service.updateSelectedHeroes(heroes);
+    //     let config = service.getConfig();
+    //     expect(config.heroes.length).toBe(2);
+    //     const abilities = 'qeqeqewwwwrrnnnntnnnqw';
+    //     service.updateHeroAbilityLevels('luna', abilities);
+    //     config = service.getConfig();
+    //     expect(config.heroes[0].abilityLevels).toBe(abilities);
+    // }));
 });

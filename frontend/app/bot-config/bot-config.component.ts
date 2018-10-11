@@ -12,7 +12,7 @@ import * as globalConfig from '../../../config/config.js';
 import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
-// import { ItemsComponent } from './items/items.component';
+import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
 declare var swal: any;

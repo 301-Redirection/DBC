@@ -53,6 +53,7 @@ export class AbilitiesComponent implements OnInit {
     retrieveHeroes(): void {
         // Retrieving selected heroes from service
         this.botConfigData.getSelectedHeroesObservable().subscribe((heroes) => {
+            console.log(JSON.stringify(heroes));
             const newSelectedHeroes = [];
             heroes.forEach((hero) => {
                 if (this.hasLoaded.hasOwnProperty(hero.programName) === true) {
@@ -297,7 +298,6 @@ export class AbilitiesComponent implements OnInit {
                         abilityLevels[i] = 'disabled';
                     }
                 }
-
             }
         }
     }
