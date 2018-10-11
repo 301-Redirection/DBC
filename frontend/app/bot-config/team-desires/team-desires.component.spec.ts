@@ -20,6 +20,56 @@ class ConfiguratorStubComponent {
 describe('TeamDesiresComponent', () => {
     let component: TeamDesiresComponent;
     let fixture: ComponentFixture<TeamDesiresComponent>;
+    const nullCondition: Condition = new Condition();
+    const nullCompoundCondition: CompoundCondition = new CompoundCondition();
+
+    // Condition comparison by property
+    const compareCondition = (data: Condition) => {
+        for (const key in data) {
+            if (data[key] !== nullCondition[key]) {
+                return false;
+            }
+            return true;
+        }
+    };
+
+    // Compound Condition by property
+    const compareCompoundCondition = (data: CompoundCondition) => {
+        if (data.value !== nullCompoundCondition.value ||
+            data.action !== nullCompoundCondition.action ||
+            (data.logicalOperators.length !== nullCompoundCondition.logicalOperators.length &&
+                data.logicalOperators.length === 0) ||
+            (data.conditions.length !== nullCompoundCondition.conditions.length &&
+                data.conditions.length === 0)) {
+            return false;
+        }
+        return true;
+    };
+
+    // Custom equality matchers for jasmine to use in tests
+    const customMatchers = {
+        toBeNullCondition: () => {
+            return {
+                compare: (actual: Condition) => {
+                    const result = {
+                        pass: compareCondition(actual),
+                    };
+                    return result;
+                },
+            };
+        },
+        toBeNullCompoundCondition: () => {
+            return {
+                compare: (actual: CompoundCondition) => {
+                    console.log(actual);
+                    const result = {
+                        pass: compareCompoundCondition(actual),
+                    };
+                    return result;
+                },
+            };
+        },
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -68,22 +118,25 @@ describe('TeamDesiresComponent', () => {
         component = fixture.componentInstance;
         component.config = config;
         fixture.detectChanges();
+        jasmine.addMatchers(customMatchers);
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should add condition to array', () => {
+    it('should add new condition to array', () => {
         component.addCondition(component.config.desires.push.top.compoundConditions[0]);
 
-        expect(component.config.desires.push.top.compoundConditions[0].conditions.length)
-            .toEqual(1);
+        expect(component.config.desires.push.top.compoundConditions[0].conditions[0])
+        // @ts-ignore
+            .toBeNullCondition();
     });
 
-    it('should add compound condition object to array', () => {
+    it('should add new compound condition object to array', () => {
         component.addConditionGroup(component.config.desires.push.top);
-        expect(component.config.desires.push.top.compoundConditions.length).toEqual(2);
+        // @ts-ignore
+        expect(component.config.desires.push.top.compoundConditions[1]).toBeNullCompoundCondition();
     });
 
     it('should change the values of the new condition', () => {
