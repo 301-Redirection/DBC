@@ -12,11 +12,11 @@
 
     <div class="collapse navbar-collapse" id="navbarDropdown">
         <!-- Show only if logged in -->
-        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">
-            <li class="nav-item">
+        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList">
+            <li class="nav-item" *ngIf="auth.loggedIn">
                 <a id="dashboardLink" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="auth.loggedIn">
                 <a id="botConfigLink" routerLink="/bot-config" class="nav-link">NEW BOT CONFIGURATION</a>
             </li>
             <li class="nav-item">
