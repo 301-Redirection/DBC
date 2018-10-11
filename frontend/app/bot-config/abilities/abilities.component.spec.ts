@@ -82,6 +82,7 @@ describe('AbilitiesComponent', () => {
         const botConfigDataServiceStub = jasmine
             .createSpyObj('BotConfigDataService', [
                 'getSelectedHeroes',
+                'getSelectedHeroesObservable',
                 'getSavedHeroAbilities',
                 'getSavedHeroAbilityLevels',
                 'getSavedHeroPriorities',
@@ -96,7 +97,10 @@ describe('AbilitiesComponent', () => {
             .returnValue(Observable.of(heroes));
 
         botConfigDataServiceStub.getSelectedHeroes.and
-            .returnValue(Observable.of(heroesArray));
+            .returnValue(heroesArray);
+        botConfigDataServiceStub.getSelectedHeroesObservable.and.returnValue(
+            Observable.of(heroesArray),
+        );
 
         botConfigDataServiceStub.getSavedHeroPriorities.and
             .returnValue(heroesPrioritiesArray);
