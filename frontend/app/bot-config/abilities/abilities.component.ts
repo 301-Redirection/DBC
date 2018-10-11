@@ -92,6 +92,14 @@ export class AbilitiesComponent implements OnInit {
     //     });
     // }
 
+    loadSavedAbilities() {
+        if (this.selectedHeroes && this.selectedHeroes.length > 0) {
+            this.selectedHeroes.forEach((hero) => {
+                this.getSavedAbilities(hero);
+            });
+        }
+    }
+
     // To be used to retrieve items saved
     getSavedAbilities(hero) {
         // console.log(hero);

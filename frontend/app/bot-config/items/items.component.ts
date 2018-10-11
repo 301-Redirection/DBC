@@ -129,6 +129,7 @@ export class ItemsComponent implements OnInit{
 
             }
         });
+        return true;
     }
 
     populateSavedItems(items) {
