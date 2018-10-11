@@ -54,12 +54,23 @@ export class HeroesComponent implements OnInit {
     };
 
     // Listen for key press to update heroSearch
-    @HostListener('document:keypress', ['$event'])
+    @HostListener('document:keydown', ['$event'])
     searchEvent(event: KeyboardEvent) {
         if (this.selected === 'heroes'
             && event.target['localName'] !== 'input'
-            && event.target['localName'] !== 'textarea') {
+            && event.target['localName'] !== 'textarea'
+            && event.code.includes('Key')) {
             this.heroSearch += event.key;
+        }
+    }
+
+    // Listen for escape key to clear search
+    @HostListener('document:keydown.escape', ['$event'])
+    clearSearch(event: KeyboardEvent) {
+        if (this.selected === 'heroes'
+            && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea') {
+            this.heroSearch = '';
         }
     }
 

@@ -38,8 +38,14 @@
                 <div class="dropdown">
                     <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
-                        <div class="d-inline">
-                            Hello, {{username}}
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name != null">
+                            Hello, {{auth.userProfile?.given_name}}
+                        </div>
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname != null">
+                            Hello, {{auth.userProfile?.nickname}}
+                        </div>
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname == null && auth.userProfile?.name != null">
+                            Hello, {{auth.userProfile?.name}}
                         </div>
                     </button>
                     <div id="signOutDropdown" class="dropdown-menu" aria-labelledby="welcomeButton">

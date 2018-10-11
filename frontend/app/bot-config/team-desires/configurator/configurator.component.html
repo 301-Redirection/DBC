@@ -1,15 +1,15 @@
 <div class="row d-flex align-contents-center">
-    <mat-form-field class="col-md-4">
+    <mat-form-field class="col-md-4 form-field">
         <mat-select placeholder="IF THE" [(value)]="condition.trigger" [matTooltip]="getTriggerTooltip()">
             <mat-option *ngFor="let t of triggers | enumToArray" [value]="triggers[t]" (click)="updateInputBounds(t)">{{t}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field class="col-md-4">
+    <mat-form-field class="col-md-4 form-field">
         <mat-select placeholder="IS" [(value)]="condition.operator" [matTooltip]="operators[condition.operator]">
             <mat-option *ngFor="let o of operators | enumToArray" [value]="operators[o]">{{o}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field class="col-md-4" hintLabel="(Enter a value from {{min}} to {{max == null ? 'infinity' : max}})">
+    <mat-form-field class="col-md-4 form-field" hintLabel="(Enter a value from {{min}} to {{max == null ? 'infinity' : max}} {{inGameTime == true ? 'minutes' : ''}})">
         <input matInput [min]="min" [max]="max" type="number" [(ngModel)]="condition.conditional" (blur)="sanitizeInput()">
     </mat-form-field>
 </div>

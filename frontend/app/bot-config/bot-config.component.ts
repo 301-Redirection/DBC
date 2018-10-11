@@ -32,9 +32,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     @HostListener('window:beforeunload', ['$event'])
     beforeunloadHandler(event) {
-        const confirmationMessage = '\o/';
-        event.returnValue = confirmationMessage;
-        return confirmationMessage;
+        event.returnValue = true;
     }
 
     // Bot variables

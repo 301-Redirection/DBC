@@ -11,6 +11,11 @@
     color: $light-grey;
 }
 
+.tutorial-frame {
+    margin-left: 11% !important;
+    margin-right: 11% !important;
+}
+
 .link {
     color: #007bff !important;
     cursor: pointer;
@@ -50,6 +55,10 @@
 
 .tutorial {
     margin-top: 20px;
+}
+
+.tutorial-image {
+    text-align: left;
 }
 
 .tutorial ol li,

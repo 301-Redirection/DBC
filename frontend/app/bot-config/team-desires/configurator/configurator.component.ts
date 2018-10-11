@@ -26,6 +26,7 @@ export class ConfiguratorComponent {
 
     min = 0;
     max = 5;
+    inGameTime: boolean;
 
     constructor() {}
 
@@ -39,9 +40,11 @@ export class ConfiguratorComponent {
         if (data === 'Game Time') {
             this.min = 0;
             this.max = 5 * 60;
+            this.inGameTime = true;
         } else {
             this.min = 0;
             this.max = 5;
+            this.inGameTime = false;
         }
     }
 

@@ -389,6 +389,14 @@ button:focus {
     border-bottom: 3px solid $light-grey;
 }
 
+.modal-header .close {
+    color: $light-grey;
+}
+
+.modal-header .close:hover {
+    color: $white !important;
+}
+
 .modal-footer {
     border-top: 3px solid $light-grey;
 }
@@ -412,5 +420,5 @@ button:focus {
 }
 
 .code {
-    color: $blue;
+    font-weight: bold;
 }
