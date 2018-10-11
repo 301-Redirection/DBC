@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" routerLink="/home">
         <img id="dotaLogo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
-        &nbsp;<sub id="botScriptTitle">BOT SCRIPTING</sub>
+        &nbsp;<sub id="botScriptTitle">BOT CONFIGURATOR</sub>
     </a>
 
     <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +17,7 @@
                 <a id="dashboardLink" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>
             <li class="nav-item" *ngIf="auth.loggedIn">
-                <a id="botConfigLink" routerLink="/bot-config" class="nav-link">NEW BOT CONFIGURATION</a>
+                <a id="botConfigLink" routerLink="/bot-config" class="nav-link">NEW BOT</a>
             </li>
             <li class="nav-item">
                 <a id="botConfigLink" routerLink="/walkthrough" class="nav-link">WALKTHROUGH</a>

@@ -23,7 +23,7 @@ declare var swal: any;
     styleUrls: ['./bot-config.component.scss'],
 })
 export class BotConfigComponent implements OnInit, AfterViewInit {
-    pageTitle = 'Dota 2 Bot Scripting - Configuration';
+    pageTitle = 'Dota 2 Bot Configurator - Configuration';
 
     @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;

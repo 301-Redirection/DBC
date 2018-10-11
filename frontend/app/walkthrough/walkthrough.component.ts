@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-walkthrough',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class WalkthroughComponent implements OnInit {
+    pageTitle = 'Dota 2 Bot Configurator - Walkthrough';
 
-    constructor() { }
+    constructor(private title: Title) {
+        this.title.setTitle(this.pageTitle);
+    }
 
     ngOnInit() { }
 
