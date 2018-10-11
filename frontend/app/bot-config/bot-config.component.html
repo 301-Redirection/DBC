@@ -39,13 +39,19 @@
                                 <h4>Script Details</h4>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                <label for="inputName" class="col-sm-3 col-form-label">
+                                    Name
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                                <label for="inputDescription" class="col-sm-3 col-form-label">
+                                    Description
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
                                 </div>
@@ -72,19 +78,15 @@
     <!-- Start Button Row -->
     <div class="row frame mb-4">
         <div class="button-container ml-auto">
-            <button type="button" class="button button-cancel mx-2" (click)="reset()">
+            <button type="button" class="button button-cancel mx-2" (click)="confirmReset()">
                 <i class="fas fa-undo mr-1"></i>
                 RESET CONFIG
             </button>
-            <button type="button" class="button button-cancel mx-2" (click)="log()">
-                <i class="fas fa-undo mr-1"></i>
-                LOG CONFIG
-            </button>
-            <button type="button" class="button button-edit mx-2" (click)="save()">
+            <button type="button" class="button button-edit mx-2" (click)="save(false)">
                 <i class="fas fa-save mr-1"></i>
                 SAVE CONFIG
             </button>
-            <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+            <a class="button button-generate mx-2" id="generateButton" (click)="generateScript()">
                 <i class="fas fa-download mr-1"></i>
                 GENERATE
             </a>

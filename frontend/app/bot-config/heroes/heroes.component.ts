@@ -3,8 +3,8 @@ import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
-// Import JQuery
 declare var $: any;
+declare var swal: any;
 
 @Component({
     selector: 'app-heroes',
@@ -58,15 +58,19 @@ export class HeroesComponent implements OnInit {
     searchEvent(event: KeyboardEvent) {
         if (this.selected === 'heroes'
             && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea'
+            && event.code.includes('Key')) {
+            this.heroSearch += event.key;
+        }
+    }
+
+    // Listen for escape key to clear search
+    @HostListener('document:keydown.escape', ['$event'])
+    clearSearch(event: KeyboardEvent) {
+        if (this.selected === 'heroes'
+            && event.target['localName'] !== 'input'
             && event.target['localName'] !== 'textarea') {
-            if (event.key === 'Backspace') {
-                this.heroSearch = this.heroSearch.slice(0, -1);
-            } else if (
-                (65 <= event.keyCode && event.keyCode <= 90) ||
-                (97 <= event.keyCode && event.keyCode <= 122)
-            ) {
-                this.heroSearch += event.key;
-            }
+            this.heroSearch = '';
         }
     }
 
@@ -228,7 +232,7 @@ export class HeroesComponent implements OnInit {
 
     checkHeroExists(hero: any): boolean {
         if (this.pools[this.selectedPool].find(x => x.id === hero.id)) {
-            alert('This hero already exists in the selected pool.');
+            swal('Oops!', 'This hero already exists in the selected pool.', 'warning');
             return true;
         }
         return false;
@@ -290,35 +294,48 @@ export class HeroesComponent implements OnInit {
         this.hidePopovers();
     }
 
+    confirmTogglePools(): void {
+        this.hidePopovers();
+        swal({
+            title: 'Are you sure?',
+            text: 'Once toggled, hero positions may change.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willToggle) => {
+            if (willToggle) {
+                this.togglePools();
+            }
+        });
+    }
+
     togglePools(): void {
         this.partitioned = !this.partitioned;
-        this.hidePopovers();
-        if (confirm('Are you sure you want to toggle pools?')) {
-            if (this.numberOfPools > 1) {
-                this.showPoolsTab(1);
-                const bigPool = [];
-                this.pools.forEach((pool) => {
-                    pool.forEach((hero) => {
-                        if (bigPool.indexOf(hero) === -1) {
-                            bigPool.push(hero);
-                        }
-                    });
+        if (this.numberOfPools > 1) {
+            this.showPoolsTab(1);
+            const bigPool = [];
+            this.pools.forEach((pool) => {
+                pool.forEach((hero) => {
+                    if (bigPool.indexOf(hero) === -1) {
+                        bigPool.push(hero);
+                    }
                 });
+            });
 
-                this.selectedPool = 0;
-                this.pools = [[], [], [], [], []];
-                this.pools[0] = bigPool;
-                this.setSelectedPool(0);
-            } else {
-                this.showPoolsTab(5);
-                const pool1 = this.pools[0];
-                this.selectedPool = 0;
-                this.pools = [[], [], [], [], []];
-                this.pools[0] = pool1;
-                this.setSelectedPool(0);
-            }
-            this.saveHeroes();
+            this.selectedPool = 0;
+            this.pools = [[], [], [], [], []];
+            this.pools[0] = bigPool;
+            this.setSelectedPool(0);
+        } else {
+            this.showPoolsTab(5);
+            const pool1 = this.pools[0];
+            this.selectedPool = 0;
+            this.pools = [[], [], [], [], []];
+            this.pools[0] = pool1;
+            this.setSelectedPool(0);
         }
+        this.saveHeroes();
     }
 
     getPools() {
@@ -335,9 +352,18 @@ export class HeroesComponent implements OnInit {
 
     triggerResetPools(): void {
         this.hidePopovers();
-        if (confirm('Are you sure you want to reset?')) {
-            this.resetPools();
-        }
+        swal({
+            title: 'Are you sure?',
+            text: 'Once reset, all selected heores will be lost.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willReset) => {
+            if (willReset) {
+                this.resetPools();
+            }
+        });
     }
 
     showPoolsTab(numPools: number) {

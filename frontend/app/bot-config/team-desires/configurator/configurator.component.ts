@@ -26,6 +26,7 @@ export class ConfiguratorComponent {
 
     min = 0;
     max = 5;
+    inGameTime: boolean;
 
     constructor() {}
 
@@ -39,9 +40,11 @@ export class ConfiguratorComponent {
         if (data === 'Game Time') {
             this.min = 0;
             this.max = 5 * 60;
+            this.inGameTime = true;
         } else {
             this.min = 0;
             this.max = 5;
+            this.inGameTime = false;
         }
     }
 
@@ -52,6 +55,17 @@ export class ConfiguratorComponent {
         if (this.condition.conditional > this.max) {
             this.condition.conditional = this.max;
         }
+    }
+
+    getTriggerTooltip() {
+        let tooltip: string = '';
+        if (this.condition.trigger != null) {
+            tooltip = this.triggers[this.condition.trigger];
+            if (this.condition.trigger === 1) {
+                tooltip = `${tooltip} in minutes`;
+            }
+        }
+        return tooltip;
     }
 }
 

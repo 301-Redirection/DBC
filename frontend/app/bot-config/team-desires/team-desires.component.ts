@@ -7,8 +7,8 @@ import {
 } from '../../services/ConfigurationFormat';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
 
-// Import JQuery
 declare var $: any;
+declare var swal: any;
 
 @Component({
     selector: 'app-team-desires',
@@ -72,6 +72,7 @@ export class TeamDesiresComponent implements OnInit {
         this.saveTeamDesires();
         this.togglePanel();
     }
+
     checkIfLoadedSavedScript() {
         this.botConfigData.notifyIsLoadedScript().subscribe((isLoadedScript) => {
             if (isLoadedScript) {
@@ -104,18 +105,26 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     delCondition(compoundCondition: CompoundCondition, index: number = -1) {
-        const ans = window.confirm('Are you sure you wish to delete this Condition?');
-        if (ans) {
-            const len = compoundCondition.logicalOperators.length;
-            compoundCondition.conditions.splice(index, 1);
+        swal({
+            title: '',
+            text: 'Are you sure you wish to delete this Condition?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                const len = compoundCondition.logicalOperators.length;
+                compoundCondition.conditions.splice(index, 1);
 
-            if (index === len - 1) {
-                compoundCondition.logicalOperators.splice(index, 1);
-            } else {
-                compoundCondition.logicalOperators.splice(index - 1, 1);
+                if (index === len - 1) {
+                    compoundCondition.logicalOperators.splice(index, 1);
+                } else {
+                    compoundCondition.logicalOperators.splice(index - 1, 1);
+                }
+                this.saveTeamDesires();
             }
-            this.saveTeamDesires();
-        }
+        });
     }
 
     addConditionGroup(configuration: Configuration): void {
@@ -124,12 +133,20 @@ export class TeamDesiresComponent implements OnInit {
     }
 
     delCondGroup(compound: CompoundCondition[], index: number = -1) {
-        const ans = window.confirm('Are you sure you wish to delete this Condition Group?');
-        if (ans) {
-            const len = compound.length - 1;
-            compound.splice(len - index, 1);
-            this.saveTeamDesires();
-        }
+        swal({
+            title: '',
+            text: 'Are you sure you wish to delete this Condition Group?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                const len = compound.length - 1;
+                compound.splice(len - index, 1);
+                this.saveTeamDesires();
+            }
+        });
     }
 
     getOperator(compoundCondition: CompoundCondition, index: number = 0): string {
@@ -152,6 +169,7 @@ export class TeamDesiresComponent implements OnInit {
             data.value = 100;
         }
     }
+
     togglePanel() {
         $(document).ready(() => {
             $('.collapse').on('show.bs.collapse', function () {

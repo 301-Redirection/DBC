@@ -3,10 +3,11 @@ import {
     OnInit,
     AfterViewInit,
     ViewChild,
+    HostListener,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ApiConnectService } from '../services/api-connect.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as globalConfig from '../../../config/config.js';
 import { TeamDesiresComponent } from './team-desires/team-desires.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -14,18 +15,25 @@ import { AbilitiesComponent } from './abilities/abilities.component';
 import { ItemsComponent } from './items/items.component';
 import { BotConfigDataService } from '../services/bot-config-data.service';
 
+declare var swal: any;
+
 @Component({
     selector: 'app-bot-config',
     templateUrl: './bot-config.component.html',
     styleUrls: ['./bot-config.component.scss'],
 })
 export class BotConfigComponent implements OnInit, AfterViewInit {
-    pageTitle = 'Dota 2 Bot Scripting - Configuration';
+    pageTitle = 'Dota 2 Bot Configurator - Configuration';
 
     @ViewChild(TeamDesiresComponent) teamDesiresComponent: TeamDesiresComponent;
     @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
     @ViewChild(AbilitiesComponent) abilitiesComponent: AbilitiesComponent;
     @ViewChild(ItemsComponent) itemsComponent: ItemsComponent;
+
+    @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event) {
+        event.returnValue = true;
+    }
 
     // Bot variables
     name: string = '';
@@ -34,19 +42,22 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     selectedTab: string;
 
     generateURL = '';
+    isSaved: boolean;
 
     constructor
     (
         private title: Title,
         private api: ApiConnectService,
         private route: ActivatedRoute,
-        private router: Router,
         private botConfigData: BotConfigDataService,
     ) {
         this.title.setTitle(this.pageTitle);
         this.route.paramMap.subscribe((paramMap) => {
             if (paramMap['params']['botScriptID']) {
                 this.loadBotScript(paramMap['params']['botScriptID']);
+                this.isSaved = true;
+            } else {
+                this.isSaved = false;
             }
         });
     }
@@ -63,7 +74,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.selectedTab = tab;
     }
 
-    save() {
+    save(andGenerate) {
         if (this.validateInfo()) {
             // call update bot from api service
             const requestBot = {
@@ -72,30 +83,42 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 description: this.description,
                 configuration: this.botConfigData.getConfig(),
             };
-            console.log(requestBot);
+
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
+                    this.isSaved = true;
                     if (this.id === -1) {
                         this.id = data.botConfig.id;
-                        this.router.navigate(['/bot-config', { botScriptID: this.id }]);
                     }
-                    alert('Bot configurations saved!');
+                    this.generateURL =
+                        `${globalConfig['app']['API_URL']}/download/${this.id}`;
+
+                    if (andGenerate) {
+                        swal('Success!', 'Bot configuration saved and generated.', 'success');
+                        window.open(this.generateURL);
+                    } else {
+                        swal('Success!', 'Bot configuration saved.', 'success');
+                    }
                 },
-                (error) => {
-                    alert('Failed to save configuration. Please try agin later.');
-                    console.log(error);
+                () => {
+                    swal('Error', 'Failed to save configuration. Please try again later.', 'error');
                 },
             );
         }
     }
 
-    log(): void {
-        console.log(this.botConfigData.getConfig());
+    generateScript(): void {
+        if (this.isSaved) {
+            window.open(this.generateURL);
+        } else {
+            const andGenerate = true;
+            this.save(andGenerate);
+        }
     }
 
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
-            alert('Please enter your bot script name and description');
+            swal('', 'Please enter your bot script name and description to continue.', 'warning');
             return false;
         }
         return true;
@@ -120,9 +143,18 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     }
 
     confirmReset() {
-        if (confirm('Are you sure you want to reset? All unsaved configurations will be lost.')) {
-            this.reset();
-        }
+        swal({
+            title: 'Are you sure?',
+            text: 'Once reset, all unsaved work will be lost.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willReset) => {
+            if (willReset) {
+                this.reset();
+            }
+        });
     }
 
     loadBotScript(id) {
@@ -140,9 +172,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
                 }
             },
-            (error) => {
-                console.log(error);
-            },
+            () => { },
         );
     }
 }

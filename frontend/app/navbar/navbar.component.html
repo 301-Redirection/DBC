@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" routerLink="/home">
         <img id="dotaLogo" src="http://cdn.dota2.com/apps/dota2/images/nav/logo.png" alt="Dota 2 Logo">
-        &nbsp;<sub id="botScriptTitle">BOT SCRIPTING</sub>
+        &nbsp;<sub id="botScriptTitle">BOT CONFIGURATOR</sub>
     </a>
 
     <button id="hamburger" (click)="toggleHamburger()" class="hamburger hamburger--squeeze navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbar-dropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,12 +12,12 @@
 
     <div class="collapse navbar-collapse" id="navbarDropdown">
         <!-- Show only if logged in -->
-        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList" *ngIf="auth.loggedIn">
-            <li class="nav-item">
+        <ul class="navbar-nav mt-2 mt-lg-0" id="navLinksList">
+            <li class="nav-item" *ngIf="auth.loggedIn">
                 <a id="dashboardLink" routerLink="/dashboard" class="nav-link">DASHBOARD</a>
             </li>
-            <li class="nav-item">
-                <a id="botConfigLink" routerLink="/bot-config" class="nav-link">NEW BOT CONFIGURATION</a>
+            <li class="nav-item" *ngIf="auth.loggedIn">
+                <a id="botConfigLink" routerLink="/bot-config" class="nav-link">NEW BOT</a>
             </li>
             <li class="nav-item">
                 <a id="botConfigLink" routerLink="/walkthrough" class="nav-link">WALKTHROUGH</a>
@@ -38,8 +38,14 @@
                 <div class="dropdown">
                     <button id="welcomeButton" type="button" class="button-profile dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>&nbsp;
-                        <div class="d-inline">
-                            Hello, {{username}}
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name != null">
+                            Hello, {{auth.userProfile?.given_name}}
+                        </div>
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname != null">
+                            Hello, {{auth.userProfile?.nickname}}
+                        </div>
+                        <div class="d-inline" *ngIf="auth.userProfile?.given_name == null && auth.userProfile?.nickname == null && auth.userProfile?.name != null">
+                            Hello, {{auth.userProfile?.name}}
                         </div>
                     </button>
                     <div id="signOutDropdown" class="dropdown-menu" aria-labelledby="welcomeButton">
