@@ -24,7 +24,7 @@ describe('TeamDesiresComponent', () => {
     const nullCompoundCondition: CompoundCondition = new CompoundCondition();
 
     // Condition comparison by property
-    const compareCondition = (data: Condition) => {
+    const compareCondition = function compareConditionByProperty(data: Condition) {
         for (const key in data) {
             if (data[key] !== nullCondition[key]) {
                 return false;
@@ -34,7 +34,7 @@ describe('TeamDesiresComponent', () => {
     };
 
     // Compound Condition by property
-    const compareCompoundCondition = (data: CompoundCondition) => {
+    const compareCompCond = function compareCompoundConditionByProperty(data: CompoundCondition) {
         if (data.value !== nullCompoundCondition.value ||
             data.action !== nullCompoundCondition.action ||
             (data.logicalOperators.length !== nullCompoundCondition.logicalOperators.length &&
@@ -63,7 +63,7 @@ describe('TeamDesiresComponent', () => {
                 compare: (actual: CompoundCondition) => {
                     console.log(actual);
                     const result = {
-                        pass: compareCompoundCondition(actual),
+                        pass: compareCompCond(actual),
                     };
                     return result;
                 },
@@ -163,5 +163,3 @@ describe('TeamDesiresComponent', () => {
             .operator).toEqual(2);
     });
 });
-
-// TODO Add more spec tests
