@@ -27,7 +27,7 @@ class ItemsComponent {
     @Input('selected') selected: string;
 }
 
-fdescribe('BotConfigComponent', () => {
+describe('BotConfigComponent', () => {
     let component: BotConfigComponent;
     let fixture: ComponentFixture<BotConfigComponent>;
     let activatedRoute: ActivatedRouteStub;
