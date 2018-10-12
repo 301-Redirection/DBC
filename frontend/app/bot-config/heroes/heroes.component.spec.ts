@@ -23,7 +23,7 @@ describe('HeroesComponent', () => {
             heroes: [
                 {
                     id: 1,
-                    programName: 'antimage',
+                    name: 'antimage',
                     niceName: 'Anti-Mage',
                     roles: 'Carry - Escape - Nuker',
                     createdAt: '2018-07-19T18:50:42.000Z',

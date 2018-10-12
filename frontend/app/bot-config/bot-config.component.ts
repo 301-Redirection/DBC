@@ -176,11 +176,11 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     // Need Saved heroes to load completely before moving on
                     this.heroesComponent.isSavedHeroesLoaded.subscribe((state) => {
                         if (state) {
-                            const isDoneLoadingAbilities =
-                                this.abilitiesComponent.loadSavedAbilities();
+                            // const isDoneLoadingAbilities =
+                            //     this.abilitiesComponent.loadSavedAbilities();
                             const isDoneLoadingItems = this.itemsComponent.getSavedItems();
                             // Wait for items to finish
-                            if (isDoneLoadingAbilities && isDoneLoadingItems) {
+                            if (isDoneLoadingItems) {
                                 this.isRetrieving = false;
                             }
                         }

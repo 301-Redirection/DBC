@@ -86,31 +86,39 @@ class BotController {
 
     // removes unnecessary fields from json
     static reduceAbilityObject(abilityObject) {
-        const abilityTempObject = abilityObject;
+        const abilityTempObject = {};
         abilityTempObject.priorities = {};
-        abilityTempObject.abilities.forEach((x) => {
+        abilityObject.abilities.forEach((x) => {
             abilityTempObject.priorities[x.type] = x.priority;
         });
-        abilityTempObject.abilities = abilityTempObject.abilityLevels;
-        delete abilityTempObject.abilityLevels;
+        abilityTempObject.abilityLevels = abilityObject.abilityLevels;
         return abilityTempObject;
     }
 
     static removeRedundantDataFromObject(configuration) {
+        const newConfiguration = {};
+        newConfiguration.heroPool = configuration.heroPool;
+        newConfiguration.desires = configuration.desires;
         let result = [];
         if (configuration.heroes && configuration.heroes.length) {
-            configuration.heroes.forEach((element) => {
-                let ele = element;
-                if (element.items && element.items.length) {
-                    result = this.makeSimpleItemArray(element.items);
-                    ele.items = result;
+            const newHeroes = [];
+            configuration.heroes.forEach((hero) => {
+                let newHero = { };
+                if (hero.abilities) {
+                    newHero = this.reduceAbilityObject(hero);
                 }
-                if (element.abilities) {
-                    ele = this.reduceAbilityObject(element);
+                newHero.name = hero.name;
+                if (hero.items && hero.items.length) {
+                    result = this.makeSimpleItemArray(hero.items);
+                    newHero.items = result;
                 }
+                newHeroes.push(newHero);
             });
+            newConfiguration.heroes = newHeroes;
+        } else {
+            newConfiguration.heroes = [];
         }
-        return configuration;
+        return newConfiguration;
     }
 
     static updateBot(request, response) {

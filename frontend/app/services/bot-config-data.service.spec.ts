@@ -22,21 +22,21 @@ describe('BotConfigDataService', () => {
     it('should set & get', inject([BotConfigDataService], (service: BotConfigDataService) => {
         expect(service).toBeTruthy();
         const heroes = ['luna', 'blood_seeker'];
-        service.updateSelectedHeroes(heroes);
+        service.setSelectedHeroes(heroes);
         service.getSelectedHeroesObservable().subscribe((resultHeroes) => {
             expect(resultHeroes).toBe(heroes);
         });
     }));
 
-    // it('should ensure - update', inject([BotConfigDataService], (service: BotConfigDataService) => {
-    //     expect(service).toBeTruthy();
-    //     const heroes = [{ programName: 'luna' } , { programName: 'blood_seeker' }];
-    //     service.updateSelectedHeroes(heroes);
-    //     let config = service.getConfig();
-    //     expect(config.heroes.length).toBe(2);
-    //     const abilities = 'qeqeqewwwwrrnnnntnnnqw';
-    //     service.updateHeroAbilityLevels('luna', abilities);
-    //     config = service.getConfig();
-    //     expect(config.heroes[0].abilityLevels).toBe(abilities);
-    // }));
+    it('should ensure - update', inject([BotConfigDataService], (service: BotConfigDataService) => {
+        expect(service).toBeTruthy();
+        const heroes = [{ name: 'luna' } , { name: 'blood_seeker' }];
+        service.setSelectedHeroes(heroes);
+        let config = service.getConfig();
+        expect(config.heroes.length).toBe(2);
+        const abilities = 'qeqeqewwwwrrnnnntnnnqw';
+        service.updateHeroAbilityLevels('luna', abilities);
+        config = service.getConfig();
+        expect(config.heroes[0].abilityLevels).toBe(abilities);
+    }));
 });

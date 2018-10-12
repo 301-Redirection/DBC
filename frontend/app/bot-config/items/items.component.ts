@@ -118,7 +118,7 @@ export class ItemsComponent implements OnInit{
                 if (this.selectedHeroes && this.selectedHeroes.length > 0) {
                     this.selectedHeroes.forEach((hero, num) => {
                         const savedItemsMinimal = this.botConfigData
-                            .getHeroItemSelection(hero.programName);
+                            .getHeroItemSelection(hero.name);
                         const savedItems = this.populateSavedItems(savedItemsMinimal);
                         if (savedItems !== undefined && savedItems.length > 0) {
                             this.heroItemSelection[num] = savedItems;
@@ -137,6 +137,9 @@ export class ItemsComponent implements OnInit{
 
     populateSavedItems(items) {
         const savedItems = [];
+        if (!items) {
+            return [];
+        }
         items.forEach((x) => {
             if (x.name.indexOf('item_recipe_') === 0) {
                 x.name = x.name.substring(12);
@@ -311,7 +314,7 @@ export class ItemsComponent implements OnInit{
         for (let i = 0; i < this.selectedHeroes.length; i += 1) {
             const hero = this.selectedHeroes[i];
             const itemsArr = this.heroItemSelection[i];
-            this.botConfigData.updateHeroItems(hero.programName, itemsArr);
+            this.botConfigData.updateHeroItems(hero.name, itemsArr);
         }
     }
 

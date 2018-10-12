@@ -192,7 +192,7 @@ async function doHeroes() {
         }
         results.splice(0);
         results.push(models.Hero.create({
-            programName: heroObject.name,
+            name: heroObject.name,
             niceName: heroObject.niceName,
             roles: heroObject.roles,
         })

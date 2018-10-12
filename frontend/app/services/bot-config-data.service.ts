@@ -35,7 +35,6 @@ export class BotConfigDataService {
 
     public setConfig(config: ConfigurationFormat) {
         this.config = config;
-        this.selectedHeroes.next(this.config.heroes);
         this.setTeamDesires(this.config.desires);
         this.setNotifyLoaded(true);
     }
@@ -111,15 +110,9 @@ export class BotConfigDataService {
         return this.config.heroPool;
     }
 
-    // Saves the currently selected heroes to the config
-    public updateSelectedHeroes(heroes: any): void {
-        this.selectedHeroes.next(heroes);
-        this.config.heroes = heroes;
-    }
-
     public setSelectedHeroes(heroes: any) {
-        this.selectedHeroes.next(heroes);
         this.config.heroes = heroes;
+        this.selectedHeroes.next(heroes);
     }
 
     public getSelectedHeroes(): any {
@@ -163,12 +156,12 @@ export class BotConfigDataService {
     }
 
     public getSavedHeroAbilityLevels(heroName: string): any {
-        const hero = this.config.heroes.find(hero => hero['name'] === heroName);
+        const hero = this.config.heroes.find(hero => hero.name === heroName);
         if (hero === undefined) {
             return undefined;
         }
 
-        return hero.abilities;
+        return hero.abilityLevels;
     }
 
     public updateHeroTalents(heroName: string, talents: any) {

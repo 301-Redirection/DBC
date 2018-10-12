@@ -17,7 +17,6 @@ describe('Static testing', () => {
         });
 
         const child = spawnSync('npm', ['run', 'scrape', '--', 'test'], { stdio: [0, 1, 2] });
-        console.log('here');
         if (child.error) {
             throw child.error;
         }
@@ -70,7 +69,7 @@ describe('Static testing', () => {
                     const expectedOutputPath = path.join(
                         __dirname,
                         'referenceFiles',
-                        `${responseObject.heroes[0].programName}.png`
+                        `${responseObject.heroes[0].name}.png`
                     );
                     const expectedOutput = fs.readFileSync(expectedOutputPath).toString();
                     expect(heroImageBody).toBe(expectedOutput);
@@ -90,7 +89,7 @@ describe('Static testing', () => {
                             const outputPath = path.join(
                                 __dirname,
                                 'referenceFiles',
-                                `${responseObject.heroes[0].programName}_q.png`
+                                `${responseObject.heroes[0].name}_q.png`
                             );
                             const output = fs.readFileSync(outputPath).toString();
                             expect(heroAbilityBody).toBe(output);

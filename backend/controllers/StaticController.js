@@ -68,9 +68,9 @@ class StaticController {
                 // only return add a hero to final output if they have implemented bots
                 for (let i = 0; i < heroes.length; i += 1) {
                     const hero = heroes[i];
-                    const isUnimplemented = unimplentedHeroes.indexOf(`npc_dota_hero_${hero.programName}`) !== -1;
+                    const isUnimplemented = unimplentedHeroes.indexOf(`npc_dota_hero_${hero.name}`) !== -1;
                     if (!isUnimplemented) {
-                        hero.dataValues.url = `/static/heroes/images/${heroes[i].programName}.png`;
+                        hero.dataValues.url = `/static/heroes/images/${heroes[i].name}.png`;
                         const keys = Object.keys(hero.heroStats.dataValues);
                         for (let j = 0; j < keys.length; j += 1) {
                             const key = keys[j];
@@ -78,10 +78,10 @@ class StaticController {
                                 hero.dataValues[key] = hero.heroStats.dataValues[key];
                             }
                         }
-                        hero.dataValues.url_q = `/static/abilities/images/${heroes[i].programName}_q.png`;
-                        hero.dataValues.url_w = `/static/abilities/images/${heroes[i].programName}_w.png`;
-                        hero.dataValues.url_e = `/static/abilities/images/${heroes[i].programName}_e.png`;
-                        hero.dataValues.url_r = `/static/abilities/images/${heroes[i].programName}_r.png`;
+                        hero.dataValues.url_q = `/static/abilities/images/${heroes[i].name}_q.png`;
+                        hero.dataValues.url_w = `/static/abilities/images/${heroes[i].name}_w.png`;
+                        hero.dataValues.url_e = `/static/abilities/images/${heroes[i].name}_e.png`;
+                        hero.dataValues.url_r = `/static/abilities/images/${heroes[i].name}_r.png`;
                         finalHeroes.push(hero);
                     }
                 }
