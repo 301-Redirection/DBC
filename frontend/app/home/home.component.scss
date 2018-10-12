@@ -17,7 +17,7 @@
 }
 
 .heading {
-    font-size: 22px;
+    color:  #5C6163;
 }
 
 .get-started-buttons {
@@ -47,7 +47,7 @@
     border-radius: .2rem;
     width: 10rem;
     height: 10rem;
-    background-color: rgba(24, 24, 24, 0.3);
+    background-color: rgba(63, 63, 63, 0.8);
     border-color: $dark-grey-1;
 }
 
@@ -79,4 +79,80 @@
     background-color: $black;
     width: 1000px;
     height: 600px;
+}
+
+.containerHome {
+    background-repeat: no-repeat;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.containerDescription {
+    background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_05.jpg');
+    background-size: auto 100%;
+    background-position: right bottom;
+    background-color: #0c0f11;
+    width: 100%;
+}
+
+.containerInner {
+    padding: 128px 0 0 643px;
+    height: 680px;
+    background: transparent;
+    padding: 100px 10%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    float: left;
+}
+
+.contain-create-inner{
+    float: right;
+}
+.containerCreate {
+    background-image: $home-background-image;
+    background-size: auto 80%;
+    background-position: right center;
+    background-color: #0c0f11;
+    width: 100%;
+}
+.containerGenerate {
+    background-image: $home-background-image;
+    background-size: auto 80%;
+    background-position: left center;
+    background-color:  #1f2c35;
+}
+
+.logo {
+    width: 1000px;
+    float: none;
+    vertical-align: middle;
+}
+
+.dbc-title {
+    display: block;
+    color: #A69E99;
+    letter-spacing: .8vw;
+    text-shadow: 2px 2px 5px #000000;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 150%;
+    font-family: inherit;
+}
+
+.description-background {
+    height: 972px;
+    background-color: #000000;
+    background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_07.jpg');
+    background-size: auto 100%;
+    background-position: top center;
+    width: 100%;
 }
