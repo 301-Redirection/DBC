@@ -17,6 +17,10 @@
         ],
         "types": ["jasmine"],
         "noUnusedLocals": true,
-        "noUnusedParameters": true
-    }
+        "noUnusedParameters": true,
+        "removeComments": true,
+    },
+    "exclude": [
+       "node_modules",
+    ]
 }
