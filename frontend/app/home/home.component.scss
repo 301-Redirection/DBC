@@ -81,7 +81,7 @@
     height: 600px;
 }
 
-.containerHome {
+.container-home {
     background-repeat: no-repeat;
     margin-right: auto;
     margin-left: auto;
@@ -97,7 +97,7 @@
     width: 100%;
 }
 
-.containerInner {
+.container-inner {
     padding: 128px 0 0 643px;
     height: 680px;
     background: transparent;
@@ -106,24 +106,33 @@
     margin-left: auto;
     margin-right: auto;
     width: 900px;
-    float: left;
+    float: right;
 }
 
 .contain-create-inner{
     float: right;
 }
-.containerCreate {
-    background-image: $home-background-image;
-    background-size: auto 80%;
-    background-position: right center;
-    background-color: #0c0f11;
-    width: 100%;
-}
-.containerGenerate {
+.container-create {
     background-image: $home-background-image;
     background-size: auto 80%;
     background-position: left center;
-    background-color:  #1f2c35;
+    background-color: #0c0f11;
+    width: 100%;
+}
+.container-generate {
+    background-image: $generate-background-image;
+    background-size: 100%;
+    background-position: right center;
+    background-color: #161b1d;
+    width: 100%;
+}
+
+.container-play {
+    background-image: $play-background-image;
+    background-size: 100% auto;
+    background-position: right center;
+    background-color: #161b1d;
+    width: 100%;
 }
 
 .logo {

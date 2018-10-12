@@ -13,6 +13,7 @@ import { AuthService } from '../auth/auth.service';
 export class HomeComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Configurator - Home';
     dotaLogoURL = '../../assets/images/dota_logo.png';
+    generateBackgroundURL = '../../assets/images/backgrounds/generate_background.png';
 
     constructor(
         private title: Title,
