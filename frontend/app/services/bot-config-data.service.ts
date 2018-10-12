@@ -96,7 +96,7 @@ export class BotConfigDataService {
             return hero.name === heroName && hero.position === heroPool;
         });
         if (!hero) {
-            throw `Removed a hero from a pool, but they doesn't exist in that pool`;
+            throw 'Removed a hero from a pool, but they doesn\'t exist in that pool';
         } else {
             this.config.heroPool.pool.splice(this.config.heroPool.pool.indexOf(hero), 1);
         }
