@@ -1,7 +1,7 @@
-const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 const path = require('path');
-const config = require('../../../config/config.js');
 const fs = require('fs-extra');
+const config = require('../../../config/config.js');
+const { LuaCodeGenerator } = require('./LuaCodeGenerator.js');
 
 const NEW_LINE = LuaCodeGenerator.getNewLine();
 const HERO_SELECT_TEMPLATE_FOLDER_NAME = 'heroSelectionTemplate';
@@ -91,7 +91,7 @@ class HeroCodeGenerator {
             }
             for (let i = 0; i < heroes.pool.length; i += 1) {
                 const hero = heroes.pool[i];
-                tempArr[(hero.position - 1) % numPools].push(`npc_dota_hero_${hero.name}`);
+                tempArr[(hero.position - 1 + numPools) % numPools].push(`npc_dota_hero_${hero.name}`);
             }
             for (let i = 0; i < numPools; i += 1) {
                 final[i] = LuaCodeGenerator

@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const pathToHelpers = path.join(process.env.NODE_PATH, 'lua', 'helperFunctions.lua');
-const contents = fs.readFileSync(pathToHelpers).toString();
+let contents = fs.readFileSync(pathToHelpers).toString();
+contents = contents.replace(/(?:\r\n|\r|\n)/g, '\n');
 
 const helperFunctions = {};
 

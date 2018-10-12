@@ -29,3 +29,14 @@ function getAlliedHeroesAlive() {
     end
     return alliesAlive
 end
+
+--**validateDesire**--
+function validateDesire(desire)
+    if desire > 1 then
+        desire = 1
+    end
+    if desire < 0 then
+        desire = 0
+    end
+    return desire
+end

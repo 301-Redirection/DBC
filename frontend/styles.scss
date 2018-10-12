@@ -2,7 +2,7 @@
 
 /* Import Global Variables */
 @import 'variables';
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "../frontend/assets/custom-material-theme.scss";
 
 /* -- Importing bootstrap for customizability -- */
 
@@ -178,7 +178,8 @@ button:focus {
 
 /* -- Custom Button Styles to mimic Dota 2 -- */ 
 
-.button {
+.button,
+.swal-button {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     letter-spacing: .2rem !important;
@@ -206,16 +207,19 @@ button:focus {
     -moz-box-shadow: $box-shadow;
     box-shadow: $box-shadow;
     cursor: pointer;
+    outline: none;
 }
 
-.button-cancel {
+.button-cancel,
+.swal-button--confirm.swal-button--danger {
     text-decoration:none;
     color: $btn-cancel-color !important;
     background-color: $btn-general-background-color;
     border: $btn-general-border $btn-cancel-border-color;
  }
   
-.button-cancel:hover {
+.button-cancel:hover,
+.swal-button--confirm.swal-button--danger:hover {
     text-decoration:none;
     background-color: $btn-cancel-border-color;
     color: $btn-cancel-color;
@@ -250,14 +254,16 @@ button:focus {
     border-color: $btn-edit-border-color-hover;
 }
 
-.button-new-configuration {
+.button-new-configuration,
+.swal-button--confirm {
     color: $btn-new-configuration-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-new-configuration-color;
 }
   
-.button-new-configuration:hover {
+.button-new-configuration:hover,
+.swal-button--confirm:hover {
     text-decoration:none;
     color: $btn-new-configuration-color;
     background-color: $btn-new-configuration-border-color;
@@ -288,13 +294,15 @@ button:focus {
     border-color: $btn-profile-border-color-hover;
 }
 
-.button-secondary {
+.button-secondary,
+.swal-button--cancel {
     color: $btn-secondary-color;
     background-color: $btn-general-background-color;
     background-image: none;
     border: $btn-general-border $btn-secondary-border-color;
 }
-.button-secondary:hover {
+.button-secondary:hover,
+.swal-button--cancel:hover {
     text-decoration: none;
     color: $white;
     background-color: $btn-secondary-border-color;
@@ -330,7 +338,6 @@ button:focus {
     background-color: $black !important;
     color: $light-grey !important;
     cursor: pointer !important;
-    padding-top: 5px;
 }
 
 .dropdown-item-danger {
@@ -369,4 +376,49 @@ button:focus {
 
 .hero-attributes {
     font-family: $font-family;
+}
+
+/* Modal styles */
+
+.modal-content {
+    background: $dark-grey-3;
+    color: $light-grey;
+}
+
+.modal-header {
+    border-bottom: 3px solid $light-grey;
+}
+
+.modal-header .close {
+    color: $light-grey;
+}
+
+.modal-header .close:hover {
+    color: $white !important;
+}
+
+.modal-footer {
+    border-top: 3px solid $light-grey;
+}
+
+/* SweetAlert customized styles */
+
+.swal-modal {
+    background-color: $dark-grey-3 !important; 
+}
+
+.swal-title,
+.swal-text {
+    color: $light-grey !important;
+    font-family: $font-family;
+}
+
+.swal-icon::before,
+.swal-icon::after,
+.swal-icon--success__hide-corners {
+    background: transparent !important;
+}
+
+.code {
+    font-weight: bold;
 }

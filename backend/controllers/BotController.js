@@ -7,10 +7,12 @@ const models = require('models');
 const path = require('path');
 const fs = require('fs');
 const mime = require('mime');
+const sequelize = require('sequelize');
 const { writeScripts, shouldRegenerateBotScripts } = require('./codeGeneration/generateScript.js');
 
 const PATH_TO_LUA = path.join(__dirname, '..', '..', '..', 'public', 'lua');
 const LIMIT_NUMBER = 5;
+const MAX_DEPTH = 10;
 
 class BotController {
     static getRecentBots(request, response) {
@@ -22,18 +24,37 @@ class BotController {
             limit: LIMIT_NUMBER,
         })
             .then((botConfigs) => {
-                response.status(200).json({ botConfigs });
+                models.BotConfig.findAll({
+                    where: { userId: request.user.sub },
+                    attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'numBots']],
+                })
+                    .then((returned) => {
+                        response.status(200).json({
+                            botConfigs,
+                            numBots: returned[0].dataValues.numBots,
+                        });
+                    });
             })
             .catch(() => {
                 response.status(500).json({ error: true, message: 'Database Error' });
             });
     }
 
+    /** recursively simplifies an complex item into
+     * an object such as
+     * {
+     *      name: <name>
+     *      components: null | {
+     *           name: <name>,
+     *           componenets: null | <thisStructure>,
+     *       }
+     * }
+     */
     static makeSimpleItemArray(items) {
         const itemsArr = [];
         if (items && items.length) {
             items.forEach((element) => {
-                itemsArr.push(this.makeSimpleItem(element));
+                itemsArr.push(this.makeSimpleItem(element, 0));
             });
         }
         return itemsArr;
@@ -41,20 +62,19 @@ class BotController {
 
     // Recursive function to simplify item object
     // into what is needed by the code generator
-    /*
-     static makeSimpleItem(item) {
+    static makeSimpleItem(item, depth) {
         if (item) {
             const newItem = {
                 name: item.name,
             };
             if (item.components) {
-                if (item.components === 'null' || item.components === null) {
+                if (item.components === 'null' || item.components === null || depth >= MAX_DEPTH) {
                     newItem.components = 'null';
                 } else if (item.components.length) {
                     const itemParts = [];
                     newItem.name = `item_recipe_${newItem.name}`;
                     item.components.forEach((element) => {
-                        itemParts.push(this.makeSimpleItem(element));
+                        itemParts.push(this.makeSimpleItem(element, depth + 1));
                     });
                     newItem.components = itemParts;
                 }
@@ -64,29 +84,52 @@ class BotController {
         return null;
     }
 
+    // removes unnecessary fields from json
+    static reduceAbilityObject(abilityObject) {
+        const abilityTempObject = {};
+        abilityTempObject.priorities = {};
+        abilityObject.abilities.forEach((x) => {
+            abilityTempObject.priorities[x.type] = x.priority;
+        });
+        abilityTempObject.abilityLevels = abilityObject.abilityLevels;
+        return abilityTempObject;
+    }
+
     static removeRedundantDataFromObject(configuration) {
+        const newConfiguration = {};
+        newConfiguration.heroPool = configuration.heroPool;
+        newConfiguration.desires = configuration.desires;
         let result = [];
         if (configuration.heroes && configuration.heroes.length) {
-            configuration.heroes.forEach((element) => {
-                const ele = element;
-                if (element.items && element.items.length) {
-                    result = this.makeSimpleItemArray(element.items);
-                    ele.items = result;
+            const newHeroes = [];
+            configuration.heroes.forEach((hero) => {
+                let newHero = { };
+                if (hero.abilities) {
+                    newHero = this.reduceAbilityObject(hero);
                 }
+                newHero.name = hero.name;
+                if (hero.items && hero.items.length) {
+                    result = this.makeSimpleItemArray(hero.items);
+                    newHero.items = result;
+                }
+                newHeroes.push(newHero);
             });
+            newConfiguration.heroes = newHeroes;
+        } else {
+            newConfiguration.heroes = [];
         }
-        return configuration;
+        return newConfiguration;
     }
-    */
+
     static updateBot(request, response) {
-        const { configuration } = request.body;
+        let { configuration } = request.body;
         const {
             name, id, description,
         } = request.body;
         const userId = request.user.sub;
         // condition for creating a botconfig entry
+        configuration = this.removeRedundantDataFromObject(configuration);
         if (id === -1) {
-            // configuration = this.removeRedundantDataFromObject(configuration);
             models.BotConfig.create({
                 name,
                 description,
@@ -98,9 +141,6 @@ class BotController {
                 .then((botConfig) => {
                     writeScripts(request, response, request.user.sub, botConfig.id);
                     response.status(200).json({ botConfig });
-                })
-                .catch(() => {
-                    response.status(500).json({ error: true, message: 'Database Error' });
                 });
         } else {
             models.BotConfig.find({

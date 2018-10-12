@@ -1,3 +1,9 @@
+@import '../../../../variables.scss';
+
 form {
     width: 100%;
+}
+
+.form-field:focus {
+    color: $blue;
 }

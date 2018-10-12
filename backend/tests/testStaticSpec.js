@@ -1,5 +1,5 @@
 const path = require('path');
-process.env.NODE_PATH = path.join(__dirname, '../backend');
+process.env.NODE_PATH = path.join(__dirname, '..');
 require('module').Module._initPaths();
 const request = require('request');
 const { spawnSync } = require('child_process');
@@ -17,7 +17,6 @@ describe('Static testing', () => {
         });
 
         const child = spawnSync('npm', ['run', 'scrape', '--', 'test'], { stdio: [0, 1, 2] });
-        console.log('here');
         if (child.error) {
             throw child.error;
         }
@@ -70,7 +69,7 @@ describe('Static testing', () => {
                     const expectedOutputPath = path.join(
                         __dirname,
                         'referenceFiles',
-                        `${responseObject.heroes[0].programName}.png`
+                        `${responseObject.heroes[0].name}.png`
                     );
                     const expectedOutput = fs.readFileSync(expectedOutputPath).toString();
                     expect(heroImageBody).toBe(expectedOutput);
@@ -90,7 +89,7 @@ describe('Static testing', () => {
                             const outputPath = path.join(
                                 __dirname,
                                 'referenceFiles',
-                                `${responseObject.heroes[0].programName}_q.png`
+                                `${responseObject.heroes[0].name}_q.png`
                             );
                             const output = fs.readFileSync(outputPath).toString();
                             expect(heroAbilityBody).toBe(output);
@@ -120,4 +119,3 @@ describe('Static testing', () => {
         });
     });
 });
-

@@ -10,11 +10,14 @@
     margin-top: 1%;
     display: inline-block;
     width: 100%;
+    text-align: center;
 }
 
 .ability-table {
     border: none;
     width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ability-table tr {
@@ -120,20 +123,6 @@
     color: #fff;
 }
 
-/* Modal CSS */
-.modal-content {
-    background: $dark-grey-3;
-    color: $light-grey;
-}
-
-.modal-header {
-    border-bottom: 3px solid $light-grey;
-}
-
-.modal-footer {
-    border-top: 3px solid $light-grey;
-}
-
 .btn-talent {
     background: $dark-grey-2;
     padding: 0;
@@ -148,7 +137,8 @@
     border: 2px solid $btn-edit-border-color;
 }
 .button-chevron:hover { 
-    background-color: $btn-edit-color;
+    background-color: $btn-edit-border-color;
+    border: 2px solid $btn-edit-color;
 }
 
 .tooltip-inner{
@@ -157,4 +147,19 @@
     margin: 0;
     background-color: $dark-grey-2;
     color: $light-grey;
+}
+
+.priority-arrows {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+}
+
+.priority-arrows div {
+    font-family: $font-family;
+}
+
+.priority-arrows div svg {
+    padding-top: 5px !important;
 }

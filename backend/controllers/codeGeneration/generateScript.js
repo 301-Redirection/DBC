@@ -10,11 +10,12 @@
  *
  * */
 
-const { codeGenerator } = require('./LuaCodeTemplateManager.js');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 const moment = require('moment');
+const { codeGenerator } = require('./LuaCodeTemplateManager.js');
+const { ConfigurationValidator } = require('./ConfigurationValidator.js');
 
 const NODE_PATH = path.join(__dirname, '..', '..');
 
@@ -129,13 +130,16 @@ const getAction = function (action) {
     return actionString;
 };
 
+const convertToDotaTime = function (minutes) {
+    return minutes * 60;
+};
+
 // Get conditions in the compoundConditions array
 const getConditions = function (compoundConditions) {
     let override = false;
     let overrideValue;
     let trigger = '';
     let operator = '';
-    let action = '';
     let logicalOperator = '';
     let scriptBuilder = '';
 
@@ -143,6 +147,8 @@ const getConditions = function (compoundConditions) {
         if (compound.conditions.length > 0) {
             const { conditions } = compound;
 
+            const action = getAction(compound.action);
+            const totalValue = compound.value / 100;
             let hasNumAlliesTrigger = false;
             let hasNumEnemiesTrigger = false;
             for (let i = 0; i < conditions.length; i += 1) {
@@ -151,6 +157,9 @@ const getConditions = function (compoundConditions) {
                 }
                 if (conditions[i].trigger === TRIGGER.EnemyHeroesAlive) {
                     hasNumEnemiesTrigger = true;
+                }
+                if (conditions[i].trigger === TRIGGER.Time) {
+                    conditions[i].conditional = convertToDotaTime(conditions[i].conditional);
                 }
             }
 
@@ -165,27 +174,24 @@ const getConditions = function (compoundConditions) {
 
             // Begin if statement for the current CompoundCondition
             scriptBuilder += 'if';
-            let totalValue = 0;
             let i = 0;
             for (i = 0; i < conditions.length; i += 1) {
                 trigger = getTrigger(conditions[i].trigger);
                 operator = getOperator(conditions[i].operator);
-                action = getAction(conditions[i].action);
-                totalValue += conditions[i].value;
 
                 if (action === 'return') {
                     override = true;
-                    overrideValue = conditions[i].value;
+                    overrideValue = totalValue;
                 }
 
                 if (i < conditions.length - 1) {
-                    logicalOperator = getLogicalOperator(compound.logicalOperator[i]);
+                    logicalOperator = getLogicalOperator(compound.logicalOperators[i]);
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) ${logicalOperator}`;
                 } else {
                     scriptBuilder += ` (${trigger} ${operator} ${conditions[i].conditional}) then\n`;
 
                     if (override === false) {
-                        scriptBuilder += `    ${action} ${totalValue / conditions.length}\n`;
+                        scriptBuilder += `    ${action} ${totalValue}\n`;
                     } else {
                         scriptBuilder += `    common = ${overrideValue}\n`;
                     }
@@ -201,9 +207,9 @@ const getConditions = function (compoundConditions) {
 const generateRoshanDesires = function (req) {
     const { roshan } = req.body.configuration.desires;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${roshan.initialValue}\n`;
+    scriptBuilder += `local common = ${roshan.initialValue / 100}\n`;
     scriptBuilder += getConditions(roshan.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -211,9 +217,9 @@ const generateRoshanDesires = function (req) {
 const generateRoamDesires = function (req) {
     const { roam } = req.body.configuration.desires;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${roam.initialValue}\n`;
+    scriptBuilder += `local common = ${roam.initialValue / 100}\n`;
     scriptBuilder += getConditions(roam.compoundConditions);
-    scriptBuilder += 'return common';
+    scriptBuilder += 'return validateDesire(common)';
     return scriptBuilder;
 };
 
@@ -221,19 +227,19 @@ const generateRoamDesires = function (req) {
 const generateLaneDesires = function (reqType) {
     const { top, mid, bot } = reqType;
     let scriptBuilder = '';
-    scriptBuilder += `local common = ${top.initialValue}\n`;
+    scriptBuilder += `local common = ${top.initialValue / 100}\n`;
     scriptBuilder += getConditions(top.compoundConditions);
     scriptBuilder += 'local topCommon = common\n\n';
 
-    scriptBuilder += `common = ${mid.initialValue}\n`;
+    scriptBuilder += `common = ${mid.initialValue / 100}\n`;
     scriptBuilder += getConditions(mid.compoundConditions);
     scriptBuilder += 'local midCommon = common\n\n';
 
-    scriptBuilder += `common = ${bot.initialValue}\n`;
+    scriptBuilder += `common = ${bot.initialValue / 100}\n`;
     scriptBuilder += getConditions(bot.compoundConditions);
     scriptBuilder += 'local botCommon = common\n\n';
 
-    scriptBuilder += 'return {topCommon, midCommon, botCommon}';
+    scriptBuilder += 'return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}';
     return scriptBuilder;
 };
 
@@ -245,6 +251,7 @@ const generateLaneDesires = function (reqType) {
 const generateTeamDesires = function (req) {
     // Reset helperFunction and APIFunction objects
     codeGenerator.reset();
+    codeGenerator.addHelperFunction('validateDesire');
 
     // Adds the script name and the description as a comment at the top of the file
     const { name, description } = req.body;
@@ -292,7 +299,7 @@ const generateTeamDesires = function (req) {
 /**
  *  Will return the user's public directory
  *
- *  Note: If Public/Lua/{id} does not exist in the root,
+ *  Note: If public/Lua/{id} does not exist in the root,
  *  the folders will be created in that order
  *
  */
@@ -301,7 +308,7 @@ const getBotScriptDirectory = function (id, botId) {
     let strBotId = String(botId);
     strId = strId.replace('|', '_');
     strBotId = strBotId.replace('|', '_');
-    let publicPath = path.join(NODE_PATH, '..', 'public');
+    let publicPath = path.join(NODE_PATH, 'public');
     if (!fs.existsSync(publicPath)) {
         fs.mkdirSync(publicPath);
     }
@@ -324,16 +331,20 @@ const getBotScriptDirectory = function (id, botId) {
  *  This is the function that does the code generation
  *  via the Lua Code Manager Objects.
  *
- *  TO DO: Get team_desires.lua that we generate to replace the
- *         team_desires.lua copied from the code templates
- *         (There seems to be a synchronousity issue...)
- *
  *  The function takes the code at the specific folder
  *  and then joins it in a zip file for download by the download
  *  route specified in index.js
  *
  * */
 const writeScripts = function (req, res, id, botId) {
+    const result = ConfigurationValidator.validate(req.body);
+    if (!result.valid) {
+        // console.log(result);
+        // console.log('Invalid botconfig');
+        // console.log(result.errors[0].schema.type.properties);
+        // console.log(result.errors[0].instance);
+        // console.log(req.body.configuration.desires.push.top.compoundConditions[0]);
+    }
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);
@@ -398,4 +409,5 @@ module.exports = {
     getLogicalOperator,
     writeScripts,
     shouldRegenerateBotScripts,
+    getBotScriptDirectory,
 };

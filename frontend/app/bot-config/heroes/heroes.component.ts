@@ -2,9 +2,10 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BehaviorSubject } from 'rxjs';
 
-// Import JQuery
 declare var $: any;
+declare var swal: any;
 
 @Component({
     selector: 'app-heroes',
@@ -28,6 +29,7 @@ export class HeroesComponent implements OnInit {
     agilityHeroes = [];
     intelligenceHeroes = [];
     heroSearch: String;
+    isSavedHeroesLoaded = new BehaviorSubject(false);
 
     // attribute urls
     strURL = '/assets/images/strength.png';
@@ -58,15 +60,19 @@ export class HeroesComponent implements OnInit {
     searchEvent(event: KeyboardEvent) {
         if (this.selected === 'heroes'
             && event.target['localName'] !== 'input'
+            && event.target['localName'] !== 'textarea'
+            && event.code.includes('Key')) {
+            this.heroSearch += event.key;
+        }
+    }
+
+    // Listen for escape key to clear search
+    @HostListener('document:keydown.escape', ['$event'])
+    clearSearch(event: KeyboardEvent) {
+        if (this.selected === 'heroes'
+            && event.target['localName'] !== 'input'
             && event.target['localName'] !== 'textarea') {
-            if (event.key === 'Backspace') {
-                this.heroSearch = this.heroSearch.slice(0, -1);
-            } else if (
-                (65 <= event.keyCode && event.keyCode <= 90) ||
-                (97 <= event.keyCode && event.keyCode <= 122)
-            ) {
-                this.heroSearch += event.key;
-            }
+            this.heroSearch = '';
         }
     }
 
@@ -116,7 +122,24 @@ export class HeroesComponent implements OnInit {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
                 this.sortHeroData();
-                this.checkIfSavedBotScript();
+                if (this.selectedHeroesList && this.selectedHeroesList.length > 0) {
+                    const newHeroList = [];
+                    this.selectedHeroesList.forEach((minHero) => {
+                        const detailedHero = this.allHeroes.find((bigHero) => {
+                            return bigHero.name === minHero.name;
+                        });
+                        for (const i in detailedHero) {
+                            if (detailedHero.hasOwnProperty(i)) {
+                                minHero[i] = detailedHero[i];
+                            }
+                        }
+                        newHeroList.push(minHero);
+                    });
+                    this.selectedHeroesList = newHeroList;
+                    this.isSavedHeroesLoaded.next(true);
+                    this.populateSelectedHeroPools();
+                    this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+                }
             },
             (error) => {
                 console.log(error);
@@ -126,27 +149,30 @@ export class HeroesComponent implements OnInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
     getSavedHeroes(): void {
-        const savedHeroes = this.botConfigData.getSavedHeroes();
-        const heroNames = [];
-        savedHeroes.forEach((heroObject) => {
-            heroNames.push(heroObject['name']);
-        });
-        this.populateSelectedHeroList(heroNames);
-        this.populateSelectedHeroPools();
+        this.populateSelectedHeroList(this.botConfigData.getSavedHeroes());
     }
 
-    populateSelectedHeroList(heroNames: any) {
+    populateSelectedHeroList(heroes: any) {
         this.selectedHeroesList = [];
-        heroNames.forEach((name) => {
-            this.selectedHeroesList.push(this.allHeroes.find(hero => hero.programName === name));
+        const allHeroesLoaded = this.allHeroes.length > 0;
+        heroes.forEach((hero) => {
+            const detailedHero = this.allHeroes.find(searchHero => searchHero.name === hero.name);
+            for (const i in detailedHero) {
+                if (detailedHero.hasOwnProperty(i)) {
+                    hero[i] = detailedHero[i];
+                }
+            }
+            this.selectedHeroesList.push(hero);
         });
-        // Reflect regenerate hero list in service
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        if (allHeroesLoaded) {
+            this.populateSelectedHeroPools();
+            this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        }
     }
 
     populateSelectedHeroPools() {
@@ -154,7 +180,7 @@ export class HeroesComponent implements OnInit {
         const heroesList = this.selectedHeroesList;
         const pools = heroPools.pool;
         pools.forEach((selectedHero) => {
-            const heroMatch = heroesList.find(hero => hero.programName === selectedHero.name);
+            const heroMatch = heroesList.find(hero => hero.name === selectedHero.name);
             this.pools[selectedHero.position].push(heroMatch);
         });
 
@@ -208,13 +234,22 @@ export class HeroesComponent implements OnInit {
             pool.splice(index, 1);
         }
 
-        index = this.selectedHeroesList.indexOf(hero);
-        if (index !== -1) {
+        const poolIndex = this.pools.indexOf(pool);
+        let shouldRemove = true;
+        this.pools.forEach((pool, i) => {
+            if (i !== poolIndex) {
+                if (pool.indexOf(hero) !== -1) {
+                    shouldRemove = false;
+                }
+            }
+        });
+        if (shouldRemove) {
+            index = this.selectedHeroesList.indexOf(hero);
             this.selectedHeroesList.splice(index, 1);
         }
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
-        this.botConfigData.removeHeroSpecification(hero.programName);
+        this.botConfigData.removeHeroFromPool(hero.name, poolIndex);
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
@@ -228,7 +263,7 @@ export class HeroesComponent implements OnInit {
 
     checkHeroExists(hero: any): boolean {
         if (this.pools[this.selectedPool].find(x => x.id === hero.id)) {
-            alert('This hero already exists in the selected pool.');
+            swal('Oops!', 'This hero already exists in the selected pool.', 'warning');
             return true;
         }
         return false;
@@ -278,7 +313,7 @@ export class HeroesComponent implements OnInit {
         for (let i = 0; i < this.numberOfPools; i += 1) {
             if (this.pools[i]) {
                 this.pools[i].forEach((hero) => {
-                    heroPool.pool.push({ name: hero.programName, position: i });
+                    heroPool.pool.push({ name: hero.name, position: i });
                 });
             }
         }
@@ -290,35 +325,48 @@ export class HeroesComponent implements OnInit {
         this.hidePopovers();
     }
 
+    confirmTogglePools(): void {
+        this.hidePopovers();
+        swal({
+            title: 'Are you sure?',
+            text: 'Once toggled, hero positions may change.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willToggle) => {
+            if (willToggle) {
+                this.togglePools();
+            }
+        });
+    }
+
     togglePools(): void {
         this.partitioned = !this.partitioned;
-        this.hidePopovers();
-        if (confirm('Are you sure you want to toggle pools?')) {
-            if (this.numberOfPools > 1) {
-                this.showPoolsTab(1);
-                const bigPool = [];
-                this.pools.forEach((pool) => {
-                    pool.forEach((hero) => {
-                        if (bigPool.indexOf(hero) === -1) {
-                            bigPool.push(hero);
-                        }
-                    });
+        if (this.numberOfPools > 1) {
+            this.showPoolsTab(1);
+            const bigPool = [];
+            this.pools.forEach((pool) => {
+                pool.forEach((hero) => {
+                    if (bigPool.indexOf(hero) === -1) {
+                        bigPool.push(hero);
+                    }
                 });
+            });
 
-                this.selectedPool = 0;
-                this.pools = [[], [], [], [], []];
-                this.pools[0] = bigPool;
-                this.setSelectedPool(0);
-            } else {
-                this.showPoolsTab(5);
-                const pool1 = this.pools[0];
-                this.selectedPool = 0;
-                this.pools = [[], [], [], [], []];
-                this.pools[0] = pool1;
-                this.setSelectedPool(0);
-            }
-            this.saveHeroes();
+            this.selectedPool = 0;
+            this.pools = [[], [], [], [], []];
+            this.pools[0] = bigPool;
+            this.setSelectedPool(0);
+        } else {
+            this.showPoolsTab(5);
+            const pool1 = this.pools[0];
+            this.selectedPool = 0;
+            this.pools = [[], [], [], [], []];
+            this.pools[0] = pool1;
+            this.setSelectedPool(0);
         }
+        this.saveHeroes();
     }
 
     getPools() {
@@ -328,16 +376,25 @@ export class HeroesComponent implements OnInit {
     resetPools(): void {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
+        this.botConfigData.setHeroPool(this.pools);
         this.selectedHeroesList = [];
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
-        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes([]);
     }
 
     triggerResetPools(): void {
         this.hidePopovers();
-        if (confirm('Are you sure you want to reset?')) {
-            this.resetPools();
-        }
+        swal({
+            title: 'Are you sure?',
+            text: 'Once reset, all selected heores will be lost.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willReset) => {
+            if (willReset) {
+                this.resetPools();
+            }
+        });
     }
 
     showPoolsTab(numPools: number) {

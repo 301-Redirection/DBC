@@ -10,19 +10,24 @@
 </div>
 
 <div id="configNav">
-    <div id="configNavContent" class="nav nav-tabs" role="tablist">
-        <a id="nav-home-tab" class="active show" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true" (click)="setTabSelected('info')">INFO</a>
-        <span class="nav-spacer">|</span>
-        <a id="nav-desires-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true" (click)="setTabSelected('teamDesires')">TEAM DESIRES</a>
-        <span class="nav-spacer">|</span>
-        <a id="nav-heroes-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false" (click)="setTabSelected('heroes')">HEROES</a>
-        <span class="nav-spacer">|</span>
-        <a id="nav-abilities-tab" data-toggle="tab" href="#nav-abilities" role="tab" aria-controls="nav-abilities" aria-selected="false" (click)="setTabSelected('abilities')">ABILITIES</a>
-        <span class="nav-spacer">|</span>
-        <a id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false" (click)="setTabSelected('items')">ITEMS</a>
+    <app-loading *ngIf="isRetrieving" class="loading-icon nav nav-tabs text-center mb-4"></app-loading>
+    <div *ngIf="!isRetrieving">
+        <div id="configNavContent" class="nav nav-tabs" role="tablist">
+            <a id="nav-home-tab" class="active show" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true"
+                (click)="setTabSelected('info')">INFO</a>
+            <span class="nav-spacer">|</span>
+            <a id="nav-desires-tab" data-toggle="tab" href="#nav-team-desires" role="tab" aria-controls="nav-team-desires" aria-selected="true"
+                (click)="setTabSelected('teamDesires')">TEAM DESIRES</a>
+            <span class="nav-spacer">|</span>
+            <a id="nav-heroes-tab" data-toggle="tab" href="#nav-heroes" role="tab" aria-controls="nav-heroes" aria-selected="false" (click)="setTabSelected('heroes')">HEROES</a>
+            <span class="nav-spacer">|</span>
+            <a id="nav-abilities-tab" data-toggle="tab" href="#nav-abilities" role="tab" aria-controls="nav-abilities" aria-selected="false"
+                (click)="setTabSelected('abilities')">ABILITIES</a>
+            <span class="nav-spacer">|</span>
+            <a id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false" (click)="setTabSelected('items')">ITEMS</a>
+        </div>
     </div>
 </div>
-        
 <div id="configContainer" class="container-fluid background main-background">
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -39,13 +44,19 @@
                                 <h4>Script Details</h4>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                <label for="inputName" class="col-sm-3 col-form-label">
+                                    Name
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="name">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                                <label for="inputDescription" class="col-sm-3 col-form-label">
+                                    Description
+                                    &nbsp;<i class="required">*</i>
+                                </label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="4" id="inputDescription" name="inputDescription" [(ngModel)]="description"></textarea>
                                 </div>
@@ -64,30 +75,29 @@
         <div class="tab-pane fade" id="nav-abilities" role="tabpanel" aria-labelledby="nav-abilities-tab">
             <app-abilities></app-abilities>
         </div>
+
         <div class="tab-pane fade" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
             <app-items [selected]="selectedTab"></app-items>
         </div>
     </div>
 
     <!-- Start Button Row -->
+    <div *ngIf="!isRetrieving">
     <div class="row frame mb-4">
         <div class="button-container ml-auto">
-            <button type="button" class="button button-cancel mx-2" (click)="reset()">
+            <button type="button" class="button button-cancel mx-2" (click)="confirmReset()">
                 <i class="fas fa-undo mr-1"></i>
                 RESET CONFIG
             </button>
-            <button type="button" class="button button-cancel mx-2" (click)="log()">
-                <i class="fas fa-undo mr-1"></i>
-                LOG CONFIG
-            </button>
-            <button type="button" class="button button-edit mx-2" (click)="save()">
+            <button type="button" class="button button-edit mx-2" (click)="save(false)">
                 <i class="fas fa-save mr-1"></i>
                 SAVE CONFIG
             </button>
-            <a class="button button-generate mx-2" id="generateButton" [href]="generateURL" download>
+            <a class="button button-generate mx-2" id="generateButton" (click)="generateScript()">
                 <i class="fas fa-download mr-1"></i>
                 GENERATE
             </a>
+            </div>
         </div>
     </div>
 </div>

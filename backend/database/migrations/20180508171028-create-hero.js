@@ -6,7 +6,7 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.INTEGER,
         },
-        programName: {
+        name: {
             type: Sequelize.STRING,
         },
         niceName: {

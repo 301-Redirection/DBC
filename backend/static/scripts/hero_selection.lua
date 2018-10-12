@@ -655,13 +655,7 @@ end
 -- Returns a Hero that fills a position that current team does not have filled.
 function GetPositionedHero(team, selectedHeroes)
 	--Fill positions in random order
-    local positionCounts = GetPositionCounts( team );
-	local postion
-	repeat
-		position=RandomInt(1,5);
-	until(positionCounts[position] == 0)
-
-	return GetRandomHero( hero_pool_position[position], selectedHeroes );
+    return GetRandomHero(hero_pool_position[(id % #hero_pool_position) + 1] , selectedHeroes );
 
 	-- The object is to fill positions in this order: 3, 4, 2, 5, 1
 	-- local order = {3, 4, 2, 5, 1};

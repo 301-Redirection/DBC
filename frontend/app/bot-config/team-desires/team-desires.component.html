@@ -2,7 +2,9 @@
     <div class="container-fluid container-fluid-custom">
         <div class="row">
             <div class="col-12 config-description">
-                Select a tab to customize your team desires
+                <p>Select a tab to customize the way you want your team of bots to behave</p>
+                <button class="button button-new-configuration" data-toggle="modal" data-target="#readMoreDesires">READ MORE</button>
+                <br>
             </div>
         </div>
 
@@ -30,14 +32,14 @@
                                 <div *ngFor="let lane of lanes" class="container-fluid-custom tab-pane fade" [class.show]="lane.title == 'Top'" [class.active]="lane.title == 'Top'" id="{{section.prop + lane.title}}" [attr.aria-labelledby]="'tab' + lane.title">
                                     <div class="form-group container">
                                         <label for="{{section.prop + lane.title}}Default">Default Value</label>
-                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(ngModel)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5" (mouseup)="saveTeamDesires()"></mat-slider>
+                                        <mat-slider class="col-md-3" min="0" max="100" step="1" [(ngModel)]="config.desires[section.prop][lane.prop].initialValue" thumbLabel="true" tickInterval="5" (change)="saveTeamDesires()"></mat-slider>
                                     </div>
                                     <div class="container">
                                         <button type="button" class="btn btn-outline-success" (click)="addConditionGroup(config.desires[section.prop][lane.prop])">Add Condition Group</button>
                                     </div>
                                     <div class="container">
                                         <div *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length != 0">
-                                            <div class="compound-cond list-group" *ngFor="let comp of config.desires[section.prop][lane.prop].compoundConditions | reverse; let j = index">
+                                            <div *ngFor="let comp of config.desires[section.prop][lane.prop].compoundConditions | reverse; let j = index" class="compound-cond list-group">
                                                 <div class="d-flex justify-content-between mb-2">
                                                     <h5>Condition Group</h5>
                                                     <button *ngIf="config.desires[section.prop][lane.prop].compoundConditions.length > 1" type="button" (click)="delCondGroup(config.desires[section.prop][lane.prop].compoundConditions, j)" class="btn button-cancel"><span class="fa fa-times fa-w-12"></span></button>
@@ -71,16 +73,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="button-group" *ngIf="config.desires[section.prop][lane.prop].compoundConditions[j].conditions.length != 0" role="group">
+                                                <div class="button-group" *ngIf="comp.conditions.length > 0" role="group">
                                                     <div class="list-group-item">
                                                         <div class="row">
                                                             <mat-form-field class="col-md-4">
-                                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
-                                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                                <mat-select placeholder="THEN" [(value)]="comp.action" [matTooltip]="actions[comp.action]">
+                                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="actions[t]">{{t}}</mat-option>
                                                                 </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field class="col-md-3" hintLabel="Percent (-100 to 100)">
-                                                                <input matInput min="0" max="100" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
+                                                                <input matInput min="0" max="101" name="number" [(ngModel)]="comp.value" type="number" (blur)="sanitizeReturnValue(comp)">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -142,8 +144,8 @@
                                         </div>
                                         <div class="list-group-item" *ngIf="config.desires[section.prop].compoundConditions[j].conditions.length != 0">
                                             <mat-form-field class="col-md-4">
-                                                <mat-select placeholder="THEN" [(value)]="comp.operator" [matTooltip]="comp.operator">
-                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="t">{{t}}</mat-option>
+                                                <mat-select placeholder="THEN" [(value)]="comp.action" [matTooltip]="actions[comp.action]">
+                                                    <mat-option *ngFor="let t of actions | enumToArray" [value]="actions[t]">{{t}}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
                                             <mat-form-field class="col-md-3" hintLabel="Percent">
@@ -156,6 +158,72 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team Desires Read More Modal -->
+<div class="modal fade" id="readMoreDesires">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">TEAM DESIRES</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>Team desires specify the behaviour of the bots as a team, rather than individual heroes.</p>
+                <br>
+                <h5>Specific Areas</h5>
+                <ul>
+                    <li>Push:</li>
+                    <p>Specify how much the team's desire to push out the top, middle (mid), and/or bottom (bot) lanes is.</p>
+                    <li>Defend:</li>
+                    <p>Specify how much the team's desire to defend the top, middle (mid), and/or bottom (bot) lanes is.</p>
+                    <li>Farm:</li>
+                    <p>Specify how much the team's desire to farm (last-hit) the top, middle (mid), and/or bottom (bot) lanes is.</p>
+                    <li>Roshan</li>
+                    <p>Customize the likelyhood of your team attacking Roshan throughout the game.</p>
+                    <li>Roam</li>
+                    <p>Customize the likelyhood of your team roaming offlane and ganking the other team.</p>
+                </ul>
+                <br>
+                <h5>Default Values</h5>
+                <p>
+                    By specifiying a default value for one of the bot behaviour areas below, you are specifying, on a scale of 0 to 100, to what extent you would like your bots to behave in that area.
+                </p>
+                <p>
+                    In other words, a default value of '0' for the teams Push Desire in the top lane would result in the bots not pushing the top lane very much, if at all during the game. Thus, as you may guess, a default value of '100' for the top lane will result in extremely aggressive bots focusing on pushing the top lane during the game.
+                </p>
+                <p>
+                    These default values will remain the same, unless modified or overwritten by a game condition, which is explained below.
+                </p>
+                <br>
+                <h5>Conditions</h5>
+                <p>
+                    It may be the case that you would like the default value specified for a specific desire to change throughout the game. Conditions allow you to select a predefined scenario that may happen during the game, and allow your bots to react to this scenario based on how much default value is modified.
+                </p>
+                <p>
+                    The following is an example of a condition:<br>
+                    <span class="code">"IF THE Game Time IS Greater Than 10 THEN Modify the Desire by 20"</span>
+                </p>
+                <p>
+                    This condition would then be triggered as the Game Time reaches greater than 10 minutes, where the previously specified default value will be increased by 20%. A negative modification value, such as -20%, would mean that the default value will be decreased by 20% (eg. ... THEN Modify the Desire by -20).
+                </p>
+                <p>
+                    Here is another example:<br>
+                    <span class="code">"IF THE Number of Enemy Heroes Alive IS Equal To 0 THEN Absolutely Set the Desire to 100"</span>
+                </p>
+                <p>
+                    This condition is triggered when all the enemy heroes have died, and overwrites the previously defined default value to be a maximum value of 100. So if this condition were set to Push the middle lane, the bots would then very aggressively push the middle lane after all enemy heroes have died
+                </p>
+                <br>
+                <h5>Condition Groups</h5>
+                <p>
+                    During the game, there may be multiple different scenarios that you would want to change your bots' behaviour in a certain area. This can be done by clicking on the Add Condition Group button and creating a completely separate group of conditions. 
+                </p>
             </div>
         </div>
     </div>

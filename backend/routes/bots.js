@@ -5,8 +5,8 @@
  */
 
 const express = require('express');
-const { jwtCheck } = require('./jwtCheck');
 const { check, validationResult } = require('express-validator/check');
+const { jwtCheck } = require('./jwtCheck');
 const { BotController } = require('../controllers/BotController.js');
 
 const router = express.Router();

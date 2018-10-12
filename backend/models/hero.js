@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Hero = sequelize.define(
         'Hero', {
-            programName: DataTypes.STRING,
+            name: DataTypes.STRING,
             niceName: DataTypes.STRING,
             roles: DataTypes.STRING,
         },

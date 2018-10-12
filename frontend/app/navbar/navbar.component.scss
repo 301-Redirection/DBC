@@ -83,10 +83,19 @@ nav {
 #welcomeButton {
     cursor: pointer;
 }
+
+#welcomeButton {
+    padding-top: .8rem;
+    padding-bottom: .5rem;
+}
+
+#signOutDropdown {
+    margin-top: -1%;
+}
  
 /* Display on hover */
 
-li.nav-item div.dropdown:hover > div.dropdown-menu {
+#signOutNavItem div.dropdown:hover > div.dropdown-menu {
     display: block;
 }
  

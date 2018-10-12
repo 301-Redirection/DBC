@@ -116,9 +116,9 @@ describe('DashboardComponent', () => {
         expect(routerLinks[5].linkParams).toBe('/bot-config/5');
     });
 
-    it('should have the title \'Dota 2 Bot Scripting - Dashboard\'', () => {
+    it('should have the title \'Dota 2 Bot Configurator - Dashboard\'', () => {
         const title = TestBed.get(Title);
-        expect(title.getTitle()).toEqual('Dota 2 Bot Scripting - Dashboard');
+        expect(title.getTitle()).toEqual('Dota 2 Bot Configurator - Dashboard');
     });
 
     // TODO: add more tests to do with how many bots are shown,

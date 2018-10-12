@@ -1,6 +1,16 @@
 -- test --
 [[ complex object test ]]
 
+function validateDesire(desire)
+    if desire > 1 then
+        desire = 1
+    end
+    if desire < 0 then
+        desire = 0
+    end
+    return desire
+end
+
 function getEnemyHeroesAlive() {    
     local enemiesAlive = 0
     for _,h in pairs(UNIT_LIST_ENEMY_HEROES)
@@ -24,99 +34,101 @@ end
 function UpdateRoshaneDesires()
     local common = 0.25
     local enemiesAlive = getEnemyHeroesAlive()
-    if (DotaTime() >= 35) or (enemiesAlive <= 3) then
+    if (DotaTime() >= 2100) or (enemiesAlive <= 3) then
         common += 0.35
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdateRoamDesires()
     local common = 0.25
-    if ( <= 2) then
+    local alliesAlive = getAlliedHeroesAlive()
+    if (alliesAlive <= 2) then
         common += -0.25
     end
-    if (DotaTime() <= 15) or ( >= 1) then
+    local alliesAlive = getAlliedHeroesAlive()
+    if (DotaTime() <= 900) or (alliesAlive >= 1) then
         common += 0.325
     end
-    return common
+    return validateDesire(common)
 end
 
 function UpdatePushLaneDesires()
-    local common = 0.2
-    if (DotaTime() < 5) then
-        common += 0.1
+    local common = 0.02
+    if (DotaTime() < 300) then
+        common += 0.01
     end
     local alliesAlive = getAlliedHeroesAlive()
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive <= 3) and (alliesAlive >= 4) and ( <= 1200) then
-        common += 0.31666666666666665
+    if (enemiesAlive <= 3) and (alliesAlive >= 4) and (DotaTime() <= 72000) then
+        common += 0.35
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 10) then
+    if (DotaTime() < 600) then
         common = 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() <= 15) then
+    if (DotaTime() <= 900) then
         common = 0.25
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateDefendLaneDesires()
     local common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
 function UpdateFarmLaneDesires()
     local common = 0.25
-    if (DotaTime() <= 20) then
-        common += 0.5
+    if (DotaTime() <= 1200) then
+        common += 0.05
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) or ( >= 3) then
+    if (enemiesAlive >= 3) or (DotaTime() >= 180) then
         common += -0.225
     end
     local topCommon = common
     
     common = 0.25
-    if (DotaTime() < 5) then
+    if (DotaTime() < 300) then
         common += 0.25
     end
     local midCommon = common
     
     common = 0.35
-    if (DotaTime() <= 20) then
-        common += 0.5
+    if (DotaTime() <= 1200) then
+        common += 0.05
     end
     local enemiesAlive = getEnemyHeroesAlive()
-    if (enemiesAlive >= 3) and ( >= 3) then
+    if (enemiesAlive >= 3) and (DotaTime() >= 180) then
         common += -0.15
     end
     local botCommon = common
     
-    return {topCommon, midCommon, botCommon}
+    return {validateDesire(topCommon), validateDesire(midCommon), validateDesire(botCommon)}
 end
 
