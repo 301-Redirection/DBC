@@ -343,8 +343,8 @@ const writeScripts = function (req, res, id, botId) {
         // console.log('Invalid botconfig');
         // console.log(result.errors[0].schema.type.properties);
         // console.log(result.errors[0].instance);
+        // console.log(req.body.configuration.desires.push.top.compoundConditions[0]);
     }
-    // console.log(req.body.configuration.desires.push.top.compoundConditions[0]);
     const directory = getBotScriptDirectory(id, botId);
     const tempDir = path.join(directory, String(botId));
     codeGenerator.setPath(tempDir);

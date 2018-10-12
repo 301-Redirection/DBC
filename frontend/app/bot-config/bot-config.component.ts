@@ -40,6 +40,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     description: string = '';
     id: number = -1;
     selectedTab: string;
+    isRetrieving = false;
 
     generateURL = '';
     isSaved: boolean;
@@ -83,7 +84,6 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                 description: this.description,
                 configuration: this.botConfigData.getConfig(),
             };
-
             this.api.updateBot(requestBot).subscribe(
                 (data) => {
                     this.isSaved = true;
@@ -138,7 +138,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.teamDesiresComponent.reset();
         this.heroesComponent.reset();
         this.abilitiesComponent.reset();
-        this.itemsComponent.reset();
+        // this.itemsComponent.reset();
         this.botConfigData.reset();
     }
 
@@ -159,6 +159,7 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
 
     loadBotScript(id) {
         let res: any;
+        this.isRetrieving = true;
         this.api.getSpecificBot(id).subscribe(
             (data) => {
                 res = data['botConfig'];
@@ -170,9 +171,27 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
                     this.name = res.name;
                     this.description = res.description;
                     this.botConfigData.setConfig(JSON.parse(res.configuration));
+                    this.heroesComponent.getSavedHeroes();
+                    this.isRetrieving = true;
+                    // Need Saved heroes to load completely before moving on
+                    this.heroesComponent.isSavedHeroesLoaded.subscribe((state) => {
+                        if (state) {
+                            // const isDoneLoadingAbilities =
+                            //     this.abilitiesComponent.loadSavedAbilities();
+                            const isDoneLoadingItems = this.itemsComponent.getSavedItems();
+                            // Wait for items to finish
+                            if (isDoneLoadingItems) {
+                                this.isRetrieving = false;
+                            }
+                        }
+                    });
+                    this.heroesComponent.isSavedHeroesLoaded.next(false);
                 }
             },
-            () => { },
+            (error) => {
+                this.isRetrieving = false;
+                console.log(error);
+            },
         );
     }
 }

@@ -65,9 +65,8 @@ export class DashboardComponent implements OnInit {
 
     deleteBotScript (botScriptID: number) {
         this.api.removeBot(botScriptID).subscribe(
-            (data) => {
+            () => {
                 this.removeScriptFromBots(botScriptID);
-                console.log(data);
             },
             (error) => {
                 console.log(error);

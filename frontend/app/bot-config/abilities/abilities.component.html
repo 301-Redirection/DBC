@@ -86,7 +86,7 @@
                                 <td *ngIf="ability.type != 'T'; else wrong">
                                     <img class="img ability-roster-image" src="{{ ability.src }}" data-toggle="tooltip" (mouseover)="triggerPopover($event.currentTarget, ability)">
                                 </td>
-                                <td *ngFor="let status of currentHero.abilityLevels[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
+                                <td *ngFor="let status of currentHero.abilityLevelsGUI[abilityNum]; let i = index" [attr.data-index]="i" (click)="overwritePriorities(i, ability.type)">
                                     <span id = "{{ ability.type }}-{{i+1}}" class="ability-level selected-ability" *ngIf="status == 'selected'; else wrong">{{ i+1 }}</span>
                                     <span id = "{{ ability.type }}-{{i+1}}" class="ability-level unselected-open-ability" *ngIf="status == 'open'; else wrong"></span>
                                     <span id = "{{ ability.type }}-{{i+1}}" class="ability-level unselected-closed-ability" *ngIf="status == 'closed'; else wrong"></span>

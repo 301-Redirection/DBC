@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BehaviorSubject } from 'rxjs';
 // Import JQuery
 declare var $: any;
 
@@ -20,6 +21,7 @@ export class ItemsComponent implements OnInit{
     basicItems = [];
     upgradeItems = [];
     recipes = [];
+    isAllItemsLoaded = new BehaviorSubject(false);
 
     // Standard Icons URLS not included in scraper data
     recipeIconURL = '../../assets/images/recipe-icon.png';
@@ -76,7 +78,8 @@ export class ItemsComponent implements OnInit{
     constructor(private api: ApiConnectService, private botConfigData: BotConfigDataService) {}
 
     ngOnInit() {
-        this.getHeroes();
+        this.selectedHeroes = [];
+        this.isAllItemsLoaded.next(false);
         this.getItems();
         this.itemSearch = '';
     }
@@ -85,7 +88,7 @@ export class ItemsComponent implements OnInit{
     // Get Item and Hero data from server
     // **********************************
     getHeroes() {
-        this.botConfigData.getSelectedHeroes().subscribe((heroes) => {
+        this.botConfigData.getSelectedHeroesObservable().subscribe((heroes) => {
             this.selectedHeroes = [];
             heroes.forEach((hero) => {
                 this.selectedHeroes.push(hero);
@@ -93,7 +96,7 @@ export class ItemsComponent implements OnInit{
                 this.totalCostPerHero.push(0);
             });
             this.currentHero = this.selectedHeroes[0];
-            this.checkIfLoadedSavedScript();
+            // this.checkIfLoadedSavedScript();
         });
         this.selectedHeroIndex = 0;
         this.prevSelectedHeroIndex = 0;
@@ -108,18 +111,46 @@ export class ItemsComponent implements OnInit{
 
     // To be used to retrieve items saved
     getSavedItems() {
-        if (this.selectedHeroes !== undefined) {
-            this.selectedHeroes.forEach((hero, num) => {
-                const savedItems = this.botConfigData.getHeroItemSelection(hero.programName);
-                if (savedItems !== undefined && savedItems.length > 0) {
-                    this.heroItemSelection[num] = savedItems;
-                    this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
-                }else {
-                    this.heroItemSelection[num] = [];
-                    this.totalCostPerHero[num] = 0;
+        // Wait for all items to load properly to be able to populate correctly
+        this.isAllItemsLoaded.subscribe((state) => {
+            if (state) {
+                this.selectedHeroes = this.botConfigData.getSelectedHeroes();
+                if (this.selectedHeroes && this.selectedHeroes.length > 0) {
+                    this.selectedHeroes.forEach((hero, num) => {
+                        const savedItemsMinimal = this.botConfigData
+                            .getHeroItemSelection(hero.name);
+                        const savedItems = this.populateSavedItems(savedItemsMinimal);
+                        if (savedItems !== undefined && savedItems.length > 0) {
+                            this.heroItemSelection[num] = savedItems;
+                            this.totalCostPerHero[num] = this.calculateCostItems(savedItems);
+                        } else {
+                            this.heroItemSelection[num] = [];
+                            this.totalCostPerHero[num] = 0;
+                        }
+                    });
                 }
-            });
+
+            }
+        });
+        return true;
+    }
+
+    populateSavedItems(items) {
+        const savedItems = [];
+        if (!items) {
+            return [];
         }
+        items.forEach((x) => {
+            if (x.name.indexOf('item_recipe_') === 0) {
+                x.name = x.name.substring(12);
+            }
+            const newItem = this.allItems.find(item => item.name === x.name);
+            if (x && x.components && x.components !== 'null' && x.components.length > 0) {
+                newItem.components = this.populateSavedItems(x.components);
+            }
+            savedItems.push(newItem);
+        });
+        return savedItems;
     }
 
     calculateCostItems (itemArr: any) {
@@ -138,6 +169,8 @@ export class ItemsComponent implements OnInit{
             (data) => {
                 this.allItems = data['items'];
                 this.sortItemData();
+                this.isAllItemsLoaded.next(true);
+                this.getHeroes();
             },
             (error) => {
                 console.log(error);
@@ -156,10 +189,10 @@ export class ItemsComponent implements OnInit{
             item['url'] = this.getItemImageFullURL(item['url']);
             if (item['type'] === 0) {
                 this.basicItems.push(item);
-            }else if (item['name'].indexOf('recipe') === -1) {
+            } else if (item['name'].indexOf('recipe') === -1) {
                 this.handleItemComponents(item);
                 this.upgradeItems.push(item);
-            }else {
+            } else {
                 item['url'] = this.recipeIconURL;
                 this.recipes.push(item);
             }
@@ -281,7 +314,7 @@ export class ItemsComponent implements OnInit{
         for (let i = 0; i < this.selectedHeroes.length; i += 1) {
             const hero = this.selectedHeroes[i];
             const itemsArr = this.heroItemSelection[i];
-            this.botConfigData.updateHeroItems(hero.programName, itemsArr);
+            this.botConfigData.updateHeroItems(hero.name, itemsArr);
         }
     }
 

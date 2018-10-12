@@ -36,7 +36,7 @@ export class HeroItemComponent implements OnInit {
             animation: true,
             placement: 'right',
             html: true,
-            content: $(`#${this.hero.programName}`).html(),
+            content: $(`#${this.hero.name}`).html(),
             template: $('#heroesPopoverTemplate').html(),
             trigger: this.isHover ? 'hover' : 'focus',
         });

@@ -11,6 +11,7 @@ describe('AbilitiesComponent', () => {
     let fixture: ComponentFixture<AbilitiesComponent>;
 
     beforeEach(async(() => {
+
         const heroesArray = [
             {
                 name: 'bloodseeker',
@@ -68,14 +69,24 @@ describe('AbilitiesComponent', () => {
             heroes: heroesArray,
         };
 
+        const heroesPrioritiesArray = {
+            Q: 0,
+            W: 1,
+            E: 2,
+            R: 3,
+            T: 4,
+        };
+
         const isLoadedScript = true;
 
         const apiConnectServiceStub = jasmine.createSpyObj('ApiConnectService', ['getAllHeroes']);
         const botConfigDataServiceStub = jasmine
             .createSpyObj('BotConfigDataService', [
                 'getSelectedHeroes',
+                'getSelectedHeroesObservable',
                 'getSavedHeroAbilities',
                 'getSavedHeroAbilityLevels',
+                'getSavedHeroPriorities',
                 'getSavedHeroTalents',
                 'updateHeroAbilities',
                 'updateHeroTalents',
@@ -87,7 +98,13 @@ describe('AbilitiesComponent', () => {
             .returnValue(Observable.of(heroes));
 
         botConfigDataServiceStub.getSelectedHeroes.and
-            .returnValue(Observable.of(heroesArray));
+            .returnValue(heroesArray);
+        botConfigDataServiceStub.getSelectedHeroesObservable.and.returnValue(
+            Observable.of(heroesArray),
+        );
+
+        botConfigDataServiceStub.getSavedHeroPriorities.and
+            .returnValue(heroesPrioritiesArray);
 
         botConfigDataServiceStub.notifyIsLoadedScript.and
             .returnValue(Observable.of(isLoadedScript));

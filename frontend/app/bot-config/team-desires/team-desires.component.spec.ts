@@ -61,7 +61,6 @@ describe('TeamDesiresComponent', () => {
         toBeNullCompoundCondition: () => {
             return {
                 compare: (actual: CompoundCondition) => {
-                    console.log(actual);
                     const result = {
                         pass: compareCompCond(actual),
                     };

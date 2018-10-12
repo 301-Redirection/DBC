@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
 import { ApiConnectService } from '../../services/api-connect.service';
 import { BotConfigDataService } from '../../services/bot-config-data.service';
+import { BehaviorSubject } from 'rxjs';
 
 declare var $: any;
 declare var swal: any;
@@ -28,6 +29,7 @@ export class HeroesComponent implements OnInit {
     agilityHeroes = [];
     intelligenceHeroes = [];
     heroSearch: String;
+    isSavedHeroesLoaded = new BehaviorSubject(false);
 
     // attribute urls
     strURL = '/assets/images/strength.png';
@@ -120,7 +122,24 @@ export class HeroesComponent implements OnInit {
                 this.allHeroes = data['heroes'];
                 this.getHeroImages();
                 this.sortHeroData();
-                this.checkIfSavedBotScript();
+                if (this.selectedHeroesList && this.selectedHeroesList.length > 0) {
+                    const newHeroList = [];
+                    this.selectedHeroesList.forEach((minHero) => {
+                        const detailedHero = this.allHeroes.find((bigHero) => {
+                            return bigHero.name === minHero.name;
+                        });
+                        for (const i in detailedHero) {
+                            if (detailedHero.hasOwnProperty(i)) {
+                                minHero[i] = detailedHero[i];
+                            }
+                        }
+                        newHeroList.push(minHero);
+                    });
+                    this.selectedHeroesList = newHeroList;
+                    this.isSavedHeroesLoaded.next(true);
+                    this.populateSelectedHeroPools();
+                    this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+                }
             },
             (error) => {
                 console.log(error);
@@ -130,27 +149,30 @@ export class HeroesComponent implements OnInit {
 
     saveHeroes(): void {
         const heroPool = this.createHeroPool();
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
         this.botConfigData.setHeroPool(heroPool);
     }
 
     getSavedHeroes(): void {
-        const savedHeroes = this.botConfigData.getSavedHeroes();
-        const heroNames = [];
-        savedHeroes.forEach((heroObject) => {
-            heroNames.push(heroObject['name']);
-        });
-        this.populateSelectedHeroList(heroNames);
-        this.populateSelectedHeroPools();
+        this.populateSelectedHeroList(this.botConfigData.getSavedHeroes());
     }
 
-    populateSelectedHeroList(heroNames: any) {
+    populateSelectedHeroList(heroes: any) {
         this.selectedHeroesList = [];
-        heroNames.forEach((name) => {
-            this.selectedHeroesList.push(this.allHeroes.find(hero => hero.programName === name));
+        const allHeroesLoaded = this.allHeroes.length > 0;
+        heroes.forEach((hero) => {
+            const detailedHero = this.allHeroes.find(searchHero => searchHero.name === hero.name);
+            for (const i in detailedHero) {
+                if (detailedHero.hasOwnProperty(i)) {
+                    hero[i] = detailedHero[i];
+                }
+            }
+            this.selectedHeroesList.push(hero);
         });
-        // Reflect regenerate hero list in service
-        this.botConfigData.updateSelectedHeroes(this.selectedHeroesList);
+        if (allHeroesLoaded) {
+            this.populateSelectedHeroPools();
+            this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
+        }
     }
 
     populateSelectedHeroPools() {
@@ -158,7 +180,7 @@ export class HeroesComponent implements OnInit {
         const heroesList = this.selectedHeroesList;
         const pools = heroPools.pool;
         pools.forEach((selectedHero) => {
-            const heroMatch = heroesList.find(hero => hero.programName === selectedHero.name);
+            const heroMatch = heroesList.find(hero => hero.name === selectedHero.name);
             this.pools[selectedHero.position].push(heroMatch);
         });
 
@@ -212,13 +234,22 @@ export class HeroesComponent implements OnInit {
             pool.splice(index, 1);
         }
 
-        index = this.selectedHeroesList.indexOf(hero);
-        if (index !== -1) {
+        const poolIndex = this.pools.indexOf(pool);
+        let shouldRemove = true;
+        this.pools.forEach((pool, i) => {
+            if (i !== poolIndex) {
+                if (pool.indexOf(hero) !== -1) {
+                    shouldRemove = false;
+                }
+            }
+        });
+        if (shouldRemove) {
+            index = this.selectedHeroesList.indexOf(hero);
             this.selectedHeroesList.splice(index, 1);
         }
 
         document.getElementById(`poolLink${this.selectedPool}`).click();
-        this.botConfigData.removeHeroSpecification(hero.programName);
+        this.botConfigData.removeHeroFromPool(hero.name, poolIndex);
         this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
     }
 
@@ -282,7 +313,7 @@ export class HeroesComponent implements OnInit {
         for (let i = 0; i < this.numberOfPools; i += 1) {
             if (this.pools[i]) {
                 this.pools[i].forEach((hero) => {
-                    heroPool.pool.push({ name: hero.programName, position: i });
+                    heroPool.pool.push({ name: hero.name, position: i });
                 });
             }
         }
@@ -345,9 +376,9 @@ export class HeroesComponent implements OnInit {
     resetPools(): void {
         this.selectedPool = 0;
         this.pools = [[], [], [], [], []];
+        this.botConfigData.setHeroPool(this.pools);
         this.selectedHeroesList = [];
-        this.botConfigData.setSelectedHeroes(this.selectedHeroesList);
-        this.botConfigData.clearSelectedHeroes(this.selectedHeroesList);
+        this.botConfigData.setSelectedHeroes([]);
     }
 
     triggerResetPools(): void {
