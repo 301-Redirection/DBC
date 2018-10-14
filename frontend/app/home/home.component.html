@@ -10,26 +10,35 @@
             <button class="button button-new-configuration btn-lg" (click)="navigate('/bot-config')">GET STARTED</button>
             <button class="button button-generate" routerLink="/walkthrough">LEARN HOW</button>
         </div>
+        <br>
+        <div class="frame banner-video">
+            <h5>Here is how it works</h5>
+            <br>
+            <iframe id="demoVideo" src="https://www.youtube.com/embed/n5Nv3kvLO1w" frameborder="0" allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+        </div>
     </div>
 
 </div>
 
 
-<div class="container-home containerDescription">
+<div class="container-home container-description">
     <div class="container-inner float-left">
-            <div class="frame home-heading-frame">
-                    <h1 id="createBotsTitle" class="home-heading heading">Create DOTA 2 Bots Your Way</h1>
-                    <br>
-                    
-                </div>
-                <div class="frame steps-frame">
-                    <h5>Create and download custom bot scripts easily and quickly</h5>
-                    <p>
-                        The days of coding scripts tediously to customize bot behaviour are now in the past.
-                        <br>This system aims to allow anyone to create their own scripts through the use of a graphical interface,
-                        <br>while still allowing considerable customizability in areas such as Team Desires, Heroes, Abilities, and Items.
-                    </p>
-                    <!-- <br>
+        <div class="frame home-heading-frame">
+            <h1 id="createBotsTitle" class="home-heading heading">Create DOTA 2 Bots Your Way</h1>
+            <br>
+
+        </div>
+        <div class="frame steps-frame">
+            <h5>Create and download custom bot scripts easily and quickly</h5>
+            <p>
+                The days of coding scripts tediously to customize bot behaviour are now in the past.
+                <br>This system aims to allow anyone to create their own scripts through the use of a graphical interface,
+                <br>while still allowing considerable customizability in areas such as Team Desires, Heroes, Abilities, and
+                Items.
+            </p>
+            <!-- <br>
                     <div class="row steps-row">
                         <div class="col-1"></div>
                         <div class="col-2">
@@ -64,9 +73,9 @@
                         </div>
                         <div class="col-1"></div>
                     </div> -->
-                </div>
+        </div>
     </div>
-    
+
     <!-- <div class="frame banner-video">
         <h5>Here is how it works</h5>
         <br>
@@ -75,46 +84,59 @@
     </div>
     <br> background-image: url(http://cdn.dota2.com/apps/dota2/images/blog/play/bg_04.jpg); -->
 </div>
-<div id="Container_04" class="container-home container-create">
+<div id="Container_04" class="container-home container-create main-background">
+    <img [src]="createBackgroundURL" class="float-left ml-4" width="55%">
     <div class="container-inner">
         <h1 class="home-heading heading"><i class="fas fa-pencil-alt fa-1x mr-3"></i> CREATE</h1>
         <br><br>
         <div class="frame steps-frame">
-                <h5>Create and download custom bot scripts easily and quickly</h5>
-                <p>
-                    The days of coding scripts tediously to customize bot behaviour are now in the past.
-                    <br>This system aims to allow anyone to create their own scripts through the use of a graphical interface,
-                    <br>while still allowing considerable customizability in areas such as Team Desires, Heroes, Abilities, and Items.
-                </p>
+            <h5>Create and Edit custom bot scripts</h5>
+            <p>
+                Give your custom scripts a title and description, then begin creating your custom bot script.create custom team desires for
+                your bots to follow based on events that occur during the game. Pick the heroes and the pools that they should
+                belong to, then customize each hero's abilities and item builds, all using simple, powerful interface. Once
+                you have are satisfied with the bot script you have created simply save it, to be able to download or edit
+                it.
+            </p>
+            <div class="home-heading heading">
+                <i class="fas fa-angle-double-down fa-2x"></i>
+            </div>
         </div>
     </div>
 </div>
 <div id="Container_04" class="container-home container-generate">
     <img [src]="generateBackgroundURL" class="float-right ml-4" width="55%">
-        <div class="container-inner contain-create-inner">
-            <h1 class="home-heading heading"><i class="fas fa-download fa-2x"></i> GENERATE</h1>
-            <br><br>
-            <div class="frame steps-frame">
-                    <h5>Create and download custom bot scripts easily and quickly</h5>
-                    <p>
-                        The days of coding scripts tediously to customize bot behaviour are now in the past.
-                        <br>This system aims to allow anyone to create their own scripts through the use of a graphical interface,
-                        <br>while still allowing considerable customizability in areas such as Team Desires, Heroes, Abilities, and Items.
-                    </p>
+    <div class="container-inner contain-create-inner">
+        <h1 class="home-heading heading"><i class="fas fa-download fa-2x"></i> GENERATE</h1>
+        <br><br>
+        <div class="frame steps-frame">
+            <h5>Download the custom bot script you have created</h5>
+            <p>
+                Once you have created a custom bot script, simply click generate and our system will create your custom script by generating
+                the Lua scripts needed to implement the custom behaviour you requested. Once the scripts are created they
+                are downloaded onto your system, after which you just need to follow our simple installation guide to install
+                the script to Dota 2.
+            </p>
+            <div class="home-heading heading">
+                <i class="fas fa-angle-double-down fa-2x"></i>
             </div>
         </div>
     </div>
+</div>
 <div id="Container_04" class="container-home container-play">
-        <div class="container-inner">
-            <h1 class="home-heading heading"><i class="fas fa-gamepad fa-2x"></i> PLAY</h1>
-            <br><br>
-            <div class="frame steps-frame">
-                    <h5>Create and download custom bot scripts easily and quickly</h5>
-                    <p>
-                        The days of coding scripts tediously to customize bot behaviour are now in the past.
-                        <br>This system aims to allow anyone to create their own scripts through the use of a graphical interface,
-                        <br>while still allowing considerable customizability in areas such as Team Desires, Heroes, Abilities, and Items.
-                    </p>
+    <div class="container-inner">
+        <h1 class="home-heading heading"><i class="fas fa-gamepad fa-2x"></i> PLAY</h1>
+        <br><br>
+        <div class="frame steps-frame">
+            <h5>Play. Create endless custom bot behaviours and strategies</h5>
+            <p>
+                Begin to play against your custom bot script after following the easy installation guide. You can use the custom bot script
+                you have created to improve your Dota skills against different strategies without any other influences affecting
+                your game play. Improve your Dota skills, quickly, simply and easily.
+            </p>
+            <div class="home-heading heading">
+                    <i class="fas fa-check fa-2x"></i>
             </div>
         </div>
     </div>
+</div>

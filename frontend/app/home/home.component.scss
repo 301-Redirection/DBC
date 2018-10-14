@@ -87,11 +87,12 @@
     margin-left: auto;
     position: relative;
     overflow: hidden;
+    box-shadow: 0px -10px 15px 0px #0c0f11;
 }
 
-.containerDescription {
-    background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_05.jpg');
-    background-size: auto 100%;
+.container-description {
+    background-image: $description-background-image;
+    background-size: auto 110%;
     background-position: right bottom;
     background-color: #0c0f11;
     width: 100%;
@@ -113,9 +114,9 @@
     float: right;
 }
 .container-create {
-    background-image: $home-background-image;
-    background-size: auto 80%;
-    background-position: left center;
+    background-image: url(/assets/images/backgrounds/main_background.jpg);
+    background-size: 100%;
+    background-position: center;
     background-color: #0c0f11;
     width: 100%;
 }
@@ -129,7 +130,7 @@
 
 .container-play {
     background-image: $play-background-image;
-    background-size: 100% auto;
+    background-size: 100% 110%;
     background-position: right center;
     background-color: #161b1d;
     width: 100%;
@@ -155,13 +156,4 @@
     font-style: inherit;
     font-size: 150%;
     font-family: inherit;
-}
-
-.description-background {
-    height: 972px;
-    background-color: #000000;
-    background-image: url('http://cdn.dota2.com/apps/dota2/images/blog/play/bg_07.jpg');
-    background-size: auto 100%;
-    background-position: top center;
-    width: 100%;
 }
