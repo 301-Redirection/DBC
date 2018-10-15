@@ -55,35 +55,35 @@ module.exports = {
                     name: 'drow_ranger',
                     items: [
                         {
-                            name: 'dagon_5',
+                            name: 'item_dagon_recipe',
                             components: [
                                 {
-                                    name: 'dagon_4',
+                                    name: 'item_dagon_recipe',
                                     components: [
                                         {
-                                            name: 'dagon_3',
+                                            name: 'item_dagon_recipe',
                                             components: [
                                                 {
-                                                    name: 'dagon_2',
+                                                    name: 'item_dagon_recipe',
                                                     components: [
                                                         {
-                                                            name: 'dagon_recipe',
+                                                            name: 'item_dagon_recipe',
                                                             components: [
                                                                 {
-                                                                    name: 'null_talisman',
+                                                                    name: 'item_null_talisman',
                                                                     components: [
                                                                         {
-                                                                            name: 'mantle',
+                                                                            name: 'item_mantle',
                                                                             components: [],
                                                                         },
                                                                         {
-                                                                            name: 'circlet',
+                                                                            name: 'item_circlet',
                                                                             components: [],
                                                                         },
                                                                     ],
                                                                 },
                                                                 {
-                                                                    name: 'staff_of_wizardry',
+                                                                    name: 'item_staff_of_wizardry',
                                                                     components: [],
                                                                 },
                                                             ],
@@ -97,30 +97,30 @@ module.exports = {
                             ],
                         },
                         {
-                            name: 'lame',
+                            name: 'item_lame',
                             components: [],
                         },
                         {
-                            name: 'dagon_2',
+                            name: 'item_dagon_recipe',
                             components: [
                                 {
-                                    name: 'dagon_1',
+                                    name: 'item_dagon_recipe',
                                     components: [
                                         {
-                                            name: 'recipe_null_talisman',
+                                            name: 'item_recipe_null_talisman',
                                             components: [
                                                 {
-                                                    name: 'mantle',
+                                                    name: 'item_mantle',
                                                     components: [],
                                                 },
                                                 {
-                                                    name: 'circlet',
+                                                    name: 'item_circlet',
                                                     components: [],
                                                 },
                                             ],
                                         },
                                         {
-                                            name: 'staff_of_wizardry',
+                                            name: 'item_staff_of_wizardry',
                                             components: [],
                                         },
                                     ],
