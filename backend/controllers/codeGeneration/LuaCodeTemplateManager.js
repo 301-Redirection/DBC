@@ -159,7 +159,7 @@ const LuaCodeTemplateManager = function () {
                         const heroSpec = configObject.heroes[i];
                         const heroName = heroSpec.name;
                         if (heroSpec) {
-                            if (heroSpec.abilities) {
+                            if (heroSpec.abilityLevels) {
                                 this.generateAbilityUsageFile(heroName, heroSpec);
                             } else {
                                 // include default bot ability file if abilities unspecified
