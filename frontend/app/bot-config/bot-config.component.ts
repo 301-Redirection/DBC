@@ -75,8 +75,16 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.selectedTab = tab;
     }
 
+    saveAllChanges() {
+        this.heroesComponent.saveHeroes();
+        this.teamDesiresComponent.saveTeamDesires();
+        this.abilitiesComponent.saveAbilities();
+        this.itemsComponent.saveItems();
+    }
+
     save(andGenerate) {
         if (this.validateInfo()) {
+            this.saveAllChanges();
             // call update bot from api service
             const requestBot = {
                 id: this.id,

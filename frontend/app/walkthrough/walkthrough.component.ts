@@ -9,6 +9,9 @@ import { Title } from '@angular/platform-browser';
 
 export class WalkthroughComponent implements OnInit {
     pageTitle = 'Dota 2 Bot Configurator - Walkthrough';
+    linuxURL = '../../assets/InstallerScripts/Linux/DBC_Linux_installer.zip';
+    macURL = '../../assets/InstallerScripts/Mac/DBC_Mac_Installer.zip';
+    windowsURL = '../../assets/InstallerScripts/Windows/DBC_Windows_Installer.zip';
 
     constructor(private title: Title) {
         this.title.setTitle(this.pageTitle);
