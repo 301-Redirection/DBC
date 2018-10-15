@@ -77,13 +77,11 @@
     float: right;
 }
 
-.container-start-inner {
-    height: 100%;
+.container-start {
+    padding-top: 3rem!important;
+    padding-bottom: 3rem!important;
 }
 
-.contain-create-inner{
-    float: right;
-}
 .container-create {
     background-image: $create-background-image;
     background-size: 100% 680px;
@@ -140,6 +138,12 @@
 }
 
 @media screen  and (min-width: 1000px)and (max-width: 1365px) {
+    .button-responsive {
+        padding:2px 4px;
+        font-size:80%;
+        line-height: 1;
+        max-width: 160px;
+    }
     .container-inner {
         width: 568px;
     }
