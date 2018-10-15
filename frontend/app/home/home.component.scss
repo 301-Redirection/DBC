@@ -33,52 +33,19 @@
 }
 
 .steps-frame {
-    // margin-top: 1rem !important;
     margin-bottom: 6rem;
-    text-align: center;
-}
-
-.steps-row {
-    height: 10rem;
-}
-
-.round-border {
-    border: 1px solid $light-grey;
-    border-radius: .2rem;
-    width: 10rem;
-    height: 10rem;
-    background-color: rgba(63, 63, 63, 0.8);
-    border-color: $dark-grey-1;
-}
-
-#createStep {
-    color: $btn-new-configuration-color;
-}
-
-#generateStep {
-    color: $btn-generate-color;
+    text-align: left;
 }
 
 #playStep {
     color: $btn-cancel-color;
 }
 
-.arrow {
-    margin-top: 3rem;
-}
-
-#firstArrow {
-    margin-left: auto;
-}
-
-#secondArrow {
-    margin-right: auto;
-}
-
 #demoVideo {
     background-color: $black;
     width: 1000px;
     height: 600px;
+    z-index: 100;
 }
 
 .container-home {
@@ -110,19 +77,23 @@
     float: right;
 }
 
+.container-start-inner {
+    height: 100%;
+}
+
 .contain-create-inner{
     float: right;
 }
 .container-create {
-    background-image: url(/assets/images/backgrounds/main_background.jpg);
-    background-size: 100%;
+    background-image: $create-background-image;
+    background-size: 100% 680px;
     background-position: center;
     background-color: #0c0f11;
     width: 100%;
 }
 .container-generate {
     background-image: $generate-background-image;
-    background-size: 100%;
+    background-size: 100% 680px;
     background-position: right center;
     background-color: #161b1d;
     width: 100%;
@@ -156,4 +127,24 @@
     font-style: inherit;
     font-size: 150%;
     font-family: inherit;
+}
+
+@media screen  and (min-width: 1366px)and (max-width: 1593px) {
+    .container-inner {
+        width: 720px;
+    }
+    .container-description, .container-create,.container-generate, .container-play{
+        background-size: 100% 680px;
+        max-height: 680px;
+    }
+}
+
+@media screen  and (min-width: 1000px)and (max-width: 1365px) {
+    .container-inner {
+        width: 568px;
+    }
+    .container-description, .container-create,.container-generate, .container-play{
+        background-size: 100% 580px;
+        max-height: 580px;
+    }
 }
