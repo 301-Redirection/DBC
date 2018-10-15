@@ -129,6 +129,10 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
             swal('', 'Please enter your bot script name and description to continue.', 'warning');
             return false;
         }
+        if (this.heroesComponent.selectedHeroesList.length < 5) {
+            swal('Warning', 'Please select at least 5 heroes', 'warning');
+            return false;
+        }
         return true;
     }
 
