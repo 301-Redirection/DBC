@@ -65,7 +65,7 @@ class BotController {
     static makeSimpleItem(item, depth) {
         if (item) {
             const newItem = {
-                name: item.name,
+                name: this.getItemApiName(item),
             };
             if (item.components) {
                 if (item.components === 'null' || item.components === null || depth >= MAX_DEPTH) {
@@ -82,6 +82,18 @@ class BotController {
             }
         }
         return null;
+    }
+
+    static getItemApiName(item) {
+        /**
+         * the dagon_1, dagon_2, dagon_3 from the scraper
+         *  do not resolve in the dota api, they all
+         *  refer to 'item_recipe_dagon'
+         */
+        if (item.name.indexOf('dagon') > -1) {
+            return 'item_recipe_dagon';
+        }
+        return `item_${item.name}`;
     }
 
     // removes unnecessary fields from json
@@ -129,6 +141,7 @@ class BotController {
         const userId = request.user.sub;
         // condition for creating a botconfig entry
         configuration = this.removeRedundantDataFromObject(configuration);
+        request.body.configuration = configuration;
         if (id === -1) {
             models.BotConfig.create({
                 name,
