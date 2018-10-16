@@ -10,6 +10,9 @@ The Dota 2 Bot Configurator is a tool that allows a Dota 2 player to specify a s
 - Familiar interface for Dota 2 players.
 - Save and edit multiple sets of bot scripts.
 
+## Live Server
+
+<a href="http://ec2-18-217-151-250.us-east-2.compute.amazonaws.com/" target="_blank">DOTA 2 Bot Configurator</a>
 
 
 ## Running Locally
