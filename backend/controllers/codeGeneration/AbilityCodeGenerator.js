@@ -90,7 +90,7 @@ class AbilityCodeGenerator {
         let fileContents = fs.readFileSync(path.join(PATH_TO_TEMPLATE_SCRIPTS, ABILITY_TEMPLATE_FOLDER_NAME, filename), 'utf8', (err) => {
             if (err) throw err;
         });
-        const abilities = this.generateLevelingAbilityCode(abilityObject.abilities);
+        const abilities = this.generateLevelingAbilityCode(abilityObject.abilityLevels);
         const talents = this.generateTalentCode(abilityObject.talents);
         fileContents = fileContents.replace('{{- abilities-to-level -}}', `${abilities}${NEW_LINE}${NEW_LINE}${talents}${NEW_LINE}`);
         return fileContents;

@@ -609,7 +609,7 @@ function AllPickLogic()
 				pickTime=GameTime();
 				randomTime=0;
 				
-				local temphero = GetPositionedHero(team, selectedHeroes);
+				local temphero = GetPositionedHero(team, selectedHeroes, i);
                 SelectHero(id, temphero);
 			end
 		end
@@ -653,7 +653,7 @@ function GetHeroPostion( heroName )
 end
 
 -- Returns a Hero that fills a position that current team does not have filled.
-function GetPositionedHero(team, selectedHeroes)
+function GetPositionedHero(team, selectedHeroes, id)
 	--Fill positions in random order
     return GetRandomHero(hero_pool_position[(id % #hero_pool_position) + 1] , selectedHeroes );
 

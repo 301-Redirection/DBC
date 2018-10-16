@@ -17,7 +17,7 @@
 }
 
 .heading {
-    font-size: 22px;
+    color:  #5C6163;
 }
 
 .get-started-buttons {
@@ -33,50 +33,122 @@
 }
 
 .steps-frame {
-    // margin-top: 1rem !important;
     margin-bottom: 6rem;
-    text-align: center;
-}
-
-.steps-row {
-    height: 10rem;
-}
-
-.round-border {
-    border: 1px solid $light-grey;
-    border-radius: .2rem;
-    width: 10rem;
-    height: 10rem;
-    background-color: rgba(24, 24, 24, 0.3);
-    border-color: $dark-grey-1;
-}
-
-#createStep {
-    color: $btn-new-configuration-color;
-}
-
-#generateStep {
-    color: $btn-generate-color;
+    text-align: left;
 }
 
 #playStep {
     color: $btn-cancel-color;
 }
 
-.arrow {
-    margin-top: 3rem;
-}
-
-#firstArrow {
-    margin-left: auto;
-}
-
-#secondArrow {
-    margin-right: auto;
-}
-
 #demoVideo {
     background-color: $black;
     width: 1000px;
     height: 600px;
+    z-index: 100;
+}
+
+.container-home {
+    background-repeat: no-repeat;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px -10px 15px 0px #0c0f11;
+}
+
+.container-description {
+    background-image: $description-background-image;
+    background-size: auto 110%;
+    background-position: right bottom;
+    background-color: #0c0f11;
+    width: 100%;
+}
+
+.container-inner {
+    padding: 128px 0 0 643px;
+    height: 680px;
+    background: transparent;
+    padding: 100px 10%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    float: right;
+}
+
+.container-start {
+    padding-top: 3rem!important;
+    padding-bottom: 3rem!important;
+}
+
+.container-create {
+    background-image: $create-background-image;
+    background-size: 100% 680px;
+    background-position: center;
+    background-color: #0c0f11;
+    width: 100%;
+}
+.container-generate {
+    background-image: $generate-background-image;
+    background-size: 100% 680px;
+    background-position: right center;
+    background-color: #161b1d;
+    width: 100%;
+}
+
+.container-play {
+    background-image: $play-background-image;
+    background-size: 100% 110%;
+    background-position: right center;
+    background-color: #161b1d;
+    width: 100%;
+}
+
+.logo {
+    width: 1000px;
+    float: none;
+    vertical-align: middle;
+}
+
+.dbc-title {
+    display: block;
+    color: #A69E99;
+    letter-spacing: .8vw;
+    text-shadow: 2px 2px 5px #000000;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 150%;
+    font-family: inherit;
+}
+
+@media screen  and (min-width: 1366px)and (max-width: 1593px) {
+    .container-inner {
+        width: 720px;
+    }
+    .container-description, .container-create,.container-generate, .container-play{
+        background-size: 100% 680px;
+        max-height: 680px;
+    }
+}
+
+@media screen  and (min-width: 1000px)and (max-width: 1365px) {
+    .button-responsive {
+        padding:2px 4px;
+        font-size:80%;
+        line-height: 1;
+        max-width: 160px;
+    }
+    .container-inner {
+        width: 568px;
+    }
+    .container-description, .container-create,.container-generate, .container-play{
+        background-size: 100% 580px;
+        max-height: 580px;
+    }
 }

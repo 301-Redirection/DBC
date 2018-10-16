@@ -31,17 +31,19 @@ export class DashboardComponent implements OnInit {
 
     processBotData(data) {
         this.isRetrieving = true;
-        this.numberOfBots = data.numBots ? data.numBots : data.botConfigs.length;
-        let tempBots = [];
-        tempBots = data.botConfigs;
-        for (const i in tempBots) {
-            const bot = tempBots[i];
-            const date = moment(bot.updatedAt).format(DATE_FORMAT);
-            bot.updatedAt = date;
-            bot.generateURL =
-                `${globalConfig['app']['API_URL']}/download/${bot.id}`;
+        if (data) {
+            this.numberOfBots = data.numBots ? data.numBots : data.botConfigs.length;
+            let tempBots = [];
+            tempBots = data.botConfigs;
+            for (const i in tempBots) {
+                const bot = tempBots[i];
+                const date = moment(bot.updatedAt).format(DATE_FORMAT);
+                bot.updatedAt = date;
+                bot.generateURL =
+                    `${globalConfig['app']['API_URL']}/download/${bot.id}`;
+            }
+            this.bots = tempBots;
         }
-        this.bots = tempBots;
         this.isRetrieving = false;
     }
 

@@ -53,47 +53,47 @@ module.exports = {
             heroes: [
                 {
                     name: 'drow_ranger',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'crystal_maiden',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'chaos_knight',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'centaur',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'chen',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'bloodseeker',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'axe',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'antimage',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
                 {
                     name: 'abaddon',
-                    abilities: 'qweqqrewqetnqrntnnnnnnnnn',
+                    abilityLevels: 'qweqqrewqetnqrntnnnnnnnnn',
                     talents: ['l', 'r', 'l', 'l'],
                 },
             ],

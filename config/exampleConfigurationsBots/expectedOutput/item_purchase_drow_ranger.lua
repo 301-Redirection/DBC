@@ -5,22 +5,22 @@
 local utility = require( GetScriptDirectory().."/utility" ) 
 
 local ItemsToBuy ={
-	"mantle",
-	"circlet",
-	"null_talisman",
-	"staff_of_wizardry",
-	"dagon_recipe",
-	"dagon_2",
-	"dagon_3",
-	"dagon_4",
-	"dagon_5",
-	"lame",
-	"mantle",
-	"circlet",
-	"recipe_null_talisman",
-	"staff_of_wizardry",
-	"dagon_1",
-	"dagon_2",
+	"item_mantle",
+	"item_circlet",
+	"item_null_talisman",
+	"item_staff_of_wizardry",
+	"item_dagon_recipe",
+	"item_dagon_recipe",
+	"item_dagon_recipe",
+	"item_dagon_recipe",
+	"item_dagon_recipe",
+	"item_lame",
+	"item_mantle",
+	"item_circlet",
+	"item_recipe_null_talisman",
+	"item_staff_of_wizardry",
+	"item_dagon_recipe",
+	"item_dagon_recipe",
 }
 
 

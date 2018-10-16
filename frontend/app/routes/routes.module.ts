@@ -5,6 +5,7 @@ import { BotConfigComponent } from '../bot-config/bot-config.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { WalkthroughComponent } from '../walkthrough/walkthrough.component';
+import { CallbackComponent } from '../callback/callback.component';
 
 export const ROUTES: Routes = [
     {
@@ -38,6 +39,11 @@ export const ROUTES: Routes = [
     {
         path: 'walkthrough',
         component: WalkthroughComponent,
+        pathMatch: 'full',
+    },
+    {
+        path: 'callback',
+        component: CallbackComponent,
         pathMatch: 'full',
     },
 ];

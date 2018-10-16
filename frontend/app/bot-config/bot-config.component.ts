@@ -75,8 +75,16 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
         this.selectedTab = tab;
     }
 
+    saveAllChanges() {
+        this.heroesComponent.saveHeroes();
+        this.teamDesiresComponent.saveTeamDesires();
+        this.abilitiesComponent.saveAbilities();
+        this.itemsComponent.saveItems();
+    }
+
     save(andGenerate) {
         if (this.validateInfo()) {
+            this.saveAllChanges();
             // call update bot from api service
             const requestBot = {
                 id: this.id,
@@ -119,6 +127,11 @@ export class BotConfigComponent implements OnInit, AfterViewInit {
     validateInfo(): boolean {
         if (this.name === '' || this.description === '') {
             swal('', 'Please enter your bot script name and description to continue.', 'warning');
+            return false;
+        }
+        if (this.heroesComponent.selectedHeroesList &&
+            this.heroesComponent.selectedHeroesList.length < 5) {
+            swal('Warning', 'Please select at least 5 heroes', 'warning');
             return false;
         }
         return true;
